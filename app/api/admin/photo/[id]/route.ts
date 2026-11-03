@@ -1,0 +1,4 @@
+import {database,storage} from '@/db';
+import type {SupportRow} from '@/lib/order-types';
+import {authenticated,json,apiError} from '@/lib/server';
+export async function GET(req:Request,{params}:{params:Promise<{id:string}>}){try{if(!await authenticated(req))return json({error:'Please sign in.'},401);const{id}=await params;const row=await database().prepare('SELECT photo_key,photo_type FROM support WHERE id=?').bind(id).first<Pick<SupportRow,'photo_key'|'photo_type'>>();if(!row?.photo_key)return json({error:'Photo not found.'},404);const file=await storage().get(row.photo_key);if(!file)return json({error:'Photo not found.'},404);return new Response(file.body,{headers:{'Content-Type':row.photo_type||'application/octet-stream','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'"}})}catch(e){return apiError(e)}}

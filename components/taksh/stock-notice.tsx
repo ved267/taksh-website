@@ -1,0 +1,1 @@
+export function StockNotice({compact=false}:{compact?:boolean}){return <p className="stock-notice"><strong>Currently out of stock.</strong>{!compact&&<> Add to your bag to request an availability update.</>}</p>}

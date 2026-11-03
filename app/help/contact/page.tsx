@@ -1,0 +1,2 @@
+import {Shell} from '@/components/taksh/shell';import {Contact} from '@/components/taksh/help';import {pageMeta} from '@/lib/shop';
+export const metadata=pageMeta('Contact us','Talk to Taksh about your next build.');export default async function Page({searchParams}:{searchParams:Promise<Record<string,string>>}){const s=await searchParams;return <Shell><Contact channel={['whatsapp','email'].includes(s.channel)?s.channel:''}/></Shell>}

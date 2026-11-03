@@ -1,0 +1,156 @@
+{
+  "chandrayaan-3": [
+    {
+      "image": "/chandrayaan/gallery-01-hero.webp",
+      "alt": "Vikram and Pragyan on the brick lunar base."
+    },
+    {
+      "image": "/chandrayaan/gallery-02-rover-closeup.webp",
+      "alt": "Pragyan with six wheels, camera eyes and a blue solar panel."
+    },
+    {
+      "image": "/chandrayaan/gallery-07-inside-front.webp",
+      "alt": "The open lander with its rover bay, tanks and guide rails."
+    },
+    {
+      "image": "/chandrayaan/gallery-03-top-deck-closeup.webp",
+      "alt": "The antenna dish and instruments on Vikram’s top deck."
+    },
+    {
+      "image": "/chandrayaan/gallery-05-leg-heat-probe.webp",
+      "alt": "Vikram’s landing leg, gold footpad and heat probe."
+    },
+    {
+      "image": "/chandrayaan/gallery-11-dimensions.webp",
+      "alt": "The complete set, about 32 cm wide, 28 cm deep and 17 cm tall."
+    },
+    {
+      "image": "/chandrayaan/gallery-12-room.webp",
+      "alt": "The complete model on a wooden console beside books."
+    }
+  ],
+  "ram-mandir": [
+    {
+      "image": "/ram-mandir/gallery-01-hero-front.webp",
+      "alt": "The brick Ram Mandir seen from the front, on its base with four lawns"
+    },
+    {
+      "image": "/ram-mandir/gallery-10-room.webp",
+      "alt": "The model on a sideboard at home"
+    },
+    {
+      "image": "/ram-mandir/gallery-02-angle.webp",
+      "alt": "The model from the south-east, showing the three hall roofs rising to the spire"
+    },
+    {
+      "image": "/ram-mandir/gallery-03-spire-flag-closeup.webp",
+      "alt": "The spire, its gold finial and the saffron flag"
+    },
+    {
+      "image": "/ram-mandir/gallery-11-spire-lifted.webp",
+      "alt": "The model with the spire lifted off, showing the eight-sided sanctum"
+    },
+    {
+      "image": "/ram-mandir/gallery-04-roofs-surya-tilak-window.webp",
+      "alt": "The three hall roofs with gold finials and the Surya Tilak window"
+    },
+    {
+      "image": "/ram-mandir/gallery-05-porch-stairs-plaque.webp",
+      "alt": "The entrance porch, the stairs, the elephants and lions, and the nameplate"
+    },
+    {
+      "image": "/ram-mandir/gallery-06-wing-porch.webp",
+      "alt": "One of the two side halls with its arches and lattice windows"
+    },
+    {
+      "image": "/ram-mandir/gallery-07-platform-lawn.webp",
+      "alt": "The carved platform, the side stairs and a lawn"
+    },
+    {
+      "image": "/ram-mandir/gallery-09-dimensions.webp",
+      "alt": "The model's size: 38 cm wide, 34 cm deep, 26 cm tall"
+    }
+  ],
+  "map-of-india": [
+    {
+      "image": "/bharat/product-page/gallery-01-hero-front.png",
+      "alt": "A square wall mosaic of India made of small round pieces, each state a different bright colour, in a brown frame."
+    },
+    {
+      "image": "/bharat/product-page/life-01-room.jpg",
+      "alt": "The map of India on a dark green living-room wall, above a teak sideboard with marigolds."
+    },
+    {
+      "image": "/bharat/product-page/gallery-02-closeup.png",
+      "alt": "Close view of the round pieces, with blue river tiles sitting on top of them."
+    },
+    {
+      "image": "/bharat/product-page/life-05-floor.jpg",
+      "alt": "A boy and his sister building the map on a round rug on the floor while their grandmother watches."
+    },
+    {
+      "image": "/bharat/product-page/life-04-last-dot.jpg",
+      "alt": "A boy placing one last yellow dot on the finished map."
+    },
+    {
+      "image": "/bharat/product-page/life-02-nani.jpg",
+      "alt": "A boy pointing at a place on the map and grinning at his grandmother."
+    },
+    {
+      "image": "/bharat/product-page/gallery-04-size.png",
+      "alt": "The map with its size: 52.8 cm wide and 52.8 cm tall."
+    },
+    {
+      "image": "/bharat/product-page/gallery-05-plates.png",
+      "alt": "The map divided into 16 square plates, named A1 to D4."
+    }
+  ],
+  "yellow-taxi": [
+    {
+      "image": "/yellow-taxi/gallery-01-hero.webp",
+      "alt": "A yellow brick taxi with a blue stripe, luggage on the roof and marigolds on the grille."
+    },
+    {
+      "image": "/yellow-taxi/gallery-02-front.webp",
+      "alt": "The brick taxi from the front, with the plate WBT 1962."
+    },
+    {
+      "image": "/yellow-taxi/gallery-03-inside.webp",
+      "alt": "The brick taxi with its roof lifted off and its bonnet open."
+    },
+    {
+      "image": "/yellow-taxi/gallery-04-roof-luggage.webp",
+      "alt": "A tin trunk, a suitcase and a bedding roll on the roof carrier."
+    },
+    {
+      "image": "/yellow-taxi/gallery-05-dashboard.webp",
+      "alt": "The cabin: steering wheel on the right, a fare meter and a clay cup on the dashboard."
+    },
+    {
+      "image": "/yellow-taxi/gallery-06-in-a-real-taxi.webp",
+      "alt": "The brick taxi on the dashboard of a real taxi, beside the driver's hand on the wheel."
+    },
+    {
+      "image": "/yellow-taxi/gallery-07-dimensions.webp",
+      "alt": "The brick taxi with its size: about 17 cm long, 8 cm wide and 9 cm tall."
+    }
+  ],
+  "nonsense": [
+    {
+      "image": "/nonsense/gallery-01-hero.webp",
+      "alt": "Blue brick glasses on a black display stand."
+    },
+    {
+      "image": "/nonsense/gallery-02-hinge-closeup.webp",
+      "alt": "A close-up of the folding hinge on the blue brick glasses."
+    },
+    {
+      "image": "/nonsense/gallery-03-home.webp",
+      "alt": "The Ulta Chashma brick glasses displayed on a shelf at home."
+    },
+    {
+      "image": "/nonsense/gallery-04-breakfast.webp",
+      "alt": "The Ulta Chashma brick glasses on a breakfast table."
+    }
+  ]
+}

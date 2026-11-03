@@ -1,0 +1,227 @@
+{
+  "brand": "Taksh",
+  "currency": "INR",
+  "specificationNote": "This is a provisional catalogue. Age guidance, build times, assembled dimensions and weights are sample estimates awaiting product validation. Set descriptions describe the proposed designs.",
+  "products": [
+    {
+      "slug": "chandrayaan-3",
+      "name": "Chandrayaan-3",
+      "shortName": "Chandrayaan-3",
+      "level": "Master",
+      "pieces": 1250,
+      "approximate": true,
+      "price": 6249,
+      "setNumber": "TK-013",
+      "age": 12,
+      "buildTime": "4–5 hours",
+      "dimensions": "About 32 × 28 × 17 cm",
+      "weight": "To be confirmed",
+      "image": "/chandrayaan/gallery-01-hero.webp",
+      "description": "Build Vikram, Pragyan and a piece of the lunar surface. A display model with moving parts and a mission worth understanding.",
+      "stories": {
+        "build": {
+          "title": "A landing worth building.",
+          "text": "Build the Vikram lander, Pragyan rover and a cratered lunar base with a printed nameplate."
+        },
+        "details": {
+          "title": "Every part has a purpose.",
+          "text": "Discover the instruments that helped the mission land, explore and learn."
+        },
+        "process": {
+          "title": "Build it. Then understand it.",
+          "text": "Numbered bags, a printed building guide and an illustrated mission story book help you make sense of what you make."
+        },
+        "display": {
+          "title": "A little space for the Moon.",
+          "text": "A black-edged lunar base frames the lander and rover as one complete scene."
+        }
+      },
+      "imageAlt": "The gold brick Vikram lander and Pragyan rover on a lunar display base."
+    },
+    {
+      "slug": "ram-mandir",
+      "name": "Ram Mandir",
+      "subtitle": "Ayodhya",
+      "level": "Master",
+      "pieces": 1500,
+      "approximate": true,
+      "price": 7499,
+      "setNumber": "RAM-MANDIR",
+      "age": 12,
+      "buildTime": "5–6 hours",
+      "dimensions": "About 38 cm wide, 34 cm deep and 26 cm tall with the flag",
+      "weight": "To be confirmed",
+      "image": "/ram-mandir/gallery-01-hero-front.webp",
+      "imageAlt": "The brick Ram Mandir seen from the front, on its base with four lawns",
+      "imageWidth": 1254,
+      "imageHeight": 1254,
+      "description": "Build the temple hall by hall, from the first step to the flag. A small window in the roof sends a beam of light into the sanctum.",
+      "stories": {
+        "build": {
+          "title": "Walk in from the east.",
+          "text": "The real temple faces the sunrise. The model is built in the same order."
+        },
+        "details": {
+          "title": "The Surya Tilak window opens.",
+          "text": "Tilt the small mirror tile on the third roof and a beam of light falls into the sanctum."
+        },
+        "process": {
+          "title": "The spire lifts off.",
+          "text": "Lift the spire to see the eight-sided sanctum inside."
+        },
+        "display": {
+          "title": "Ayodhya",
+          "text": "A simplified brick model inspired by the Ram Mandir in Ayodhya."
+        }
+      }
+    },
+    {
+      "slug": "map-of-india",
+      "name": "Bharat: The Map of India",
+      "subtitle": "28 states · 8 union territories · 7 rivers",
+      "level": "Master",
+      "pieces": 4470,
+      "approximate": true,
+      "price": 8999,
+      "setNumber": "MAP-OF-INDIA",
+      "age": 12,
+      "buildTime": "8–10 hours",
+      "dimensions": "52.8 cm × 52.8 cm, about 2 cm deep",
+      "weight": "To be confirmed",
+      "image": "/bharat/gallery-01-hero-front.png",
+      "imageAlt": "A square wall mosaic of India made of small round pieces, each state a different bright colour, in a brown frame.",
+      "imageWidth": 2000,
+      "imageHeight": 2000,
+      "description": "Build India one dot at a time. Every state has its own colour, and every colour has a reason. When it is finished, it hangs on your wall.",
+      "stories": {
+        "build": {
+          "title": "Every dot is a piece. Tap the map.",
+          "text": "Build India one dot at a time."
+        },
+        "details": {
+          "title": "Seven rivers.",
+          "text": "The rivers go on last: 109 blue tiles, laid on top of the finished states."
+        },
+        "process": {
+          "title": "The white at the top.",
+          "text": "Himalaya means home of snow."
+        },
+        "display": {
+          "title": "A door and a boat.",
+          "text": "India never changes. The sea is yours."
+        }
+      }
+    },
+    {
+      "slug": "gully-cricket",
+      "name": "Gully Cricket",
+      "subtitle": "Your gully. Your rules.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 600,
+      "approximate": true,
+      "price": 2999,
+      "setNumber": "GULLY-CRICKET",
+      "age": 8,
+      "buildTime": "To be confirmed",
+      "dimensions": "About 18 × 13 × 12 cm (Terrace House)",
+      "weight": "To be confirmed",
+      "image": "/gully-cricket/gallery-01-hero.png",
+      "imageAlt": "A brick neighbourhood house with an open terrace, green shutters and four figures playing cricket in front.",
+      "imageWidth": 1448,
+      "imageHeight": 1086,
+      "description": "Build a neighbourhood lane where the evening match never ends. Then take it apart and build it again: a narrow gully, a chai corner, a match-day pavilion, or something nobody has thought of yet.",
+      "stories": {
+        "build": {
+          "title": "Who’s batting?",
+          "text": "Four players and one bat."
+        },
+        "details": {
+          "title": "Change the street.",
+          "text": "One set. Build one at a time."
+        },
+        "process": {
+          "title": "Uncle, ball de do!",
+          "text": "Every gully has one window."
+        },
+        "display": {
+          "title": "One more over.",
+          "text": "Your gully. Your rules."
+        }
+      }
+    },
+    {
+      "slug": "yellow-taxi",
+      "name": "Yellow Taxi",
+      "subtitle": "Calcutta · 1962",
+      "level": "Craft",
+      "pieces": 350,
+      "approximate": true,
+      "price": 1749,
+      "setNumber": "YELLOW-TAXI",
+      "age": 9,
+      "buildTime": "2–3 hours",
+      "dimensions": "About 17 × 8 × 9 cm",
+      "weight": "To be confirmed",
+      "image": "/yellow-taxi/gallery-01-hero.webp",
+      "imageAlt": "A yellow brick taxi with a blue stripe, luggage on the roof and marigolds on the grille.",
+      "imageWidth": 1254,
+      "imageHeight": 1254,
+      "description": "Build the taxi that carried Calcutta for more than sixty years. The roof lifts off, the bonnet opens and the wheels roll.",
+      "stories": {
+        "build": {
+          "title": "Taxi!",
+          "text": "Your model carries the year on its plate: WBT 1962."
+        },
+        "details": {
+          "title": "Get in.",
+          "text": "Lift the roof off and look inside."
+        },
+        "process": {
+          "title": "Where to?",
+          "text": "Britain built this design for three years. India built it for fifty-seven."
+        },
+        "display": {
+          "title": "Last stop.",
+          "text": "Soon there will be none left to hail. You can still build one."
+        }
+      }
+    },
+    {
+      "slug": "nonsense",
+      "name": "Ulta Chashma",
+      "level": "Craft",
+      "pieces": 200,
+      "approximate": true,
+      "price": 1999,
+      "setNumber": "NONSENSE",
+      "age": 8,
+      "buildTime": "45–60 minutes",
+      "dimensions": "About 15 cm wide, 17 cm deep and 11 cm tall. Life-size.",
+      "weight": "To be confirmed",
+      "image": "/nonsense/gallery-01-hero.webp",
+      "imageAlt": "Blue brick glasses on a black display stand.",
+      "imageWidth": 1254,
+      "imageHeight": 1254,
+      "description": "Tension toh hai sabke saath, bas nazariye ki hi toh hai baat.",
+      "stories": {
+        "build": {
+          "title": "Ulta Chashma",
+          "text": "Tension toh hai sabke saath, bas nazariye ki hi toh hai baat."
+        },
+        "details": {
+          "title": "Ulta Chashma",
+          "text": "Tension toh hai sabke saath, bas nazariye ki hi toh hai baat."
+        },
+        "process": {
+          "title": "Ulta Chashma",
+          "text": "Tension toh hai sabke saath, bas nazariye ki hi toh hai baat."
+        },
+        "display": {
+          "title": "Ulta Chashma",
+          "text": "Tension toh hai sabke saath, bas nazariye ki hi toh hai baat."
+        }
+      }
+    }
+  ]
+}

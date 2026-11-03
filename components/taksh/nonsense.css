@@ -1,0 +1,26 @@
+.nonsense-opening{padding-top:48px;padding-bottom:56px}
+.nonsense-collection{display:block;color:var(--muted);font-size:14px;line-height:1.5;letter-spacing:.025em;margin-bottom:12px}
+
+.nonsense-page .ch3-pricing small{font-size:13px;max-width:145px}
+.nonsense-page .nonsense-intro{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(25px,2.2vw,32px);font-weight:700;line-height:1.2;letter-spacing:-.025em;color:var(--cobalt);text-wrap:balance}
+.nonsense-page .ch3-facts{font-size:13px}
+.nonsense-page .ch3-counter{font-size:13px}
+
+.nonsense-sticky>div{display:flex;gap:4px;align-items:baseline}
+.nonsense-sticky>div>span{font-size:16px}
+@media(max-width:960px){.nonsense-opening .ch3-top-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}.nonsense-opening .ch3-buy{display:block;position:static;grid-column:auto;grid-row:auto}.nonsense-page .ch3-facts{margin:18px 0}.nonsense-page .ch3-description{margin-top:0}.nonsense-page .ch3-gallery{order:0}}
+@media(max-width:760px){.nonsense-opening{padding:24px 20px 36px}.nonsense-page .ch3-title{margin-bottom:0}.nonsense-page .ch3-facts{font-size:13px}.nonsense-page .ch3-facts>*{min-height:44px}.nonsense-page .ch3-contact a{font-size:16px}.nonsense-sticky>div{display:flex;flex-wrap:wrap;gap:3px}.nonsense-sticky strong,.nonsense-sticky>div>span{font-size:13px}.nonsense-sticky .button{padding:10px 16px;white-space:nowrap}}
+
+.nonsense-page .ch3-main-image{cursor:default}
+
+.nonsense-breakfast{background:var(--beige)}
+.nonsense-breakfast-scene{position:relative;margin:0;isolation:isolate;overflow:hidden;height:min(900px,100svh);min-height:620px}
+.nonsense-breakfast-scene img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.nonsense-breakfast-scene:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,13,24,.7),rgba(10,13,24,.25) 35%,transparent 65%);z-index:1;pointer-events:none}
+.nonsense-page .nonsense-breakfast-copy{position:absolute;left:max(56px,calc((100vw - 1328px)/2));bottom:56px;right:56px;z-index:2;color:var(--cream);margin:0}
+.nonsense-breakfast-copy h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:1.1;text-shadow:0 2px 18px rgba(0,0,0,.25)}
+.nonsense-breakfast-copy h2{font-size:clamp(34px,4.2vw,60px);text-wrap:balance}
+.nonsense-caption{padding:28px 24px 32px;color:var(--muted);text-align:center}
+.nonsense-caption p{font-size:14px;line-height:1.6}
+.nonsense-caption small{display:block;font-size:13px;line-height:1.6;margin:12px auto 0;max-width:850px}
+@media(max-width:760px){.nonsense-breakfast-scene{height:calc(100svh - 76px);min-height:540px;max-height:820px}.nonsense-breakfast-scene img{object-position:55% center}.nonsense-page .nonsense-breakfast-copy{left:24px;right:24px;bottom:42px}.nonsense-breakfast-copy h2{font-size:38px;max-width:440px}.nonsense-caption{padding:24px 20px 30px}}
