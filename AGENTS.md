@@ -1,6 +1,6 @@
 # Taksh shared website source
 
-This repository belongs to ved267 and is intended for both Codex and Claude. Read README-TAKSH.md and MIGRATION-STATUS.md before making changes.
+This repository belongs to ved267 and is intended for both Codex and Claude. Read README.md and MIGRATION-STATUS.md before making changes.
 
 The initial snapshot is the exact tracked source of Sites version59, commit d090acfe3163346d2f2a63f24ef119aef6b147fe, plus the available public assets. It is an export baseline, not a completed Vercel migration. Preserve product design, public UI/UX, customer-data protections and performance. Do not publish this checkout to Sites or use its historical .openai/hosting.json to modify the original site.
 
