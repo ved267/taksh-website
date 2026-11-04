@@ -53,3 +53,11 @@ next-env.d.ts
 
 # Build-generated content-addressed image variants.
 /public/media/
+
+# Netlify generated output and local account state
+.netlify/
+
+# Generated non-secret build identity
+.deployment/
+
+*.tsbuildinfo

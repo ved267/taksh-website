@@ -30,3 +30,15 @@ test('hosted execution requires durable database configuration',()=>{
  assert.throws(()=>databaseConfig({VERCEL:'1',TURSO_DATABASE_URL:'libsql://example.turso.io'}),/token/i);
  assert.equal(databaseConfig({}).url,'file:.local/taksh.sqlite3');
 });
+
+test('Netlify production cannot silently use a local database',()=>{
+ assert.throws(()=>databaseConfig({NETLIFY:'true'}),/database.*configured/i);
+ assert.throws(()=>databaseConfig({NETLIFY:'true',TURSO_DATABASE_URL:'file:.local/ephemeral.sqlite3'}),/local.*hosted/i);
+ assert.throws(()=>databaseConfig({NETLIFY:'true',TURSO_DATABASE_URL:'libsql://example.turso.io'}),/token/i);
+});
+
+test('Netlify serverless runtime markers fail closed and previews never use production credentials',()=>{
+ assert.throws(()=>databaseConfig({SITE_ID:'netlify-site'}),/database.*configured/i);
+ assert.throws(()=>databaseConfig({SITE_ID:'netlify-site',TAKSH_DEPLOY_CONTEXT:'deploy-preview',TURSO_DATABASE_URL:'libsql://production.turso.io',TURSO_AUTH_TOKEN:'production'}),/preview.*configured/i);
+ assert.equal(databaseConfig({SITE_ID:'netlify-site',TAKSH_DEPLOY_CONTEXT:'deploy-preview',TURSO_DATABASE_URL:'libsql://production.turso.io',TURSO_AUTH_TOKEN:'production',TAKSH_PREVIEW_DATABASE_URL:'libsql://preview.turso.io',TAKSH_PREVIEW_AUTH_TOKEN:'preview'}).url,'libsql://preview.turso.io');
+});

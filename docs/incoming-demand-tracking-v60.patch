@@ -1,0 +1,1587 @@
+diff --git a/app/api/admin/export/route.ts b/app/api/admin/export/route.ts
+index 858db94..d073719 100644
+--- a/app/api/admin/export/route.ts
++++ b/app/api/admin/export/route.ts
+@@ -1,5 +1,6 @@
++import {requestTraffic} from '@/lib/demand-domain.mjs';
+ import {database} from '@/db';
+ import type {StoredOrder,OrderDetails,OrderItem,SupportRow,SubscriptionRow,EnquiryRow} from '@/lib/order-types';
+ import {authenticated,json,apiError} from '@/lib/server';
+ import {csvCell} from '@/lib/order-domain.mjs';
+-export async function GET(req:Request){try{if(!await authenticated(req))return json({error:'Please sign in.'},401);const kind=new URL(req.url).searchParams.get('kind')||'orders';let rows:unknown[][]=[];let headers:string[]=[];if(kind==='subscriptions'){headers=['Date and time','Mobile','WhatsApp consent'];const r=await database().prepare('SELECT * FROM subscriptions ORDER BY created_at DESC').all<SubscriptionRow>();rows=r.results.map(r=>[r.created_at,r.mobile,!!r.consent])}else if(kind==='support'){headers=['Reference','Date and time','Set','Piece description','Mobile','Photo'];const r=await database().prepare('SELECT * FROM support ORDER BY created_at DESC').all<SupportRow>();rows=r.results.map(r=>[r.id,r.created_at,r.set_slug,r.description,r.mobile,r.photo_key?'Yes':'No'])}else if(kind==='enquiries'){headers=['Reference','Date and time','Name','Mobile','Email','Topic','Message'];const r=await database().prepare('SELECT * FROM enquiries ORDER BY created_at DESC').all<EnquiryRow>();rows=r.results.map(r=>[r.reference,r.created_at,r.name,r.mobile,r.email,r.topic,r.message])}else{headers=['Order reference','Date and time','Last updated','Status','Last step reached','Items','Quantity','Total value INR','Name','Mobile','Email','Pincode','City','State','Full address','Payment preference','WhatsApp consent','Device type','Arrival page','UTM source','UTM medium','UTM campaign','Email status'];const r=await database().prepare('SELECT * FROM orders ORDER BY created_at DESC').all<StoredOrder>();rows=r.results.map(r=>{const d=JSON.parse(r.details) as OrderDetails;const items=JSON.parse(r.items) as OrderItem[];return[r.reference,r.created_at,r.updated_at,r.status,r.last_step,items.map(i=>`${i.name} (${i.setNumber}) × ${i.quantity}`).join('; '),items.reduce((n,i)=>n+i.quantity,0),r.total,d.fullName,d.mobile,d.email,d.pincode,d.city,d.state,[d.house,d.street,d.landmark,d.city,d.state,d.pincode].filter(Boolean).join(', '),d.paymentPreference,d.whatsappConsent,r.device_type,r.arrival_page,r.utm_source,r.utm_medium,r.utm_campaign,r.email_status]})}return new Response('\uFEFF'+[headers,...rows].map(r=>r.map(csvCell).join(',')).join('\r\n'),{headers:{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':`attachment; filename="taksh-${['orders','subscriptions','support','enquiries'].includes(kind)?kind:'orders'}.csv"`,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}})}catch(e){return apiError(e)}}
++export async function GET(req:Request){try{if(!await authenticated(req))return json({error:'Please sign in.'},401);const kind=new URL(req.url).searchParams.get('kind')||'orders';let rows:unknown[][]=[];let headers:string[]=[];if(kind==='subscriptions'){headers=['Date and time','Mobile','WhatsApp consent'];const r=await database().prepare('SELECT * FROM subscriptions ORDER BY created_at DESC').all<SubscriptionRow>();rows=r.results.map(r=>[r.created_at,r.mobile,!!r.consent])}else if(kind==='support'){headers=['Reference','Date and time','Set','Piece description','Mobile','Photo'];const r=await database().prepare('SELECT * FROM support ORDER BY created_at DESC').all<SupportRow>();rows=r.results.map(r=>[r.id,r.created_at,r.set_slug,r.description,r.mobile,r.photo_key?'Yes':'No'])}else if(kind==='enquiries'){headers=['Reference','Date and time','Name','Mobile','Email','Topic','Message'];const r=await database().prepare('SELECT * FROM enquiries ORDER BY created_at DESC').all<EnquiryRow>();rows=r.results.map(r=>[r.reference,r.created_at,r.name,r.mobile,r.email,r.topic,r.message])}else{headers=['Request reference','Date and time','Last updated','Status','Last step reached','Items','Quantity','Potential value INR','Name','Mobile','Email','Pincode','City','State','Full address','Payment preference','WhatsApp consent','Device type','Arrival page','UTM source','UTM medium','UTM campaign','Email status'];const r=await database().prepare('SELECT * FROM orders ORDER BY created_at DESC').all<StoredOrder>();rows=r.results.map(r=>{const d=JSON.parse(r.details) as OrderDetails;const items=JSON.parse(r.items) as OrderItem[];return[r.reference,r.created_at,r.updated_at,r.traffic_type==='test'||r.traffic_type==='automated'||requestTraffic(d)!=='external'?'excluded_'+(r.traffic_type==='automated'?'automated':'test'):r.status,r.last_step,items.map(i=>`${i.name} (${i.setNumber}) × ${i.quantity}`).join('; '),items.reduce((n,i)=>n+i.quantity,0),r.total,d.fullName,d.mobile,d.email,d.pincode,d.city,d.state,[d.house,d.street,d.landmark,d.city,d.state,d.pincode].filter(Boolean).join(', '),d.paymentPreference,d.whatsappConsent,r.device_type,r.arrival_page,r.utm_source,r.utm_medium,r.utm_campaign,r.email_status]})}return new Response('\uFEFF'+[headers,...rows].map(r=>r.map(csvCell).join(',')).join('\r\n'),{headers:{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':`attachment; filename="taksh-${['orders','subscriptions','support','enquiries'].includes(kind)?kind:'orders'}.csv"`,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}})}catch(e){return apiError(e)}}
+diff --git a/app/api/admin/orders/route.ts b/app/api/admin/orders/route.ts
+index 61abb7f..ba0d413 100644
+--- a/app/api/admin/orders/route.ts
++++ b/app/api/admin/orders/route.ts
+@@ -1,4 +1,6 @@
++import {demandQueries,assembleDemandReport} from '@/lib/demand-report.mjs';
++import {catalogueProducts} from '@/lib/shop';
+ import {database} from '@/db';
+ import type {StoredOrder} from '@/lib/order-types';
+ import {json,authenticated,apiError} from '@/lib/server';
+-export async function GET(req:Request){try{if(!await authenticated(req))return json({error:'Please sign in.'},401);const orders=await database().prepare('SELECT * FROM orders ORDER BY created_at DESC LIMIT 5000').all<StoredOrder>();const subscriptions=await database().prepare('SELECT * FROM subscriptions ORDER BY created_at DESC LIMIT 5000').all();const support=await database().prepare('SELECT id,created_at,set_slug,description,mobile,photo_key FROM support ORDER BY created_at DESC LIMIT 5000').all();const enquiries=await database().prepare('SELECT * FROM enquiries ORDER BY created_at DESC LIMIT 5000').all();return json({enquiries:enquiries.results,orders:orders.results.map(row=>{const safe={...row} as Partial<StoredOrder>;delete safe.token_hash;return {...safe,items:JSON.parse(row.items),details:JSON.parse(row.details)}}),subscriptions:subscriptions.results,support:support.results})}catch(e){return apiError(e)}}
++export async function GET(req:Request){try{if(!await authenticated(req))return json({error:'Please sign in.'},401);const orders=await database().prepare('SELECT * FROM orders ORDER BY created_at DESC LIMIT 5000').all<StoredOrder>();const subscriptions=await database().prepare('SELECT * FROM subscriptions ORDER BY created_at DESC LIMIT 5000').all();const support=await database().prepare('SELECT id,created_at,set_slug,description,mobile,photo_key FROM support ORDER BY created_at DESC LIMIT 5000').all();const enquiries=await database().prepare('SELECT * FROM enquiries ORDER BY created_at DESC LIMIT 5000').all();const reportRows=await database().prepare('SELECT key,updated_at,payload FROM reporting_state').all<{key:string;updated_at:string;payload:string}>();const reports=Object.fromEntries(reportRows.results.map(r=>[r.key,{updatedAt:r.updated_at,...JSON.parse(r.payload)}]));return json({demand:assembleDemandReport(await database().batch(demandQueries.map((sql:string)=>database().prepare(sql))),catalogueProducts),reports,enquiries:enquiries.results,orders:orders.results.map(row=>{const safe={...row} as Partial<StoredOrder>;delete safe.token_hash;return {...safe,items:JSON.parse(row.items),details:JSON.parse(row.details)}}),subscriptions:subscriptions.results,support:support.results})}catch(e){return apiError(e)}}
+diff --git a/app/api/cart/route.ts b/app/api/cart/route.ts
+index 1b1ec74..a0690e9 100644
+--- a/app/api/cart/route.ts
++++ b/app/api/cart/route.ts
+@@ -1,3 +1,4 @@
++import {requestTraffic,knownReferrer,preserveTraffic} from '@/lib/demand-domain.mjs';
+ import {database} from '@/db';
+ import {resolveItems} from '@/lib/order-domain.mjs';
+ import {json,parseJson,currentOrder,hash,token,setCookie,apiError,rateLimit} from '@/lib/server';
+@@ -13,8 +14,8 @@ export async function POST(req:Request){try{
+   await rateLimit(req,'cart',60);const access=token();const id=crypto.randomUUID();
+   const reference='TK-'+now.slice(2,10).replace(/-/g,'')+'-'+token().slice(0,8).toUpperCase();
+   const a=body.attribution||{};const s=(v:unknown)=>typeof v==='string'?v.slice(0,300):'';
+-  await database().prepare('INSERT INTO orders (id,token_hash,reference,created_at,updated_at,status,last_step,items,total,details,device_type,arrival_page,utm_source,utm_medium,utm_campaign,email_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(id,await hash(access),reference,now,now,'cart',0,JSON.stringify(items),total,'{}',/Mobile|Android|iPhone/i.test(req.headers.get('user-agent')||'')?'mobile':'desktop',s(a.arrivalPage)||'/',s(a.utmSource),s(a.utmMedium),s(a.utmCampaign),'not_requested').run();
++  await database().prepare('INSERT INTO orders (id,token_hash,reference,created_at,updated_at,status,last_step,items,total,details,device_type,arrival_page,utm_source,utm_medium,utm_campaign,email_status,traffic_type,referrer) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(id,await hash(access),reference,now,now,'cart',0,JSON.stringify(items),total,'{}',/Mobile|Android|iPhone/i.test(req.headers.get('user-agent')||'')?'mobile':'desktop',s(a.arrivalPage)||'/',s(a.utmSource),s(a.utmMedium),s(a.utmCampaign),'not_requested',requestTraffic({},req.headers.get('user-agent')||'',body.internal===true),knownReferrer(a.referrer)).run();
+   headers['Set-Cookie']=setCookie(req,'taksh_cart',access);
+- }else await database().prepare("UPDATE orders SET updated_at=?,version=version+1,items=?,total=? WHERE id=? AND status='cart'").bind(now,JSON.stringify(items),total,row.id).run();
++ }else await database().prepare("UPDATE orders SET updated_at=?,version=version+1,items=?,total=?,traffic_type=? WHERE id=? AND status='cart'").bind(now,JSON.stringify(items),total,preserveTraffic(row.traffic_type,requestTraffic({},req.headers.get('user-agent')||'',body.internal===true)),row.id).run();
+  return json({saved:true},200,headers);
+  }catch(e){return apiError(e)}}
+diff --git a/app/api/checkout/route.ts b/app/api/checkout/route.ts
+index a710a3a..90dd5ae 100644
+--- a/app/api/checkout/route.ts
++++ b/app/api/checkout/route.ts
+@@ -1,3 +1,4 @@
++import {requestTraffic,knownReferrer,preserveTraffic} from '@/lib/demand-domain.mjs';
+ import {database} from '@/db';
+ import type {StoredOrder} from '@/lib/order-types';
+ import {resolveItems,validateDetails} from '@/lib/order-domain.mjs';
+@@ -7,6 +8,6 @@ export async function POST(req:Request){try{const body=await parseJson(req);if(!
+  if(row?.status==='cart')header['Set-Cookie']=setCookie(req,'taksh_checkout',cookie(req,'taksh_cart'));
+  if(!row||row.status==='placed'){await rateLimit(req,'checkout',60);const access=token();const id=crypto.randomUUID();const reference='TK-'+now.slice(2,10).replace(/-/g,'')+'-'+token().slice(0,8).toUpperCase();const s=(x:unknown)=>typeof x==='string'?x.slice(0,300):'';const attribution=body.attribution||{};await database().prepare('INSERT INTO orders (id,token_hash,reference,created_at,updated_at,status,last_step,items,total,details,device_type,arrival_page,utm_source,utm_medium,utm_campaign,email_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(id,await hash(access),reference,now,now,'draft',step,JSON.stringify(items),total,JSON.stringify(details),/Mobile|Android|iPhone/i.test(req.headers.get('user-agent')||'')?'mobile':'desktop',s(attribution.arrivalPage)||'/',s(attribution.utmSource),s(attribution.utmMedium),s(attribution.utmCampaign),'not_configured').run();header['Set-Cookie']=setCookie(req,'taksh_checkout',access);row=await database().prepare('SELECT * FROM orders WHERE id=?').bind(id).first<StoredOrder>()}
+  if(!row)throw new Error("Order storage is temporarily unavailable. Please try again.");
+- const result=await database().prepare('UPDATE orders SET updated_at=?, last_step=MAX(last_step,?), version=version+1, items=?, total=?, details=?, status=?, placed_at=? WHERE id=? AND status=? AND version=?').bind(now,step,JSON.stringify(items),total,JSON.stringify(details),complete?'placed':'draft',complete?now:null,row.id,row.status,row.version).run();if(!result.meta.changes)return json({error:'Your checkout changed in another window. Please refresh and try again.'},409);row=await database().prepare('SELECT * FROM orders WHERE id=?').bind(row.id).first<StoredOrder>();if(!row)throw new Error("Order storage is temporarily unavailable. Please try again.");if(complete&&result.meta.changes){const emailStatus=await sendConfirmation(row);await database().prepare('UPDATE orders SET email_status=? WHERE id=?').bind(emailStatus,row.id).run();row.email_status=emailStatus}return json({order:publicOrder(row)},200,header)
++ const result=await database().prepare('UPDATE orders SET updated_at=?, last_step=MAX(last_step,?), version=version+1, items=?, total=?, details=?, status=?, placed_at=?,traffic_type=?,referrer=? WHERE id=? AND status=? AND version=?').bind(now,step,JSON.stringify(items),total,JSON.stringify(details),complete?'placed':'draft',complete?now:null,preserveTraffic(row.traffic_type,requestTraffic(details,req.headers.get('user-agent')||'',body.internal===true)),knownReferrer(body.attribution?.referrer),row.id,row.status,row.version).run();if(!result.meta.changes)return json({error:'Your checkout changed in another window. Please refresh and try again.'},409);row=await database().prepare('SELECT * FROM orders WHERE id=?').bind(row.id).first<StoredOrder>();if(!row)throw new Error("Order storage is temporarily unavailable. Please try again.");if(complete&&result.meta.changes){const emailStatus=await sendConfirmation(row);await database().prepare('UPDATE orders SET email_status=? WHERE id=?').bind(emailStatus,row.id).run();row.email_status=emailStatus}return json({order:publicOrder(row)},200,header)
+  }catch(e){return apiError(e)}}
+ export async function DELETE(req:Request){try{checkOrigin(req);const row=await currentOrder(req);if(!row)return json({error:'No saved entry found in this browser.'},404);await database().prepare('DELETE FROM orders WHERE id=? AND token_hash=?').bind(row.id,row.token_hash).run();return json({deleted:true},200,{'Set-Cookie':setCookie(req,'taksh_checkout','',0)})}catch(e){return apiError(e)}}
+diff --git a/app/api/integrations/customer-sheet/route.ts b/app/api/integrations/customer-sheet/route.ts
+index 11cec02..7362cfe 100644
+--- a/app/api/integrations/customer-sheet/route.ts
++++ b/app/api/integrations/customer-sheet/route.ts
+@@ -6,8 +6,14 @@ export async function POST(req:Request){
+  try{
+   if(!runtime.CUSTOMER_SHEET_SYNC_KEY)return json({error:'Customer sync is not configured.'},503);
+   if(!await validSyncKey(req.headers.get('authorization'),runtime.CUSTOMER_SHEET_SYNC_KEY))return json({error:'Not authorised.'},401);
+-  const body=await parseJson(req),cursor=parseSyncCursor(body.cursor);
+-  const result=await database().prepare("SELECT id,reference,placed_at,status,details,items,total,utm_source,utm_campaign FROM orders WHERE status='placed' AND (placed_at>? OR (placed_at=? AND id>?)) ORDER BY placed_at,id LIMIT 100").bind(cursor.at,cursor.at,cursor.id).all<StoredOrder>();
++  const body=await parseJson(req);
++  if(['ack','failure'].includes(body.action)){
++   const at=new Date().toISOString();let key='customer-sheet',payload:Record<string,unknown>;
++   if(!Number.isInteger(body.count)||body.count<0||body.count>10000)throw new Error('Invalid sync count.');const category=['network','http','sheet','schema','authorization'].includes(body.category)?body.category:'';payload={status:body.action==='ack'?'success':'failed',lastAttempt:at,count:body.count,errorCategory:category};if(body.action==='ack')payload.lastSuccess=at;else {const previous=await database().prepare('SELECT payload FROM reporting_state WHERE key=?').bind(key).first<{payload:string}>();if(previous)payload.lastSuccess=JSON.parse(previous.payload).lastSuccess;}
++   await database().prepare('INSERT INTO reporting_state (key,updated_at,payload) VALUES (?,?,?) ON CONFLICT(key) DO UPDATE SET updated_at=excluded.updated_at,payload=excluded.payload').bind(key,at,JSON.stringify(payload)).run();return json({recorded:true});
++  }
++  const cursor=parseSyncCursor(body.cursor);
++  const result=await database().prepare("SELECT id,reference,placed_at,status,details,items,total,utm_source,utm_campaign,traffic_type FROM orders WHERE status='placed' AND (placed_at>? OR (placed_at=? AND id>?)) ORDER BY placed_at,id LIMIT 100").bind(cursor.at,cursor.at,cursor.id).all<StoredOrder>();
+   const rows=result.results,last=rows.at(-1);
+   return json({requests:rows.map(sheetRequest),nextCursor:last?{at:last.placed_at,id:last.id}:cursor,hasMore:rows.length===100});
+  }catch(e){return apiError(e)}
+diff --git a/components/taksh/bag.tsx b/components/taksh/bag.tsx
+index ef4ba93..0433fd6 100644
+--- a/components/taksh/bag.tsx
++++ b/components/taksh/bag.tsx
+@@ -8,4 +8,4 @@ import {catalogueProducts as products,productMoney,money} from '@/lib/shop';
+ import {useStore} from './store';
+ import {ProductImage} from './visuals';
+ import {Stepper} from './stepper';
+-export function Bag(){const{items,ready,total,count,update}=useStore();const viewed=useRef(false);useEffect(()=>{if(ready&&items.length&&!viewed.current){viewed.current=true;track('ViewCart',{items})}},[ready,items]);if(!ready)return <div className="wrap empty-state">Opening your bag…</div>;if(!items.length)return <div className="wrap empty-state bag-empty"><h1>Your bag is empty.</h1><SiteLink href="/sets" className="button primary">See the sets</SiteLink></div>;return <div className="wrap bag-page"><div className="breadcrumb"><SiteLink href="/">Home</SiteLink><span>/</span><span>Bag</span></div><div className="section-title"><h1>Your bag.</h1><p>{count} {count===1?'set':'sets'}, selected for an availability update.</p></div><div className="bag-layout"><div className="bag-items">{items.map(i=>{const p=products.find(p=>p.slug===i.slug)!;return <div className="bag-item" key={i.slug}><SiteLink href={'/sets/'+p.slug}><ProductImage p={p} sizes="120px"/></SiteLink><div className="bag-item-details"><span className="small muted">{p.level}{p.slug!=='nonsense'&&<> / {p.setNumber}</>}</span><SiteLink href={'/sets/'+p.slug}><h2>{p.name}</h2></SiteLink><span className="price-tag">{productMoney(p)}</span><div><Stepper label={`${p.name} quantity`} value={i.quantity} onChange={q=>update(p.slug,q)}/><button className="remove-link" onClick={()=>update(p.slug,0)}>Remove</button></div></div><strong className="line-total">{productMoney(p,p.price*i.quantity)}</strong></div>})}<SiteLink href="/sets" className="text-link">Keep looking</SiteLink></div><aside className="bag-summary"><h2>Your selection</h2><div className="summary-line"><span>Subtotal</span><span>{money(total)}</span></div><div className="summary-line"><span>Delivery</span><span>Free</span></div><div className="summary-total"><span>Total</span><strong>{money(total)}</strong></div><p className="small">Inclusive of all taxes</p><SiteLink href="/checkout" className="button primary full">Request availability</SiteLink><p className="small centre">Currently out of stock. This is a stock request, not a confirmed order.</p></aside></div></div>}
++export function Bag(){const{items,ready,total,count,update}=useStore();const viewed=useRef(false);useEffect(()=>{if(ready&&items.length&&!viewed.current){viewed.current=true;track('ViewCart',{items})}},[ready,items]);if(!ready)return <div className="wrap empty-state">Opening your bag…</div>;if(!items.length)return <div className="wrap empty-state bag-empty"><h1>Your bag is empty.</h1><SiteLink href="/sets" className="button primary">See the sets</SiteLink></div>;return <div className="wrap bag-page"><div className="breadcrumb"><SiteLink href="/">Home</SiteLink><span>/</span><span>Bag</span></div><div className="section-title"><h1>Your bag.</h1><p>{count} {count===1?'set':'sets'}, in your bag.</p></div><div className="bag-layout"><div className="bag-items">{items.map(i=>{const p=products.find(p=>p.slug===i.slug)!;return <div className="bag-item" key={i.slug}><SiteLink href={'/sets/'+p.slug}><ProductImage p={p} sizes="120px"/></SiteLink><div className="bag-item-details"><span className="small muted">{p.level}{p.slug!=='nonsense'&&<> / {p.setNumber}</>}</span><SiteLink href={'/sets/'+p.slug}><h2>{p.name}</h2></SiteLink><span className="price-tag">{productMoney(p)}</span><div><Stepper label={`${p.name} quantity`} value={i.quantity} onChange={q=>update(p.slug,q)}/><button className="remove-link" onClick={()=>update(p.slug,0)}>Remove</button></div></div><strong className="line-total">{productMoney(p,p.price*i.quantity)}</strong></div>})}<SiteLink href="/sets" className="text-link">Keep looking</SiteLink></div><aside className="bag-summary"><h2>Your selection</h2><div className="summary-line"><span>Subtotal</span><span>{money(total)}</span></div><div className="summary-line"><span>Delivery</span><span>Free</span></div><div className="summary-total"><span>Total</span><strong>{money(total)}</strong></div><p className="small">Inclusive of all taxes</p><SiteLink href="/checkout" className="button primary full">Checkout</SiteLink></aside></div></div>}
+diff --git a/components/taksh/checkout.tsx b/components/taksh/checkout.tsx
+index 3cdcafc..d8b91cc 100644
+--- a/components/taksh/checkout.tsx
++++ b/components/taksh/checkout.tsx
+@@ -8,7 +8,7 @@ import {ProductImage} from './visuals';
+ import {SiteLink} from './site-link';
+ import {catalogueProducts as products,money} from '@/lib/shop';
+ import {checkoutErrors} from '@/lib/order-domain.mjs';
+-import {track} from '@/lib/tracking';
++import {track,internalTracking} from '@/lib/tracking';
+ import {flushCart} from '@/lib/cart-sync';
+ import {nextCheckoutField} from '@/lib/experience-domain.mjs';
+ import {ContactLink} from './shell';
+@@ -25,18 +25,18 @@ function Field({id,label,value,onChange,error,numeric=false,maxLength,autoComple
+ export function Checkout(){
+  const store=useStore(),[d,setD]=useState<Details>(blank),[loaded,setLoaded]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[errors,setErrors]=useState<Record<string,string>>({}),[order,setOrder]=useState<PublicOrder|null>(null);
+  const initialised=useRef(false),identity=useRef<{reference?:string;version?:number}>({});
+- const save=useCallback(async(action:string,details:Details,items:CartItem[])=>{let attribution={};try{attribution=JSON.parse(sessionStorage.getItem('taksh-arrival')||'{}')}catch{}const {response,data:result}: {response:Response;data:CheckoutResponse}=await requestJson('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,details,step:1,items,attribution,...identity.current})});if(!response.ok||!result.order)throw new Error(result.error||'We could not save your details. Please try again.');identity.current={reference:result.order.reference,version:result.order.version};return result.order},[])
++ const save=useCallback(async(action:string,details:Details,items:CartItem[])=>{let attribution={};try{attribution=JSON.parse(sessionStorage.getItem('taksh-arrival')||'{}')}catch{}const {response,data:result}: {response:Response;data:CheckoutResponse}=await requestJson('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,details,internal:internalTracking(),step:1,items,attribution,...identity.current})});if(!response.ok||!result.order)throw Object.assign(new Error(result.error||'We could not save your details. Please try again.'),{status:response.status});identity.current={reference:result.order.reference,version:result.order.version};return result.order},[])
+  useEffect(()=>{if(!store.ready||initialised.current)return;initialised.current=true;(async()=>{try{await flushCart();const {response,data:result}: {response:Response;data:CheckoutResponse}=await requestJson('/api/checkout');if(!response.ok)throw new Error(result.error||'We could not open your checkout. Please try again.');if(!store.items.length){if(result.order?.status==='placed')setOrder(result.order);setLoaded(true);return}const previous=result.order?.status==='draft'?result.order:null;let local:Partial<Details>={};try{local=JSON.parse(sessionStorage.getItem(draftKey)||'{}')}catch{}const restored={...blank,...previous?.details,...local};const details={...blank,fullName:restored.fullName,mobile:restored.mobile,email:restored.email,whatsappConsent:restored.whatsappConsent};identity.current=previous?{reference:previous.reference,version:previous.version}:{};setD(details);await save('begin',blank,store.items);track('InitiateCheckout',{items:store.items});setLoaded(true)}catch(e:unknown){setError(checkoutError(e))}})()},[store.ready,store.items,save]);
+  const change=<K extends keyof Details>(key:K,value:Details[K])=>{setD(old=>{const next={...old,[key]:value};try{sessionStorage.setItem(draftKey,JSON.stringify(next))}catch{}return next});setErrors(old=>({...old,[key]:'',...(key==='email'||key==='mobile'?{mobile:'',email:''}:{})}));setError('')};
+- async function submit(e:React.FormEvent){e.preventDefault();setError('');const problems:Record<string,string>={...checkoutErrors(d,2)};if(Object.keys(problems).length){setErrors(problems);requestAnimationFrame(()=>document.getElementById(Object.keys(problems)[0])?.focus());return}setBusy(true);try{const saved=await save('place',d,store.items);setOrder(saved);try{sessionStorage.removeItem(draftKey)}catch{}store.clear();track('Lead',{items:saved.items,reference:saved.reference,contactable:!!(saved.details.mobile||saved.details.email)});window.scrollTo({top:0,behavior:'instant'})}catch(e:unknown){setError(checkoutError(e))}finally{setBusy(false)}}
+- if(order)return <section className="preorder-confirmation"><div className="wrap"><h1>Request saved.</h1><p className="confirmation-copy">{order.details.mobile||order.details.email?'Your request is saved. We’ll be in touch as soon as more inventory arrives.':'Your selection is saved. You can contact us on WhatsApp for stock updates.'} No payment has been taken.</p><p className="confirmation-reference">Request reference: <strong>{order.reference}</strong></p><p className="confirmation-next">{order.details.mobile||order.details.email?'We’ll use the contact details you shared for availability updates. This is a stock request, not a confirmed order.':'We don’t have a way to contact you yet. Message us with this reference if you’d like a stock update.'} <ContactLink>Contact Taksh on WhatsApp</ContactLink></p><Summary items={order.items} total={order.total}/><SiteLink href="/" className="button primary">Back to home</SiteLink></div></section>;
+- if(!store.ready||(!loaded&&!error))return <div className="wrap empty-state"><p>Opening your availability request…</p></div>;
++ async function submit(e:React.FormEvent){e.preventDefault();setError('');const problems:Record<string,string>={...checkoutErrors(d,2)};if(Object.keys(problems).length){track('RequestFailure',{items:store.items,category:'validation'});setErrors(problems);requestAnimationFrame(()=>document.getElementById(Object.keys(problems)[0])?.focus());return}setBusy(true);try{const saved=await save('place',d,store.items);setOrder(saved);try{sessionStorage.removeItem(draftKey)}catch{}store.clear();if(!saved.measurementExcluded)track('Lead',{items:saved.items,reference:saved.reference,saved:true,contactable:!!(saved.details.mobile||saved.details.email)});window.scrollTo({top:0,behavior:'instant'})}catch(e:unknown){track('RequestFailure',{items:store.items,category:e instanceof TypeError||typeof navigator!=='undefined'&&!navigator.onLine?'network':(e as {status?:number})?.status===409?'conflict':(e as {status?:number})?.status===400?'validation':((e as {status?:number})?.status||0)>=500?'server':'save'});setError(checkoutError(e))}finally{setBusy(false)}}
++ if(order)return <section className="preorder-confirmation"><div className="wrap"><h1>Currently out of stock.</h1><p className="confirmation-copy">Your selected sets aren’t available right now. No payment has been taken and no order has been confirmed.</p><p className="confirmation-reference">Request reference: <strong>{order.reference}</strong></p><p className="confirmation-next">{order.details.mobile||order.details.email?'We’ll use the contact details you shared for availability updates. This is a stock request, not a confirmed order.':'We don’t have a way to contact you yet. Message us with this reference if you’d like a stock update.'} <ContactLink>Contact Taksh on WhatsApp</ContactLink></p><Summary items={order.items} total={order.total}/><SiteLink href="/" className="button primary">Back to home</SiteLink></div></section>;
++ if(!store.ready||(!loaded&&!error))return <div className="wrap empty-state"><p>Opening checkout…</p></div>;
+  if(!store.items.length)return <div className="wrap empty-state"><h1>Your bag is empty.</h1><SiteLink className="button primary" href="/sets">See the sets</SiteLink></div>;
+  const items=store.items.map(i=>({...products.find(p=>p.slug===i.slug)!,quantity:i.quantity}));
+- return <div className="checkout-layout preorder-layout wrap"><div className="checkout-main"><h1>Request availability.</h1><p className="checkout-availability"><strong>Currently out of stock.</strong>Leave your details and we’ll let you know when your sets return. No payment is collected here.</p><Selection items={items} total={store.total}/><form className="checkout-panel" onSubmit={submit} noValidate><fieldset disabled={!loaded||busy} className="form-stack checkout-fields"><h2 className="checkout-form-heading">Contact</h2><p className="checkout-draft-note">Share an email address or mobile number so we can reply. Your details stay in this browser tab until you send your request.</p>
++ return <div className="checkout-layout preorder-layout wrap"><div className="checkout-main"><h1>Checkout.</h1><p className="checkout-availability">Review your selection and add your contact details.</p><Selection items={items} total={store.total}/><form className="checkout-panel" onSubmit={submit} noValidate><fieldset disabled={!loaded||busy} className="form-stack checkout-fields"><h2 className="checkout-form-heading">Contact</h2><p className="checkout-draft-note">Share an email address or mobile number so we can reply. Your details stay in this browser tab until you continue.</p>
+  <Field id="fullName" label="Name (optional)" value={d.fullName} onChange={v=>change('fullName',v)} error={errors.fullName} autoComplete="name"/>
+  <Field id="mobile" label="Mobile number" value={d.mobile} onChange={v=>change('mobile',v)} error={errors.mobile} numeric maxLength={10} autoComplete="tel-national"/>
+  <Field id="email" label="Email" value={d.email} onChange={v=>change('email',v)} error={errors.email} autoComplete="email"/>
+  {d.mobile&&<label className="check-label"><Checkbox checked={d.whatsappConsent} onCheckedChange={v=>change('whatsappConsent',v===true)}/>Message me on WhatsApp about this request</label>}
+- </fieldset><div className="checkout-policies"><p>No delivery address is needed for a stock update. We’ll confirm availability before you decide to order.</p><SiteLink href="/returns">Returns and refunds</SiteLink></div>{error&&<p className="error-message" role="alert">{error}</p>}{!loaded&&error&&<button type="button" className="button outline" onClick={()=>location.reload()}>Try again</button>}<button id="request-submit" className="button primary full checkout-submit" disabled={busy||!loaded}>{busy?'Saving…':'Request stock update'}</button><p className="checkout-consent">By continuing you agree to our <SiteLink href="/privacy">Privacy Policy</SiteLink> and to be contacted about this request.</p></form></div><aside className="checkout-summary"><Summary items={items} total={store.total}/></aside></div>;
++ </fieldset><div className="checkout-policies"><p>We’ll use these details to contact you about your selection.</p><SiteLink href="/returns">Returns and refunds</SiteLink></div>{error&&<p className="error-message" role="alert">{error}</p>}{!loaded&&error&&<button type="button" className="button outline" onClick={()=>location.reload()}>Try again</button>}<button id="request-submit" className="button primary full checkout-submit" disabled={busy||!loaded}>{busy?'Checking availability…':'Go to payment'}</button><p className="checkout-consent">By continuing you agree to our <SiteLink href="/privacy">Privacy Policy</SiteLink> and to be contacted about this request.</p></form></div><aside className="checkout-summary"><Summary items={items} total={store.total}/></aside></div>;
+ }
+diff --git a/components/taksh/owner-dashboard.tsx b/components/taksh/owner-dashboard.tsx
+index afc816c..049ef0b 100644
+--- a/components/taksh/owner-dashboard.tsx
++++ b/components/taksh/owner-dashboard.tsx
+@@ -1,27 +1,30 @@
+ 'use client';
++import {requestTraffic} from '@/lib/demand-domain.mjs';
+ import {errorMessage} from '@/lib/order-types';
+ import {useCallback,useEffect,useState} from 'react';
+ import {Logo} from './visuals';
+ import {SiteLink} from './site-link';
+ import {money} from '@/lib/shop';
+-type SavedRequest={reference:string;created_at:string;updated_at:string;status:string;total:number;items:{name:string;quantity:number;setNumber:string}[];details:{fullName?:string;mobile?:string;email?:string;house?:string;street?:string;city?:string;state?:string;pincode?:string;whatsappConsent?:boolean};utm_source:string;utm_medium:string;utm_campaign:string;arrival_page:string};
++type Demand={requests:number;requestedUnits:number;potentialValue:number;contacts:number;paidOrders:number;drafts:number;carts:number;products:{slug:string;name:string;requests:number;units:number;potentialValue:number}[];sources:{name:string;requests:number}[]};
++type SavedRequest={traffic_type?:string;referrer?:string;reference:string;created_at:string;updated_at:string;status:string;total:number;items:{name:string;quantity:number;setNumber:string}[];details:{fullName?:string;mobile?:string;email?:string;house?:string;street?:string;city?:string;state?:string;pincode?:string;whatsappConsent?:boolean};utm_source:string;utm_medium:string;utm_campaign:string;arrival_page:string};
+ export function OwnerDashboard(){
++ const[demand,setDemand]=useState<Demand|null>(null),[reports,setReports]=useState<Record<string,{status?:string;lastSuccess?:string;lastAttempt?:string;updatedAt?:string;count?:number;errorCategory?:string}>>({});
+  const[orders,setOrders]=useState<SavedRequest[]>([]),[authenticated,setAuthenticated]=useState(false),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[password,setPassword]=useState(''),[error,setError]=useState(''),[query,setQuery]=useState(''),[filter,setFilter]=useState('placed');
+- const refresh=useCallback(async()=>{try{const response=await fetch('/api/admin/orders',{cache:'no-store'});if(response.status===401){setAuthenticated(false);setOrders([]);return}const data:{error?:string;orders:SavedRequest[]}=await response.json();if(!response.ok)throw new Error(data.error||'We could not load your requests.');setOrders(data.orders);setAuthenticated(true);setError('')}catch(e:unknown){setError(errorMessage(e))}finally{setLoading(false)}},[])
++ const refresh=useCallback(async()=>{try{const response=await fetch('/api/admin/orders',{cache:'no-store'});if(response.status===401){setAuthenticated(false);setOrders([]);return}const data:{error?:string;orders:SavedRequest[];demand?:Demand;reports?:typeof reports}=await response.json();if(!response.ok)throw new Error(data.error||'We could not load your requests.');setOrders(data.orders);setDemand(data.demand||null);setReports(data.reports||{});setAuthenticated(true);setError('')}catch(e:unknown){setError(errorMessage(e))}finally{setLoading(false)}},[])
+  useEffect(()=>{
+   const controller=new AbortController();
+   fetch('/api/admin/orders',{cache:'no-store',signal:controller.signal}).then(async response=>{
+    if(response.status===401)return null;
+-   const data:{error?:string;orders:SavedRequest[]}=await response.json();
++   const data:{error?:string;orders:SavedRequest[];demand?:Demand;reports?:typeof reports}=await response.json();
+    if(!response.ok)throw new Error(data.error||'We could not load your requests.');
+-   return data.orders;
++   setDemand(data.demand||null);setReports(data.reports||{});return data.orders;
+   }).then(rows=>{if(!controller.signal.aborted){setOrders(rows??[]);setAuthenticated(rows!==null);setError('')}})
+    .catch((error:unknown)=>{if(!controller.signal.aborted)setError(errorMessage(error))})
+    .finally(()=>{if(!controller.signal.aborted)setLoading(false)});
+   return()=>controller.abort();
+  },[]);
+- async function signIn(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');try{const response=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});const data:{error?:string;orders:SavedRequest[]}=await response.json();if(!response.ok)throw new Error(data.error||'Sign-in failed.');setPassword('');await refresh()}catch(e:unknown){setError(errorMessage(e))}finally{setBusy(false)}}
++ async function signIn(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');try{const response=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});const data:{error?:string;orders:SavedRequest[];demand?:Demand;reports?:typeof reports}=await response.json();if(!response.ok)throw new Error(data.error||'Sign-in failed.');setPassword('');await refresh()}catch(e:unknown){setError(errorMessage(e))}finally{setBusy(false)}}
+  async function signOut(){setBusy(true);try{const response=await fetch('/api/admin/logout',{method:'POST'});if(!response.ok)throw new Error('Could not sign out. Please try again.');setOrders([]);setAuthenticated(false)}catch(e:unknown){setError(errorMessage(e))}finally{setBusy(false)}}
+- const shown=orders.filter(o=>o.items.length>0&&(filter==='all'||o.status===filter)&&[o.reference,o.details.fullName,o.details.mobile,o.details.email,...o.items.map(i=>i.name)].join(' ').toLowerCase().includes(query.toLowerCase()));
+- return <div className="owner-dashboard"><header className="header"><div className="header-inner"><Logo reversed/><span className="owner-header-label">Owner dashboard</span><SiteLink href="/">Visit site</SiteLink>{authenticated&&<button onClick={signOut} disabled={busy}>Sign out</button>}</div></header><main className="wrap admin-page">{!authenticated?<div className="admin-login"><h1>Your saved requests.</h1><p>Sign in with your existing owner password to see customer details and selected sets.</p>{loading?<p>Checking access…</p>:<form onSubmit={signIn} className="form-stack"><div className="field"><label htmlFor="owner-password">Password</label><input id="owner-password" type="password" value={password} onChange={e=>setPassword(e.target.value)} autoComplete="current-password" required/></div><button className="button primary" disabled={busy}>{busy?'Signing in…':'Sign in'}</button></form>}{error&&<p className="error-message" role="alert">{error}</p>}</div>:<><h1>Saved requests.</h1><p className="muted">These are stock-update requests, not paid orders. Anonymous carts show selections without contact details. Drafts reached checkout.</p><div className="owner-summary"><span><strong>{orders.filter(o=>o.status==='placed').length}</strong> Submitted</span><span><strong>{orders.filter(o=>o.status==='draft').length}</strong> Checkout drafts</span><span><strong>{orders.filter(o=>o.status==='cart'&&o.items.length).length}</strong> Anonymous carts</span></div><div className="owner-toolbar"><label className="field"><span>Find a request</span><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Name, contact, reference or set" type="search"/></label><a className="button outline" href="/api/admin/export?kind=orders" download>Download CSV</a><button className="button outline" disabled={loading} onClick={()=>{setLoading(true);void refresh()}}>{loading?'Refreshing…':'Refresh'}</button></div><div className="owner-filters" role="group" aria-label="Request status">{[['placed','Submitted'],['draft','Checkout drafts'],['cart','Anonymous carts'],['all','All']].map(([value,label])=><button key={value} aria-pressed={filter===value} onClick={()=>setFilter(value)}>{label}</button>)}</div>{error&&<p className="error-message" role="alert">{error}</p>}<div className="owner-requests">{shown.length?shown.map(o=><article className="owner-request" key={o.reference}><header><h2>{o.details.fullName||'No name supplied'}</h2><span>{o.status==='placed'?'Submitted request':o.status==='cart'?'Anonymous cart':'Checkout draft'}</span></header><p className="small muted">{o.reference} · {new Date(o.created_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})} IST</p><div className="owner-request-body"><div><h3>Selection</h3><ul>{o.items.map((i,index)=><li key={index}>{i.name} × {i.quantity}</li>)}</ul><strong>{money(o.total)} selection value</strong></div><div><h3>Contact</h3><p>{o.details.mobile?<a href={`tel:+91${o.details.mobile}`}>{o.details.mobile}</a>:'No mobile supplied'}</p><p>{o.details.email?<a href={`mailto:${o.details.email}`}>{o.details.email}</a>:'No email supplied'}</p><p className="small muted">WhatsApp updates: {o.details.whatsappConsent?'allowed':'not selected'}</p></div><div><h3>Address</h3><p>{[o.details.house,o.details.street,o.details.city,o.details.state,o.details.pincode].filter(Boolean).join(', ')||'No address supplied'}</p></div></div><p className="small muted owner-source">Source: {[o.utm_source,o.utm_medium,o.utm_campaign].filter(Boolean).join(' / ')||'No campaign supplied'} · Arrival: {o.arrival_page||'—'}</p></article>):<p className="table-empty">No requests match this view.</p>}</div></>}</main></div>
++ const shown=orders.filter(o=>o.items.length>0&&(filter==='all'||(o.traffic_type!=='test'&&o.traffic_type!=='automated'&&requestTraffic(o.details)==='external'&&o.status===filter))&&[o.reference,o.details.fullName,o.details.mobile,o.details.email,...o.items.map(i=>i.name)].join(' ').toLowerCase().includes(query.toLowerCase()));
++ return <div className="owner-dashboard"><header className="header"><div className="header-inner"><Logo reversed/><span className="owner-header-label">Owner dashboard</span><SiteLink href="/">Visit site</SiteLink>{authenticated&&<button onClick={signOut} disabled={busy}>Sign out</button>}</div></header><main className="wrap admin-page">{!authenticated?<div className="admin-login"><h1>Your saved requests.</h1><p>Sign in with your existing owner password to see customer details and selected sets.</p>{loading?<p>Checking access…</p>:<form onSubmit={signIn} className="form-stack"><div className="field"><label htmlFor="owner-password">Password</label><input id="owner-password" type="password" value={password} onChange={e=>setPassword(e.target.value)} autoComplete="current-password" required/></div><button className="button primary" disabled={busy}>{busy?'Signing in…':'Sign in'}</button></form>}{error&&<p className="error-message" role="alert">{error}</p>}</div>:<><h1>Saved requests.</h1><p className="muted">These are stock-update requests, not paid orders. Anonymous carts show selections without contact details. Drafts reached checkout.</p><div className="owner-summary"><span><strong>{demand?.requests??orders.filter(o=>o.status==='placed').length}</strong> Submitted</span><span><strong>{demand?.drafts??orders.filter(o=>o.status==='draft').length}</strong> Checkout drafts</span><span><strong>{demand?.carts??orders.filter(o=>o.status==='cart'&&o.items.length).length}</strong> Anonymous carts</span></div>{demand&&<><div className="owner-summary"><span><strong>{demand.contacts}</strong> Contact records</span><span><strong>{demand.requestedUnits}</strong> Requested units</span><span><strong>{money(demand.potentialValue)}</strong> Potential value</span><span><strong>{demand.paidOrders}</strong> Paid orders</span></div><div className="owner-summary">{demand.products.map(p=><span key={p.slug}><strong>{p.name}</strong>{p.requests} requests · {p.units} units · {money(p.potentialValue)} potential value</span>)}</div><p className="small muted">Known request sources: {demand.sources.map(s=>`${s.name}: ${s.requests}`).join(' · ')||'None recorded'}. Request totals cover saved records; anonymous browser counts are available in <a href="https://analytics.google.com/analytics/web/#/a411534146p558410788/reports/intelligenthome" target="_blank" rel="noopener noreferrer">Google Analytics</a>.</p><p className="small muted">Sheet sync: {reports['customer-sheet']?.status==='success'?'confirmed '+new Date(reports['customer-sheet'].lastSuccess!).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})+' IST':reports['customer-sheet']?.status==='failed'?'needs attention ('+reports['customer-sheet'].errorCategory+')':'awaiting acknowledgement'}. {reports['customer-sheet']?.lastSuccess&&Date.now()-Date.parse(reports['customer-sheet'].lastSuccess)>20*60000?'Sync is stale; the existing scheduled job will retry.':''}</p></>}<div className="owner-toolbar"><label className="field"><span>Find a request</span><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Name, contact, reference or set" type="search"/></label><a className="button outline" href="/api/admin/export?kind=orders" download>Download CSV</a><button className="button outline" disabled={loading} onClick={()=>{setLoading(true);void refresh()}}>{loading?'Refreshing…':'Refresh'}</button></div><div className="owner-filters" role="group" aria-label="Request status">{[['placed','Submitted'],['draft','Checkout drafts'],['cart','Anonymous carts'],['all','All']].map(([value,label])=><button key={value} aria-pressed={filter===value} onClick={()=>setFilter(value)}>{label}</button>)}</div>{error&&<p className="error-message" role="alert">{error}</p>}<div className="owner-requests">{shown.length?shown.map(o=><article className="owner-request" key={o.reference}><header><h2>{o.details.fullName||'No name supplied'}</h2><span>{o.traffic_type==='test'||o.traffic_type==='automated'||requestTraffic(o.details)!=='external'?'Test / automated (excluded)':o.status==='placed'?'Submitted request':o.status==='cart'?'Anonymous cart':'Checkout draft'}</span></header><p className="small muted">{o.reference} · {new Date(o.created_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})} IST</p><div className="owner-request-body"><div><h3>Selection</h3><ul>{o.items.map((i,index)=><li key={index}>{i.name} × {i.quantity}</li>)}</ul><strong>{money(o.total)} selection value</strong></div><div><h3>Contact</h3><p>{o.details.mobile?<a href={`tel:+91${o.details.mobile}`}>{o.details.mobile}</a>:'No mobile supplied'}</p><p>{o.details.email?<a href={`mailto:${o.details.email}`}>{o.details.email}</a>:'No email supplied'}</p><p className="small muted">WhatsApp updates: {o.details.whatsappConsent?'allowed':'not selected'}</p></div><div><h3>Address</h3><p>{[o.details.house,o.details.street,o.details.city,o.details.state,o.details.pincode].filter(Boolean).join(', ')||'No address supplied'}</p></div></div><p className="small muted owner-source">Source: {[o.utm_source,o.utm_medium,o.utm_campaign].filter(Boolean).join(' / ')||'No campaign supplied'} · Arrival: {o.arrival_page||'—'}</p></article>):<p className="table-empty">No requests match this view.</p>}</div></>}</main></div>
+ }
+diff --git a/components/taksh/stock-notice.tsx b/components/taksh/stock-notice.tsx
+index d1e805a..7a37ab9 100644
+--- a/components/taksh/stock-notice.tsx
++++ b/components/taksh/stock-notice.tsx
+@@ -1 +1 @@
+-export function StockNotice({compact=false}:{compact?:boolean}){return <p className="stock-notice"><strong>Currently out of stock.</strong>{!compact&&<> Add to your bag to request an availability update.</>}</p>}
++export function StockNotice(_props:{compact?:boolean}){return null}
+diff --git a/components/taksh/store.tsx b/components/taksh/store.tsx
+index 8a45972..4c3dec7 100644
+--- a/components/taksh/store.tsx
++++ b/components/taksh/store.tsx
+@@ -23,12 +23,12 @@ export function StoreProvider({children}:{children:React.ReactNode}){const raw=u
+  useEffect(()=>{if(previousPath.current!==null&&previousPath.current!==pathname)trackRoutePageView();previousPath.current=pathname},[pathname]);
+  const readItems=useCallback(()=>{try{return normaliseBag(JSON.parse(bagSnapshot()||'[]')) as CartItem[]}catch{return []}},[]);
+  const commit=useCallback((next:CartItem[])=>writeBag(JSON.stringify(next)),[]);
+- useEffect(()=>{initialiseTracking();try{if(!sessionStorage.getItem('taksh-arrival')){const u=new URL(location.href);sessionStorage.setItem('taksh-arrival',JSON.stringify({arrivalPage:u.pathname,utmSource:u.searchParams.get('utm_source')||'',utmMedium:u.searchParams.get('utm_medium')||'',utmCampaign:u.searchParams.get('utm_campaign')||''}))}}catch{}},[]);
++ useEffect(()=>{initialiseTracking();try{if(!sessionStorage.getItem('taksh-arrival')){const u=new URL(location.href);sessionStorage.setItem('taksh-arrival',JSON.stringify({arrivalPage:u.pathname,referrer:document.referrer?new URL(document.referrer).origin:'',utmSource:u.searchParams.get('utm_source')||'',utmMedium:u.searchParams.get('utm_medium')||'',utmCampaign:u.searchParams.get('utm_campaign')||''}))}}catch{}},[]);
+  const add=useCallback((p:Product,qty=1,silent=false)=>{const prior=readItems().find(i=>i.slug===p.slug)?.quantity||0;const next=addBagItem(readItems(),p.slug,qty);const quantity=next.find(i=>i.slug===p.slug)!.quantity;commit(next);syncCart(next);const actual=quantity-prior;if(actual)track('AddToCart',{content_ids:[p.setNumber],value:p.price*actual,num_items:actual});if(!silent)setAdded({p,qty:quantity,limited:actual===0})},[commit,readItems]);
+  const update=(slug:string,qty:number)=>{if(!Number.isInteger(qty))return;const prior=readItems().find(i=>i.slug===slug)?.quantity||0;if(qty<prior)track('RemoveFromCart',{items:[{slug,quantity:prior-Math.max(0,qty)}]});const next=normaliseBag(qty<=0?readItems().filter(i=>i.slug!==slug):readItems().map(i=>i.slug===slug?{...i,quantity:Math.min(3,qty)}:i));commit(next);syncCart(next)};
+  useEffect(()=>{const flush=()=>{if(document.visibilityState==='hidden')flushCart()};window.addEventListener('online',flushCart);document.addEventListener('visibilitychange',flush);return()=>{window.removeEventListener('online',flushCart);document.removeEventListener('visibilitychange',flush)}},[]);
+  useEffect(()=>{if(ready&&items.length)syncCart(items)},[ready,items]);
+ 
+  useEffect(()=>{const context=document.modelContext;if(!context?.registerTool)return;const lifecycle=new AbortController();const register=(tool:BrowserTool)=>{try{Promise.resolve(context.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{})}catch{}};register({name:'taksh_read_bag',description:'Read the current Taksh bag and catalogue prices.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute:()=>({items:items.map(i=>({...i,name:products.find(p=>p.slug===i.slug)?.name})),total:items.reduce((n,i)=>n+(products.find(p=>p.slug===i.slug)?.price||0)*i.quantity,0)})});register({name:'taksh_add_to_bag',description:'Add a known Taksh set to the visible bag. Does not place an order.',inputSchema:{type:'object',properties:{slug:{type:'string'},quantity:{type:'integer',minimum:1,maximum:3}},required:['slug','quantity'],additionalProperties:false},annotations:{readOnlyHint:false},execute:({slug,quantity}:{slug:string;quantity:number})=>{const p=products.find(p=>p.slug===slug);if(!p||!Number.isInteger(quantity)||quantity<1||quantity>3)throw new Error('Choose a valid set and quantity from 1 to 3.');add(p,quantity);return{slug,quantity:Math.min(3,(items.find(i=>i.slug===slug)?.quantity||0)+quantity),status:'added_to_bag'}}});return()=>lifecycle.abort()},[items,add]);
+- return <Ctx.Provider value={{items,ready,add,update,clear:()=>{commit([]);syncCart([])},count:items.reduce((n,i)=>n+i.quantity,0),total:items.reduce((n,i)=>n+(products.find(p=>p.slug===i.slug)?.price||0)*i.quantity,0)}}>{children}<Dialog open={!!added} onOpenChange={v=>{if(!v)setAdded(null)}}><DialogContent className="taksh-dialog bag-dialog"><span className="confirmation-mark">{added?.limited?<Minus size={24}/>:<Check size={24}/>}</span><DialogTitle>{added?.limited?'Three is the limit for this set':'Added to your bag'}</DialogTitle><DialogDescription className="sr-only">Your selected set, price and quantity.</DialogDescription>{added&&<div className="added-item"><ProductImage p={added.p} sizes="100px"/><div><span className="small muted">{added.p.level}{added.p.slug!=='nonsense'&&<> / {added.p.setNumber}</>}</span><h3>{added.p.name}</h3><p>{productMoney(added.p)} · Quantity {added.qty}</p></div></div>}<p className="small">Currently out of stock. Request an availability update from your bag.</p><div className="two-buttons"><button className="button outline" onClick={()=>setAdded(null)}>Keep looking</button><SiteLink className="button primary" href="/bag" onClick={()=>setAdded(null)}>View bag</SiteLink></div></DialogContent></Dialog></Ctx.Provider>
++ return <Ctx.Provider value={{items,ready,add,update,clear:()=>{commit([]);syncCart([])},count:items.reduce((n,i)=>n+i.quantity,0),total:items.reduce((n,i)=>n+(products.find(p=>p.slug===i.slug)?.price||0)*i.quantity,0)}}>{children}<Dialog open={!!added} onOpenChange={v=>{if(!v)setAdded(null)}}><DialogContent className="taksh-dialog bag-dialog"><span className="confirmation-mark">{added?.limited?<Minus size={24}/>:<Check size={24}/>}</span><DialogTitle>{added?.limited?'Three is the limit for this set':'Added to your bag'}</DialogTitle><DialogDescription className="sr-only">Your selected set, price and quantity.</DialogDescription>{added&&<div className="added-item"><ProductImage p={added.p} sizes="100px"/><div><span className="small muted">{added.p.level}{added.p.slug!=='nonsense'&&<> / {added.p.setNumber}</>}</span><h3>{added.p.name}</h3><p>{productMoney(added.p)} · Quantity {added.qty}</p></div></div>}<p className="small">Review your selection in your bag.</p><div className="two-buttons"><button className="button outline" onClick={()=>setAdded(null)}>Keep looking</button><SiteLink className="button primary" href="/bag" onClick={()=>setAdded(null)}>View bag</SiteLink></div></DialogContent></Dialog></Ctx.Provider>
+ }
+diff --git a/db/schema.ts b/db/schema.ts
+index f252515..56d800d 100644
+--- a/db/schema.ts
++++ b/db/schema.ts
+@@ -1,7 +1,9 @@
+ import {sqliteTable,text,integer,index} from 'drizzle-orm/sqlite-core';
+-export const orders=sqliteTable('orders',{id:text('id').primaryKey(),tokenHash:text('token_hash').notNull().unique(),reference:text('reference').notNull().unique(),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),placedAt:text('placed_at'),status:text('status').notNull().default('draft'),version:integer('version').notNull().default(0),lastStep:integer('last_step').notNull().default(1),items:text('items').notNull(),total:integer('total').notNull(),details:text('details').notNull(),deviceType:text('device_type').notNull(),arrivalPage:text('arrival_page').notNull(),utmSource:text('utm_source').notNull(),utmMedium:text('utm_medium').notNull(),utmCampaign:text('utm_campaign').notNull(),emailStatus:text('email_status').notNull().default('not_configured')},t=>[index('idx_orders_created_at').on(t.createdAt)]);
++export const orders=sqliteTable('orders',{id:text('id').primaryKey(),tokenHash:text('token_hash').notNull().unique(),reference:text('reference').notNull().unique(),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),placedAt:text('placed_at'),status:text('status').notNull().default('draft'),version:integer('version').notNull().default(0),lastStep:integer('last_step').notNull().default(1),items:text('items').notNull(),total:integer('total').notNull(),currency:text('currency').notNull().default('INR'),details:text('details').notNull(),deviceType:text('device_type').notNull(),arrivalPage:text('arrival_page').notNull(),utmSource:text('utm_source').notNull(),utmMedium:text('utm_medium').notNull(),utmCampaign:text('utm_campaign').notNull(),emailStatus:text('email_status').notNull().default('not_configured'),trafficType:text('traffic_type').notNull().default('external'),referrer:text('referrer').notNull().default('')},t=>[index('idx_orders_created_at').on(t.createdAt)]);
+ export const subscriptions=sqliteTable('subscriptions',{id:text('id').primaryKey(),createdAt:text('created_at').notNull(),mobile:text('mobile').notNull().unique(),consent:integer('consent').notNull()});
+ export const support=sqliteTable('support',{id:text('id').primaryKey(),createdAt:text('created_at').notNull(),setSlug:text('set_slug').notNull(),description:text('description').notNull(),mobile:text('mobile').notNull(),photoKey:text('photo_key'),photoType:text('photo_type')});
+ export const adminSessions=sqliteTable('admin_sessions',{tokenHash:text('token_hash').primaryKey(),expiresAt:integer('expires_at').notNull()});
+ export const rateLimits=sqliteTable('rate_limits',{key:text('key').primaryKey(),windowStart:integer('window_start').notNull(),attempts:integer('attempts').notNull()});
+ export const enquiries=sqliteTable('enquiries',{id:text('id').primaryKey(),reference:text('reference').notNull().unique(),createdAt:text('created_at').notNull(),name:text('name').notNull(),mobile:text('mobile').notNull(),email:text('email').notNull(),topic:text('topic').notNull(),message:text('message').notNull()});
++
++export const reportingState=sqliteTable('reporting_state',{key:text('key').primaryKey(),updatedAt:text('updated_at').notNull(),payload:text('payload').notNull()});
+diff --git a/docs/DEMAND-TRACKING-MIGRATION.md b/docs/DEMAND-TRACKING-MIGRATION.md
+new file mode 100644
+index 0000000..d735fba
+--- /dev/null
++++ b/docs/DEMAND-TRACKING-MIGRATION.md
+@@ -0,0 +1,16 @@
++# Demand tracking — migration handoff
++
++Current work follows the user's 3 November constrained scope: existing UI and asynchronous GA4 only. Marketing tagging deferred. No new visitor cookie, customer profile store, recording, paid service, public form/control/screen or blocking analytics request.
++
++Migration-sensitive components:
++- Existing `db/index.ts` is the only database binding boundary. APIs use the existing D1-compatible prepared-statement/batch interface. A Vercel runtime must adapt this existing boundary and R2 photo storage; tracking does not introduce another hosting dependency.
++- Apply additive `drizzle/0003_fat_proteus.sql`: `orders.traffic_type`, `orders.referrer`, and `reporting_state` aggregate/sync cache. Also apply `drizzle/0004_vengeful_nuke.sql` for the explicit historical INR currency field. Preserve all older migrations, order item JSON, totals, timestamps, token hashes and consent choices. Do not recalculate old request prices.
++- Keep `https://taksh.store/api/integrations/customer-sheet` and `CUSTOMER_SHEET_SYNC_KEY` stable across DNS/hosting cutover, or update the existing bound Google Apps Script endpoint at the same cutover. Its cursor, SYNC_STATE partial-write recovery property and deduplication reference column must survive. Test/automated rows are scanned but excluded from the customer Sheet. Raw secrets stay outside Git.
++- Keep GA measurement ID `G-NHQFYHTNLP`, canonical domain and browser consent key. Preview hosts and automated/internal browsers are excluded.
++- Owner access uses existing `ADMIN_PASSWORD_HASH`; user states they never set a password. Usable owner sign-in is unresolved. Do not export a guessed password or silently reset credentials.
++- Customer Sheet owner: bengani.devansh2004@gmail.com. The bound Apps Script project is `1mtedPc3FL3ocp7zB0MoTZ4gTy35X0Wlmcytn_KFYxQwuXUlN93IafQO7`. Script property `TAKSH_SYNC_KEY` is already configured and must not be printed or committed.
++- Existing owner reports/layout are retained. User chose to keep visitor/funnel reports in Google Analytics. No Analytics Data API bridge, new Google permission or duplicate visitor cache is shipped.
++
++Export source only after the final checked commit; current uncommitted changes are in progress. Superseded expanded UI/identity draft is archived in ignored `outputs/measurement-plan-2026-11-03/superseded-draft`, not part of the shipping source.
++
++4 November user-approved flow update: remove stock labels from cards/product pages/bag. The existing contact form now ends in “Go to payment”; only after the same server-confirmed availability-request save does it show “Currently out of stock,” explicitly no payment and no confirmed order. No payment form/provider, address fields, payment records or revenue events were added. Preserve this latest flow during export; earlier “keep all wording unchanged” constraint has this explicit exception.
+diff --git a/drizzle/0003_fat_proteus.sql b/drizzle/0003_fat_proteus.sql
+new file mode 100644
+index 0000000..e48474d
+--- /dev/null
++++ b/drizzle/0003_fat_proteus.sql
+@@ -0,0 +1,8 @@
++CREATE TABLE `reporting_state` (
++	`key` text PRIMARY KEY NOT NULL,
++	`updated_at` text NOT NULL,
++	`payload` text NOT NULL
++);
++--> statement-breakpoint
++ALTER TABLE `orders` ADD `traffic_type` text DEFAULT 'external' NOT NULL;--> statement-breakpoint
++ALTER TABLE `orders` ADD `referrer` text DEFAULT '' NOT NULL;
+\ No newline at end of file
+diff --git a/drizzle/0004_vengeful_nuke.sql b/drizzle/0004_vengeful_nuke.sql
+new file mode 100644
+index 0000000..1ce03bc
+--- /dev/null
++++ b/drizzle/0004_vengeful_nuke.sql
+@@ -0,0 +1 @@
++ALTER TABLE `orders` ADD `currency` text DEFAULT 'INR' NOT NULL;
+\ No newline at end of file
+diff --git a/drizzle/meta/0003_snapshot.json b/drizzle/meta/0003_snapshot.json
+new file mode 100644
+index 0000000..7aeae80
+--- /dev/null
++++ b/drizzle/meta/0003_snapshot.json
+@@ -0,0 +1,461 @@
++{
++  "version": "6",
++  "dialect": "sqlite",
++  "id": "d5a2c6ea-98ec-4459-8dc9-7381b90b8491",
++  "prevId": "2a0912c2-81cc-44a1-84a5-f4b0d6d37a04",
++  "tables": {
++    "admin_sessions": {
++      "name": "admin_sessions",
++      "columns": {
++        "token_hash": {
++          "name": "token_hash",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "expires_at": {
++          "name": "expires_at",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "enquiries": {
++      "name": "enquiries",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "reference": {
++          "name": "reference",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "name": {
++          "name": "name",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "mobile": {
++          "name": "mobile",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "email": {
++          "name": "email",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "topic": {
++          "name": "topic",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "message": {
++          "name": "message",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {
++        "enquiries_reference_unique": {
++          "name": "enquiries_reference_unique",
++          "columns": [
++            "reference"
++          ],
++          "isUnique": true
++        }
++      },
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "orders": {
++      "name": "orders",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "token_hash": {
++          "name": "token_hash",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "reference": {
++          "name": "reference",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "updated_at": {
++          "name": "updated_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "placed_at": {
++          "name": "placed_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": false,
++          "autoincrement": false
++        },
++        "status": {
++          "name": "status",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "'draft'"
++        },
++        "version": {
++          "name": "version",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": 0
++        },
++        "last_step": {
++          "name": "last_step",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": 1
++        },
++        "items": {
++          "name": "items",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "total": {
++          "name": "total",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "details": {
++          "name": "details",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "device_type": {
++          "name": "device_type",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "arrival_page": {
++          "name": "arrival_page",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "utm_source": {
++          "name": "utm_source",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "utm_medium": {
++          "name": "utm_medium",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "utm_campaign": {
++          "name": "utm_campaign",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "email_status": {
++          "name": "email_status",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "'not_configured'"
++        },
++        "traffic_type": {
++          "name": "traffic_type",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "'external'"
++        },
++        "referrer": {
++          "name": "referrer",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "''"
++        }
++      },
++      "indexes": {
++        "orders_token_hash_unique": {
++          "name": "orders_token_hash_unique",
++          "columns": [
++            "token_hash"
++          ],
++          "isUnique": true
++        },
++        "orders_reference_unique": {
++          "name": "orders_reference_unique",
++          "columns": [
++            "reference"
++          ],
++          "isUnique": true
++        },
++        "idx_orders_created_at": {
++          "name": "idx_orders_created_at",
++          "columns": [
++            "created_at"
++          ],
++          "isUnique": false
++        }
++      },
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "rate_limits": {
++      "name": "rate_limits",
++      "columns": {
++        "key": {
++          "name": "key",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "window_start": {
++          "name": "window_start",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "attempts": {
++          "name": "attempts",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "reporting_state": {
++      "name": "reporting_state",
++      "columns": {
++        "key": {
++          "name": "key",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "updated_at": {
++          "name": "updated_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "payload": {
++          "name": "payload",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "subscriptions": {
++      "name": "subscriptions",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "mobile": {
++          "name": "mobile",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "consent": {
++          "name": "consent",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {
++        "subscriptions_mobile_unique": {
++          "name": "subscriptions_mobile_unique",
++          "columns": [
++            "mobile"
++          ],
++          "isUnique": true
++        }
++      },
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "support": {
++      "name": "support",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "set_slug": {
++          "name": "set_slug",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "description": {
++          "name": "description",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "mobile": {
++          "name": "mobile",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "photo_key": {
++          "name": "photo_key",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": false,
++          "autoincrement": false
++        },
++        "photo_type": {
++          "name": "photo_type",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": false,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    }
++  },
++  "views": {},
++  "enums": {},
++  "_meta": {
++    "schemas": {},
++    "tables": {},
++    "columns": {}
++  },
++  "internal": {
++    "indexes": {}
++  }
++}
+\ No newline at end of file
+diff --git a/drizzle/meta/0004_snapshot.json b/drizzle/meta/0004_snapshot.json
+new file mode 100644
+index 0000000..b9f9bd8
+--- /dev/null
++++ b/drizzle/meta/0004_snapshot.json
+@@ -0,0 +1,469 @@
++{
++  "version": "6",
++  "dialect": "sqlite",
++  "id": "451c81ff-7bfc-4c0e-809b-fb54f927e83a",
++  "prevId": "d5a2c6ea-98ec-4459-8dc9-7381b90b8491",
++  "tables": {
++    "admin_sessions": {
++      "name": "admin_sessions",
++      "columns": {
++        "token_hash": {
++          "name": "token_hash",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "expires_at": {
++          "name": "expires_at",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "enquiries": {
++      "name": "enquiries",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "reference": {
++          "name": "reference",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "name": {
++          "name": "name",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "mobile": {
++          "name": "mobile",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "email": {
++          "name": "email",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "topic": {
++          "name": "topic",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "message": {
++          "name": "message",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {
++        "enquiries_reference_unique": {
++          "name": "enquiries_reference_unique",
++          "columns": [
++            "reference"
++          ],
++          "isUnique": true
++        }
++      },
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "orders": {
++      "name": "orders",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "token_hash": {
++          "name": "token_hash",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "reference": {
++          "name": "reference",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "updated_at": {
++          "name": "updated_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "placed_at": {
++          "name": "placed_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": false,
++          "autoincrement": false
++        },
++        "status": {
++          "name": "status",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "'draft'"
++        },
++        "version": {
++          "name": "version",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": 0
++        },
++        "last_step": {
++          "name": "last_step",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": 1
++        },
++        "items": {
++          "name": "items",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "total": {
++          "name": "total",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "currency": {
++          "name": "currency",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "'INR'"
++        },
++        "details": {
++          "name": "details",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "device_type": {
++          "name": "device_type",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "arrival_page": {
++          "name": "arrival_page",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "utm_source": {
++          "name": "utm_source",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "utm_medium": {
++          "name": "utm_medium",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "utm_campaign": {
++          "name": "utm_campaign",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "email_status": {
++          "name": "email_status",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "'not_configured'"
++        },
++        "traffic_type": {
++          "name": "traffic_type",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "'external'"
++        },
++        "referrer": {
++          "name": "referrer",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false,
++          "default": "''"
++        }
++      },
++      "indexes": {
++        "orders_token_hash_unique": {
++          "name": "orders_token_hash_unique",
++          "columns": [
++            "token_hash"
++          ],
++          "isUnique": true
++        },
++        "orders_reference_unique": {
++          "name": "orders_reference_unique",
++          "columns": [
++            "reference"
++          ],
++          "isUnique": true
++        },
++        "idx_orders_created_at": {
++          "name": "idx_orders_created_at",
++          "columns": [
++            "created_at"
++          ],
++          "isUnique": false
++        }
++      },
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "rate_limits": {
++      "name": "rate_limits",
++      "columns": {
++        "key": {
++          "name": "key",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "window_start": {
++          "name": "window_start",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "attempts": {
++          "name": "attempts",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "reporting_state": {
++      "name": "reporting_state",
++      "columns": {
++        "key": {
++          "name": "key",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "updated_at": {
++          "name": "updated_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "payload": {
++          "name": "payload",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "subscriptions": {
++      "name": "subscriptions",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "mobile": {
++          "name": "mobile",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "consent": {
++          "name": "consent",
++          "type": "integer",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        }
++      },
++      "indexes": {
++        "subscriptions_mobile_unique": {
++          "name": "subscriptions_mobile_unique",
++          "columns": [
++            "mobile"
++          ],
++          "isUnique": true
++        }
++      },
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    },
++    "support": {
++      "name": "support",
++      "columns": {
++        "id": {
++          "name": "id",
++          "type": "text",
++          "primaryKey": true,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "created_at": {
++          "name": "created_at",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "set_slug": {
++          "name": "set_slug",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "description": {
++          "name": "description",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "mobile": {
++          "name": "mobile",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": true,
++          "autoincrement": false
++        },
++        "photo_key": {
++          "name": "photo_key",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": false,
++          "autoincrement": false
++        },
++        "photo_type": {
++          "name": "photo_type",
++          "type": "text",
++          "primaryKey": false,
++          "notNull": false,
++          "autoincrement": false
++        }
++      },
++      "indexes": {},
++      "foreignKeys": {},
++      "compositePrimaryKeys": {},
++      "uniqueConstraints": {},
++      "checkConstraints": {}
++    }
++  },
++  "views": {},
++  "enums": {},
++  "_meta": {
++    "schemas": {},
++    "tables": {},
++    "columns": {}
++  },
++  "internal": {
++    "indexes": {}
++  }
++}
+\ No newline at end of file
+diff --git a/drizzle/meta/_journal.json b/drizzle/meta/_journal.json
+index c16eed6..19999a6 100644
+--- a/drizzle/meta/_journal.json
++++ b/drizzle/meta/_journal.json
+@@ -22,6 +22,20 @@
+       "when": 1791020214851,
+       "tag": "0002_slim_fabian_cortez",
+       "breakpoints": true
++    },
++    {
++      "idx": 3,
++      "version": "6",
++      "when": 1793710777112,
++      "tag": "0003_fat_proteus",
++      "breakpoints": true
++    },
++    {
++      "idx": 4,
++      "version": "6",
++      "when": 1793725636900,
++      "tag": "0004_vengeful_nuke",
++      "breakpoints": true
+     }
+   ]
+ }
+\ No newline at end of file
+diff --git a/integrations/customer-sheet.gs b/integrations/customer-sheet.gs
+index 3bc1c60..a614b4e 100644
+--- a/integrations/customer-sheet.gs
++++ b/integrations/customer-sheet.gs
+@@ -26,9 +26,10 @@ function syncTakshRequests() {
+     const key = props.getProperty('TAKSH_SYNC_KEY');
+     if (!key || !/^[a-f0-9]{64}$/.test(key)) throw new Error('Add the private sync key in Script Properties.');
+     const initialImport = props.getProperty('INITIAL_IMPORT_DONE') !== 'yes';
+-    let more = true;
++    let more = true, syncedCount = 0;
++    let state=JSON.parse(props.getProperty('SYNC_STATE')||'null')||{cursor:JSON.parse(props.getProperty('CURSOR')||'null'),pending:Number(props.getProperty('PENDING_ALERT_COUNT')||0),staged:null};
+     for (let page = 0; page < 5 && more; page++) {
+-      const cursor = JSON.parse(props.getProperty('CURSOR') || 'null');
++      const cursor = state.cursor;
+       const response = UrlFetchApp.fetch(TAKSH_SYNC.endpoint, {
+         method: 'post', contentType: 'application/json',
+         headers: {Authorization: 'Bearer ' + key},
+@@ -37,20 +38,27 @@ function syncTakshRequests() {
+       if (response.getResponseCode() !== 200) throw new Error('Taksh returned HTTP ' + response.getResponseCode() + '. The next sync will retry.');
+       const data = JSON.parse(response.getContentText());
+       if (!Array.isArray(data.requests) || data.requests.length > 100) throw new Error('Unexpected request data.');
++      // Persist the alert plan before any Sheet writes, so a partial write can retry.
++      if(!state.staged){const refs=new Set(sheet.getRange(5,13,sheet.getMaxRows()-4,1).getValues().map(r=>String(r[0])));state.staged={after:data.nextCursor,refs:data.requests.map(r=>r.reference),count:initialImport?0:data.requests.filter(r=>!r.isTest&&!refs.has(r.reference)).length};props.setProperty('SYNC_STATE',JSON.stringify(state));}
++      if(JSON.stringify(state.staged.after)!==JSON.stringify(data.nextCursor)){const planned=new Set(state.staged.refs);data.requests=data.requests.filter(r=>planned.has(r.reference));data.nextCursor=state.staged.after;data.hasMore=true;}
+       applyRequests_(sheet, data.requests);
++      syncedCount += data.requests.length;
+       SpreadsheetApp.flush();
+-      const pending = Number(props.getProperty('PENDING_ALERT_COUNT') || 0) + (initialImport ? 0 : data.requests.length);
+-      props.setProperties({CURSOR: JSON.stringify(data.nextCursor), PENDING_ALERT_COUNT: String(pending)});
++      state.pending+=state.staged.count;state.cursor=data.nextCursor;state.staged=null;
++      props.setProperty('SYNC_STATE',JSON.stringify(state));
++      props.setProperties({CURSOR:JSON.stringify(state.cursor),PENDING_ALERT_COUNT:String(state.pending)});
+       more = data.hasMore === true;
+     }
+     if (initialImport && !more) props.setProperty('INITIAL_IMPORT_DONE', 'yes');
+-    let alertsPending = Number(props.getProperty('PENDING_ALERT_COUNT') || 0) > 0;
++    reportTakshState_({action:'ack',count:syncedCount}, key);
++    let alertsPending = state.pending > 0;
+     const elapsed = Date.now() - Number(props.getProperty('LAST_ALERT_AT') || 0);
+     if (alertsPending && elapsed >= 15 * 60 * 1000 && MailApp.getRemainingDailyQuota() > 0) {
+       try {
+-        const count = Number(props.getProperty('PENDING_ALERT_COUNT'));
++        const count = state.pending;
+         MailApp.sendEmail({to: TAKSH_SYNC.email, subject: 'Taksh: ' + count + ' new customer request' + (count === 1 ? '' : 's'),
+           body: count + ' new stock-update request' + (count === 1 ? ' is' : 's are') + ' saved in your private customer Sheet. No payment has been collected.\n\n' + ss.getUrl()});
++        state.pending=0;props.setProperty('SYNC_STATE',JSON.stringify(state));
+         props.setProperties({PENDING_ALERT_COUNT: '0', LAST_ALERT_AT: String(Date.now())});
+         alertsPending = false;
+       } catch (_) { /* Keep the alert count for a later attempt. */ }
+@@ -58,6 +66,7 @@ function syncTakshRequests() {
+     sheet.getRange('A3').setValue('Last synced: ' + Utilities.formatDate(new Date(), 'Asia/Kolkata', "d MMM yyyy, HH:mm 'IST'") + (alertsPending ? '. Email alert pending.' : ''));
+   } catch (error) {
+     if (sheet) sheet.getRange('A3').setValue('Sync needs attention: ' + error.message);
++    try { reportTakshState_({action:'failure',count:0,category:'sheet'},PropertiesService.getScriptProperties().getProperty('TAKSH_SYNC_KEY')); } catch (_) {}
+     throw error;
+   } finally { lock.releaseLock(); }
+ }
+@@ -73,20 +82,32 @@ function applyRequests_(sheet, requests) {
+     if (i + 5 === sheet.getMaxRows()) throw new Error('Leave the final table row empty so more space can be added.');
+     existing.set(ref, i + 5); nextRow = Math.max(nextRow, i + 6);
+   });
++  const writes = [];let newCustomerCount=0;
+   for (const request of requests) {
++    if(request.isTest)continue;
+     if (!Array.isArray(request.values) || request.values.length !== 15 || request.values[12] !== request.reference) throw new Error('Unexpected customer columns.');
+     let row = existing.get(request.reference);
+     if (!row) {
+       if (nextRow > sheet.getMaxRows() - 5) sheet.insertRowsBefore(sheet.getMaxRows(), 500);
+       row = nextRow++; existing.set(request.reference, row);
+       sheet.getRange(row, 16).setValue('New');
++      if (!request.isTest) newCustomerCount++;
+     }
+     const values = request.values.slice();
+     values[11] = new Date(values[11]);
+     if (!Number.isFinite(values[11].getTime())) throw new Error('Invalid submitted date.');
+-    sheet.getRange(row, 2).setNumberFormat('@');
+-    sheet.getRange(row, 9).setNumberFormat('@');
+-    sheet.getRange(row, 12).setNumberFormat('dd mmm yyyy hh:mm');
+-    sheet.getRange(row, 1, 1, 15).setValues([values]);
++    writes.push({row,values});
+   }
++  writes.sort((a,b)=>a.row-b.row);
++  for(let i=0;i<writes.length;){let end=i+1;while(end<writes.length&&writes[end].row===writes[end-1].row+1)end++;
++    const first=writes[i].row,count=end-i;
++    sheet.getRange(first,2,count,1).setNumberFormat('@');sheet.getRange(first,9,count,1).setNumberFormat('@');sheet.getRange(first,12,count,1).setNumberFormat('dd mmm yyyy hh:mm');
++    sheet.getRange(first,1,count,15).setValues(writes.slice(i,end).map(w=>w.values));i=end;
++  }
++  return newCustomerCount;
++}
++
++function reportTakshState_(payload,key){
++ const response=UrlFetchApp.fetch(TAKSH_SYNC.endpoint,{method:'post',contentType:'application/json',headers:{Authorization:'Bearer '+key},payload:JSON.stringify(payload),muteHttpExceptions:true,followRedirects:false});
++ if(response.getResponseCode()!==200||JSON.parse(response.getContentText()).recorded!==true)throw new Error('Sync acknowledgement failed. The next sync will retry safely.');
+ }
+diff --git a/lib/cart-sync.ts b/lib/cart-sync.ts
+index 61e4473..efc3d5b 100644
+--- a/lib/cart-sync.ts
++++ b/lib/cart-sync.ts
+@@ -1,8 +1,9 @@
++import {internalTracking} from './tracking';
+ import {requestJson} from './request-json.mjs';
+ import type {CartItem} from './shop';
+ let latest:CartItem[]=[];let timer:ReturnType<typeof setTimeout>|undefined;let queue=Promise.resolve();let pending=false;
+ // Debounce quantity taps and serialise writes so an older response cannot win.
+ export function syncCart(items:CartItem[]){latest=items.map(i=>({...i}));pending=true;clearTimeout(timer);timer=setTimeout(flushCart,400)}
+ export function flushCart(){clearTimeout(timer);if(!pending)return queue;pending=false;const items=latest;let attribution={};try{attribution=JSON.parse(sessionStorage.getItem('taksh-arrival')||'{}')}catch{}
+- queue=queue.then(async()=>{try{const {response}=await requestJson('/api/cart',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items,attribution}),keepalive:true},8000);if(!response.ok)pending=true}catch{pending=true}});return queue;
++ queue=queue.then(async()=>{try{const {response}=await requestJson('/api/cart',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items,attribution,internal:internalTracking()}),keepalive:true},8000);if(!response.ok)pending=true}catch{pending=true}});return queue;
+ }
+diff --git a/lib/customer-sheet-domain.mjs b/lib/customer-sheet-domain.mjs
+index 7d8833f..4fca2a9 100644
+--- a/lib/customer-sheet-domain.mjs
++++ b/lib/customer-sheet-domain.mjs
+@@ -14,5 +14,5 @@ function text(value){const s=String(value??'').replace(/\u0000/g,'');return /^[=
+ export function sheetRequest(row){
+  if(row.status!=='placed')throw new Error('Only submitted requests can be exported.');
+  const d=JSON.parse(row.details),items=JSON.parse(row.items);
+- return {reference:row.reference,placedAt:row.placed_at,values:[text(d.fullName),text(d.mobile),items.map(i=>`${text(i.name)} × ${i.quantity}`).join('; '),items.reduce((n,i)=>n+i.quantity,0),row.total,text(d.email),text(d.city),text(d.state),text(d.pincode),text([d.house,d.street,d.city,d.state,d.pincode].filter(Boolean).join(', ')),d.whatsappConsent?'Yes':'No',row.placed_at,text(row.reference),text(row.utm_source),text(row.utm_campaign)]};
++ return {reference:row.reference,placedAt:row.placed_at,isTest:row.traffic_type==='test'||row.traffic_type==='automated'||/@(?:example\.test|example\.invalid)$/i.test(d.email||''),values:[text(d.fullName),text(d.mobile),items.map(i=>`${text(i.name)} × ${i.quantity}`).join('; '),items.reduce((n,i)=>n+i.quantity,0),row.total,text(d.email),text(d.city),text(d.state),text(d.pincode),text([d.house,d.street,d.city,d.state,d.pincode].filter(Boolean).join(', ')),d.whatsappConsent?'Yes':'No',row.placed_at,text(row.reference),text(row.utm_source),text(row.utm_campaign)]};
+ }
+diff --git a/lib/demand-domain.mjs b/lib/demand-domain.mjs
+new file mode 100644
+index 0000000..69b0eb9
+--- /dev/null
++++ b/lib/demand-domain.mjs
+@@ -0,0 +1,5 @@
++export function requestTraffic(details={},userAgent='',internal=false){if(internal||/@(?:example\.test|example\.invalid)$/i.test(details.email||''))return 'test';return /bot\b|crawler|spider|headless|preview|facebookexternalhit/i.test(userAgent)?'automated':'external'}
++export function preserveTraffic(previous,current){return previous==='test'||previous==='automated'?previous:current}
++export function knownReferrer(raw){try{const h=new URL(raw).hostname;if(/(^|\.)instagram\.com$/.test(h))return 'Instagram';if(/(^|\.)facebook\.com$/.test(h))return 'Facebook';if(/(^|\.)google\.[a-z.]+$/.test(h))return 'Google';if(h==='taksh.store')return 'Same site';return 'Other referral'}catch{return 'Direct / unknown'}}
++function parsed(value,fallback){try{return typeof value==='string'?JSON.parse(value):value||fallback}catch{return fallback}}
++export function aggregateDemand(rows=[]){const seen=new Set(),contacts=new Set(),products=new Map(),sources=new Map();let requests=0,requestedUnits=0,potentialValue=0,drafts=0,carts=0;for(const r of rows){const id=r.reference||r.id;if(!id||seen.has(id))continue;seen.add(id);const details=parsed(r.details,{});if(r.is_test||r.traffic_type==='test'||r.traffic_type==='automated'||requestTraffic(details)!=='external')continue;const items=parsed(r.items,[]);if(r.status==='draft')drafts++;if(r.status==='cart'&&items.length)carts++;if(r.status!=='placed')continue;requests++;potentialValue+=Number.isFinite(r.total)?r.total:0;const contact=details.email?'email:'+details.email.trim().toLowerCase():details.mobile?'mobile:'+details.mobile:null;if(contact)contacts.add(contact);const source=r.utm_source||r.referrer||'Direct / unknown';sources.set(source,(sources.get(source)||0)+1);for(const item of items){if(!Number.isInteger(item.quantity)||item.quantity<1||!Number.isFinite(item.price))continue;requestedUnits+=item.quantity;const p=products.get(item.slug)||{slug:item.slug,name:item.name,requests:0,units:0,potentialValue:0};p.requests++;p.units+=item.quantity;p.potentialValue+=item.price*item.quantity;products.set(item.slug,p)}}return {requests,requestedUnits,potentialValue,contacts:contacts.size,paidOrders:0,drafts,carts,products:[...products.values()],sources:[...sources].map(([name,requests])=>({name,requests}))}}
+diff --git a/lib/demand-report.mjs b/lib/demand-report.mjs
+new file mode 100644
+index 0000000..7da0b4e
+--- /dev/null
++++ b/lib/demand-report.mjs
+@@ -0,0 +1,14 @@
++// Full-population aggregates run only when the authenticated owner opens reports.
++// The 5,000-row cap applies to the displayed customer list, never demand totals.
++const eligible="traffic_type NOT IN ('test','automated') AND lower(COALESCE(json_extract(details,'$.email'),'')) NOT LIKE '%@example.test' AND lower(COALESCE(json_extract(details,'$.email'),'')) NOT LIKE '%@example.invalid'";
++export const demandQueries=[
++ `WITH eligible AS (SELECT * FROM orders WHERE ${eligible}) SELECT
++ COUNT(CASE WHEN status='placed' THEN 1 END) requests,
++ COALESCE(SUM(CASE WHEN status='placed' THEN total ELSE 0 END),0) potentialValue,
++ COUNT(DISTINCT CASE WHEN status='placed' THEN CASE WHEN trim(COALESCE(json_extract(details,'$.email'),''))<>'' THEN 'email:'||lower(trim(json_extract(details,'$.email'))) WHEN COALESCE(json_extract(details,'$.mobile'),'')<>'' THEN 'mobile:'||json_extract(details,'$.mobile') END END) contacts,
++ COUNT(CASE WHEN status='draft' THEN 1 END) drafts,
++ COUNT(CASE WHEN status='cart' AND json_array_length(items)>0 THEN 1 END) carts FROM eligible`,
++ `SELECT json_extract(i.value,'$.slug') slug,MAX(json_extract(i.value,'$.name')) name,COUNT(DISTINCT o.reference) requests,SUM(json_extract(i.value,'$.quantity')) units,SUM(json_extract(i.value,'$.quantity')*json_extract(i.value,'$.price')) potentialValue FROM orders o,json_each(o.items) i WHERE ${eligible} AND o.status='placed' GROUP BY slug`,
++ `SELECT COALESCE(NULLIF(utm_source,''),NULLIF(referrer,''),'Direct / unknown') name,COUNT(*) requests FROM orders WHERE ${eligible} AND status='placed' GROUP BY name`
++];
++export function assembleDemandReport(results,catalogue=[]){const products=[...results[1].results];for(const p of catalogue)if(!products.some(r=>r.slug===p.slug))products.push({slug:p.slug,name:p.name,requests:0,units:0,potentialValue:0});return {...results[0].results[0],requestedUnits:products.reduce((n,p)=>n+p.units,0),paidOrders:0,products,sources:results[2].results}}
+diff --git a/lib/order-types.ts b/lib/order-types.ts
+index 4e2f1cb..a02d1de 100644
+--- a/lib/order-types.ts
++++ b/lib/order-types.ts
+@@ -5,10 +5,10 @@ export type OrderDetails = {
+ export type OrderItem = {slug:string;name:string;setNumber:string;level?:string;price:number;quantity:number};
+ export type StoredOrder = {
+  id:string;token_hash:string;reference:string;created_at:string;updated_at:string;placed_at:string|null;
+- status:'cart'|'draft'|'placed';version:number;last_step:number;items:string;total:number;details:string;
++ currency?:string;traffic_type?:string;referrer?:string;status:'cart'|'draft'|'placed';version:number;last_step:number;items:string;total:number;details:string;
+  device_type:string;arrival_page:string;utm_source:string;utm_medium:string;utm_campaign:string;email_status:string;
+ };
+-export type PublicOrder = {reference:string;version:number;status:StoredOrder['status'];lastStep:number;createdAt:string;items:OrderItem[];total:number;details:OrderDetails;emailStatus:string};
++export type PublicOrder = {measurementExcluded?:boolean;reference:string;version:number;status:StoredOrder['status'];lastStep:number;createdAt:string;items:OrderItem[];total:number;details:OrderDetails;emailStatus:string};
+ export type CheckoutResponse = {order:PublicOrder|null;error?:string};
+ export type SupportRow = {id:string;created_at:string;set_slug:string;description:string;mobile:string;photo_key:string|null;photo_type:string|null};
+ export type SubscriptionRow = {created_at:string;mobile:string;consent:number};
+diff --git a/lib/server.ts b/lib/server.ts
+index 94541d4..480cc13 100644
+--- a/lib/server.ts
++++ b/lib/server.ts
+@@ -1,3 +1,4 @@
++import {requestTraffic} from './demand-domain.mjs';
+ import {database,runtime} from '@/db';
+ import type {StoredOrder,OrderDetails,OrderItem,PublicOrder} from './order-types';
+ export const json=(data:unknown,status=200,headers:Record<string,string>={})=>Response.json(data,{status,headers:{'Cache-Control':'no-store',...headers}});
+@@ -10,6 +11,6 @@ export async function parseJson(req:Request){checkOrigin(req);if(!req.headers.ge
+ export async function rateLimit(req:Request,kind:string,limit:number){const key=kind+':'+await hash(req.headers.get('cf-connecting-ip')||'local');const now=Date.now();const start=now-15*60*1000;const result=await database().prepare('INSERT INTO rate_limits (key,window_start,attempts) VALUES (?,?,1) ON CONFLICT(key) DO UPDATE SET window_start=CASE WHEN window_start<? THEN excluded.window_start ELSE window_start END, attempts=CASE WHEN window_start<? THEN 1 ELSE attempts+1 END RETURNING attempts').bind(key,now,start,start).first<{attempts:number}>();if((result?.attempts||0)>limit)throw new Error('Too many attempts. Please try again in 15 minutes.')}
+ export async function authenticated(req:Request){const t=cookie(req,'taksh_admin');if(!t)return false;return !!await database().prepare('SELECT token_hash FROM admin_sessions WHERE token_hash=? AND expires_at>?').bind(await hash(t),Date.now()).first()}
+ export async function currentOrder(req:Request,key='taksh_checkout'){const t=cookie(req,key);if(!t)return null;return database().prepare('SELECT * FROM orders WHERE token_hash=?').bind(await hash(t)).first<StoredOrder>()}
+-export function publicOrder(row:StoredOrder|null):PublicOrder|null{if(!row)return null;return {reference:row.reference,version:row.version,status:row.status,lastStep:row.last_step,createdAt:row.created_at,items:JSON.parse(row.items) as OrderItem[],total:row.total,details:JSON.parse(row.details) as OrderDetails,emailStatus:row.email_status}}
++export function publicOrder(row:StoredOrder|null):PublicOrder|null{if(!row)return null;return {measurementExcluded:row.traffic_type==='test'||row.traffic_type==='automated'||requestTraffic(JSON.parse(row.details))!=='external',reference:row.reference,version:row.version,status:row.status,lastStep:row.last_step,createdAt:row.created_at,items:JSON.parse(row.items) as OrderItem[],total:row.total,details:JSON.parse(row.details) as OrderDetails,emailStatus:row.email_status}}
+ export function apiError(error:unknown){console.error('Taksh request failed',error instanceof Error?error.message:'unknown');const message=error instanceof Error?error.message:'Could not save. Please try again.';const isDb=/SQLITE|D1|database|binding|fetch failed/i.test(message);return json({error:isDb?'We could not save your details just now. Please try again.':message},isDb?503:400)}
+-export async function sendConfirmation(order:StoredOrder){if(!runtime.RESEND_API_KEY||!runtime.FROM_EMAIL)return'not_configured';const details=JSON.parse(order.details) as OrderDetails;if(!details.email)return'not_requested';try{const response=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:`Bearer ${runtime.RESEND_API_KEY}`,'Content-Type':'application/json','Idempotency-Key':`taksh-${order.id}`},body:JSON.stringify({from:runtime.FROM_EMAIL,to:[details.email],subject:`Your Taksh stock-update request · ${order.reference}`,text:`Your request is saved. These sets are currently out of stock. We'll be in touch when more inventory arrives. No payment has been taken.\n\nOrder reference: ${order.reference}\n${(JSON.parse(order.items) as OrderItem[]).map(i=>`${i.name} × ${i.quantity}`).join('\n')}\n\nWhat you build, builds you.`})});return response.ok?'sent':'failed'}catch{return'failed'}}
++export async function sendConfirmation(order:StoredOrder){if(!runtime.RESEND_API_KEY||!runtime.FROM_EMAIL)return'not_configured';const details=JSON.parse(order.details) as OrderDetails;if(!details.email)return'not_requested';try{const response=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:`Bearer ${runtime.RESEND_API_KEY}`,'Content-Type':'application/json','Idempotency-Key':`taksh-${order.id}`},body:JSON.stringify({from:runtime.FROM_EMAIL,to:[details.email],subject:`Your Taksh stock-update request · ${order.reference}`,text:`Your request is saved. We'll be in touch to confirm availability. No payment has been taken.\n\nOrder reference: ${order.reference}\n${(JSON.parse(order.items) as OrderItem[]).map(i=>`${i.name} × ${i.quantity}`).join('\n')}\n\nWhat you build, builds you.`})});return response.ok?'sent':'failed'}catch{return'failed'}}
+diff --git a/lib/tracking-domain.mjs b/lib/tracking-domain.mjs
+index d0b37ef..0de8185 100644
+--- a/lib/tracking-domain.mjs
++++ b/lib/tracking-domain.mjs
+@@ -1,15 +1,18 @@
++export function excludedFromTracking(hostname,userAgent='',internal=false,automated=false){return hostname!=='taksh.store'||internal||automated||/bot\b|crawler|spider|headless|preview/i.test(userAgent)}
+ // Public catalogue facts only. Never forward form fields or arbitrary event data.
+ export function eventPayload(name, data = {}, products = []) {
+-  const names = {ViewContent:'view_item', AddToCart:'add_to_cart', InitiateCheckout:'begin_checkout', Lead:'generate_lead', ViewCart:'view_cart', RemoveFromCart:'remove_from_cart'};
++  const names = {ViewContent:'view_item', AddToCart:'add_to_cart', InitiateCheckout:'begin_checkout', Lead:'generate_lead', ViewCart:'view_cart', RemoveFromCart:'remove_from_cart',RequestFailure:'availability_request_error'};
+   if (!names[name]) return null;
+   const selections = Array.isArray(data.items) ? data.items : (data.content_ids || []).map(id => ({setNumber:id, quantity:name === 'AddToCart' ? data.num_items : 1}));
+   const items = selections.flatMap(selection => {
+     const p = products.find(p => p.slug === selection.slug || p.setNumber === selection.setNumber);
+     if (!p) return [];
+     const quantity = Math.min(3, Math.max(1, Number.isInteger(selection.quantity) ? selection.quantity : 1));
+-    return [{item_id:p.setNumber, item_name:p.name, item_brand:'Taksh', item_category:p.level, price:p.price, quantity}];
++    const price=name==='Lead'&&data.saved===true&&Number.isFinite(selection.price)&&selection.price>=0?selection.price:p.price;
++    return [{item_id:p.setNumber, item_name:p.name, item_brand:'Taksh', item_category:p.level, price, quantity}];
+   });
+   if (!items.length) return null;
++  if(name==='RequestFailure')return {name:names[name],data:{failure_category:['validation','network','save','conflict','server'].includes(data.category)?data.category:'save',items}};
+   const value = items.reduce((total, i) => total + i.price * i.quantity, 0);
+   return {name:name==='Lead'&&data.contactable===false?'selection_saved':names[name], data:{currency:'INR', items, ...(name === 'Lead' ? {lead_type:'stock_update', selection_value:value} : {value})}};
+ }
+diff --git a/lib/tracking.ts b/lib/tracking.ts
+index 32cbe0d..fa88b33 100644
+--- a/lib/tracking.ts
++++ b/lib/tracking.ts
+@@ -1,9 +1,10 @@
+ import {brand,catalogueProducts} from './shop';
+-import {createTracker,safePage} from './tracking-domain.mjs';
++import {createTracker,safePage,excludedFromTracking} from './tracking-domain.mjs';
+ import {readConsent,writeConsent,analyticsEnabled} from './consent-domain.mjs';
+ declare global {interface Window {dataLayer?:IArguments[];gtag?:(...args:unknown[])=>void}}
+ export const analyticsConfigured = /^G-[A-Z0-9]+$/.test(brand.ga);
+ export const analyticsChoiceKey = 'taksh-analytics-consent';
++export function internalTracking(){try{return excludedFromTracking(location.hostname,navigator.userAgent,localStorage.getItem('taksh-internal-traffic')==='1',navigator.webdriver===true)}catch{return false}}
+ let tracker:ReturnType<typeof createTracker>|undefined;
+ function currentPage() {
+   const url = safePage(location.href,catalogueProducts);
+@@ -13,7 +14,7 @@ function currentPage() {
+   return {url,title};
+ }
+ function instance() {
+-  if (typeof window === 'undefined' || !analyticsConfigured || ['localhost','127.0.0.1','::1'].includes(location.hostname) || location.pathname.startsWith('/admin')) return;
++  if (typeof window === 'undefined' || !analyticsConfigured || ['localhost','127.0.0.1','::1'].includes(location.hostname) || location.pathname.startsWith('/admin')||internalTracking()||location.hostname!=='taksh.store') return;
+   if (!tracker) tracker = createTracker({products:catalogueProducts,
+     load:() => {
+       window.dataLayer = window.dataLayer || [];
+@@ -30,12 +31,15 @@ function instance() {
+   });
+   return tracker;
+ }
+-export function track(name:'ViewContent'|'AddToCart'|'InitiateCheckout'|'Lead'|'ViewCart'|'RemoveFromCart',data:Record<string,unknown>={}) {
++export function track(name:'ViewContent'|'AddToCart'|'InitiateCheckout'|'Lead'|'ViewCart'|'RemoveFromCart'|'RequestFailure',data:Record<string,unknown>={}) {
+   const t = instance();if (!t) return;const p=currentPage();t.page(p.url,p.title);t.event(name,data);
+ }
+-export function trackRoutePageView() {const t=instance();if(t){const p=currentPage();t.page(p.url,p.title)}}
++function disableInternal(){tracker?.consent(false);window.gtag?.('consent','update',{analytics_storage:'denied'});(window as unknown as Record<string,unknown>)[`ga-disable-${brand.ga}`]=true;}
++function markInternalRoute(){if(location.pathname.startsWith('/admin')){try{localStorage.setItem('taksh-internal-traffic','1')}catch{};disableInternal();}}
++let observingInternal=false;
++export function trackRoutePageView() {markInternalRoute();const t=instance();if(t){const p=currentPage();t.page(p.url,p.title)}}
+ export function analyticsPreference(){try{return readConsent(localStorage.getItem(analyticsChoiceKey))}catch{return null}}
+-export function initialiseTracking() {let allow=true;try{allow=analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{}instance()?.consent(allow);trackRoutePageView()}
++export function initialiseTracking() {if(!observingInternal){observingInternal=true;window.addEventListener('storage',(event:StorageEvent)=>{if(event.key==='taksh-internal-traffic'&&event.newValue==='1')disableInternal()});}markInternalRoute();let allow=true;try{allow=analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{}instance()?.consent(allow);trackRoutePageView()}
+ export function setAnalyticsConsent(allow:boolean) {
+   let saved=true;try {localStorage.setItem(analyticsChoiceKey,writeConsent(allow))}catch{saved=false}
+   // Withdrawal stops the tracker before a page update can emit another event.
+diff --git a/tests/customer-sheet-script.test.mjs b/tests/customer-sheet-script.test.mjs
+index 1105568..d8a4b2d 100644
+--- a/tests/customer-sheet-script.test.mjs
++++ b/tests/customer-sheet-script.test.mjs
+@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
+ import fs from 'node:fs/promises';
+ import vm from 'node:vm';
+ const context=vm.createContext({Date,Map,Set});
+-vm.runInContext(await fs.readFile(new URL('../integrations/customer-sheet.gs',import.meta.url),'utf8'),context);
++const awaitSource=await fs.readFile(new URL('../integrations/customer-sheet.gs',import.meta.url),'utf8');vm.runInContext(awaitSource,context);
+ function fakeSheet(){const rows=Array.from({length:5},()=>Array(17).fill(''));rows[4][0]='Before';rows[4][12]='TK-1';rows[4][15]='Contacted';rows[4][16]='Call Friday';return {rows,getMaxRows:()=>1000,insertRowsBefore(){throw new Error('No capacity expansion expected')},getRange(r,c,h=1,w=1){return {getValues:()=>Array.from({length:h},(_,i)=>Array.from({length:w},(_,j)=>rows[r-1+i]?.[c-1+j]??'')),getDisplayValues:()=>Array.from({length:h},(_,i)=>Array.from({length:w},(_,j)=>String(rows[r-1+i]?.[c-1+j]??''))),setNumberFormat(){return this},setValue(v){return this.setValues([[v]])},setValues(values){values.forEach((a,i)=>{rows[r-1+i]??=Array(17).fill('');a.forEach((v,j)=>rows[r-1+i][c-1+j]=v)});return this}}}}}
+ const request=(ref,name)=>({reference:ref,values:[name,'9000000000','Yellow Taxi × 1',1,1749,'test@example.com','Kolkata','West Bengal','700001','Test address','Yes','2026-10-12T06:00:00.000Z',ref,'test','test']});
+ test('sync retries preserve follow-up notes and never duplicate a request',()=>{
+@@ -12,3 +12,20 @@ test('sync retries preserve follow-up notes and never duplicate a request',()=>{
+  assert.equal(s.rows[4][0],'After');assert.equal(s.rows[4][15],'Contacted');assert.equal(s.rows[4][16],'Call Friday');
+  assert.equal(s.rows.filter(r=>r[12]==='TK-2').length,1);assert.equal(s.rows[5][15],'New');assert.equal(s.rows[5][11].toISOString(),'2026-10-12T06:00:00.000Z');
+ });
++
++test('test requests do not queue owner alerts and repeat application adds no demand',()=>{const s=fakeSheet();const row={...request('TK-QA','Taksh QA'),isTest:true};assert.equal(context.applyRequests_(s,[row]),0);assert.equal(context.applyRequests_(s,[row]),0);assert.equal(s.rows.filter(r=>r[12]==='TK-QA').length,0)});
++
++test('partial Sheet failure retries exactly once without losing pending owner alerts',()=>{
++ const s=fakeSheet(),props=new Map([['TAKSH_SYNC_KEY','a'.repeat(64)],['INITIAL_IMPORT_DONE','yes']]);let fail=true;
++ const c=vm.createContext({Date,Map,Set,JSON,Number,String,Error,
++ LockService:{getScriptLock:()=>({tryLock:()=>true,releaseLock(){}})},
++ SpreadsheetApp:{getActiveSpreadsheet:()=>({getId:()=> '1PP8TvtPv5nD9XAbedCjQ7woxrjMu6G0ygUWRgfol9X0',getSheetByName:()=>s,getUrl:()=>''}),flush(){if(fail){fail=false;throw new Error('Injected flush failure')}}},
++ PropertiesService:{getScriptProperties:()=>({getProperty:k=>props.get(k),setProperty:(k,v)=>props.set(k,v),setProperties:p=>Object.entries(p).forEach(([k,v])=>props.set(k,v))})},
++ UrlFetchApp:{fetch:(_url,options)=>({getResponseCode:()=>200,getContentText:()=>JSON.stringify(JSON.parse(options.payload).action?{recorded:true}:{requests:[request('TK-PARTIAL','New buyer'),{...request('TK-QA','QA'),isTest:true}],nextCursor:{at:'2026-10-12T06:00:00.000Z',id:'last'},hasMore:false})})},
++ MailApp:{getRemainingDailyQuota:()=>0},Utilities:{formatDate:()=> 'test time'}});
++ // This test does not need the status cell; all customer data uses numeric ranges.
++ const original=s.getRange;s.getRange=(r,...args)=>typeof r==='string'?{setValue(){}}:original(r,...args);
++ vm.runInContext(awaitSource,c);assert.throws(()=>c.syncTakshRequests(),/Injected flush/);assert.equal(s.rows.filter(r=>r[12]==='TK-PARTIAL').length,1);
++ c.syncTakshRequests();assert.equal(s.rows.filter(r=>r[12]==='TK-PARTIAL').length,1);assert.equal(s.rows.filter(r=>r[12]==='TK-QA').length,0);assert.equal(JSON.parse(props.get('SYNC_STATE')).pending,1);
++ c.syncTakshRequests();assert.equal(JSON.parse(props.get('SYNC_STATE')).pending,1);
++});
+diff --git a/tests/demand.integration.mjs b/tests/demand.integration.mjs
+new file mode 100644
+index 0000000..149698c
+--- /dev/null
++++ b/tests/demand.integration.mjs
+@@ -0,0 +1,18 @@
++// Isolated local Worker only. Synthetic records never reach customer systems.
++import assert from 'node:assert/strict';
++const origin='http://127.0.0.1:5174',syncKey='a'.repeat(64);
++function client(){const cookies=new Map();return async function call(path,body,expected=200,extra={}){const response=await fetch(origin+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json',Origin:origin,'User-Agent':'Mozilla/5.0 LocalDemandQA',Cookie:[...cookies].map(([k,v])=>`${k}=${v}`).join('; '),...extra},body:body===undefined?undefined:JSON.stringify(body)});for(const s of response.headers.getSetCookie()){const[k,v]=s.split(';')[0].split('=');cookies.set(k,v)}const data=response.headers.get('content-type')?.includes('text/csv')?{csv:await response.text()}:await response.json();assert.ok((Array.isArray(expected)?expected:[expected]).includes(response.status),JSON.stringify({status:response.status,data}));return data}}
++const owner=client(),visitor=client(),internal=client();await visitor('/api/admin/orders',undefined,401);await owner('/api/admin/login',{password:'taksh-local-demand-qa'});
++const before=(await owner('/api/admin/orders')).demand;
++const items=[{slug:'gully-cricket',quantity:2,price:1}];await visitor('/api/cart',{items,details:{email:'unsent@example.test'}});const draft=(await visitor('/api/checkout',{action:'begin',step:1,items,details:{}})).order;assert.equal(draft.details.email,'');assert.equal(draft.total,5998);
++await visitor('/api/checkout',{action:'place',step:1,items,reference:draft.reference,version:draft.version,details:{}},400);
++const body={action:'place',step:1,items,reference:draft.reference,version:draft.version,details:{email:'simulation@outside.invalid'}};
++const parallel=await Promise.all([visitor('/api/checkout',body,[200,409]),visitor('/api/checkout',body,[200,409])]);const placed=parallel.find(r=>r.order)?.order;assert.ok(placed);const repeated=(await visitor('/api/checkout',body)).order;assert.equal(placed.reference,repeated.reference);assert.equal(placed.version,repeated.version);
++await internal('/api/cart',{items});await internal('/api/cart',{items,internal:true});const testDraft=(await internal('/api/checkout',{action:'begin',step:1,items,details:{},internal:true})).order;await internal('/api/checkout',{...body,reference:testDraft.reference,version:testDraft.version,internal:false,details:{email:'owner-simulation@outside.invalid'}});
++const after=await owner('/api/admin/orders');assert.equal(after.demand.requests,before.requests+1);assert.equal(after.demand.requestedUnits,before.requestedUnits+2);assert.equal(after.demand.potentialValue,before.potentialValue+5998);assert.equal(after.demand.paidOrders,0);assert.ok(after.orders.some(o=>o.reference===testDraft.reference&&o.traffic_type==='test'));assert.ok(!JSON.stringify(after.orders).includes('token_hash'));assert.equal(after.orders.find(o=>o.reference===placed.reference).currency,'INR');
++const exported=await owner('/api/admin/export?kind=orders');assert.match(exported.csv,/Potential value INR/);assert.ok(exported.csv.split('\n').some(line=>line.includes(testDraft.reference)&&line.includes('excluded_test')));
++await visitor('/api/integrations/customer-sheet',{cursor:null},401);
++const report=await visitor('/api/integrations/customer-sheet',{cursor:null},200,{Authorization:'Bearer '+syncKey});assert.ok(report.requests.some(r=>r.reference===testDraft.reference&&r.isTest));assert.ok(report.requests.some(r=>r.reference===placed.reference&&!r.isTest));
++await visitor('/api/integrations/customer-sheet',{action:'failure',count:0,category:'sheet'},200,{Authorization:'Bearer '+syncKey});assert.equal((await owner('/api/admin/orders')).reports['customer-sheet'].status,'failed');
++await visitor('/api/integrations/customer-sheet',{action:'ack',count:1},200,{Authorization:'Bearer '+syncKey});const successful=(await owner('/api/admin/orders')).reports['customer-sheet'];assert.equal(successful.status,'success');await visitor('/api/integrations/customer-sheet',{action:'failure',count:0,category:'network'},200,{Authorization:'Bearer '+syncKey});assert.equal((await owner('/api/admin/orders')).reports['customer-sheet'].lastSuccess,successful.lastSuccess);await visitor('/api/integrations/customer-sheet',{action:'ack',count:1},200,{Authorization:'Bearer '+syncKey});
++console.log('Confirmed-only demand, retry idempotency, contact isolation, internal exclusion, historical snapshot totals, authenticated reports, Sheet failure/recovery passed locally.');
+diff --git a/tests/demand.test.mjs b/tests/demand.test.mjs
+new file mode 100644
+index 0000000..4359d86
+--- /dev/null
++++ b/tests/demand.test.mjs
+@@ -0,0 +1,16 @@
++import test from 'node:test';import assert from 'node:assert/strict';
++import {requestTraffic,preserveTraffic,aggregateDemand} from '../lib/demand-domain.mjs';
++test('reserved synthetic contacts and obvious automation are excluded without guessing identities',()=>{assert.equal(requestTraffic({email:'qa@example.test'},'Mozilla/5.0'),'test');assert.equal(requestTraffic({email:'real@example.com'},'Googlebot/2.1'),'automated');assert.equal(requestTraffic({email:'real@example.com'},'Mozilla/5.0'),'external')});
++test('demand counts confirmed non-test requests once and preserves historical prices',()=>{const row={id:'1',reference:'TK-1',status:'placed',is_test:0,traffic_type:'external',total:200,items:[{slug:'gully-cricket',name:'Gully Cricket',price:100,quantity:2}],details:{email:'x@example.com'}};const d=aggregateDemand([row,row,{...row,id:'2',reference:'TK-2',is_test:1},{...row,id:'3',reference:'TK-3',status:'draft'}]);assert.equal(d.requests,1);assert.equal(d.requestedUnits,2);assert.equal(d.potentialValue,200);assert.equal(d.paidOrders,0);assert.equal(d.products[0].potentialValue,200);assert.equal(d.contacts,1)});
++test('record exclusions survive later external updates',()=>{assert.equal(preserveTraffic('test','external'),'test');assert.equal(preserveTraffic('automated','external'),'automated');assert.equal(preserveTraffic('external','test'),'test')});
++
++test('owner demand aggregates include submitted history beyond the displayed 5000 rows',async()=>{
++ const {DatabaseSync}=await import('node:sqlite');const {demandQueries,assembleDemandReport}=await import('../lib/demand-report.mjs');
++ const db=new DatabaseSync(':memory:');db.exec('CREATE TABLE orders(reference TEXT,status TEXT,items TEXT,total INTEGER,details TEXT,traffic_type TEXT,utm_source TEXT,referrer TEXT)');
++ const insert=db.prepare('INSERT INTO orders VALUES (?,?,?,?,?,?,?,?)');
++ insert.run('old-request','placed',JSON.stringify([{slug:'gully-cricket',name:'Gully Cricket',price:99,quantity:2}]),198,JSON.stringify({email:'buyer@outside.invalid'}),'external','','Instagram');
++ for(let i=0;i<5001;i++)insert.run('cart-'+i,'cart','[]',0,'{}','external','','');
++ insert.run('test','placed',JSON.stringify([{slug:'gully-cricket',price:2999,quantity:3}]),8997,JSON.stringify({email:'qa@example.test'}),'external','','');
++ const result=assembleDemandReport(demandQueries.map(q=>({results:db.prepare(q).all()})));
++ assert.equal(result.requests,1);assert.equal(result.requestedUnits,2);assert.equal(result.potentialValue,198);assert.equal(result.contacts,1);assert.equal(result.sources[0].name,'Instagram');db.close();
++});
+diff --git a/tests/tracking-lifecycle.test.mjs b/tests/tracking-lifecycle.test.mjs
+new file mode 100644
+index 0000000..b80e8cf
+--- /dev/null
++++ b/tests/tracking-lifecycle.test.mjs
+@@ -0,0 +1,7 @@
++import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs/promises';import vm from 'node:vm';import ts from 'typescript';
++import * as domain from '../lib/tracking-domain.mjs';import * as consent from '../lib/consent-domain.mjs';
++const source=ts.transpileModule(await fs.readFile(new URL('../lib/tracking.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
++function browser(choice){const stored=new Map(),listeners=new Map(),scripts=[];if(choice)stored.set('taksh-analytics-consent',choice);const exports={},location={hostname:'taksh.store',pathname:'/',href:'https://taksh.store/'};const window={addEventListener:(n,fn)=>listeners.set(n,fn)};const context={exports,require:n=>n==='./shop'?{brand:{ga:'G-TEST'},catalogueProducts:[{slug:'set',setNumber:'01',name:'Set',price:100}]}:n==='./tracking-domain.mjs'?domain:consent,window,location,navigator:{userAgent:'Mozilla/5.0',webdriver:false},localStorage:{getItem:k=>stored.get(k)||null,setItem:(k,v)=>stored.set(k,v)},URL,Event,document:{referrer:'',head:{appendChild:s=>scripts.push(s)},createElement:()=>({})}};vm.runInNewContext(source,context);return {api:exports,stored,listeners,scripts,location,window,events:()=>window.dataLayer?.filter(args=>args[0]==='event')||[]}}
++test('SPA owner entry excludes subsequent visits and disables an already-loaded Google tag',()=>{const b=browser();b.api.initialiseTracking();assert.equal(b.scripts.length,1);const count=b.events().length;b.location.pathname='/admin';b.location.href='https://taksh.store/admin';b.api.trackRoutePageView();b.location.pathname='/';b.location.href='https://taksh.store/';b.api.trackRoutePageView();b.api.track('AddToCart',{items:[{slug:'set',quantity:1}]});assert.equal(b.stored.get('taksh-internal-traffic'),'1');assert.equal(b.window['ga-disable-G-TEST'],true);assert.equal(b.events().length,count)});
++test('internal exclusion in another tab stops existing tracker events',()=>{const b=browser();b.api.initialiseTracking();const count=b.events().length;b.stored.set('taksh-internal-traffic','1');b.listeners.get('storage')({key:'taksh-internal-traffic',newValue:'1'});b.api.trackRoutePageView();assert.equal(b.window['ga-disable-G-TEST'],true);assert.equal(b.events().length,count)});
++test('existing analytics-off preference loads no Google script and emits no funnel events',()=>{const b=browser(consent.writeConsent(false));b.api.initialiseTracking();b.api.track('AddToCart',{items:[{slug:'set',quantity:1}]});assert.equal(b.scripts.length,0);assert.equal(b.events().length,0)});
+diff --git a/tests/tracking.test.mjs b/tests/tracking.test.mjs
+index 00ea212..f46a66e 100644
+--- a/tests/tracking.test.mjs
++++ b/tests/tracking.test.mjs
+@@ -22,3 +22,6 @@ test('anonymous selections are not counted as contactable leads',()=>{
+  const e=eventPayload('Lead',{items:[{slug:'ram-mandir',quantity:1}],contactable:false},products);
+  assert.equal(e.name,'selection_saved');assert.equal(e.data.selection_value,7499);assert.equal(e.data.value,undefined);
+ });
++test('failure events contain categories and catalogue items, never typed input',()=>{const e=eventPayload('RequestFailure',{items:[{slug:'ram-mandir',quantity:1}],category:'validation',email:'private@example.test',message:'Typed message'},products);assert.equal(e.name,'availability_request_error');assert.equal(e.data.failure_category,'validation');assert.ok(!JSON.stringify(e).includes('private'));assert.ok(!JSON.stringify(e).includes('Typed'))});
++test('saved request event preserves the server price snapshot instead of current catalogue price',()=>{const e=eventPayload('Lead',{items:[{slug:'ram-mandir',quantity:2,price:7000}],saved:true},products);assert.equal(e.data.selection_value,14000);assert.equal(e.data.items[0].price,7000);assert.equal(e.data.value,undefined)});
++test('internal, preview and obvious automated traffic is excluded without treating real mobile users as bots',async()=>{const{excludedFromTracking}=await import('../lib/tracking-domain.mjs');assert.equal(excludedFromTracking('taksh.store','Mozilla/5.0',false,false),false);assert.equal(excludedFromTracking('taksh.store','Mozilla/5.0',true,false),true);assert.equal(excludedFromTracking('taksh.store','Googlebot/2.1'),true);assert.equal(excludedFromTracking('taksh.store','Mozilla/5.0',false,true),true);assert.equal(excludedFromTracking('preview.vercel.app','Mozilla/5.0'),true)});

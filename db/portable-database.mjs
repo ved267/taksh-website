@@ -1,13 +1,17 @@
+import {isNetlify} from '../lib/hosting.mjs';
 import {createClient} from '@libsql/client';
 import {mkdirSync} from 'node:fs';
 import {dirname,resolve} from 'node:path';
 
 export function databaseConfig(env){
- const url=env.TURSO_DATABASE_URL||env.DATABASE_URL;
- if(env.VERCEL&&!url)throw new Error('Durable database is not configured.');
- if(env.VERCEL&&/^(file:|:memory:)/.test(url||''))throw new Error('Local databases are unavailable in hosted execution.');
- if(url&&!/^(file:|:memory:)/.test(url)&&!env.TURSO_AUTH_TOKEN)throw new Error('Database authentication token is not configured.');
- return {url:url||'file:.local/taksh.sqlite3',authToken:env.TURSO_AUTH_TOKEN};
+ const preview=isNetlify(env)&&env.TAKSH_DEPLOY_CONTEXT&&env.TAKSH_DEPLOY_CONTEXT!=='production'&&env.TAKSH_DEPLOY_CONTEXT!=='local';
+ const url=preview?env.TAKSH_PREVIEW_DATABASE_URL:env.TURSO_DATABASE_URL||env.DATABASE_URL;
+ const authToken=preview?env.TAKSH_PREVIEW_AUTH_TOKEN:env.TURSO_AUTH_TOKEN;
+ if(preview&&(!url||!authToken))throw new Error('Preview database is not configured.');
+ if((env.VERCEL||isNetlify(env))&&!url)throw new Error('Durable database is not configured.');
+ if((env.VERCEL||isNetlify(env))&&/^(file:|:memory:)/.test(url||''))throw new Error('Local databases are unavailable in hosted execution.');
+ if(url&&!/^(file:|:memory:)/.test(url)&&!authToken)throw new Error('Database authentication token is not configured.');
+ return {url:url||'file:.local/taksh.sqlite3',authToken};
 }
 
 export function createDatabase(config){

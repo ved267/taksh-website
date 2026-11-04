@@ -1,6 +1,7 @@
+import {isNetlify} from '../lib/hosting.mjs';
 import {readFile,readdir} from 'node:fs/promises';
 import {createDatabase,databaseConfig} from '../db/portable-database.mjs';
-if(process.env.VERCEL)throw new Error('Initialise hosted databases through a reviewed migration, not this local command.');
+if(process.env.VERCEL||isNetlify(process.env))throw new Error('Initialise hosted databases through a reviewed migration, not this local command.');
 const config=databaseConfig(process.env);
 if(!config.url.startsWith('file:'))throw new Error('This command only initialises a local database.');
 const db=createDatabase(config);

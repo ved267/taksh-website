@@ -22,6 +22,34 @@
       "when": 1791020214851,
       "tag": "0002_slim_fabian_cortez",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1793710777112,
+      "tag": "0003_fat_proteus",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1793725636900,
+      "tag": "0004_vengeful_nuke",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1793783487393,
+      "tag": "0005_private_support_uploads",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1793798398046,
+      "tag": "0006_support_upload_claim",
+      "breakpoints": true
     }
   ]
 }

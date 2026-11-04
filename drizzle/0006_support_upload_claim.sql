@@ -1,0 +1,1 @@
+ALTER TABLE `support_uploads` ADD `claimed` integer DEFAULT 0 NOT NULL;

@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NEXT_TELEMETRY_DISABLED = "1"
+  TAKSH_BUILD_PLATFORM = "netlify"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[context.production.environment]
+  TAKSH_BUILD_CONTEXT = "production"
+
+[context.deploy-preview.environment]
+  TAKSH_BUILD_CONTEXT = "deploy-preview"
+
+[context.branch-deploy.environment]
+  TAKSH_BUILD_CONTEXT = "branch-deploy"
+
+[context.dev.environment]
+  TAKSH_BUILD_CONTEXT = "dev"

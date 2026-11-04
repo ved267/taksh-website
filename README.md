@@ -1,8 +1,12 @@
 # Taksh website — owner-controlled shared source
 
-Owner: **ved267**. Shared by Codex and Claude. No hosting purchase or live cutover is authorised.
+Owner: **ved267**. Shared by Codex and Claude. The user authorises the complete move to Free services only; no hosting purchase is authorised.
 
-## Current branch
+## Latest migration target
+
+`migration/free-hosting` is the current working branch: Netlify Free for commercial-compatible hosting/private uploads and Turso Free for data. It includes the checked live Sites version60 changes. Read [FREE-HOSTING.md](docs/FREE-HOSTING.md) for configuration, tests, usage limits and the pending sign-ins/cutover. No new host is live yet. The earlier Vercel branch remains preserved.
+
+## Earlier migration branch
 
 `migration/vercel-unpaid` adapts the exported Sites version59 application to standard Next.js. The public components, product CSS, images and request journey are preserved. Local SQLite and private file storage allow testing without connecting to real customer data. Optional hosted libSQL and private Blob adapters are present but unprovisioned and unverified.
 

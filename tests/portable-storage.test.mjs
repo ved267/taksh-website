@@ -20,3 +20,12 @@ test('hosted execution has no filesystem upload fallback',()=>{
  assert.throws(()=>storageConfig({VERCEL:'1'}),/storage.*configured/i);
  assert.equal(storageConfig({}).kind,'local');
 });
+
+test('Netlify uses its private store rather than local disk or a paid provider token',()=>{
+ assert.equal(storageConfig({NETLIFY:'true'}).kind,'netlify');
+ assert.equal(storageConfig({NETLIFY:'true',BLOB_READ_WRITE_TOKEN:'unrelated-token'}).kind,'netlify');
+});
+
+test('Netlify runtime marker requires private platform storage even without build-only NETLIFY',()=>{
+ assert.equal(storageConfig({SITE_ID:'netlify-site'}).kind,'netlify');
+});

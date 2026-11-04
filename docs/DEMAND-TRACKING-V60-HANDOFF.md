@@ -1,0 +1,19 @@
+# Incoming checked Sites version 60 — 4 November 2026
+
+Live source: f07dfe675471c0befd519aabea1cf1d79e5aa392, based on d090acfe3163346d2f2a63f24ef119aef6b147fe (v59). This is now published at taksh.store. `incoming-demand-tracking-v60.patch` is the exact source-only diff; it contains no runtime secrets or customer data. It is a handoff, not an applied migration. No code in this migration checkout was changed by the demand-tracking chat.
+
+Reconcile this delta before cutover. Preserve your portable db/index.ts, request-origin/client-IP adaptation, Next.js build and storage work. Manually merge lib/server.ts (adds a public measurementExcluded flag and removes the early stock email wording); do not overwrite the runtime/header adaptations. Schema additions are drizzle/0003_fat_proteus.sql and 0004_vengeful_nuke.sql: orders.traffic_type, orders.referrer, orders.currency=INR and reporting_state. These are already live on Sites; capture all new columns/table and latest records in the final private database backup. Never recalculate historical prices.
+
+User's latest approved flow supersedes earlier wording: no product/card/bag out-of-stock notices; existing contact form says Go to payment; only after the request save does the result say Currently out of stock, no payment and no confirmed order. No payment provider or paid-order event. Port the matching store.tsx/bag.tsx/checkout.tsx/stock-notice.tsx changes together.
+
+No GA Data API bridge: user chose visitor reports in existing Google Analytics. Keep G-NHQFYHTNLP, existing consent key and internal marker taksh-internal-traffic. Preview hosts excluded. Visit /admin in an owner's browser marks it internal without needing a successful login; cross-tab events disable the loaded tag. GA event payloads contain public catalogue facts only.
+
+The existing bound Apps Script was updated and manually verified. Preserve Script Properties TAKSH_SYNC_KEY, CURSOR, SYNC_STATE, INITIAL_IMPORT_DONE, alert timestamps/counts and the sole five-minute syncTakshRequests trigger. SYNC_STATE is authoritative for partial-write retries; don't reset it or create another integration. Preserve Sheet A:Q layout and P/Q manual notes. Production endpoint remains https://taksh.store/api/integrations/customer-sheet. Key continuity/secure rotation must be reconciled at cutover because the Sites secret is masked. New authenticated ack/failure requests write only sync health. Test/automated requests are scanned and excluded from customer rows/owner alerts.
+
+71 unit tests, TS/build/budgets and local request/duplicate/privacy/sync integrations passed. Demand integration currently uses loopback 5174 and local-only fixture credentials; adapt TAKSH_TEST_ORIGIN/fixture injection for your isolated 5274 runtime, never use them in production. Tests and full-population SQL aggregates use SQLite JSON functions supported by existing D1; verify against the portable adapter. No new subscriptions or customers contacted.
+
+One labelled live internal verification reused draft TK-261012-AB5D6FDB, now saved/traffic_type=test, and must stay excluded after data migration. It added no real demand and no Sheet customer row. Existing older test/owner provenance remains incomplete; do not treat historical placed statuses as actual paid orders. No payment system exists.
+
+Unresolved owner sign-in: user never established a known owner password. Existing ADMIN_PASSWORD_HASH is masked. Establish an owner-approved credential privately during migration; never copy the local test fixture or request a plaintext password in chat. Keep the current live Sites publication as rollback.
+
+Controlled local performance: 8 alternating samples each, median load 57.7→52.7 ms, interaction task 14.602→11.537 ms; no added page fetch/XHR. Public CSS unchanged (105310 bytes), all Gully originals byte-identical. Your Next.js runtime still needs its own matching comparison.

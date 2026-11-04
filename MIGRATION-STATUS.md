@@ -1,5 +1,11 @@
 # Migration status — updated 4 November 2026
 
+## Current direction — Free hosting only
+
+The user now explicitly authorises the complete shift, requiring zero hosting payment. Target changed to Netlify Free + Turso Free; see [FREE-HOSTING.md](docs/FREE-HOSTING.md). Version60 source is reconciled on `migration/free-hosting`; current v60 data is privately backed up and restore-checked. Netlify-specific build packaging and private adapters are implemented. Both Free account sign-ins, real provisioning, hosted staging and live cutover remain pending. No domain has moved and no charge was incurred.
+
+The previous Vercel-specific outstanding list below is historical context; its commercial-plan blocker is avoided by the new target, not an instruction to buy Pro.
+
 ## Latest unpaid preparation
 
 `migration/vercel-unpaid` now uses standard Next.js with portable database and private-upload adapters. Local schema initialisation is explicit. Hosted execution refuses local persistence when durable services are missing. No paid services, deployment, project provisioning or domain changes were made. The user explicitly selected unpaid setup.
