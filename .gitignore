@@ -50,3 +50,12 @@ next-env.d.ts
 
 # Build-generated content-addressed image variants.
 /public/media/
+
+# Private migration and Wrangler local state
+.local/
+.netlify/
+.deployment/
+.dev.vars*
+*.sqlite3
+*.sqlite3-*
+*.tsbuildinfo

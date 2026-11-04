@@ -1,9 +1,10 @@
 import {brand,catalogueProducts} from './shop';
-import {createTracker,safePage} from './tracking-domain.mjs';
+import {createTracker,safePage,excludedFromTracking} from './tracking-domain.mjs';
 import {readConsent,writeConsent,analyticsEnabled} from './consent-domain.mjs';
 declare global {interface Window {dataLayer?:IArguments[];gtag?:(...args:unknown[])=>void}}
 export const analyticsConfigured = /^G-[A-Z0-9]+$/.test(brand.ga);
 export const analyticsChoiceKey = 'taksh-analytics-consent';
+export function internalTracking(){try{return excludedFromTracking(location.hostname,navigator.userAgent,localStorage.getItem('taksh-internal-traffic')==='1',navigator.webdriver===true)}catch{return false}}
 let tracker:ReturnType<typeof createTracker>|undefined;
 function currentPage() {
   const url = safePage(location.href,catalogueProducts);
@@ -13,7 +14,7 @@ function currentPage() {
   return {url,title};
 }
 function instance() {
-  if (typeof window === 'undefined' || !analyticsConfigured || ['localhost','127.0.0.1','::1'].includes(location.hostname) || location.pathname.startsWith('/admin')) return;
+  if (typeof window === 'undefined' || !analyticsConfigured || ['localhost','127.0.0.1','::1'].includes(location.hostname) || location.pathname.startsWith('/admin')||internalTracking()||location.hostname!=='taksh.store') return;
   if (!tracker) tracker = createTracker({products:catalogueProducts,
     load:() => {
       window.dataLayer = window.dataLayer || [];
@@ -30,12 +31,15 @@ function instance() {
   });
   return tracker;
 }
-export function track(name:'ViewContent'|'AddToCart'|'InitiateCheckout'|'Lead'|'ViewCart'|'RemoveFromCart',data:Record<string,unknown>={}) {
+export function track(name:'ViewContent'|'AddToCart'|'InitiateCheckout'|'Lead'|'ViewCart'|'RemoveFromCart'|'RequestFailure',data:Record<string,unknown>={}) {
   const t = instance();if (!t) return;const p=currentPage();t.page(p.url,p.title);t.event(name,data);
 }
-export function trackRoutePageView() {const t=instance();if(t){const p=currentPage();t.page(p.url,p.title)}}
+function disableInternal(){tracker?.consent(false);window.gtag?.('consent','update',{analytics_storage:'denied'});(window as unknown as Record<string,unknown>)[`ga-disable-${brand.ga}`]=true;}
+function markInternalRoute(){if(location.pathname.startsWith('/admin')){try{localStorage.setItem('taksh-internal-traffic','1')}catch{};disableInternal();}}
+let observingInternal=false;
+export function trackRoutePageView() {markInternalRoute();const t=instance();if(t){const p=currentPage();t.page(p.url,p.title)}}
 export function analyticsPreference(){try{return readConsent(localStorage.getItem(analyticsChoiceKey))}catch{return null}}
-export function initialiseTracking() {let allow=true;try{allow=analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{}instance()?.consent(allow);trackRoutePageView()}
+export function initialiseTracking() {if(!observingInternal){observingInternal=true;window.addEventListener('storage',(event:StorageEvent)=>{if(event.key==='taksh-internal-traffic'&&event.newValue==='1')disableInternal()});}markInternalRoute();let allow=true;try{allow=analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{}instance()?.consent(allow);trackRoutePageView()}
 export function setAnalyticsConsent(allow:boolean) {
   let saved=true;try {localStorage.setItem(analyticsChoiceKey,writeConsent(allow))}catch{saved=false}
   // Withdrawal stops the tracker before a page update can emit another event.

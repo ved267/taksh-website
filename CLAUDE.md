@@ -1,3 +1,1 @@
-# Taksh instructions for Claude
-
-Read AGENTS.md, README.md and MIGRATION-STATUS.md. They apply equally to Claude and Codex. Use this repository as the shared source, with a separate branch per task and a preview before integration. You may edit the source when the user asks; the legacy Sites configuration does not authorise deploying to Sites. Keep credentials and customer backups outside Git. No new subscription or purchase is authorised by having access to the code.
+Read and follow [AGENTS.md](AGENTS.md). It is the single rules file for Claude and Codex.

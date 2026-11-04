@@ -1,0 +1,100 @@
+{
+  "checked_date": "2026-11-04",
+  "source_version": 60,
+  "source_commit": "f07dfe675471c0befd519aabea1cf1d79e5aa392",
+  "thresholds": {
+    "compressedWorkerBytes": 3145728,
+    "cpuMs": 10
+  },
+  "decision": "STOP_CPU_GATE_FAILED",
+  "size": {
+    "method": "Wrangler 4.151.0 deploy --dry-run against the existing original builder dist/server/wrangler.json; no upload",
+    "reportedGzipKiB": 405.9,
+    "reportedRawKiB": 1421.63,
+    "scope": "Existing local Vinext artifact. Its exact source provenance is not certified because the builder has later uncommitted work; this is not a new standalone Cloudflare candidate build."
+  },
+  "cpu": {
+    "method": "Cloudflare Workers invocation logs for current live v60; last 120 minutes, 100 returned events; aggregated public paths only; not a controlled load test or a measurement on the owner's target account.",
+    "routes": {
+      "POST /api/integrations/customer-sheet": {
+        "samples": 48,
+        "minMs": 3,
+        "medianMs": 14,
+        "maxMs": 57,
+        "above10ms": 34
+      },
+      "GET /help/contact": {
+        "samples": 1,
+        "minMs": 92,
+        "medianMs": 92,
+        "maxMs": 92,
+        "above10ms": 1
+      },
+      "GET /sets/gully-cricket": {
+        "samples": 7,
+        "minMs": 8,
+        "medianMs": 28,
+        "maxMs": 139,
+        "above10ms": 6
+      },
+      "GET /sets/map-of-india": {
+        "samples": 9,
+        "minMs": 15,
+        "medianMs": 90,
+        "maxMs": 246,
+        "above10ms": 9
+      },
+      "GET /": {
+        "samples": 12,
+        "minMs": 4,
+        "medianMs": 95,
+        "maxMs": 231,
+        "above10ms": 11
+      },
+      "GET /sets/nonsense": {
+        "samples": 5,
+        "minMs": 15,
+        "medianMs": 25,
+        "maxMs": 37,
+        "above10ms": 5
+      },
+      "GET /sets/yellow-taxi": {
+        "samples": 5,
+        "minMs": 16,
+        "medianMs": 43,
+        "maxMs": 121,
+        "above10ms": 5
+      },
+      "GET /sets/ram-mandir": {
+        "samples": 5,
+        "minMs": 14,
+        "medianMs": 26,
+        "maxMs": 67,
+        "above10ms": 5
+      },
+      "GET /sets/chandrayaan-3": {
+        "samples": 5,
+        "minMs": 21,
+        "medianMs": 31,
+        "maxMs": 119,
+        "above10ms": 5
+      },
+      "GET /sets": {
+        "samples": 1,
+        "minMs": 74,
+        "medianMs": 74,
+        "maxMs": 74,
+        "above10ms": 1
+      }
+    }
+  },
+  "unmeasured": [
+    "Standalone migrated Worker CPU",
+    "Availability/checkout write CPU",
+    "5MB support upload CPU",
+    "Owner/report CPU",
+    "Mobile/desktop target performance"
+  ],
+  "noDeployment": true,
+  "noUpgrade": true
+}
