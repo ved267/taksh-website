@@ -1,6 +1,7 @@
 // Local Worker only: no production customer records or notifications.
 import assert from 'node:assert/strict';
-const origin='http://127.0.0.1:5174';
+const origin=process.env.TAKSH_TEST_ORIGIN||'http://127.0.0.1:5374';
+assert.ok(new URL(origin).protocol==='http:'&&['127.0.0.1','localhost'].includes(new URL(origin).hostname),'Integration tests require an isolated loopback test server.');
 for(const contact of [{email:'availability@example.test'},{mobile:'9876543210'}]){
  const cookies=new Map();
  async function post(body,status=200){const response=await fetch(origin+'/api/checkout',{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,Cookie:[...cookies].map(([k,v])=>`${k}=${v}`).join('; ')},body:JSON.stringify(body)});for(const s of response.headers.getSetCookie()){const [k,v]=s.split(';')[0].split('=');cookies.set(k,v)}const result=await response.json();assert.equal(response.status,status,JSON.stringify(result));return result;}

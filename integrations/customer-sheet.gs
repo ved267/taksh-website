@@ -39,7 +39,7 @@ function syncTakshRequests() {
       const data = JSON.parse(response.getContentText());
       if (!Array.isArray(data.requests) || data.requests.length > 100) throw new Error('Unexpected request data.');
       // Persist the alert plan before any Sheet writes, so a partial write can retry.
-      if(!state.staged){const refs=new Set(sheet.getRange(5,13,sheet.getMaxRows()-4,1).getValues().map(r=>String(r[0])));state.staged={after:data.nextCursor,refs:data.requests.map(r=>r.reference),count:initialImport?0:data.requests.filter(r=>!r.isTest&&!refs.has(r.reference)).length};props.setProperty('SYNC_STATE',JSON.stringify(state));}
+      if(!state.staged){const refs=new Set(sheet.getRange(5,13,sheet.getMaxRows()-4,1).getValues().map(r=>String(r[0])));state.staged={after:data.nextCursor,refs:data.requests.map(r=>r.reference),count:initialImport?0:data.requests.filter(r=>!r.isTest&&!r.excluded&&!refs.has(r.reference)).length};props.setProperty('SYNC_STATE',JSON.stringify(state));}
       if(JSON.stringify(state.staged.after)!==JSON.stringify(data.nextCursor)){const planned=new Set(state.staged.refs);data.requests=data.requests.filter(r=>planned.has(r.reference));data.nextCursor=state.staged.after;data.hasMore=true;}
       applyRequests_(sheet, data.requests);
       syncedCount += data.requests.length;
@@ -84,7 +84,7 @@ function applyRequests_(sheet, requests) {
   });
   const writes = [];let newCustomerCount=0;
   for (const request of requests) {
-    if(request.isTest)continue;
+    if(request.isTest||request.excluded)continue;
     if (!Array.isArray(request.values) || request.values.length !== 15 || request.values[12] !== request.reference) throw new Error('Unexpected customer columns.');
     let row = existing.get(request.reference);
     if (!row) {

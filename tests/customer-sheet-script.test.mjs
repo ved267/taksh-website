@@ -29,3 +29,5 @@ test('partial Sheet failure retries exactly once without losing pending owner al
  c.syncTakshRequests();assert.equal(s.rows.filter(r=>r[12]==='TK-PARTIAL').length,1);assert.equal(s.rows.filter(r=>r[12]==='TK-QA').length,0);assert.equal(JSON.parse(props.get('SYNC_STATE')).pending,1);
  c.syncTakshRequests();assert.equal(JSON.parse(props.get('SYNC_STATE')).pending,1);
 });
+
+test('contactless legacy selections do not become customer Sheet rows',()=>{const s=fakeSheet();assert.equal(context.applyRequests_(s,[{...request('TK-LEGACY',''),excluded:true}]),0);assert.equal(s.rows.filter(r=>r[12]==='TK-LEGACY').length,0)});
