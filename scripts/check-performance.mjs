@@ -5,9 +5,22 @@ import zlib from 'node:zlib';
 import {createHash} from 'node:crypto';
 
 const root=process.cwd();
-const cssDir=path.join(root,'dist/client/_next/static/css');
-const cssFile=fs.readdirSync(cssDir).find(file=>/^index\..*\.css$/.test(file));
-const css=fs.readFileSync(path.join(cssDir,cssFile));
+const homeHtml=fs.readFileSync(path.join(root,'.next/server/app/index.html'),'utf8');
+const cssPaths=[...new Set([...homeHtml.matchAll(/<link[^>]+href="([^"]+\.css)"/g)].map(m=>m[1]).filter(u=>u.startsWith('/_next/')))].map(u=>path.join(root,'.next',u.slice('/_next/'.length)));
+assert.ok(cssPaths.length,'Production CSS is missing. Run the production build first.');
+const css=Buffer.concat(cssPaths.map(file=>fs.readFileSync(file)));
+// Compare each product's emitted CSS against its original required stylesheet sum.
+// Nonsense uses ChandrayaanGallery; Bharat, Taxi and Gully share Ram Mandir styles.
+const originalCssBudgets={'chandrayaan-3':126764,'ram-mandir':117094,'map-of-india':121558,'yellow-taxi':120728,nonsense:129542,'gully-cricket':123760};
+const productCssBytes={};
+for(const [slug,budget] of Object.entries(originalCssBudgets)){
+ const html=fs.readFileSync(path.join(root,'.next/server/app/sets',slug+'.html'),'utf8');
+ const refs=[...new Set([...html.matchAll(/<link[^>]+href="([^\"]+\.css)"/g)].map(m=>m[1]).filter(u=>u.startsWith('/_next/')))];
+ assert.ok(refs.length,`Missing CSS for ${slug}`);
+ const bytes=refs.reduce((sum,u)=>sum+fs.statSync(path.join(root,'.next',u.slice('/_next/'.length))).size,0);
+ productCssBytes[slug]=bytes;
+ assert.ok(bytes<=budget,`${slug} CSS exceeds its original stylesheet budget (${bytes} > ${budget}).`);
+}
 const manifestPath=path.join(root,'lib/image-assets.json');
 const manifest=fs.existsSync(manifestPath)?JSON.parse(fs.readFileSync(manifestPath,'utf8')):{};
 const galleries={
@@ -16,7 +29,7 @@ const galleries={
  'ram-mandir':['01-hero-front','10-room','02-angle','03-spire-flag-closeup','11-spire-lifted','04-roofs-surya-tilak-window','05-porch-stairs-plaque','06-wing-porch','07-platform-lawn','09-dimensions'],
 };
 galleries.nonsense=fs.readdirSync('public/nonsense').filter(f=>/^gallery-.*(?<!-sm)\.webp$/.test(f)).map(f=>f.slice(8,-5));
-const report={globalCssBytes:css.length,globalCssGzipBytes:zlib.gzipSync(css).length,thumbnailBytes:{}};
+const report={globalCssBytes:css.length,globalCssGzipBytes:zlib.gzipSync(css).length,productCssBytes,thumbnailBytes:{}};
 for(const [folder,names] of Object.entries(galleries)){
  report.thumbnailBytes[folder]=names.reduce((sum,name)=>{
   const entry=manifest[`/${folder}/gallery-${name}.webp`];

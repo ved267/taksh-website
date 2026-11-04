@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  outputFileTracingRoot:process.cwd(),
+  experimental:{cssChunking:'strict'},
+  async headers(){return [{source:'/media/:path*',headers:[{key:'Cache-Control',value:'public, max-age=31536000, immutable'}]}]},
 };
 
 export default nextConfig;

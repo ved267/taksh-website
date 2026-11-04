@@ -1,4 +1,10 @@
-# Migration status — 3 November 2026
+# Migration status — updated 4 November 2026
+
+## Latest unpaid preparation
+
+`migration/vercel-unpaid` now uses standard Next.js with portable database and private-upload adapters. Local schema initialisation is explicit. Hosted execution refuses local persistence when durable services are missing. No paid services, deployment, project provisioning or domain changes were made. The user explicitly selected unpaid setup.
+
+See [local verification and limits](docs/verification/2026-11-04-local-migration.md). Public components, product CSS and image sources are unchanged. The original builder’s unfinished measurement changes are still outside this migration branch.
 
 ## Verified
 
@@ -14,7 +20,7 @@
 ## Outstanding before leaving Sites
 
 1. Finish/reconcile original builder measurement changes; current export is version59 plus a separately saved working-tree snapshot, not a promise of all future changes.
-2. Decide and implement the Vercel runtime adaptation and portable database/storage providers. The code currently imports cloudflare:workers; copying it to Vercel alone will not migrate the backend. Preserve existing UI and APIs while replacing platform adapters and build configuration.
+2. Local runtime adaptation is implemented on the migration branch. Provision and configure durable hosted database and private upload storage only under an approved hosting/budget decision; migrate schema/data deliberately and verify hosted behavior. Optional adapters are not evidence of a working hosted service. The unchanged support form accepts photos up to5MB, but Vercel Functions have a4.5MB body limit; implement and verify an appropriate direct-upload path before production without silently reducing the current UI limit.
 3. Back up again immediately before cutover and migrate/reconcile database records, uploads and current writes. Exported JSON includes the table schema/columns and rows; original SQL migrations are in source. Owner-only SQLite and SQL backups were restored locally, passed integrity checks and round-tripped with matching counts for all six tables. Do not restore expired admin sessions or rate limits as persistent business data.
 4. Sites masks ADMIN_PASSWORD_HASH and CUSTOMER_SHEET_SYNC_KEY; their values were not retrievable. The inventory records the names and source revision. Recreate an owner-approved admin credential securely and rotate/reconnect Sheet sync during migration. Do not copy an unrelated local test password into production. Never paste secrets into chat or Git.
 5. No support records reference uploaded photos, but no R2 bucket-list/export capability was available. Bucket emptiness and unreferenced/orphaned objects have not been verified. Check/export via an owner-accessible route before declaring all storage exported.
