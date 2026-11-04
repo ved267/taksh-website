@@ -1,22 +1,9 @@
-# Taksh website — owner-controlled shared source
+# Taksh website — GitHub source of truth
 
-Owner: **ved267**. Prepared 3 November 2026 for Codex and Claude collaboration.
+Owner: ved267. Shared equally by Claude and Codex. Read AGENTS.md.
 
-This contains the Sites version59 tracked application source and available public assets. The original framework README is preserved in docs/SITES-STARTER-README.md. GitHub stores the editable source; hosting can be moved independently of which coding agent edits it.
+Current branch `codex/cloudflare-free-migration` reconciles the exact published Sites version60 source. The earlier Next/Vercel and Netlify/Turso work is saved on its own branches; no paid provider or account was provisioned. Main remains the original export baseline until a reviewed migration is approved.
 
-## Current state
+**Stopped at the requested Cloudflare Free gate:** compressed existing Vinext artifact405.90KiB, but real live v60 CPU samples exceed10ms. No own-account deployment or DNS switch. Read [Cloudflare status](docs/cloudflare/STATUS.md), [measurements](docs/cloudflare/feasibility-2026-11-04.json) and the [owner-only steps](docs/cloudflare/OWNER-STEPS.md).
 
-- Initial baseline source: d090acfe3163346d2f2a63f24ef119aef6b147fe (Sites version59).
-- The application currently uses Vinext/React, Cloudflare D1 for records and R2 for uploads. It has not yet been converted to Vercel's deployment runtime.
-- The real customer database and private configuration inventory are deliberately excluded from this repository. The owner has a separate local export.
-- Public UI/UX is unchanged by this export. There are no deployments or domain changes implied by a GitHub push.
-
-## Local locations
-
-- Shared editable copy: `/Users/devanshsmac/Desktop/Taksh Website`.
-- Owner's export/backup: `/Users/devanshsmac/Desktop/Taksh Website Export/2026-11-03/`.
-- Original Sites builder checkout: `/Users/devanshsmac/Documents/Codex/2026-10-02/sites-plugin-sites-openai-curated-remote/taksh`.
-
-Use separate branches or worktrees for Claude and Codex. Reconcile the original builder's unfinished measurement changes before selecting the final migration source. Keep the main branch deployable only after the Vercel migration checks pass; until then treat it as an export baseline.
-
-Read MIGRATION-STATUS.md for the pending work and the current platform limitations. Read AGENTS.md before changes. Dependency packages, build output, local credentials, historical screenshots and temporary output folders are not required source; the dependency lockfile, source, public assets, migrations and original Git history backup are preserved.
+The original builder folder is frozen with a README. Live taksh.store remains on Sites. After an approved future cutover, keep Sites unchanged as rollback for14days. Customer backups and unfinished original-folder work are private and excluded from Git. The source app still contains historical Sites build configuration because runtime adaptation is intentionally stopped at the feasibility gate; do not publish it to Sites.

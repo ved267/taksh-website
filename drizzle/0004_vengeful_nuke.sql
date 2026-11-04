@@ -1,0 +1,1 @@
+ALTER TABLE `orders` ADD `currency` text DEFAULT 'INR' NOT NULL;
