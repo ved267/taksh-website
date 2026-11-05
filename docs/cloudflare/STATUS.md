@@ -23,7 +23,7 @@ Latest owner brief replaces Workers Builds production deployment: GitHub Actions
 
 ## Billing and monitoring
 
-$3usage email warning saved. $10total-bill forecast cannot be provided by native budget alerts: official documentation excludes fixed fees; the existing$10alert is usage-only. Images/Stream cost and creation attribution are being investigated; no cancellation performed. Latest owner instruction authorises cancellation if Taksh does not use it and it costs money.
+$3usage email warning saved. $10total-bill forecast cannot be provided by native budget alerts: official documentation excludes fixed fees; the existing$10alert is usage-only. Images/Stream configuration verified$0/month with both paid storage options unchecked,0images/transformations/origins, and noTakshuse. Left unchanged because owner's chargeable-condition is not met; precise creation audit attribution remains unresolved. Latest owner instruction authorises cancellation if Taksh does not use it and it costs money.
 
 The hourly Codex Mac automation was deleted, not paused. No70000/day or2000minute monitoring threshold remains. There is no Mac schedule for it. Use Cloudflare billing emails. Included1%sampled/query-redacted observability is configured/deployed on staging; current account usage is reported in MIGRATION-STATUS. Permanent daily backup credential/schedule and post-cutover72hour reporting remain pending.
 
