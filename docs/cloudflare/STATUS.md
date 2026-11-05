@@ -27,7 +27,7 @@ Actual GitHub Validate on ddc4e84 passed all checks and its preview build passed
 
 $3 usage email alert saved. Native usage budgets cannot forecast an exact $10 total including fixed subscriptions/tax. Images/Stream verified unused/$0 with paid storage off; left unchanged. Creation actor/date still unresolved. Workers proration invoice verified privately; second invoice skipped by owner. Hourly Mac usage monitor deleted and remains absent.
 
-Wrangler can deploy/access D1/R2. Account token-management API returned 403/9109; billing/audit API 403/10000. Native Chrome recovered sufficiently to prepare the D1 Read token review and verify GitHub free compute/zero paid-overage budget. Final credential creation confirmation is pending. Browser DOM control still fails with a timeout-options error; native work later stopped because the Mac locked and automatic unlock failed. Owner unlock requested; no credentials or cutover claimed.
+Wrangler can deploy/access D1/R2. Account token-management API returned 403/9109; billing/audit API 403/10000. Native Chrome recovered sufficiently to prepare the D1 Read token review and verify GitHub free compute/zero paid-overage budget. Owner approved and the read token was created/stored, but metadata read200/export401. A stale native screenshot exposed it; owner disable/revoke and verification are pending. Do not reuse it or grant broader permissions silently. Browser DOM control still fails with a timeout-options error; native work later stopped because the Mac locked and automatic unlock failed. Owner unlock is complete; no daily-cron activation or cutover claimed.
 
 ## Data and integrations
 

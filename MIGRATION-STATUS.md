@@ -31,7 +31,7 @@ Automatic Actions preview deployment, PR URL comments and actual Claude/Codex pa
 
 ## Backups and account settings
 
-Daily backup Worker is deployed without a public endpoint; **daily schedule remains OFF**. Final account-token review is prepared for `Taksh daily D1 export`: current account, D1 Read only, no expiry. Required action-time browser confirmation is pending; no token has been created or stored. After verifying its actual export permission, enable and verify 03:30 IST daily, then check the first real cron health.
+Daily backup Worker is deployed without a public endpoint; **daily schedule remains OFF**. Owner approved token creation and unlocked the Mac. Account-owned `Taksh daily D1 export` was created with D1 Read only and saved only as the backup Worker secret. Database-info GET returned200; native export POST returned401/code10000, so export permission is not verified and no activation proof was written. A later native screenshot retained the old token-success modal despite text state showing it closed; treat that token as exposed and never reuse it. Owner was asked to disable/revoke it because browser controls became inconsistent/blank. Disable/revoke verification and a fresh working least-privilege credential are pending. No broader permission was granted. Daily schedule remains off.
 
 Paid D1 Time Travel's current remote bookmark verified; 30-day retention is always on. R2 `d1/` retention is 30 days. Monthly owner-only copy automation `taksh-monthly-private-d1-copy` is ACTIVE for the first of each month at 10:00 IST. It requires matching checksum/size, private permissions and backup age ≤48 hours. First scheduled run pending; the Mac must be awake and Wrangler signed in. The old hourly usage monitor remains deleted.
 
@@ -52,8 +52,8 @@ Cloudflare account-wide November UTC snapshot **5 Nov 11:22:45 UTC**; delayed/sa
 
 ## Remaining before the switch
 
-1. Unlock the Mac. Native browser work stopped when automatic unlock failed; dedicated browser DOM calls also still fail with a timeout-options error. No failed browser action is claimed complete.
-2. Finish private backup/deployment credentials, owner passwords and Sheet key/Google consent; verify real isolated Sheet/notification delivery and the first daily cron.
+1. Disable/revoke the exposed newly created backup token and verify it no longer authenticates. Mac unlock is complete. Native text/rendered frame inconsistency and blank Cloudflare UI prevent reliable security clicks; dedicated DOM calls still fail with timeoutMs. No disable success is claimed.
+2. Replace the exposed, export-incompatible read token with a fresh verified credential (broader access needs explicit approval); finish deployment credentials, owner passwords and Sheet key/Google consent; verify real isolated Sheet/notification delivery and the first daily cron.
 3. Finish hosted current-head CI, automatic preview URL comments and Claude test PR parity; complete repeated browser/analytics checks and the phone checklist.
 4. Capture full private Namecheap DNS/TTL/redirect/forwarding inventory. Prepare equivalent Cloudflare Free zone, verified free Email Routing and www redirect. Lower TTLs a day ahead. Public lookups are not a complete inventory.
 5. Sites connector cannot list/export the managed R2 bucket, including orphan objects. Zero support rows is not proof it is empty. The exact unsupported boundary is documented in STORAGE-MIGRATION.md; owner UI/provider export is still sought, with no complete storage-export claim.

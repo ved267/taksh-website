@@ -12,7 +12,7 @@ This proves the export, real R2 object, offsite download and remote restore. It 
 
 ## Permanent credential and activation
 
-Follow the single owner checklist in [OWNER-STEPS.md](OWNER-STEPS.md). Create an account-restricted **D1 Read** token; enter it personally with:
+Follow the single owner checklist in [OWNER-STEPS.md](OWNER-STEPS.md). The first account-restricted **D1 Read** token was created and tested: database metadata GET200, native export POST401/code10000. It is not sufficient in this tested setup. Do not assume Read is a verified export permission or silently grant Edit. That token also appeared in a stale native screenshot and must be disabled/revoked and never reused; owner action/verification pending. A fresh working permission must be reviewed and approved before activation. Private entry helper:
 
 ```sh
 node scripts/set-private-setting.mjs backup-token
