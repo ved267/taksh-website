@@ -1,16 +1,23 @@
-# Demand tracking — migration handoff
+# Demand reporting — hosting handoff
 
-Current work follows the user's 3 November constrained scope: existing UI and asynchronous GA4 only. Marketing tagging deferred. No new visitor cookie, customer profile store, recording, paid service, public form/control/screen or blocking analytics request.
+Published Sites version60 is the live baseline (f07dfe675471c0befd519aabea1cf1d79e5aa392). GitHub is now the source of truth. The original builder folder is frozen; this follow-up belongs on its own codex branch and must be reconciled into the own-account Cloudflare migration through review. No Sites deployment, DNS change or hosting subscription is part of this follow-up.
 
-Migration-sensitive components:
-- Existing `db/index.ts` is the only database binding boundary. APIs use the existing D1-compatible prepared-statement/batch interface. A Vercel runtime must adapt this existing boundary and R2 photo storage; tracking does not introduce another hosting dependency.
-- Apply additive `drizzle/0003_fat_proteus.sql`: `orders.traffic_type`, `orders.referrer`, and `reporting_state` aggregate/sync cache. Also apply `drizzle/0004_vengeful_nuke.sql` for the explicit historical INR currency field. Preserve all older migrations, order item JSON, totals, timestamps, token hashes and consent choices. Do not recalculate old request prices.
-- Keep `https://taksh.store/api/integrations/customer-sheet` and `CUSTOMER_SHEET_SYNC_KEY` stable across DNS/hosting cutover, or update the existing bound Google Apps Script endpoint at the same cutover. Its cursor, SYNC_STATE partial-write recovery property and deduplication reference column must survive. Test/automated rows are scanned but excluded from the customer Sheet. Raw secrets stay outside Git.
-- Keep GA measurement ID `G-NHQFYHTNLP`, canonical domain and browser consent key. Preview hosts and automated/internal browsers are excluded.
-- Owner access uses existing `ADMIN_PASSWORD_HASH`; user states they never set a password. Usable owner sign-in is unresolved. Do not export a guessed password or silently reset credentials.
-- Customer Sheet owner: bengani.devansh2004@gmail.com. The bound Apps Script project is `1mtedPc3FL3ocp7zB0MoTZ4gTy35X0Wlmcytn_KFYxQwuXUlN93IafQO7`. Script property `TAKSH_SYNC_KEY` is already configured and must not be printed or committed.
-- Existing owner reports/layout are retained. User chose to keep visitor/funnel reports in Google Analytics. No Analytics Data API bridge, new Google permission or duplicate visitor cache is shipped.
+## Runtime and data continuity
 
-Export source only after the final checked commit; current uncommitted changes are in progress. Superseded expanded UI/identity draft is archived in ignored `outputs/measurement-plan-2026-11-03/superseded-draft`, not part of the shipping source.
+- Preserve the migration's Cloudflare runtime adapters and account-owned DB/BUCKET bindings. Reporting uses the existing prepared-statement/batch interface and SQLite JSON functions. No new tracking library, public reporting request, visitor identifier or per-event database operation is introduced.
+- Keep all existing migrations, including 0003_fat_proteus.sql and 0004_vengeful_nuke.sql, already included in v60. Preserve traffic_type, referrer, currency, item price JSON, totals, timestamps, consent and reporting_state. This follow-up adds no migration.
+- Keep taksh.store/api/integrations/customer-sheet and CUSTOMER_SHEET_SYNC_KEY continuous at cutover, or rotate/reconnect deliberately. Preserve bound Script Properties CURSOR, SYNC_STATE, INITIAL_IMPORT_DONE and alert state, the single five-minute trigger, the existing Sheet layout and P/Q manual notes. Do not reset the cursor to repopulate previously cleared records.
+- The committed customer-sheet.gs additionally skips contactless legacy selections. Install the matching script when integrating this follow-up; preserve its credentials and properties. Newly scanned excluded rows advance the cursor but create no customer row or alert. Existing excluded rows would need a separate targeted reconciliation; the live reference range was empty at the last check, so none were removed.
 
-4 November user-approved flow update: remove stock labels from cards/product pages/bag. The existing contact form now ends in “Go to payment”; only after the same server-confirmed availability-request save does it show “Currently out of stock,” explicitly no payment and no confirmed order. No payment form/provider, address fields, payment records or revenue events were added. Preserve this latest flow during export; earlier “keep all wording unchanged” constraint has this explicit exception.
+## Private owner exclusions and access
+
+- Owner password was explicitly configured through the Sites secret store on4November and live sign-in verified. Never copy the password or hash into Git, this document, screenshots or chat. Establish the corresponding production secret privately during migration; do not use the local test fixture.
+- INTERNAL_CONTACTS is a server-only secret containing JSON email/mobile arrays for verified owner testing contacts. Its value is not in source. Configure production privately and use synthetic contacts in previews. .env.example lists the name only. The Sites configuration has this setting prepared, but live v60 does not consume it; this follow-up has not been published to the frozen Sites deployment.
+- Private contact matching runs only in authenticated dashboard/CSV reporting and key-authenticated Sheet export. It must never affect public checkout response flags: callers must not be able to probe whether a contact belongs to the private list. GA suppression uses the existing browser/internal marker, not private-contact matching. Each owner's testing browser/device must enter the existing /admin route once to acquire its internal marker; historical GA visits cannot be separated perfectly.
+- Contactless historical placed records are retained as legacy selections, outside contactable request/unit/potential-value totals. Owner tests remain visible in All with an exclusion label. No records are deleted and historical prices are unchanged.
+
+## Existing public flow and analytics
+
+Preserve the user-approved v60 flow: no stock warning on product/cards/bag; the existing contact form ends with Go to payment; only after the same server-confirmed availability-request save does it show Currently out of stock, no payment and no confirmed order. No payment provider, address fields, revenue event or additional consent control was added.
+
+Visitor/returning/funnel reports stay in existing Google Analytics by user choice. Keep measurement ID G-NHQFYHTNLP, canonical host, consent key and taksh-internal-traffic marker. No Analytics Data API bridge or extra Google permission is required. Browser identities are not exact unique people. Marketing-link tagging remains deferred.
