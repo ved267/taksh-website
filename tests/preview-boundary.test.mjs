@@ -1,5 +1,15 @@
 import test from'node:test';import assert from'node:assert/strict';import{readFileSync}from'node:fs';import yaml from'js-yaml';
 import{compiledPreviewBase}from'../lib/cloudflare/compiled-preview.mjs';
+test('preview activation cannot open the production cutover gate',()=>{
+ const production=yaml.load(readFileSync('.github/workflows/production.yml','utf8')).jobs.deploy.if;
+ const preview=yaml.load(readFileSync('.github/workflows/deploy-preview.yml','utf8')).jobs.deploy.if;
+ const requiredFlags=condition=>[...condition.matchAll(/vars\.(TAKSH_[A-Z_]+)\s*==\s*'true'/g)].map(match=>match[1]);
+ const flags={TAKSH_CI_READY:'true',TAKSH_DEPLOYMENT_READY:'true',TAKSH_PRODUCTION_READY:'false'};
+ const activationAllowed=condition=>requiredFlags(condition).every(name=>flags[name]==='true');
+ assert.equal(activationAllowed(preview),true,'credential-ready previews must be testable before cutover');
+ assert.equal(activationAllowed(production),false,'production must still require its separate owner release gate');
+ flags.TAKSH_PRODUCTION_READY='true';assert.equal(activationAllowed(production),true);
+});
 test('branch build never receives deployment credentials; deploy workflow uses trusted main only',()=>{
  const build=readFileSync('.github/workflows/preview.yml','utf8');assert.equal(build.includes('secrets.'),false,'branch workflow must be secret-free');
  const deploy=yaml.load(readFileSync('.github/workflows/deploy-preview.yml','utf8'));

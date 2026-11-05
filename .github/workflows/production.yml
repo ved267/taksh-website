@@ -14,6 +14,7 @@ jobs:
   deploy:
     if: >-
       vars.TAKSH_DEPLOYMENT_READY == 'true' && vars.TAKSH_CI_READY == 'true' &&
+      vars.TAKSH_PRODUCTION_READY == 'true' &&
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.event == 'push' &&
       github.event.workflow_run.head_branch == 'main' &&

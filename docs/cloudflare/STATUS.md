@@ -1,6 +1,6 @@
-# Cloudflare migration — current status
+# Cloudflare migration status
 
-Updated5November2026 (Asia/Kolkata). Workers Paid+$5base and R2 are verified active; earlier Free10ms gate is resolved. No other paid add-on/trial authorised. Sites is still live, builder frozen, domain unchanged. See [MIGRATION-STATUS.md](../../MIGRATION-STATUS.md) for the current evidence, monthly figures and pending checks. The historical feasibility report remains historical, not a current stop instruction.
+Updated 5 November 2026. The owner has active Workers Paid ($5/month) and R2. No other paid add-on or trial is authorised. Sites v60 remains live; original builder frozen; domain unchanged. [MIGRATION-STATUS.md](../../MIGRATION-STATUS.md) contains current evidence, usage and remaining checks.
 
 ## Resources
 
@@ -8,31 +8,29 @@ Owner account `60742c7f90408058b71f1065a6815ddd`.
 
 | Purpose | D1 | R2 | State |
 | --- | --- | --- | --- |
-| Production | taksh-production | taksh-production-support | Schema migrated; initial private13order/1report snapshot reconciled; no public app cutover |
-| Dedicated synthetic staging | taksh-preview | taksh-preview-support | Hosted5suite verification passed; noindex; synthetic data only |
-| Branch previews | taksh-pr-<branch slug>-<branch hash> | same branch-specific name | Dedicated writable resources, production IDs rejected |
-| Daily backup | Production export source | taksh-private-backups | Worker deployed; daily schedule OFF until dedicated credential is verified; first remote backup+restore passed |
+| Production standby | taksh-production | taksh-production-support | Initial 13 orders/1 reporting record reconciled; no live domain cutover |
+| Dedicated synthetic staging | taksh-preview | taksh-preview-support | Five hosted suites pass; noindex, no production email/data |
+| Branch previews | taksh-pr-<slug>-<hash> | Same branch-specific name | Isolated native preview deployed; actual Actions comments/parity pending |
+| Daily backup | Production export source | taksh-private-backups | First remote backup/independent restore pass; permanent token and cron pending |
 
-No public R2 access enabled. Backup `d1/` retention30days verified. Backup code rejects exports above20MiB and checks exact bytes/SHA256 before writing a completion manifest. Paid Time Travel remote bookmark verified;30days always on. First monthly outside-Cloudflare SQL/manifest download passed its checksum; recurring monthly copy is not yet scheduled.
+No public R2 access. Backup d1/ retention 30 days, Paid D1 Time Travel 30 days. First monthly private copy verified; monthly copy automation active for first-day 10:00 IST, first scheduled run pending.
 
-## Deployment and source
+## Source and deployment
 
-Main is reconciled to livev60 through [PR#1](https://github.com/ved267/taksh-website/pull/1). Source baseline validated with locked native build,71original units and five local request suites. Migration adds89total unit tests and synthetic hosted verification. Current migration branch is `codex/cloudflare-migration`; draftPR#3 is pushed through code checkpoint547531b, initial checks skipped while readinessfalse; actual Validate and preview-build subsequently passed on91e80ea. Current normal preview build is secret-free and a separate trusted-main workflow verifies/extracts/deploys its compiled artifact; actual preview build passed; automatic deployment/PR comments remain unverified.
+Main matches published v60 through PR#1. Draft migration PR#3 has the plain runtime, isolated storage, explicit migrations/import/restore tools and shared Claude/Codex workflow. Independent review fixes cover secret-free branch builds, verified trusted-main extraction/deploy, all-field import conflicts/CAS and complete contiguous export pages.
 
-Latest owner brief replaces Workers Builds production deployment: GitHub Actions alone deploys production after Validate succeeds on main. Preview resources remain isolated for both `claude/*` and `codex/*`. Actions deployment secret, actual PR comments/Claude parity and free-minute reporting remain pending. Dedicated staging, direct branch preview and9second staging rollback are verified. CI readiness is true after verifying free allowance and existing$0paid Actions budget; deployment readiness remains false pending the dedicated deployment credential and cutover gates. Private Free branch protection is unavailable; do not pretend repository instructions enforce it.
+Actual GitHub Validate on ddc4e84 passed all checks and its preview build passed. Controlled benchmark main/target JS 247,520 / CSS 33,364 / Worker 414,782 gzip bytes, identical; all 21 key-page gates pass. Numeric artifacts downloaded. Current local unit suite 90/90 includes a new separate production-activation regression test; its next hosted verification is pending.
 
-## Billing and monitoring
+`TAKSH_CI_READY=true` after free-budget verification. `TAKSH_DEPLOYMENT_READY=false` until the scoped deploy credential is verified. `TAKSH_PRODUCTION_READY=false` is an independent release gate, so previews can be tested before production approval. Production accepts only actual successful Validate steps on exact current main; no Workers Builds production path. GitHub private Free branch protection is unavailable, as accepted in the owner's deployment-gate brief. Actual Claude/Codex preview comments remain unverified.
 
-$3usage email warning saved. $10total-bill forecast cannot be provided by native budget alerts: official documentation excludes fixed fees; the existing$10alert is usage-only. Images/Stream configuration verified$0/month with both paid storage options unchecked,0images/transformations/origins, and noTakshuse. Left unchanged because owner's chargeable-condition is not met; precise creation audit attribution remains unresolved. Latest owner instruction authorises cancellation if Taksh does not use it and it costs money.
+## Billing and access
 
-The hourly Codex Mac automation was deleted, not paused. No70000/day or2000minute monitoring threshold remains. There is no Mac schedule for it. Use Cloudflare billing emails. Included1%sampled/query-redacted observability is configured/deployed on staging; current account usage is reported in MIGRATION-STATUS. Permanent daily backup credential/schedule and post-cutover72hour reporting remain pending.
+$3 usage email alert saved. Native usage budgets cannot forecast an exact $10 total including fixed subscriptions/tax. Images/Stream verified unused/$0 with paid storage off; left unchanged. Creation actor/date still unresolved. Workers proration invoice verified privately; second invoice skipped by owner. Hourly Mac usage monitor deleted and remains absent.
 
-## Known account access limitation
+Wrangler can deploy/access D1/R2. Account token-management API returned 403/9109; billing/audit API 403/10000. Native Chrome recovered sufficiently to prepare the D1 Read token review and verify GitHub free compute/zero paid-overage budget. Final credential creation confirmation is pending. Browser DOM control still fails with a timeout-options error; native work later stopped because the Mac locked and automatic unlock failed. Owner unlock requested; no credentials or cutover claimed.
 
-Wrangler can deploy and access D1/R2. Account token-management API returned403/9109; billing/audit APIs returned403/10000. This is a permission limit, not token creation success. Browser audit inspection works through native Chrome controls; extension browser calls currently fail with a timeout-options error. Any credential creation/security confirmation or owner-only step must be completed through the owner's account/private settings; never request raw credentials in chat.
+## Data and integrations
 
-## Data/storage limitations
+Latest bounded source export was complete within the exposed seven tables but is not an atomic snapshot. Initial import/remote restore exact; final fresh and late-write reconciliation remain required. Sites exposes no R2 list/export operation, so orphan-object export cannot be claimed; see STORAGE-MIGRATION.md.
 
-Latest bounded Sites table export had zero omitted/truncated cells and all seven table cursors completed. It is not an atomic database snapshot. Initial business import matched every exported field; final fresh reconciliation and post-switch delta import are required.0support rows does not prove an empty bucket. Sites connector has no R2 list/export operation, so orphaned object inventory/export remains unresolved and must be explicitly solved or explained before claiming complete transfer.
-
-5Nov CI account follow-up: actual Validate41982057485 passed all required build/test/lint/request-flow/performance steps on91e80ea; preview build41982057456 succeeded with compiled artifact. Numeric artifact upload omission found independently and fixed; hosted re-verification pending. Backup token prepared at final review, awaiting the required browser action-time confirmation before credential creation. No domain or cron change.
+Staging Sheet is private, empty and structurally verified; actual key/script authorisation/feed row/notification pending. Initial desktop/phone-preset Gully measurements and basic UI interactions captured, but wider repeated speed, analytics and physical-phone approval remain pending. Full DNS/forwarding inventory, free Cloudflare equivalents and the two owner go/no-go decisions remain before cutover.
