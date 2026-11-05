@@ -50,4 +50,5 @@ jobs:
           retention-days: 7
           name: performance
           path: .local/performance-*.json
-          if-no-files-found: ignore
+          include-hidden-files: true
+          if-no-files-found: error
