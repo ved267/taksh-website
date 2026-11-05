@@ -15,6 +15,8 @@ test('restore selects only the fixed staging database and validates native backu
  const sql=Buffer.from('CREATE TABLE requests(id TEXT PRIMARY KEY,total INTEGER);INSERT INTO requests VALUES (\'synthetic\',123);');
  const manifest={databaseId:'production',key:'d1/2026-11-05/taksh-production.sql',bytes:sql.length,sha256:operations.sha256(sql)};
  assert.doesNotThrow(()=>operations.verifySqlBackup(sql,manifest,'production'));
+ assert.doesNotThrow(()=>operations.verifySqlBackup(sql,{...manifest,key:'d1/2026-11-05/00000000-0000-4000-8000-000000000001/taksh-production.sql'},'production'));
+ assert.equal(operations.validDailyBackupKey('d1/pre-restore/123/staging.sql'),false);
  assert.throws(()=>operations.verifySqlBackup(Buffer.concat([sql,Buffer.from('x')]),manifest,'production'),/integrity/i);
  assert.throws(()=>operations.verifySqlBackup(sql,manifest,'other'),/source/i);
  const one=new DatabaseSync(':memory:');one.exec(sql.toString());const two=new DatabaseSync(':memory:');two.exec(sql.toString());
