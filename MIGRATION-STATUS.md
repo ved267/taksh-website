@@ -6,7 +6,7 @@ Updated5 November2026 (Asia/Kolkata). **Migration in progress; taksh.store still
 
 - GitHub source: https://github.com/ved267/taksh-website (private). Main reconciled to approved live Sites v60 through PR#1, merge `e036f7e`. Published Sites source `f07dfe675471c0befd519aabea1cf1d79e5aa392` was the reconciliation reference. Unpublished builder work was preserved privately; original builder folder is frozen.
 - Active migration branch: `codex/cloudflare-migration`. Legacy Netlify/Turso work remains stopped on its old branches.
-- Isolated synthetic preview: https://codex-cloudflare-free-migration-taksh-store.taksh-ved267.workers.dev . This is the previous branch's temporary URL; it will be replaced by the renamed branch/staging deployment. The URL does not contain production data. All five hosted request suites passed on this preview.
+- Current isolated branch preview: https://codex-cloudflare-migration-taksh-store.taksh-ved267.workers.dev . Five hosted synthetic suites passed through the trusted compiled-artifact configuration. Dedicated owner staging is listed below. No production customer data is present. Draft migration [PR#3](https://github.com/ved267/taksh-website/pull/3), code checkpoint `547531b`, pushed; GitHub checks are deliberately SKIPPED while readiness is false, not claimed passed.
 - Production D1/R2 provisioned; all five original schema migrations applied explicitly. Initial private Sites business snapshot imported into production D1:13orders,1reporting row,0enquiries/subscriptions/support; field-for-field reconciliation passed. No admin sessions/rate limits restored. Production domain/Worker app not switched. Final fresh export/delta reconciliation is still required at cutover.
 
 ## Verified
@@ -30,12 +30,12 @@ Production is implemented in GitHub Actions only after actual Validate steps pas
 | Metric | Latest verified observation | Source/as-of |
 | --- | --- | --- |
 | Workers fixed fee |$5/month approved and active | Cloudflare subscriptions,4Nov |
-| Requests / CPU | 175requests,0errors; total CPU3437.342ms, median7.278ms,p99222.516ms | Cloudflare account GraphQL,5Nov04:51:31UTC; November UTC month, delayed/sampled account-wide data |
-| D1 rows |1949read /560written | Account GraphQL,5Nov04:51:31UTC |
-| D1 storage | Production metadata110592bytes; all4D1databases331776bytes total | D1API,5Nov; file-size metadata may lag |
-| R2 operations |46operations in November snapshot (account-wide, delayed) | Account GraphQL,5Nov04:51:31UTC |
+| Requests / CPU | 283requests,0errors; total CPU4855.252ms, median6.397ms,p99170.471ms | Cloudflare account GraphQL,5Nov05:39:55UTC; November UTC month, delayed/sampled account-wide data |
+| D1 rows |3094read /811written | Account GraphQL,5Nov05:39:55UTC |
+| D1 storage | Production metadata110592bytes; all5D1databases544768bytes total | D1API,5Nov; file-size metadata may lag |
+| R2 operations |67operations in November snapshot (account-wide, delayed) | Account GraphQL,5Nov05:39:55UTC |
 | R2 billed storage |0.11GB-month,0billable/$0usage in current cycle | Cloudflare billing UI,4Nov; cycle15Oct–14Nov |
-| Cloudflare build minutes | No rows in5Novsnapshot; no Workers Builds connected | GraphQL,5Nov04:51UTC; deployments now use Actions |
+| Cloudflare build minutes | No rows in5Novsnapshot; no Workers Builds connected | GraphQL,5Nov05:39:55UTC; deployments now use Actions |
 | GitHub Actions minutes | Unknown account included pool; runners held off | Billing API404/extrauser scope; owner UI required, no broadening |
 | Images/Stream | Plan label Images Stream Basic; creation audit response being inspected for price/which subscription | Audit event4Nov19:24:46IST, owner account via Dashboard; not yet attributed to this plan |
 | Total monthly bill | About$5base target plus tax/actual usage;4Novinvoice$2.09 received, not itemised in email | Usage alert is not a hard cap/total forecast |
@@ -46,7 +46,7 @@ Finish actual isolated Sheet/notification delivery, owner private credentials, b
 
 ## Required before switch approval
 
-Private complete Namecheap zone, TTLs, redirects and forwarding-address inventory. Cloudflare Free zone and equivalent free Email Routing/redirects/verification records; lower TTLs a day ahead. Owner privately completes account security/credentials/forwarding verification. Written timed cutover/delta-import/rollback runbook. Owner must approve staging and separately approve nameserver switch. Sites stays live/untouched and builder frozen until then. Keep Sites14days after actual cutover, ask before retirement, take final export. Monitor and report72hours after switch. Monthly owner-only export outside Cloudflare must be documented and tested without a Mac hourly monitor.
+Private complete Namecheap zone, TTLs, redirects and forwarding-address inventory. Cloudflare Free zone and equivalent free Email Routing/redirects/verification records; lower TTLs a day ahead. Owner privately completes account security/credentials/forwarding verification. Written timed cutover/delta-import/rollback runbook. Owner must approve staging and separately approve nameserver switch. Sites stays live/untouched and builder frozen until then. Keep Sites14days after actual cutover, ask before retirement, take final export. Monitor and report72hours after switch. The first monthly owner-only export outside Cloudflare is tested/documented; its recurring copy job remains unscheduled. The Mac hourly usage monitor stays deleted.
 
 Owner-only steps: [OWNER-STEPS.md](docs/cloudflare/OWNER-STEPS.md). Evidence and limitations: [Cloudflare status](docs/cloudflare/STATUS.md).
 
