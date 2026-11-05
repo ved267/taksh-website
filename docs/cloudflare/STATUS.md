@@ -17,7 +17,7 @@ No public R2 access enabled. Backup `d1/` retention30days verified. Backup code 
 
 ## Deployment and source
 
-Main is reconciled to livev60 through [PR#1](https://github.com/ved267/taksh-website/pull/1). Source baseline validated with locked native build,71original units and five local request suites. Migration adds84total unit tests and synthetic hosted verification. Current migration branch is `codex/cloudflare-migration`.
+Main is reconciled to livev60 through [PR#1](https://github.com/ved267/taksh-website/pull/1). Source baseline validated with locked native build,71original units and five local request suites. Migration adds89total unit tests and synthetic hosted verification. Current migration branch is `codex/cloudflare-migration`.
 
 Latest owner brief replaces Workers Builds production deployment: GitHub Actions alone deploys production after Validate succeeds on main. Preview resources remain isolated for both `claude/*` and `codex/*`. Actions deployment secret, actual PR comments/Claude parity and free-minute reporting remain pending. Dedicated staging, direct branch preview and9second staging rollback are verified. Readiness flags are false until owner account setup. Private Free branch protection is unavailable; do not pretend repository instructions enforce it.
 

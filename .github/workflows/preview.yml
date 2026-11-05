@@ -1,4 +1,4 @@
-name: Isolated branch preview
+name: Build isolated branch preview
 on:
   push:
     branches: ['claude/**', 'codex/**']
@@ -6,17 +6,17 @@ on:
     branches: [main]
 permissions:
   contents: read
-  pull-requests: write
 concurrency:
-  group: preview-${{ github.head_ref || github.ref_name }}
+  group: preview-build-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 jobs:
-  preview:
+  build:
     if: >-
-      vars.TAKSH_CI_READY == 'true' && vars.TAKSH_DEPLOYMENT_READY == 'true' &&
+      vars.TAKSH_CI_READY == 'true' &&
       (github.event_name == 'push' ||
       (github.event.pull_request.head.repo.full_name == github.repository &&
       (startsWith(github.head_ref, 'claude/') || startsWith(github.head_ref, 'codex/'))))
+    name: Build preview without credentials
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -28,17 +28,19 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci --no-audit --no-fund
-      - run: npm run build
-      - name: Deploy isolated preview
-        id: preview
-        run: node scripts/deploy-preview.mjs
+      - name: Locked install
+        run: npm ci --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Package compiled preview
+        run: python3 scripts/package-preview.py
         env:
-          TAKSH_PREVIEW_BRANCH: ${{ github.head_ref || github.ref_name }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - name: Post URL on the branch pull request
-        run: node scripts/comment-preview.mjs
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAKSH_PREVIEW_BRANCH: ${{ github.head_ref || github.ref_name }}
-          TAKSH_PREVIEW_URL: ${{ steps.preview.outputs.url }}
+          TAKSH_BUILD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          TAKSH_BUILD_BRANCH: ${{ github.head_ref || github.ref_name }}
+      - name: Upload compiled preview
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: preview-bundle
+          path: .local/preview-bundle.zip
+          retention-days: 1
+          if-no-files-found: error

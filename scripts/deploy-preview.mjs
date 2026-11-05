@@ -7,11 +7,15 @@ import {previewIdentity,isolatedPreviewConfig} from '../lib/cloudflare/preview-c
 import {previewBranchAllowed} from '../lib/cloudflare/deployment-policy.mjs';
 import {cloudflareRequest} from './cloudflare-api.mjs';
 import {previewUrlFromOutput} from '../lib/cloudflare/preview-output.mjs';
+import {compiledPreviewBase} from '../lib/cloudflare/compiled-preview.mjs';
 const root=process.cwd();
 const branch=process.env.TAKSH_PREVIEW_BRANCH||process.env.WORKERS_CI_BRANCH||process.env.CF_PAGES_BRANCH||execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim();
 if(!previewBranchAllowed(branch))throw new Error('Only claude/* and codex/* branches can deploy previews.');
 const identity=previewIdentity(branch);
-const builtPath=resolve(root,'dist/server/wrangler.json'),base=JSON.parse(await readFile(builtPath,'utf8'));
+const bundleRoot=process.env.TAKSH_PREVIEW_BUNDLE_ROOT;
+const builtPath=resolve(root,'dist/server/wrangler.json');
+const base=bundleRoot?compiledPreviewBase(JSON.parse(await readFile(resolve(root,'wrangler.json'),'utf8')),bundleRoot):JSON.parse(await readFile(builtPath,'utf8'));
+if(process.env.GITHUB_ACTIONS&&!bundleRoot)throw new Error('Actions previews require a verified compiled bundle and trusted main tooling.');
 const account=base.account_id;
 if(!/^[a-f0-9]{32}$/.test(account||''))throw new Error('Cloudflare account is not configured.');
 const dbs=(await cloudflareRequest(`accounts/${account}/d1/database?per_page=100`)).result;
@@ -22,8 +26,8 @@ if(!buckets.some(bucket=>bucket.name===identity.bucketName))await cloudflareRequ
 const config=isolatedPreviewConfig(base,branch,db.uuid);
 config.main=resolve(dirname(builtPath),base.main);
 config.assets.directory=resolve(dirname(builtPath),base.assets.directory);
-config.d1_databases.forEach(binding=>binding.migrations_dir=resolve(root,'drizzle'));
-config.previews.d1_databases.forEach(binding=>binding.migrations_dir=resolve(root,'drizzle'));
+config.d1_databases.forEach(binding=>binding.migrations_dir=resolve(bundleRoot||root,'drizzle'));
+config.previews.d1_databases.forEach(binding=>binding.migrations_dir=resolve(bundleRoot||root,'drizzle'));
 await mkdir(resolve(root,'.local'),{recursive:true});
 const configPath=resolve(root,'.local/wrangler-preview.json');
 await writeFile(configPath,JSON.stringify(config,null,2));
