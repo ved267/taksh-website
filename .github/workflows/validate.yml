@@ -1,0 +1,61 @@
+name: Validate
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    if: vars.TAKSH_CI_READY == 'true'
+    name: Locked build, tests and performance
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TAKSH_PERFORMANCE_BUILD_ID: 00000000-0000-4000-8000-000000000001
+      # Public synthetic fixtures, only for this non-deployable benchmark build.
+      # Vinext otherwise embeds fresh random server identities/authentication
+      # values; their entropy changes gzip size even when app code is identical.
+      # Production and preview workflows build separately without these fixtures.
+      __VINEXT_SHARED_RSC_BUILD_IDENTITY: '00000000000000000000000000000001'
+      __VINEXT_SHARED_PRERENDER_SECRET: '1111111111111111111111111111111111111111111111111111111111111111'
+      __VINEXT_SHARED_REVALIDATE_SECRET: '2222222222222222222222222222222222222222222222222222222222222222'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Locked install
+        run: npm ci --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Unit tests
+        run: npm test
+      - name: Type check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Request flows and page weights
+        run: node scripts/test-local.mjs
+        env:
+          TAKSH_PERFORMANCE_OUTPUT: .local/performance-current.json
+      - name: Compare with main baseline
+        run: node scripts/check-main-performance.mjs "$BASE_SHA"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+      - name: Keep numeric performance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          retention-days: 7
+          name: performance
+          path: .local/performance-*.json
+          include-hidden-files: true
+          if-no-files-found: error

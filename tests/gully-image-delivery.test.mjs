@@ -6,9 +6,9 @@ import {createRequire} from 'node:module';
 import ts from 'typescript';
 // Exercise the real helper with its checked-in image manifest.
 const path=new URL('../lib/images.ts',import.meta.url);
-const module={exports:{}};
-vm.runInNewContext(ts.transpileModule(fs.readFileSync(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,esModuleInterop:true,target:ts.ScriptTarget.ES2017}}).outputText,{module,exports:module.exports,require:createRequire(path)});
-const {imageSrcSet,imageAsset,imageOriginal}=module.exports;
+const imageModule={exports:{}};
+vm.runInNewContext(ts.transpileModule(fs.readFileSync(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,esModuleInterop:true,target:ts.ScriptTarget.ES2017}}).outputText,{module:imageModule,exports:imageModule.exports,require:createRequire(path)});
+const {imageSrcSet,imageAsset,imageOriginal}=imageModule.exports;
 const manifest=JSON.parse(fs.readFileSync(new URL('../lib/image-assets.json',import.meta.url),'utf8'));
 test('Gully display copies are responsive while viewer originals stay byte-identical',()=>{
  for(const [path,image] of Object.entries(manifest).filter(([path])=>path.startsWith('/gully-cricket/'))){

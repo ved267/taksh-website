@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "measuredAt": "2026-11-05T04:16:08.873Z",
+  "totals": {
+    "jsGzip": 247541,
+    "cssGzip": 33364,
+    "workerGzip": 415089
+  },
+  "pages": {
+    "/": {
+      "htmlGzip": 8483,
+      "jsGzip": 186542,
+      "cssGzip": 20121,
+      "pageBytes": 452945
+    },
+    "/sets": {
+      "htmlGzip": 6037,
+      "jsGzip": 185869,
+      "cssGzip": 20121,
+      "pageBytes": 320711
+    },
+    "/sets/gully-cricket": {
+      "htmlGzip": 7203,
+      "jsGzip": 191840,
+      "cssGzip": 25091,
+      "pageBytes": 603736
+    },
+    "/sets/map-of-india": {
+      "htmlGzip": 9186,
+      "jsGzip": 191536,
+      "cssGzip": 24485,
+      "pageBytes": 1050459
+    },
+    "/sets/ram-mandir": {
+      "htmlGzip": 9449,
+      "jsGzip": 191537,
+      "cssGzip": 23135,
+      "pageBytes": 441029
+    },
+    "/sets/yellow-taxi": {
+      "htmlGzip": 8883,
+      "jsGzip": 190532,
+      "cssGzip": 24216,
+      "pageBytes": 460549
+    },
+    "/sets/chandrayaan-3": {
+      "htmlGzip": 9665,
+      "jsGzip": 193544,
+      "cssGzip": 24948,
+      "pageBytes": 517787
+    },
+    "/sets/nonsense": {
+      "htmlGzip": 6459,
+      "jsGzip": 195071,
+      "cssGzip": 25963,
+      "pageBytes": 469005
+    },
+    "/our-story": {
+      "htmlGzip": 8483,
+      "jsGzip": 186542,
+      "cssGzip": 20121,
+      "pageBytes": 452945
+    },
+    "/quality": {
+      "htmlGzip": 4660,
+      "jsGzip": 182926,
+      "cssGzip": 20121,
+      "pageBytes": 316391
+    },
+    "/levels": {
+      "htmlGzip": 8483,
+      "jsGzip": 186542,
+      "cssGzip": 20121,
+      "pageBytes": 452945
+    },
+    "/community": {
+      "htmlGzip": 8483,
+      "jsGzip": 186542,
+      "cssGzip": 20121,
+      "pageBytes": 452945
+    },
+    "/building-instructions": {
+      "htmlGzip": 8483,
+      "jsGzip": 186542,
+      "cssGzip": 20121,
+      "pageBytes": 452945
+    },
+    "/help": {
+      "htmlGzip": 4575,
+      "jsGzip": 182926,
+      "cssGzip": 20121,
+      "pageBytes": 316306
+    },
+    "/help/contact": {
+      "htmlGzip": 5443,
+      "jsGzip": 207123,
+      "cssGzip": 20121,
+      "pageBytes": 341371
+    },
+    "/help/missing-piece": {
+      "htmlGzip": 5483,
+      "jsGzip": 207123,
+      "cssGzip": 20121,
+      "pageBytes": 341411
+    },
+    "/returns": {
+      "htmlGzip": 5049,
+      "jsGzip": 182926,
+      "cssGzip": 20121,
+      "pageBytes": 316780
+    },
+    "/privacy": {
+      "htmlGzip": 5922,
+      "jsGzip": 182926,
+      "cssGzip": 20121,
+      "pageBytes": 317653
+    },
+    "/bag": {
+      "htmlGzip": 4147,
+      "jsGzip": 184258,
+      "cssGzip": 20121,
+      "pageBytes": 317210
+    },
+    "/checkout": {
+      "htmlGzip": 4048,
+      "jsGzip": 189553,
+      "cssGzip": 20121,
+      "pageBytes": 322406
+    },
+    "/admin": {
+      "htmlGzip": 3312,
+      "jsGzip": 183931,
+      "cssGzip": 20121,
+      "pageBytes": 316048
+    }
+  }
+}

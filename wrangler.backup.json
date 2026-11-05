@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "taksh-daily-backup",
+  "main": "workers/backup.mjs",
+  "compatibility_date": "2026-10-12",
+  "workers_dev": false,
+  "limits": {
+    "cpu_ms": 10000
+  },
+  "triggers": {
+    "crons": []
+  },
+  "vars": {
+    "CLOUDFLARE_ACCOUNT_ID": "60742c7f90408058b71f1065a6815ddd",
+    "D1_DATABASE_ID": "d110db81-9cb7-4b8d-90e5-3787ffd01517"
+  },
+  "r2_buckets": [
+    {
+      "binding": "BACKUPS",
+      "bucket_name": "taksh-private-backups"
+    }
+  ],
+  "account_id": "60742c7f90408058b71f1065a6815ddd"
+}

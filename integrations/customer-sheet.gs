@@ -84,13 +84,15 @@ function applyRequests_(sheet, requests) {
   });
   const writes = [];let newCustomerCount=0;
   for (const request of requests) {
-    if(request.isTest)continue;
+    const migrationTest=request.isTest&&Array.isArray(request.values)&&request.values[14]==='taksh-migration-check';
+    if(request.isTest&&!migrationTest)continue;
     if (!Array.isArray(request.values) || request.values.length !== 15 || request.values[12] !== request.reference) throw new Error('Unexpected customer columns.');
     let row = existing.get(request.reference);
     if (!row) {
       if (nextRow > sheet.getMaxRows() - 5) sheet.insertRowsBefore(sheet.getMaxRows(), 500);
       row = nextRow++; existing.set(request.reference, row);
-      sheet.getRange(row, 16).setValue('New');
+      sheet.getRange(row, 16).setValue(migrationTest?'Test':'New');
+      if(migrationTest)sheet.getRange(row,17).setValue('Internal migration test; excluded from demand totals.');
       if (!request.isTest) newCustomerCount++;
     }
     const values = request.values.slice();

@@ -1,0 +1,8 @@
+import test from'node:test';import assert from'node:assert/strict';import{DatabaseSync}from'node:sqlite';import{businessUpsertSql}from'../lib/cloudflare/delta-import.mjs';
+test('late Sites imports are idempotent, quote-safe and cannot downgrade a submitted request',()=>{
+ const db=new DatabaseSync(':memory:');db.exec('CREATE TABLE orders(id TEXT PRIMARY KEY,status TEXT,updated_at TEXT,details TEXT,total INTEGER)');
+ const first={id:'one',status:'placed',updated_at:'2026-11-05T10:00:00Z',details:"O'Brien",total:1999};db.exec(businessUpsertSql('orders',first));db.exec(businessUpsertSql('orders',first));assert.equal(db.prepare('SELECT COUNT(*) n FROM orders').get().n,1);
+ assert.throws(()=>businessUpsertSql('orders',{...first,status:'draft',updated_at:'2026-11-05T11:00:00Z',total:1},db.prepare("SELECT * FROM orders WHERE id='one'").get()),/conflict/);assert.equal(db.prepare('SELECT total FROM orders').get().total,1999);
+ db.exec(businessUpsertSql('orders',{id:'two',status:'draft',updated_at:'2026-11-05T11:00:00Z',details:'draft',total:1}));db.exec(businessUpsertSql('orders',{id:'two',status:'placed',updated_at:'2026-11-05T10:00:00Z',details:"'; DROP TABLE orders; --",total:2999},db.prepare("SELECT * FROM orders WHERE id='two'").get()));assert.equal(db.prepare("SELECT total FROM orders WHERE id='two'").get().total,2999);assert.equal(db.prepare('SELECT COUNT(*) n FROM orders').get().n,2);
+ assert.throws(()=>businessUpsertSql('admin_sessions',{token_hash:'never'}),/business/);assert.throws(()=>businessUpsertSql('orders',{'id);DROP TABLE orders;--':'bad'}),/column/);db.close();
+});

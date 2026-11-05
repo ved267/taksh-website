@@ -1,0 +1,33 @@
+name: Ask before Sites retirement
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * *'
+permissions:
+  contents: read
+  issues: write
+  actions: write
+concurrency:
+  group: taksh-retirement
+  cancel-in-progress: false
+jobs:
+  check:
+    if: github.ref == 'refs/heads/main' && vars.TAKSH_CUTOVER_AT != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node scripts/migration-watch.mjs retirement
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TAKSH_CUTOVER_AT: ${{ vars.TAKSH_CUTOVER_AT }}
+          TAKSH_PRODUCTION_READY: ${{ vars.TAKSH_PRODUCTION_READY }}

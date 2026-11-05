@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {previewIdentity,isolatedPreviewConfig} from '../lib/cloudflare/preview-config.mjs';
+test('Claude and Codex branches have separate stable writable preview resources',()=>{
+ const claude=previewIdentity('claude/contact'),codex=previewIdentity('codex/contact');
+ assert.deepEqual(previewIdentity('claude/contact'),claude);
+ assert.notEqual(claude.databaseName,codex.databaseName);
+ assert.notEqual(claude.bucketName,codex.bucketName);
+ assert.throws(()=>previewIdentity('main'),/production/);
+ assert.throws(()=>previewIdentity(''),/branch/);
+ const base={main:'index.js',assets:{directory:'../client'},d1_databases:[{binding:'DB',database_id:'production'}],r2_buckets:[{binding:'BUCKET',bucket_name:'production'}]};
+ const config=isolatedPreviewConfig(base,'claude/contact','preview-id');
+ assert.equal(config.previews.d1_databases[0].database_id,'preview-id');
+ assert.equal(config.previews.vars.APP_ENV,'preview');
+ assert.equal(config.d1_databases[0].preview_database_id,'preview-id');
+ assert.equal(config.d1_databases[0].database_id,'production');
+ assert.notEqual(config.previews.r2_buckets[0].bucket_name,'production');
+ assert.throws(()=>isolatedPreviewConfig(base,'codex/task','production'),/production/);
+ assert.equal(base.d1_databases[0].preview_database_id,undefined);
+});

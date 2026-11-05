@@ -1,0 +1,46 @@
+name: Deploy compiled branch preview
+on:
+  workflow_run:
+    workflows: [Build isolated branch preview]
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+concurrency:
+  group: preview-deploy-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+jobs:
+  deploy:
+    if: >-
+      vars.TAKSH_CI_READY == 'true' && vars.TAKSH_DEPLOYMENT_READY == 'true' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      (startsWith(github.event.workflow_run.head_branch, 'claude/') || startsWith(github.event.workflow_run.head_branch, 'codex/'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install trusted deployment tools
+        run: npm ci --no-audit --no-fund
+      - name: Verify run and extract data-only bundle
+        run: node scripts/fetch-preview-build.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Deploy with trusted configuration
+        id: preview
+        run: node scripts/deploy-preview.mjs
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Post URL on the branch pull request
+        run: node scripts/comment-preview.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAKSH_PREVIEW_URL: ${{ steps.preview.outputs.url }}

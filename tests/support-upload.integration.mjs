@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+const origin=process.env.TAKSH_TEST_ORIGIN;
+assert.ok(origin&&new URL(origin).protocol==='http:'&&['127.0.0.1','localhost'].includes(new URL(origin).hostname),'Synthetic uploads require isolated local Worker.');
+const bytes=new Uint8Array(5*1024*1024);bytes.set([137,80,78,71,13,10,26,10]);
+const form=new FormData();form.set('set','gully-cricket');form.set('description','Synthetic direct five megabyte support test');form.set('mobile','9999999998');form.set('photo',new File([bytes],'synthetic.png',{type:'image/png'}));
+console.log('Checking hosted/local direct upload');
+const uploaded=await fetch(origin+'/api/support',{method:'POST',headers:{Origin:origin},body:form});assert.equal(uploaded.status,200,await uploaded.text());
+console.log('Upload response received; checking owner login');
+const login=await fetch(origin+'/api/admin/login',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json'},body:JSON.stringify({password:process.env.TAKSH_TEST_PASSWORD||'taksh-local-demand-qa'})});assert.equal(login.status,200);const cookie=login.headers.getSetCookie().map(s=>s.split(';')[0]).join('; ');
+const dashboard=await fetch(origin+'/api/admin/orders',{headers:{Cookie:cookie}}).then(r=>r.json());const support=dashboard.support.find(s=>s.description==='Synthetic direct five megabyte support test');assert.ok(support);
+const path='/api/admin/photo/'+support.id,denied=await fetch(origin+path);assert.equal(denied.status,401);assert.match(denied.headers.get('cache-control'),/no-store/);
+console.log('Checking private photo download');
+const photo=await fetch(origin+path,{headers:{Cookie:cookie}});assert.equal(photo.status,200);assert.equal(photo.headers.get('cache-control'),'private, no-store');assert.deepEqual(new Uint8Array(await photo.arrayBuffer()),bytes);
+const logout=await fetch(origin+'/api/admin/logout',{method:'POST',headers:{Origin:origin,Cookie:cookie}});assert.equal(logout.status,200);assert.equal((await fetch(origin+path,{headers:{Cookie:cookie}})).status,401);
+console.log('Direct 5 MiB multipart upload, private exact-byte download, no-store and logout revocation passed.');
