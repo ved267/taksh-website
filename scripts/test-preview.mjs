@@ -1,11 +1,21 @@
 // Synthetic remote verification through a loopback proxy so existing tests retain their local-only guard.
 // Hardcoded allowlist: NEVER use this helper for taksh.store or production data.
-import {createServer}from'node:http';import{randomBytes,createHash}from'node:crypto';import{writeFile,rm}from'node:fs/promises';import{execFileSync,spawn}from'node:child_process';import{resolve}from'node:path';
-const origin='https://codex-cloudflare-free-migration-taksh-store.taksh-ved267.workers.dev';
+import {createServer}from'node:http';import{randomBytes,createHash}from'node:crypto';import{writeFile,rm,readFile}from'node:fs/promises';import{execFileSync,spawn}from'node:child_process';import{resolve}from'node:path';
+import {cloudflareRequest}from'./cloudflare-api.mjs';
+let origin;
 const password=randomBytes(32).toString('hex'),syncKey=randomBytes(32).toString('hex');
-const file=resolve('.local/preview-synthetic-secrets.json');
-await writeFile(file,JSON.stringify({ADMIN_PASSWORD_HASH:createHash('sha256').update(password).digest('hex'),CUSTOMER_SHEET_SYNC_KEY:syncKey}),{mode:0o600});
-try{execFileSync(process.execPath,['scripts/deploy-preview.mjs'],{stdio:'inherit',env:{...process.env,TAKSH_PREVIEW_SECRETS_FILE:file}});}finally{await rm(file,{force:true});}
+if(process.argv.includes('--staging')){
+ const account='60742c7f90408058b71f1065a6815ddd',path=`accounts/${account}/workers/scripts/taksh-staging/secrets`;
+ const configured=(await cloudflareRequest(path)).result;
+ if(configured.some(secret=>secret.name==='ADMIN_PASSWORD_HASH'))throw new Error('Staging already has an owner password. Refusing to replace a configured credential with a test fixture.');
+ for(const [name,text]of Object.entries({ADMIN_PASSWORD_HASH:createHash('sha256').update(password).digest('hex'),CUSTOMER_SHEET_SYNC_KEY:syncKey}))await cloudflareRequest(path,{method:'PUT',body:{name,text,type:'secret_text'}});
+ origin='https://taksh-staging.taksh-ved267.workers.dev';
+}else{
+ const file=resolve('.local/preview-synthetic-secrets.json');
+ await writeFile(file,JSON.stringify({ADMIN_PASSWORD_HASH:createHash('sha256').update(password).digest('hex'),CUSTOMER_SHEET_SYNC_KEY:syncKey}),{mode:0o600});
+ try{execFileSync(process.execPath,['scripts/deploy-preview.mjs'],{stdio:'inherit',env:{...process.env,TAKSH_PREVIEW_SECRETS_FILE:file}});}finally{await rm(file,{force:true});}
+ origin=(await readFile('.local/preview-url.txt','utf8')).trim();if(!/^https:\/\/codex-cloudflare-migration-taksh-store\.taksh-ved267\.workers\.dev$/.test(origin))throw new Error('Remote QA requires this isolated migration preview.');
+}
 const server=createServer(async(req,res)=>{try{
  const started=Date.now();console.log('Preview request',req.method,new URL(req.url,origin).pathname);
  const body=[];for await(const part of req)body.push(part);

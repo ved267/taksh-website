@@ -9,23 +9,23 @@ Owner account `60742c7f90408058b71f1065a6815ddd`.
 | Purpose | D1 | R2 | State |
 | --- | --- | --- | --- |
 | Production | taksh-production | taksh-production-support | Schema migrated; initial private13order/1report snapshot reconciled; no public app cutover |
-| Earlier synthetic staging placeholder | taksh-preview | taksh-preview-support | Schema only; not production data |
+| Dedicated synthetic staging | taksh-preview | taksh-preview-support | Hosted5suite verification passed; noindex; synthetic data only |
 | Branch previews | taksh-pr-<branch slug>-<branch hash> | same branch-specific name | Dedicated writable resources, production IDs rejected |
-| Daily backup | Production export source | taksh-private-backups | Worker deployed; daily schedule OFF until credential/first remote backup+restore succeed |
+| Daily backup | Production export source | taksh-private-backups | Worker deployed; daily schedule OFF until dedicated credential is verified; first remote backup+restore passed |
 
-No public R2 access enabled. Backup `d1/` retention30days verified. Backup code rejects exports above20MiB and checks exact bytes/SHA256 before writing a completion manifest. D1 Time Travel on Paid and monthly outside-Cloudflare backup still need current verification/documentation.
+No public R2 access enabled. Backup `d1/` retention30days verified. Backup code rejects exports above20MiB and checks exact bytes/SHA256 before writing a completion manifest. Paid Time Travel remote bookmark verified;30days always on. First monthly outside-Cloudflare SQL/manifest download passed its checksum; recurring monthly copy is not yet scheduled.
 
 ## Deployment and source
 
-Main is reconciled to livev60 through [PR#1](https://github.com/ved267/taksh-website/pull/1). Source baseline validated with locked native build,71original units and five local request suites. Migration adds76total unit tests and synthetic hosted verification. Current migration branch is `codex/cloudflare-migration`.
+Main is reconciled to livev60 through [PR#1](https://github.com/ved267/taksh-website/pull/1). Source baseline validated with locked native build,71original units and five local request suites. Migration adds84total unit tests and synthetic hosted verification. Current migration branch is `codex/cloudflare-migration`.
 
-Latest owner brief replaces Workers Builds production deployment: GitHub Actions alone deploys production after Validate succeeds on main. Preview resources remain isolated for both `claude/*` and `codex/*`. Actions deployment secrets, preview PR comments, staging environment, rollback test and free-minute reporting are not yet configured/verified. Private Free branch protection is unavailable; do not pretend repository instructions enforce it.
+Latest owner brief replaces Workers Builds production deployment: GitHub Actions alone deploys production after Validate succeeds on main. Preview resources remain isolated for both `claude/*` and `codex/*`. Actions deployment secret, actual PR comments/Claude parity and free-minute reporting remain pending. Dedicated staging, direct branch preview and9second staging rollback are verified. Readiness flags are false until owner account setup. Private Free branch protection is unavailable; do not pretend repository instructions enforce it.
 
 ## Billing and monitoring
 
-$3usage email warning saved. $10total-bill alert remains unverified: existing native$10alert measures usage, not total fixed fees/tax/forecast. Images/Stream cost and creation attribution are being investigated; no cancellation performed. Latest owner instruction authorises cancellation if Taksh does not use it and it costs money.
+$3usage email warning saved. $10total-bill forecast cannot be provided by native budget alerts: official documentation excludes fixed fees; the existing$10alert is usage-only. Images/Stream cost and creation attribution are being investigated; no cancellation performed. Latest owner instruction authorises cancellation if Taksh does not use it and it costs money.
 
-The hourly Codex Mac automation was deleted, not paused. No70000/day or2000minute monitoring threshold remains. There is no Mac schedule for it. Use Cloudflare billing emails. Errors/CPU observability, current usage reporting, daily backup and post-cutover72hour checks must still be configured/verified.
+The hourly Codex Mac automation was deleted, not paused. No70000/day or2000minute monitoring threshold remains. There is no Mac schedule for it. Use Cloudflare billing emails. Included1%sampled/query-redacted observability is configured/deployed on staging; current account usage is reported in MIGRATION-STATUS. Permanent daily backup credential/schedule and post-cutover72hour reporting remain pending.
 
 ## Known account access limitation
 

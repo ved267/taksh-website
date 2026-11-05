@@ -1,31 +1,53 @@
-# Daily D1 backups
+# Backups and recovery
 
-The backup code is deployed as `taksh-daily-backup`, with **no HTTP URL and no active schedule yet**. `taksh-private-backups` is a private Standard R2 bucket. A verified lifecycle rule expires only `d1/` objects after30days. No public bucket access was enabled.
+Updated 5 November 2026. The daily schedule is **OFF** until the permanent credential is entered and verified. No backup HTTP endpoint is public.
 
-`workers/backup.mjs` exports production D1 using Cloudflare's polling export API, downloads its short-lived signed URL without forwarding the API credential, rejects empty/HTML/oversized data, writes SQL with a SHA256 checksum, then writes the completion manifest. A matching complete backup skips duplicate executions. Health is recorded at `health/latest.json`. Maximum export size20MiB;30copies are at most600MiB before small metadata. Existing account R2 usage also counts toward the free allowance. SQL export can briefly block writes; the intended time is03:30IST (22:00UTC), off peak.
+## Verified first remote backup
 
-## Owner credential setup
+On 5 November, the production D1 export was written to private `taksh-private-backups/d1/2026-11-05/taksh-production.sql` (13,592 bytes), with a SHA256 manifest and matching R2 metadata. The first run used the existing authorised owner's Wrangler OAuth in memory; that expiring session was **not** stored as the cron credential.
 
-Use Cloudflare's API token screen to create a dedicated token with **Account / D1 / Read**, restricted to this account. The API does not provide a per-database resource selector; this permission can export D1 databases in the selected account. Never reuse the expiring Wrangler OAuth credential for a server cron, and never paste any token into chat/Git.
+The SQL and manifest were downloaded into the owner-only folder `/Users/devanshsmac/Desktop/Taksh Website Export/2026-11/private-data/`, with private directory/file permissions. A fresh remote D1 database, `taksh-restore-check-2026-11-05-956f5f48`, was created independently and restored from this SQL. Every field matched production. Counts: orders 13, reporting_state 1, d1_migrations 5; enquiries, subscriptions, support, admin_sessions and rate_limits 0. The private restore database is retained for review and is not bound to a public Worker. Evidence: ignored `.local/remote-backup-verified.json`.
 
-Copy it directly into Workers & Pages → taksh-daily-backup → Settings → Variables and Secrets → Add → Secret → `D1_BACKUP_TOKEN`. The account/database IDs and R2 binding are non-secret committed configuration. The storefront and GitHub Actions do not receive this token. Confirm only that the setting was saved; do not send its value.
+This proves the export, real R2 object, offsite download and remote restore. It does not prove a permanent token or a scheduled execution.
 
-After credential setup, explicitly deploy the committed `wrangler.backup.json` to enable the daily schedule:
+## Permanent credential and activation
 
-```
-npx wrangler deploy --config wrangler.backup.json
-```
+Follow the single owner checklist in [OWNER-STEPS.md](OWNER-STEPS.md). Create an account-restricted **D1 Read** token; enter it personally with:
 
-Do not mark backups operational until the first real SQL object, manifest/checksum and restore check have passed. Unit tests currently exercise actual local R2, export polling, auth isolation, failure/size handling, idempotency and restoration into SQLite with synthetic data. They do not prove the owner's remote token or cron ran.
-
-## Restore verification
-
-Download a selected SQL/manifest privately with Wrangler R2 commands, verify SHA256, and restore into a **new disposable D1 database**, never over production as a test. Compare schema and per-table counts, timestamps, totals and a content digest. Do not put SQL/customer data into Git. A production restore requires a separate reviewed recovery action and current pre-restore backup.
-
-Migration commands remain explicit:
-
-```
-npx wrangler d1 migrations apply DB --remote --config wrangler.json
+```sh
+node scripts/set-private-setting.mjs backup-token
 ```
 
-The preview deploy command explicitly applies the same committed migrations to that branch's dedicated synthetic database before deploying. Schema creation never happens during a website request.
+Input is hidden. The helper verifies that this credential can complete an actual production export, stores it only in the backup Worker's `D1_BACKUP_TOKEN` secret, and writes non-secret verification metadata locally. Never use a Global API Key or paste tokens into chat. The token permission covers D1 in the selected account; a per-database selector must not be invented.
+
+Then the operator runs:
+
+```sh
+node scripts/enable-daily-backup.mjs
+```
+
+This refuses activation without a matching remote restore and dedicated credential proof from the last 24 hours, plus the saved Worker secret. If those proofs have expired, repeat verification first. The committed configuration enables `0 22 * * *`: **03:30 IST daily**. After activation, verify the schedule through Cloudflare and the next real `health/latest.json`; record the first cron result. Do not claim cron health from the one-time operator run.
+
+## What is retained
+
+The backup code uses the official [D1 polling export API](https://developers.cloudflare.com/api/resources/d1/subresources/database/methods/export/). Signed downloads receive no API token. Empty, HTML and exports above 20 MiB fail. SQL is written before its completion manifest; a matching completed day's backup is idempotent. `health/latest.json` records generic success/failure without SQL or credentials. Private R2 lifecycle expires only `d1/` objects after 30 days; 30 maximum-size copies use at most 600 MiB plus metadata. Existing account R2 storage/operations also count toward its free allowance. Export can briefly block database writes; daily time is off peak.
+
+D1 Time Travel is always enabled with **30-day retention on Paid**, without extra backup or restore charges ([Cloudflare documentation](https://developers.cloudflare.com/d1/reference/time-travel/)). Remote `wrangler d1 time-travel info DB --config wrangler.json` returned a current bookmark on 5 November. No Time Travel restore was performed against production.
+
+## Monthly copy outside Cloudflare
+
+The first monthly copy is verified in the private Desktop export folder above. Repeat monthly from the shared checkout:
+
+```sh
+node scripts/download-d1-backup.mjs
+```
+
+This fetches the latest successful health record, SQL and manifest, checks size/SHA256, and saves private files outside Git. This command is documented and tested; a recurring monthly job has **not** been enabled yet. A Mac-based copy requires the Mac to be awake and Wrangler signed in. The deleted hourly usage monitor is not involved or recreated.
+
+## Independent restore check
+
+```sh
+node scripts/verify-backup-restore.mjs /absolute/private/backup.sql /absolute/private/manifest.json
+```
+
+Paths must be in the owner's Desktop export folder. The script creates a new private database, imports, then compares all user-table contents/counts against the current production standby. On an actively changing production database, reconcile against the export-time snapshot rather than assuming a later live read is identical. Keep customer rows and SQL out of logs/Git. Never overwrite production as a restore test; a production recovery requires a reviewed recovery point and a fresh pre-restore backup.

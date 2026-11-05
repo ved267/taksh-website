@@ -12,35 +12,37 @@ Updated5 November2026 (Asia/Kolkata). **Migration in progress; taksh.store still
 ## Verified
 
 - Plain Cloudflare Worker/Vite/Vinext build; active Sites/ChatGPT/.openai hooks removed and legacy source archived.
--76unit tests passed. Typecheck and lint passed (3existing warnings). Fresh local D1/R2 request suites passed: selection/cart, email/mobile availability requests, no-contact validation, server prices, duplicate/retry prevention, owner login, confirmed-only demand/internal exclusion, Sheet failure/ack recovery, direct5MiB upload, private exact-byte photo download, logout revocation.
-- Same five suites passed remotely on the isolated synthetic preview. A5MiB test upload took43seconds from this Mac; private download2.7seconds. This is network wall time, not CPU or a phone benchmark.
-- Native live-v60 build baseline and target compared: total client JS/CSS, compressed Worker and combined key-page weight had no increase. Framework random build IDs caused a1-byte independent HTML-gzip fluctuation; requested combined page-weight gate passed. Deterministic CI build identities are being added so repeated comparisons are stable. No claim of a completed mobile/desktop browser speed comparison yet.
-- Private backup Worker deployed with **no active daily schedule**; local R2/export polling/failure/checksum/SQLite restore tests passed. Private R2 backup bucket has verified30-day retention for `d1/` only. Remote credential, first backup and remote restore/count check are pending.
-- Cloudflare$3usage early-warning email alert saved and verified. The existing$10usage alert is **not** a verified total-bill alert. Exact total-bill support/configuration remains unresolved.
+-84unit tests passed. Typecheck and lint passed (3existing warnings). Fresh local D1/R2 request suites passed: selection/cart, email/mobile availability requests, no-contact validation, server prices, duplicate/retry prevention, owner login, confirmed-only demand/internal exclusion, Sheet failure/ack recovery, direct5MiB upload, private exact-byte photo download, logout revocation.
+- Five hosted synthetic suites passed on the dedicated staging site and again on the renamed migration branch preview. Secure owner login/CSV, Sheet endpoint failure/recovery, exact5MiB private upload/download and logout revocation passed. No real customer email was sent. This does not prove a real Google Sheet write or browser speed.
+- Fresh deterministic target versus native live-v60 main baseline: JS gzip247541bytes, CSS33364bytes (identical); Worker415038bytes versus415089bytes (51bytes smaller). All21key URLs returned200 and combined page-weight gate passed. Same-source main baseline measured5Nov04:16UTC; final target5Nov04:51UTC. No mobile/desktop browser speed comparison claimed yet.
+- Dedicated staging https://taksh-staging.taksh-ved267.workers.dev is deployed with its own synthetic D1/R2 and noindex. It is **not ready for final staging approval** until owner setup, actual synthetic Sheet/notification delivery and browser checks finish. Latest full read-only crawl against live:18URLs,637assets,0errors; sitemap/robots/meta/404 match. Public UI/copy/assets unchanged.
+- Real first backup5Nov:13592byte SQL+manifest in private R2, downloaded privately outside Cloudflare, restored into a fresh remote D1; all fields/counts matched (13orders,1report,5migrations,other tables0). The one-time operator used existing OAuth in memory, not a stored cron secret. Permanent dedicated credential remains pending and daily schedule **OFF**. R2d1/retention30days verified. Paid Time Travel remote bookmark verified; documentation confirms30days always-on. First monthly owner-only copy verified; monthly recurring copy is not scheduled yet.
+- Staging previous-version rollback applied and verified in9050ms, then latest noindex version restored. One-command rollback and an optional Actions button are prepared. The two-minute target excludes DNS propagation and Actions queue/install time; production has no previous public app deployment yet.
+- Cloudflare$3usage early-warning email saved/verified; invoice emails received. Official Cloudflare budget alerts exclude fixed subscriptions and tax: an exact$10total-bill forecast is **not implemented by those alerts**. The existing$10usage warning is not a substitute or hard cap. No Mac monitor was added.
 - Hourly Mac monitor/schedule was deleted at the owner's request. No70k/day or2000minute alert applies on Paid. Do not recreate it.
 
 ## Latest required workflow (supersedes Workers Builds plan)
 
-Production must deploy only from GitHub Actions after Validate passes on main. Private Free GitHub branch protection is unavailable (403); deployment enforcement must block failed/unchecked main builds. Disable Workers Builds or any other automatic production path. Isolated Claude/Codex branch previews, PR URL comments, least-privilege deployment token in this repository's GitHub Actions secrets, and staging rollback test still need setup and verification. Agents use GitHub only. Full checks run on PRs/main, with superseded jobs cancelled, within free Actions minutes.
+Production is implemented in GitHub Actions only after actual Validate steps pass on current main, rechecked immediately before deploy. Skipped/failed/stale/PR/other-repo runs are rejected. No automatic Workers Builds production path was connected. Preview scripts create isolated resources and write verified PR URLs equally for claude/* and codex/*; direct Codex CLI preview works, actual Actions parity/comments remain pending credentials. All four workflow files parse successfully. Account readiness flags remain false: `TAKSH_CI_READY=false`, `TAKSH_DEPLOYMENT_READY=false`, so runner spend/deploys are deliberately off until free pool/budget and credential checks. Private Free branch protection returned403; no upgrade/public exposure. No migration merge/cutover yet.
 
 ## Monthly usage and cost
 
 | Metric | Latest verified observation | Source/as-of |
 | --- | --- | --- |
 | Workers fixed fee |$5/month approved and active | Cloudflare subscriptions,4Nov |
-| Requests / CPU | Initial analytics query returned no samples before public preview traffic; current totals pending | Cloudflare account GraphQL,4Nov14:59UTC; do not infer zero after later tests |
-| D1 rows |365read /150written in November snapshot; subsequent test/import activity not included | Account GraphQL,4Nov14:59UTC |
-| D1 storage | Pending current measured total | Not inferred |
-| R2 operations |21in November snapshot (account-wide); later activity not included | Account GraphQL,4Nov14:59UTC |
+| Requests / CPU | 175requests,0errors; total CPU3437.342ms, median7.278ms,p99222.516ms | Cloudflare account GraphQL,5Nov04:51:31UTC; November UTC month, delayed/sampled account-wide data |
+| D1 rows |1949read /560written | Account GraphQL,5Nov04:51:31UTC |
+| D1 storage | Production metadata110592bytes; all4D1databases331776bytes total | D1API,5Nov; file-size metadata may lag |
+| R2 operations |46operations in November snapshot (account-wide, delayed) | Account GraphQL,5Nov04:51:31UTC |
 | R2 billed storage |0.11GB-month,0billable/$0usage in current cycle | Cloudflare billing UI,4Nov; cycle15Oct–14Nov |
-| Cloudflare build minutes | No builds recorded in initial snapshot | GraphQL,4Nov14:59UTC; latest plan now Actions |
-| GitHub Actions minutes | Pending account usage query | Must remain within free allowance |
+| Cloudflare build minutes | No rows in5Novsnapshot; no Workers Builds connected | GraphQL,5Nov04:51UTC; deployments now use Actions |
+| GitHub Actions minutes | Unknown account included pool; runners held off | Billing API404/extrauser scope; owner UI required, no broadening |
 | Images/Stream | Plan label Images Stream Basic; creation audit response being inspected for price/which subscription | Audit event4Nov19:24:46IST, owner account via Dashboard; not yet attributed to this plan |
-| Total monthly bill | Not yet verified; about$5target, plus applicable tax | Usage alert is not a hard cap/total forecast |
+| Total monthly bill | About$5base target plus tax/actual usage;4Novinvoice$2.09 received, not itemised in email | Usage alert is not a hard cap/total forecast |
 
 ## Required before staging approval
 
-Complete integrations inventory, all-URL/sitemap/link/image/security/analytics checks, desktop/mobile comparison with live, dedicated staging resources and synthetic Sheet/email tests, daily remote backup+restore then schedule, tested staging rollback, deployment-only CI enforcement and Claude/Codex preview parity. Resolve Images/Stream cost/use and cancel only if unused and chargeable per owner's latest instruction. Set native billing emails, with honest limits if Cloudflare cannot alert on fixed-fee/tax-inclusive totals.
+Finish actual isolated Sheet/notification delivery, owner private credentials, browser phone/desktop/GA checks and speed comparison, permanent backup credential then daily schedule/first cron, actual Actions checks/PR comments and Claude/Codex parity. Runtime, isolated staging, full crawl, real first remote backup/restore and staging rollback are verified above. Resolve Images/Stream cost/use and cancel only if unused and chargeable per owner's latest instruction. Keep provider billing emails; exact tax-inclusive total forecast is unavailable through native usage budget alerts. Browser tab control currently fails with timeoutMs error; native Chrome is shared with ElevenLabs work. Account actions remain pending Cloudflare availability.
 
 ## Required before switch approval
 

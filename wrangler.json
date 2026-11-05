@@ -6,7 +6,7 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "workers_dev": true,
+  "workers_dev": false,
   "preview_urls": true,
   "limits": {
     "cpu_ms": 1000
@@ -36,5 +36,17 @@
       "APP_ENV": "preview"
     }
   },
-  "account_id": "60742c7f90408058b71f1065a6815ddd"
+  "account_id": "60742c7f90408058b71f1065a6815ddd",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.01,
+    "redact_query_string": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false
+    },
+    "traces": {
+      "enabled": false
+    }
+  }
 }

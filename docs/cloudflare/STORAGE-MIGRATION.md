@@ -1,0 +1,9 @@
+# Sites storage: unresolved export boundary
+
+Checked 5 November 2026. The available Sites connector exposes database reads, versions/source, environment variables, logs, domains and access controls. It exposes **no R2 object list, object download, bucket export or storage credential operation**. The owner's Wrangler account controls the new Taksh buckets; it does not control the managed Sites account/bucket. Account credentials cannot be assumed to grant access across accounts.
+
+The existing storefront's private photo route can retrieve a referenced support object's key after owner authentication. It cannot enumerate orphaned/unreferenced keys. The bounded source D1 export currently has zero support rows. That proves no referenced photo in that snapshot, **not that the old bucket is empty**. No complete R2 export has been performed or claimed.
+
+A complete provider storage export/listing, or a verified owner storage UI with equivalent list/download capability, is still needed to prove the old bucket's contents. The browser storage UI has not yet been verified because account/browser access remains unresolved. If Sites provides no such owner capability, the exact unsupported operation is enumeration/export of the provider-managed R2 bucket, including orphaned objects; a provider-assisted export is required. Do not republish or modify the frozen Sites app to invent an unauthorised export endpoint.
+
+Keep any supplied listing and objects privately outside Git; reconcile key, size and checksum, including unreferenced keys, and copy the required objects into private production R2 before accepting their database references. `import-sites-business-data.mjs` refuses referenced photos unless a verified private export manifest includes their keys. Retain Sites during this unresolved boundary and the post-cutover rollback window. The owner must receive this limitation explicitly if no export capability exists.

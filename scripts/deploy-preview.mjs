@@ -1,12 +1,15 @@
-// Cloudflare Workers Builds runs this for EVERY non-production branch, independent of agent.
+// GitHub Actions runs this for claude/* and codex/* branches, independent of agent.
 // It explicitly applies committed migrations before deploying; never runs inside a request.
-import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,appendFile} from 'node:fs/promises';
 import {resolve,dirname} from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {previewIdentity,isolatedPreviewConfig} from '../lib/cloudflare/preview-config.mjs';
+import {previewBranchAllowed} from '../lib/cloudflare/deployment-policy.mjs';
 import {cloudflareRequest} from './cloudflare-api.mjs';
+import {previewUrlFromOutput} from '../lib/cloudflare/preview-output.mjs';
 const root=process.cwd();
-const branch=process.env.WORKERS_CI_BRANCH||process.env.CF_PAGES_BRANCH||execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim();
+const branch=process.env.TAKSH_PREVIEW_BRANCH||process.env.WORKERS_CI_BRANCH||process.env.CF_PAGES_BRANCH||execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim();
+if(!previewBranchAllowed(branch))throw new Error('Only claude/* and codex/* branches can deploy previews.');
 const identity=previewIdentity(branch);
 const builtPath=resolve(root,'dist/server/wrangler.json'),base=JSON.parse(await readFile(builtPath,'utf8'));
 const account=base.account_id;
@@ -28,4 +31,11 @@ const wrangler=resolve(root,'node_modules/wrangler/bin/wrangler.js');
 function run(args){execFileSync(process.execPath,[wrangler,...args],{stdio:'inherit'});}
 console.log(`Isolated synthetic preview: ${branch}; ${identity.databaseName}`);
 run(['d1','migrations','apply','DB','--remote','--preview','--config',configPath]);
-run(['preview','--name',branch,'--config',configPath,...(process.env.TAKSH_PREVIEW_SECRETS_FILE?['--secrets-file',resolve(process.env.TAKSH_PREVIEW_SECRETS_FILE)]:[])]);
+const metadataPath=resolve(root,'.local/preview-deployment-output.jsonl');
+await writeFile(metadataPath,'');
+execFileSync(process.execPath,[wrangler,'preview','--name',branch,'--config',configPath,'--json',...(process.env.TAKSH_PREVIEW_SECRETS_FILE?['--secrets-file',resolve(process.env.TAKSH_PREVIEW_SECRETS_FILE)]:[])],{encoding:'utf8',stdio:['ignore','pipe','inherit'],maxBuffer:16*1024*1024,env:{...process.env,WRANGLER_OUTPUT_FILE_PATH:metadataPath}});
+const url=previewUrlFromOutput(await readFile(metadataPath,'utf8'),branch,base.name);
+console.log('Preview URL: '+url);
+await writeFile(resolve(root,'.local/preview-url.txt'),url+'\n');
+if(process.env.GITHUB_OUTPUT)await appendFile(process.env.GITHUB_OUTPUT,'url='+url+'\n');
+if(process.env.GITHUB_STEP_SUMMARY)await appendFile(process.env.GITHUB_STEP_SUMMARY,`Isolated preview for ${branch}: [Open preview](${url})\n`);

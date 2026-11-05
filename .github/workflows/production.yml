@@ -1,0 +1,44 @@
+name: Deploy validated production
+on:
+  workflow_run:
+    workflows: [Validate]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: taksh-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: >-
+      vars.TAKSH_DEPLOYMENT_READY == 'true' && vars.TAKSH_CI_READY == 'true' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Verify current main passed Validate
+        run: node scripts/verify-production.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - name: Deploy checked revision only
+        run: |
+          node scripts/verify-production.mjs
+          node node_modules/wrangler/bin/wrangler.js deploy --config dist/server/wrangler.json
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

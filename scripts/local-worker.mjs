@@ -1,0 +1,17 @@
+// Compiled Worker on direct Miniflare, avoiding Wrangler's development ProxyWorker.
+// Only synthetic local D1/R2; static bytes use the compiled assets directory.
+import {Miniflare,convertV4MiniflareOptions}from'miniflare';
+import{readFile,readdir}from'node:fs/promises';import{resolve,sep,extname}from'node:path';import{createServer}from'node:http';
+export async function startLocalWorker(root,config,persist){
+ const serverRoot=resolve(root,'dist/server'),assetRoot=resolve(root,'dist/client');
+ const files=(await readdir(serverRoot,{recursive:true})).filter(p=>p.endsWith('.js'));
+ const modules=['index.js',...files.filter(p=>p!=='index.js')].map(path=>({type:'ESModule',path:resolve(serverRoot,path)}));
+ const types={'.js':'text/javascript','.css':'text/css','.html':'text/html','.xml':'application/xml','.txt':'text/plain','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.avif':'image/avif','.svg':'image/svg+xml','.ico':'image/x-icon','.woff2':'font/woff2','.woff':'font/woff'};
+ async function asset(request){const url=new URL(request.url),file=resolve(assetRoot,'.'+decodeURIComponent(url.pathname));if(!file.startsWith(assetRoot+sep))return null;try{const bytes=await readFile(file);return new Response(request.method==='HEAD'?null:bytes,{headers:{'Content-Type':types[extname(file)]||'application/octet-stream','Content-Length':String(bytes.length)}});}catch{return null;}}
+ const mf=new Miniflare(convertV4MiniflareOptions({resourcePersistencePath:resolve(persist,'v3'),name:'taksh-local-synthetic',modules,modulesRoot:serverRoot,compatibilityDate:config.compatibility_date,compatibilityFlags:config.compatibility_flags,bindings:config.vars,d1Databases:{DB:config.d1_databases[0].database_id},r2Buckets:{BUCKET:'taksh-local-synthetic'},serviceBindings:{ASSETS:async request=>await asset(request)||new Response('Not found.',{status:404})}}));
+ // Prove the explicit migration command's database is the one the Worker will use.
+ const migrations=await(await mf.getD1Database('DB')).prepare('SELECT COUNT(*) AS count FROM d1_migrations').first();if(migrations.count!==(await readdir(resolve(root,'drizzle'))).filter(name=>name.endsWith('.sql')).length){await mf.dispose();throw new Error('Local Worker did not open the explicitly migrated synthetic database.');}
+ const server=createServer(async(req,res)=>{try{const chunks=[];for await(const part of req)chunks.push(part);const url=`http://127.0.0.1:${server.address().port}${req.url}`;const init={method:req.method,headers:req.headers,...(['GET','HEAD'].includes(req.method)?{}:{body:Buffer.concat(chunks)})};const request=new Request(url,init);const response=(['GET','HEAD'].includes(req.method)?await asset(request):null)||await mf.dispatchFetch(url,init);res.statusCode=response.status;for(const [key,value]of response.headers)if(!['set-cookie','transfer-encoding','content-length','content-encoding'].includes(key))res.setHeader(key,value);res.setHeader('Set-Cookie',response.headers.getSetCookie());res.end(req.method==='HEAD'?undefined:Buffer.from(await response.arrayBuffer()));}catch(error){console.error('Local Worker request failed:',error.message);res.writeHead(500,{'Content-Type':'application/json'});res.end('{"error":"Local Worker request failed"}');}});
+ await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
+ return{origin:`http://127.0.0.1:${server.address().port}`,async close(){server.closeAllConnections();await new Promise(ok=>server.close(ok));await mf.dispose();}};
+}

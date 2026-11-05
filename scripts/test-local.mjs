@@ -3,7 +3,6 @@ import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {resolve,dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {spawn,execFileSync} from 'node:child_process';
-import {createServer} from 'node:net';
 const root=resolve(process.env.TAKSH_APP_ROOT||process.cwd());
 const temp=resolve(root,`.local/ci-${Date.now()}`);await mkdir(temp,{recursive:true});
 const configFile=resolve(root,'dist/server/wrangler.json'),config=JSON.parse(await readFile(configFile,'utf8'));
@@ -17,15 +16,16 @@ const localConfig=resolve(temp,'wrangler.json');await writeFile(localConfig,JSON
 await writeFile(resolve(temp,'.dev.vars'),`ADMIN_PASSWORD_HASH=${createHash('sha256').update('taksh-local-demand-qa').digest('hex')}\nCUSTOMER_SHEET_SYNC_KEY=${'a'.repeat(64)}\nRESEND_API_KEY=\nFROM_EMAIL=\n`,{mode:0o600});
 const wrangler=resolve(root,'node_modules/wrangler/bin/wrangler.js'),persist=resolve(temp,'state');
 execFileSync(process.execPath,[wrangler,'d1','migrations','apply','DB','--local','--config',localConfig,'--persist-to',persist],{cwd:root,stdio:'inherit'});
-const port=await new Promise((ok,bad)=>{const s=createServer();s.on('error',bad);s.listen(0,'127.0.0.1',()=>{const port=s.address().port;s.close(()=>ok(port));});});
-const child=spawn(process.execPath,[wrangler,'dev','--config',localConfig,'--local','--persist-to',persist,'--ip','127.0.0.1','--port',String(port),'--inspector-port','0'],{cwd:root,stdio:['ignore','pipe','pipe']});
-let logs='';for(const stream of [child.stdout,child.stderr])stream.on('data',d=>{logs+=d.toString();});
-const origin=`http://127.0.0.1:${port}`;
+const {startLocalWorker}=await import('./local-worker.mjs');
+config.vars={APP_ENV:'preview',ADMIN_PASSWORD_HASH:createHash('sha256').update('taksh-local-demand-qa').digest('hex'),CUSTOMER_SHEET_SYNC_KEY:'a'.repeat(64),RESEND_API_KEY:'',FROM_EMAIL:''};
+const worker=await startLocalWorker(root,config,persist);
+const origin=worker.origin;
 try{
- let ready=false;for(let i=0;i<120;i++){if(child.exitCode!==null)throw new Error('Local Worker exited: '+logs.slice(-4000));try{const r=await fetch(origin+'/api/admin/orders');if(r.status===401){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,500));}
- if(!ready)throw new Error('Local Worker not ready: '+logs.slice(-4000));
- if(!process.argv.includes('--performance-only'))for(const test of ['cart-lifecycle','availability-request','gully-cricket','demand','support-upload'])execFileSync(process.execPath,[resolve(import.meta.dirname,'../tests',test+'.integration.mjs')],{cwd:root,stdio:'inherit',env:{...process.env,TAKSH_TEST_ORIGIN:origin}});
+ if(!process.argv.includes('--performance-only'))for(const test of ['cart-lifecycle','availability-request','gully-cricket','demand','support-upload'])await new Promise((ok,bad)=>{
+  const run=spawn(process.execPath,[resolve(import.meta.dirname,'../tests',test+'.integration.mjs')],{cwd:root,stdio:'inherit',env:{...process.env,TAKSH_TEST_ORIGIN:origin}});
+  run.on('error',bad);run.on('exit',code=>code===0?ok():bad(new Error(`Local ${test} failed (${code}). See ${temp}/worker.log`)));
+ });
  const {measurePerformance}=await import('./measure-performance.mjs');
  const report=await measurePerformance(root,origin);
  const output=process.env.TAKSH_PERFORMANCE_OUTPUT||resolve(temp,'performance.json');await writeFile(output,JSON.stringify(report,null,2)+'\n');console.log(`Performance evidence: ${output}`);
-}finally{child.kill('SIGTERM');await writeFile(resolve(temp,'worker.log'),logs);}
+}finally{await worker.close();}
