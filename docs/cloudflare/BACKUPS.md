@@ -42,7 +42,7 @@ The first monthly copy is verified in the private Desktop export folder above. R
 node scripts/download-d1-backup.mjs
 ```
 
-This fetches the latest successful health record, SQL and manifest, checks size/SHA256, and saves private files outside Git. This command is documented and tested; a recurring monthly job has **not** been enabled yet. A Mac-based copy requires the Mac to be awake and Wrangler signed in. The deleted hourly usage monitor is not involved or recreated.
+This fetches the latest successful health record, SQL and manifest, checks size/SHA256, and saves private files outside Git. This command is documented and tested. Codex automation `taksh-monthly-private-d1-copy` is ACTIVE: the first of each month at10:00IST. It checks checksum/size, owner-only permissions and a backup/health age within48hours; stale or failed copies are reported, not accepted as fresh. The first scheduled run has not occurred yet. The Mac must be awake with Wrangler signed in. The deleted hourly usage monitor is not involved or recreated.
 
 ## Independent restore check
 

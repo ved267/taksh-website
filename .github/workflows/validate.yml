@@ -16,6 +16,13 @@ jobs:
     timeout-minutes: 30
     env:
       TAKSH_PERFORMANCE_BUILD_ID: 00000000-0000-4000-8000-000000000001
+      # Public synthetic fixtures, only for this non-deployable benchmark build.
+      # Vinext otherwise embeds fresh random server identities/authentication
+      # values; their entropy changes gzip size even when app code is identical.
+      # Production and preview workflows build separately without these fixtures.
+      __VINEXT_SHARED_RSC_BUILD_IDENTITY: '00000000000000000000000000000001'
+      __VINEXT_SHARED_PRERENDER_SECRET: '1111111111111111111111111111111111111111111111111111111111111111'
+      __VINEXT_SHARED_REVALIDATE_SECRET: '2222222222222222222222222222222222222222222222222222222222222222'
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
