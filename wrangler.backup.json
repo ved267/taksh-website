@@ -8,9 +8,7 @@
     "cpu_ms": 10000
   },
   "triggers": {
-    "crons": [
-      "0 22 * * *"
-    ]
+    "crons": []
   },
   "vars": {
     "CLOUDFLARE_ACCOUNT_ID": "60742c7f90408058b71f1065a6815ddd",

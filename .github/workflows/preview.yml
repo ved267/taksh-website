@@ -1,5 +1,6 @@
 name: Build isolated branch preview
 on:
+  workflow_dispatch:
   push:
     branches: ['claude/**', 'codex/**']
   pull_request:
@@ -13,7 +14,7 @@ jobs:
   build:
     if: >-
       vars.TAKSH_CI_READY == 'true' &&
-      (github.event_name == 'push' ||
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch' ||
       (github.event.pull_request.head.repo.full_name == github.repository &&
       (startsWith(github.head_ref, 'claude/') || startsWith(github.head_ref, 'codex/'))))
     name: Build preview without credentials

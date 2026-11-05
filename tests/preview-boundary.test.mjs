@@ -22,3 +22,8 @@ test('credentialed deployment config is constructed from trusted settings and fi
  const result=compiledPreviewBase({name:'taksh-store',account_id:'60742c7f90408058b71f1065a6815ddd',d1_databases:[],r2_buckets:[],build:{command:'must never execute'},routes:['production.example'],vars:{DANGEROUS:'must not copy'}},'/tmp/synthetic-bundle');
  assert.equal(result.build,undefined);assert.equal(result.routes,undefined);assert.equal(result.vars.DANGEROUS,undefined);assert.equal(result.no_bundle,true);assert.equal(result.main,'/tmp/synthetic-bundle/dist/server/index.js');
 });
+test('native previews override every parent secret with synthetic fixtures',async()=>{
+ const {syntheticPreviewSecrets}=await import('../lib/cloudflare/compiled-preview.mjs');const fixtures=syntheticPreviewSecrets();
+ assert.deepEqual(Object.keys(fixtures).sort(),['ADMIN_PASSWORD_HASH','CUSTOMER_SHEET_SYNC_KEY','FROM_EMAIL','INTERNAL_CONTACTS','RESEND_API_KEY']);
+ assert.match(fixtures.ADMIN_PASSWORD_HASH,/^[a-f0-9]{64}$/);assert.match(fixtures.CUSTOMER_SHEET_SYNC_KEY,/^[a-f0-9]{64}$/);assert.equal(fixtures.RESEND_API_KEY,'preview-email-disabled');
+});

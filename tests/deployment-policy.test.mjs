@@ -9,3 +9,8 @@ test('Claude and Codex preview branches follow identical policy, while main is r
  assert.equal(previewBranchAllowed('claude/product'),true);assert.equal(previewBranchAllowed('codex/product'),true);
  for(const value of ['main','master','','codex/','codex/task\nmain','feature/task'])assert.equal(previewBranchAllowed(value),false);
 });
+test('manual production picks only successful Validate push evidence on current main',async()=>{
+ const {validatedMainRun}=await import('../lib/cloudflare/deployment-policy.mjs');const sha='a'.repeat(40),good={id:7,head_sha:sha,head_branch:'main',event:'push',conclusion:'success',path:'.github/workflows/validate.yml',repository:{full_name:'ved267/taksh-website'}};
+ assert.equal(validatedMainRun([good],sha).id,7);
+ for(const change of [{head_sha:'b'.repeat(40)},{head_branch:'claude/task'},{event:'pull_request'},{conclusion:'failure'},{path:'.github/workflows/other.yml'}])assert.equal(validatedMainRun([{...good,...change}],sha),undefined);
+});

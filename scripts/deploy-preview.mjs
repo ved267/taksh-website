@@ -7,7 +7,7 @@ import {previewIdentity,isolatedPreviewConfig} from '../lib/cloudflare/preview-c
 import {previewBranchAllowed} from '../lib/cloudflare/deployment-policy.mjs';
 import {cloudflareRequest} from './cloudflare-api.mjs';
 import {previewUrlFromOutput} from '../lib/cloudflare/preview-output.mjs';
-import {compiledPreviewBase} from '../lib/cloudflare/compiled-preview.mjs';
+import {compiledPreviewBase,syntheticPreviewSecrets} from '../lib/cloudflare/compiled-preview.mjs';
 const root=process.cwd();
 const branch=process.env.TAKSH_PREVIEW_BRANCH||process.env.WORKERS_CI_BRANCH||process.env.CF_PAGES_BRANCH||execFileSync('git',['branch','--show-current'],{encoding:'utf8'}).trim();
 if(!previewBranchAllowed(branch))throw new Error('Only claude/* and codex/* branches can deploy previews.');
@@ -35,9 +35,13 @@ const wrangler=resolve(root,'node_modules/wrangler/bin/wrangler.js');
 function run(args){execFileSync(process.execPath,[wrangler,...args],{stdio:'inherit'});}
 console.log(`Isolated synthetic preview: ${branch}; ${identity.databaseName}`);
 run(['d1','migrations','apply','DB','--remote','--preview','--config',configPath]);
+const fixtureFile=resolve(root,'.local/preview-fixture-secrets.json');
+const overrides=process.env.TAKSH_PREVIEW_SECRETS_FILE?JSON.parse(await readFile(resolve(process.env.TAKSH_PREVIEW_SECRETS_FILE),'utf8')):{};
+await writeFile(fixtureFile,JSON.stringify({...syntheticPreviewSecrets(),...overrides}),{mode:0o600});
+const secretsFile=fixtureFile;
 const metadataPath=resolve(root,'.local/preview-deployment-output.jsonl');
 await writeFile(metadataPath,'');
-execFileSync(process.execPath,[wrangler,'preview','--name',branch,'--config',configPath,'--json',...(process.env.TAKSH_PREVIEW_SECRETS_FILE?['--secrets-file',resolve(process.env.TAKSH_PREVIEW_SECRETS_FILE)]:[])],{encoding:'utf8',stdio:['ignore','pipe','inherit'],maxBuffer:16*1024*1024,env:{...process.env,WRANGLER_OUTPUT_FILE_PATH:metadataPath}});
+execFileSync(process.execPath,[wrangler,'preview','--name',branch,'--config',configPath,'--json','--secrets-file',secretsFile],{encoding:'utf8',stdio:['ignore','pipe','inherit'],maxBuffer:16*1024*1024,env:{...process.env,WRANGLER_OUTPUT_FILE_PATH:metadataPath}});
 const url=previewUrlFromOutput(await readFile(metadataPath,'utf8'),branch,base.name);
 console.log('Preview URL: '+url);
 await writeFile(resolve(root,'.local/preview-url.txt'),url+'\n');

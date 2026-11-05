@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   rollback:
-    if: vars.TAKSH_DEPLOYMENT_READY == 'true' && github.ref == 'refs/heads/main'
+    if: vars.TAKSH_DEPLOYMENT_READY == 'true' && vars.TAKSH_PRODUCTION_READY == 'true' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

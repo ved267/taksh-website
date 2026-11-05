@@ -29,3 +29,8 @@ test('partial Sheet failure retries exactly once without losing pending owner al
  c.syncTakshRequests();assert.equal(s.rows.filter(r=>r[12]==='TK-PARTIAL').length,1);assert.equal(s.rows.filter(r=>r[12]==='TK-QA').length,0);assert.equal(JSON.parse(props.get('SYNC_STATE')).pending,1);
  c.syncTakshRequests();assert.equal(JSON.parse(props.get('SYNC_STATE')).pending,1);
 });
+test('one explicitly marked migration test reaches the Sheet as Test without adding demand or alerts',()=>{
+ const s=fakeSheet(),row={...request('TK-MIGRATION','Taksh migration internal test'),isTest:true};row.values[14]='taksh-migration-check';
+ assert.equal(context.applyRequests_(s,[row]),0);assert.equal(context.applyRequests_(s,[row]),0);
+ const saved=s.rows.filter(r=>r[12]==='TK-MIGRATION');assert.equal(saved.length,1);assert.equal(saved[0][15],'Test');assert.match(saved[0][16],/internal|migration/i);
+});

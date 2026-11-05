@@ -39,3 +39,6 @@ test('failed or oversized exports do not produce a successful backup record',asy
   const result=await bucket.list({prefix:'d1/'});assert.equal(result.objects.length,0);
  });
 });
+test('manual backup forces a fresh authenticated export even if the day already has a valid object',async()=>{
+ await fixture(async bucket=>{let exports=0;const env={CLOUDFLARE_ACCOUNT_ID:account,D1_DATABASE_ID:database,D1_BACKUP_TOKEN:'local-backup-fixture',BACKUPS:bucket};const fetcher=async url=>{if(url.includes('api.cloudflare.com')){exports++;return Response.json({success:true,result:{status:'complete',result:{signed_url:'https://test.r2.cloudflarestorage.com/export.sql'}}})}return new Response(sql)};const options={fetcher,wait:async()=>{},now:new Date('2026-11-05T22:00:00Z')};await backups.runDailyBackup(env,options);await backups.runDailyBackup(env,{...options,force:true});assert.equal(exports,2);});
+});
