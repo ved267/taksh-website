@@ -36,7 +36,7 @@ Committed Drizzle SQL under drizzle/ is authoritative; migration metadata remain
 | support | id, created_at, set_slug, description, mobile, photo_key, photo_type |
 | enquiries | id, reference, created_at, name, mobile, email, topic, message |
 | reporting_state | key, updated_at, payload |
-| d1_migrations | D1 migration bookkeeping, maintained by Wrangler |
+| d1_migrations | id, name, applied_at (Wrangler bookkeeping) |
 
 Orders persist server-side item/price/currency snapshots, progress, CAS version, attribution and traffic classification. A saved request does not establish payment. Preserve source identifiers/timestamps and idempotency during import. Business-data reconciliation does not reuse source admin sessions/rate limits. Internal and automated rows remain excluded from real demand reporting.
 
@@ -44,7 +44,7 @@ Orders persist server-side item/price/currency snapshots, progress, CAS version,
 
 Production: taksh-production D1 and taksh-production-support R2. Dedicated staging: taksh-preview D1 and taksh-preview-support R2. Native branch previews derive separate D1/bucket names from branch+hash, use APP_ENV=preview and synthetic secrets; production storage is never mounted there. Dedicated staging is APP_ENV=staging and can receive the authorised private restore test.
 
-Private taksh-private-backups holds native SQL plus integrity manifests under d1/YYYY-MM-DD/, pre-restore snapshots under d1/pre-restore/, and numeric health records under health/. Lifecycle deletes d1/ objects after30days. GitHub backup schedule is22:00UTC daily after proof/readiness. D1 Paid Time Travel is an independent30-day layer. Monthly Mac copy is best effort. Legacy taksh-daily-backup has no active cron and is not used; no separate backup token.
+Private taksh-private-backups holds native SQL plus integrity manifests under d1/YYYY-MM-DD/<snapshot UUID>/ with a completed-day pointer, pre-restore snapshots under d1/pre-restore/, and numeric health records under health/. Lifecycle deletes d1/ objects after30days. GitHub backup schedule is22:00UTC daily after proof/readiness. D1 Paid Time Travel is an independent30-day layer. Monthly Mac copy is best effort. Legacy taksh-daily-backup has no active cron and is not used; no separate backup token.
 
 The Apps Script sync trigger runs every5minutes. The hosted Actions watch runs hourly only through the72-hour cutover window and sends one summary, and a daily hosted retirement check asks at day14 then disables. The app Worker has no cron handler; Sheet health is checked by the hosted Actions watch. No migration, backup export or DDL executes during a customer request.
 

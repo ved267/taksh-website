@@ -42,3 +42,14 @@ test('failed or oversized exports do not produce a successful backup record',asy
 test('manual backup forces a fresh authenticated export even if the day already has a valid object',async()=>{
  await fixture(async bucket=>{let exports=0;const env={CLOUDFLARE_ACCOUNT_ID:account,D1_DATABASE_ID:database,D1_BACKUP_TOKEN:'local-backup-fixture',BACKUPS:bucket};const fetcher=async url=>{if(url.includes('api.cloudflare.com')){exports++;return Response.json({success:true,result:{status:'complete',result:{signed_url:'https://test.r2.cloudflarestorage.com/export.sql'}}})}return new Response(sql)};const options={fetcher,wait:async()=>{},now:new Date('2026-11-05T22:00:00Z')};await backups.runDailyBackup(env,options);await backups.runDailyBackup(env,{...options,force:true});assert.equal(exports,2);});
 });
+test('failed same-day completion publish preserves the previous restorable snapshot',async()=>{
+ await fixture(async bucket=>{
+  const env={CLOUDFLARE_ACCOUNT_ID:account,D1_DATABASE_ID:database,D1_BACKUP_TOKEN:'local-backup-fixture',BACKUPS:bucket};let body=sql;
+  const fetcher=async url=>url.includes('api.cloudflare.com')?Response.json({success:true,result:{status:'complete',result:{signed_url:'https://test.r2.cloudflarestorage.com/export.sql'}}}):new Response(body);
+  const opts={fetcher,wait:async()=>{},now:new Date('2026-11-05T22:00:00Z'),force:true};
+  const first=await backups.runDailyBackup(env,opts);body=sql.replace('123','456');
+  env.BACKUPS={get:(...x)=>bucket.get(...x),head:(...x)=>bucket.head(...x),put:async(key,...args)=>{if(key.endsWith('.json'))throw Error('storage interruption');return bucket.put(key,...args)}};
+  await assert.rejects(backups.runDailyBackup(env,opts),/storage interruption/);
+  assert.equal(await(await bucket.get(first.key)).text(),sql,'previous completion must still restore exact original contents');
+ });
+});

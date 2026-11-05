@@ -6,6 +6,8 @@ const worker=environment==='staging'?'taksh-staging':'taksh-store',config=enviro
 const wrangler=resolve('node_modules/wrangler/bin/wrangler.js');
 function list(){return JSON.parse(execFileSync(process.execPath,[wrangler,'deployments','list','--name',worker,'--config',config,'--json'],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));}
 const {current,previous}=previousDeployment(list());
+const expectedCurrent=process.argv.find(v=>v.startsWith('--expected-current='))?.split('=')[1],target=process.argv.find(v=>v.startsWith('--target='))?.split('=')[1];
+if((expectedCurrent&&current!==expectedCurrent)||(target&&previous!==target))throw new Error('Deployment changed since recovery planning; no rollback performed.');
 console.log(JSON.stringify({environment,currentVersion:current,rollbackVersion:previous}));
 if(!process.argv.includes('--apply')){console.log('Inspection only. Add --apply for the explicit rollback.');process.exit(0);}
 const start=Date.now();
