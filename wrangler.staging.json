@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "taksh-staging",
+  "main": "workers/app.ts",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": true,
+  "preview_urls": false,
+  "limits": {
+    "cpu_ms": 1000
+  },
+  "assets": {
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "APP_ENV": "staging"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "taksh-preview",
+      "database_id": "ee526389-8611-4c32-85f5-f9d29dadd27a",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "taksh-preview-support"
+    }
+  ],
+  "account_id": "60742c7f90408058b71f1065a6815ddd",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.01,
+    "redact_query_string": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false
+    },
+    "traces": {
+      "enabled": false
+    }
+  }
+}

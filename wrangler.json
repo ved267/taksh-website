@@ -1,0 +1,52 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "taksh-store",
+  "main": "workers/app.ts",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": false,
+  "preview_urls": true,
+  "limits": {
+    "cpu_ms": 1000
+  },
+  "assets": {
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "APP_ENV": "production"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "taksh-production",
+      "database_id": "d110db81-9cb7-4b8d-90e5-3787ffd01517",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "taksh-production-support"
+    }
+  ],
+  "previews": {
+    "vars": {
+      "APP_ENV": "preview"
+    }
+  },
+  "account_id": "60742c7f90408058b71f1065a6815ddd",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.01,
+    "redact_query_string": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false
+    },
+    "traces": {
+      "enabled": false
+    }
+  }
+}

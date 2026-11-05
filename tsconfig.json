@@ -37,12 +37,17 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
   "exclude": [
     "node_modules",
-    "examples"
+    "examples",
+    "docs/legacy-sites",
+    "build",
+    ".next",
+    ".netlify",
+    ".deployment",
+    ".wrangler",
+    "dist"
   ]
 }

@@ -1,6 +1,8 @@
 // Isolated local Worker only. Never sends a request to the customer database.
 import assert from 'node:assert/strict';
-const origin='http://127.0.0.1:5174';
+const requestedOrigin=new URL(process.env.TAKSH_TEST_ORIGIN||'http://127.0.0.1:5174');
+assert.ok(requestedOrigin.protocol==='http:'&&['127.0.0.1','localhost'].includes(requestedOrigin.hostname),'Integration fixtures require an isolated loopback Worker.');
+const origin=process.env.TAKSH_TEST_ORIGIN||'http://127.0.0.1:5174';
 const cookies=new Map();
 async function post(path,body){const r=await fetch(origin+path,{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,Cookie:[...cookies].map(([k,v])=>k+'='+v).join('; ')},body:JSON.stringify(body)});for(const s of r.headers.getSetCookie()){const [k,v]=s.split(';')[0].split('=');cookies.set(k,v)}const data=await r.json();assert.equal(r.status,200,JSON.stringify(data));return data;}
 await post('/api/cart',{items:[{slug:'gully-cricket',quantity:2,price:1}],attribution:{utmSource:'local-gully-qa'}});
