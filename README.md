@@ -1,9 +1,16 @@
-# Taksh website — GitHub source of truth
+# Taksh website
 
-Owner: ved267. Shared equally by Claude and Codex. Read AGENTS.md.
+GitHub is the source of truth for Claude and Codex: https://github.com/ved267/taksh-website. Follow [AGENTS.md](AGENTS.md); CLAUDE.md only points there. Original Sites builder folder is frozen. Sites remains live until the owner's staging and switch approvals.
 
-Current branch `codex/cloudflare-free-migration` reconciles the exact published Sites version60 source. The earlier Next/Vercel and Netlify/Turso work is saved on its own branches; no paid provider or account was provisioned. Main remains the original export baseline until a reviewed migration is approved.
+Target: owner's Cloudflare Workers Paid ($5/month), native D1 and private R2 within its free allowance. No other paid add-on/trial. Production deploys only through GitHub Actions after Validate passes on main; isolated previews use the same path for Claude/Codex. Setup is in progress; do not assume a listed capability is already active.
 
-**Stopped at the requested Cloudflare Free gate:** compressed existing Vinext artifact405.90KiB, but real live v60 CPU samples exceed10ms. No own-account deployment or DNS switch. Read [Cloudflare status](docs/cloudflare/STATUS.md), [measurements](docs/cloudflare/feasibility-2026-11-04.json) and the [owner-only steps](docs/cloudflare/OWNER-STEPS.md).
+```
+npm ci
+npm run build
+npm test
+npm run typecheck
+npm run lint
+node scripts/test-local.mjs
+```
 
-The original builder folder is frozen with a README. Live taksh.store remains on Sites. After an approved future cutover, keep Sites unchanged as rollback for14days. Customer backups and unfinished original-folder work are private and excluded from Git. The source app still contains historical Sites build configuration because runtime adaptation is intentionally stopped at the feasibility gate; do not publish it to Sites.
+Use committed D1 migrations with explicit Wrangler commands, never request-time schema changes. Secrets/customer data/exports stay out of Git. Current progress, verified evidence and outstanding owner steps: [MIGRATION-STATUS.md](MIGRATION-STATUS.md), [Cloudflare status](docs/cloudflare/STATUS.md), [owner steps](docs/cloudflare/OWNER-STEPS.md).

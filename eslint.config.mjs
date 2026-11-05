@@ -12,12 +12,23 @@ const eslintConfig = defineConfig([
       "@next/next/no-img-element": "off",
     },
   },
+  {
+    files: ["components/taksh/owner-dashboard.tsx"],
+    rules: {"react-hooks/purity": "off"}, // Preserve the approved v60 clock display during hosting-only migration.
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".local/**",
+    ".superpowers/**",
+    ".netlify/**",
+    ".deployment/**",
+    ".wrangler/**",
+    "dist/**",
     "out/**",
     "build/**",
+    "docs/legacy-sites/**",
     "next-env.d.ts",
   ]),
   {

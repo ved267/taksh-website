@@ -1,65 +1,36 @@
-# Cloudflare migration — stopped at the Free CPU gate
+# Cloudflare migration — current status
 
-Checked4 November2026. The user expressly required stopping if the application does not fit Free, with no upgrade unless separately approved. No own-account resources, deployment, paid plan, trial, payment details or domain change were made. Netlify/Turso work is stopped, not continued.
+Updated5November2026 (Asia/Kolkata). Workers Paid+$5base and R2 are verified active; earlier Free10ms gate is resolved. No other paid add-on/trial authorised. Sites is still live, builder frozen, domain unchanged. See [MIGRATION-STATUS.md](../../MIGRATION-STATUS.md) for the current evidence, monthly figures and pending checks. The historical feasibility report remains historical, not a current stop instruction.
 
-## Preserved and reconciled
+## Resources
 
-- Previous migration work is already committed and pushed at `5a6296be8f175d9872e751d613840918d9b18cb3`, branch `migration/free-hosting`. No customer exports or secret files are tracked.
-- Current branch `codex/cloudflare-free-migration` starts from the GitHub export baseline and applies the exact checked live v60 delta. All delta files compared byte-for-byte with live source commit `f07dfe675471c0befd519aabea1cf1d79e5aa392`. No Netlify upload chunking, Turso/Blob adapters or extra upload migrations are carried into this branch. Existing native D1/R2 support5MB handler/schema/migrations are preserved; no new standalone runtime is claimed.
-- Original builder folder has a freeze README pointing to GitHub. Its later uncommitted changes, including historical internal-demand exclusion work, were copied to the owner's private backup first. They are not live v60, not silently dropped, not approved for Git or merged. Do not resume edits/builds in that folder.
-- One rules file is AGENTS.md; CLAUDE.md points only there. Branch names/PR notes and intended equal checks/previews are documented. Main remains the baseline; Sites remains the live site until an approved cutover.
+Owner account `60742c7f90408058b71f1065a6815ddd`.
 
-## Measurement result
+| Purpose | D1 | R2 | State |
+| --- | --- | --- | --- |
+| Production | taksh-production | taksh-production-support | Schema migrated; initial private13order/1report snapshot reconciled; no public app cutover |
+| Earlier synthetic staging placeholder | taksh-preview | taksh-preview-support | Schema only; not production data |
+| Branch previews | taksh-pr-<branch slug>-<branch hash> | same branch-specific name | Dedicated writable resources, production IDs rejected |
+| Daily backup | Production export source | taksh-private-backups | Worker deployed; daily schedule OFF until credential/first remote backup+restore succeed |
 
-Wrangler4.151.0 `deploy --dry-run` against the existing original-builder artifact reported:
+No public R2 access enabled. Backup `d1/` retention30days verified. Backup code rejects exports above20MiB and checks exact bytes/SHA256 before writing a completion manifest. D1 Time Travel on Paid and monthly outside-Cloudflare backup still need current verification/documentation.
 
-- Total upload1421.63KiB, **gzip405.90KiB** (about0.396MiB): below the user's3MiB threshold.
-- No upload/deployment occurred. This is the existing local Vinext artifact, not a rebuilt standalone target. Exact artifact provenance cannot be certified because the builder has later uncommitted changes. The current live-source CPU measurements below are the decisive failure.
-- Cloudflare's current limits page lists64MiB Worker size, differing from the older3MiB figure. We honoured the stricter3MiB requirement supplied by the user. Size passes either way.
+## Deployment and source
 
-Read-only Cloudflare invocation logs for current live v60 returned100 events from the latest120minutes. Public-route aggregates, with no IPs, contacts, headers, cookies or raw events:
+Main is reconciled to livev60 through [PR#1](https://github.com/ved267/taksh-website/pull/1). Source baseline validated with locked native build,71original units and five local request suites. Migration adds76total unit tests and synthetic hosted verification. Current migration branch is `codex/cloudflare-migration`.
 
-|Route|Samples|Min CPU ms|Median CPU ms|Max CPU ms|Samples above10ms|
-|---|---:|---:|---:|---:|---:|
-|POST /api/integrations/customer-sheet|48|3|14|57|34|
-|GET /help/contact|1|92|92|92|1|
-|GET /sets/gully-cricket|7|8|28|139|6|
-|GET /sets/map-of-india|9|15|90|246|9|
-|GET /|12|4|95|231|11|
-|GET /sets/nonsense|5|15|25|37|5|
-|GET /sets/yellow-taxi|5|16|43|121|5|
-|GET /sets/ram-mandir|5|14|26|67|5|
-|GET /sets/chandrayaan-3|5|21|31|119|5|
-|GET /sets|1|74|74|74|1|
+Latest owner brief replaces Workers Builds production deployment: GitHub Actions alone deploys production after Validate succeeds on main. Preview resources remain isolated for both `claude/*` and `codex/*`. Actions deployment secrets, preview PR comments, staging environment, rollback test and free-minute reporting are not yet configured/verified. Private Free branch protection is unavailable; do not pretend repository instructions enforce it.
 
-These are real CPU timings reported by Cloudflare, not wall time, browser load time or a local CPU estimate. The sample is mixed traffic/cache state, not a controlled benchmark. It includes multiple routes exceeding10ms. It does not prove a future stripped standalone build will have identical CPU, but it does not support the requested drop-in Free qualification. No write traffic was generated to obtain these observations. Availability/checkout writes, owner reports and5MB uploads were not separately CPU-tested; those remain unmeasured, not presumed passing.
+## Billing and monitoring
 
-Cloudflare documents Workers Free at10ms/request. Workers Paid starts at**$5/month**, with included usage and possible additional usage charges; this is not a fixed all-in guarantee. No upgrade is approved or performed. Keep the gate stopped. Any CPU reduction/static-rendering work would be a separate implementation choice to authorise and remeasure, beyond simply replacing Sites wiring.
+$3usage email warning saved. $10total-bill alert remains unverified: existing native$10alert measures usage, not total fixed fees/tax/forecast. Images/Stream cost and creation attribution are being investigated; no cancellation performed. Latest owner instruction authorises cancellation if Taksh does not use it and it costs money.
 
-## Other verified constraints
+The hourly Codex Mac automation was deleted, not paused. No70000/day or2000minute monitoring threshold remains. There is no Mac schedule for it. Use Cloudflare billing emails. Errors/CPU observability, current usage reporting, daily backup and post-cutover72hour checks must still be configured/verified.
 
-- Workers Builds Free includes3000build minutes/month, one concurrent build and20minute timeout. Deploys do not have a per-deploy fee, but unlimited updates cannot be guaranteed within a finite build allowance. Requested2000minute warning is sensible but not yet active.
-- R2 setup requires adding a billing subscription through checkout; it is metered beyond its free allowance. No owner account's ability to enable R2 without a card/billing commitment was verified. The strict no-card/no-charge condition must be honoured; do not enable a billable subscription as a workaround.
-- GitHub's main-protection read returned403: “Upgrade to GitHub Pro or make this repository public to enable this feature.” The private repository remains private. Main protection is not enforced; an agent rule is not equivalent. No account upgrade or visibility change was made.
+## Known account access limitation
 
-## Verified now
+Wrangler can deploy and access D1/R2. Account token-management API returned403/9109; billing/audit APIs returned403/10000. This is a permission limit, not token creation success. Browser audit inspection works through native Chrome controls; extension browser calls currently fail with a timeout-options error. Any credential creation/security confirmation or owner-only step must be completed through the owner's account/private settings; never request raw credentials in chat.
 
-71 v60 unit tests passed. Source-delta comparison passed. Wrangler dry-run succeeded. Real current CPU logs retrieved and reduced to public aggregates. Previous migration branch push verified. No new staging, hosted test, own-account build, mobile/desktop target performance, CI/protection, usage alert or preview URL was verified.
+## Data/storage limitations
 
-## Left pending by the stop gate
-
-Plain owner-account Wrangler config/Worker and removal of Sites-only wrappers; isolated D1/R2 provisioning; explicit committed migration commands; GitHub Actions/checks and main protection; Workers Builds main/branch/PR integration; usage alerts; synthetic staging; fresh Sites export/count/content reconciliation and orphan R2 export; owner/Sheet secrets; every URL, request retry/duplicate/Sheet/support/analytics/security/mobile/desktop performance check; owner's staging go; domain cutover and14day rollback retention.
-
-Cloudflare supports preview builds for non-production branches and GitHub PR comments. The eventual rule must treat `claude/*` and `codex/*` identically, with isolated preview resources and no production secrets. **It is not configured, so an actual Claude PR preview URL cannot yet be confirmed.**
-
-Read [OWNER-STEPS.md](OWNER-STEPS.md) for the single consolidated list of actions that need the owner. Do not ask for secrets in chat.
-
-## Sources checked
-
-- https://developers.cloudflare.com/workers/platform/limits/
-- https://developers.cloudflare.com/workers/platform/pricing/
-- https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/
-- https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/
-- https://developers.cloudflare.com/r2/get-started/
-- https://developers.cloudflare.com/r2/pricing/
-- https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches
+Latest bounded Sites table export had zero omitted/truncated cells and all seven table cursors completed. It is not an atomic database snapshot. Initial business import matched every exported field; final fresh reconciliation and post-switch delta import are required.0support rows does not prove an empty bucket. Sites connector has no R2 list/export operation, so orphaned object inventory/export remains unresolved and must be explicitly solved or explained before claiming complete transfer.

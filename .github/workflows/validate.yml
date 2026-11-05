@@ -1,0 +1,51 @@
+name: Validate
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    name: Locked build, tests and performance
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TAKSH_PERFORMANCE_BUILD_ID: 00000000-0000-4000-8000-000000000001
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Locked install
+        run: npm ci --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Unit tests
+        run: npm test
+      - name: Type check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Request flows and page weights
+        run: node scripts/test-local.mjs
+        env:
+          TAKSH_PERFORMANCE_OUTPUT: .local/performance-current.json
+      - name: Compare with PR base (main)
+        if: github.event_name == 'pull_request'
+        run: node scripts/check-main-performance.mjs "$BASE_SHA"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      - name: Keep numeric performance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: performance
+          path: .local/performance-*.json
+          if-no-files-found: ignore
