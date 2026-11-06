@@ -21,10 +21,12 @@ Status: migration preparation; Sites remains live. Read AGENTS.md first. This do
 | Retired backup Worker | taksh-daily-backup; no public URL, no cron; not the backup path |
 | Existing demand Sheet | 1PP8TvtPv5nD9XAbedCjQ7woxrjMu6G0ygUWRgfol9X0; Customer requests; gid1125591437 |
 | GA4 measurement | G-NHQFYHTNLP |
-| Production domain / registrar | taksh.store / Namecheap; DNS/forwarding preparation pending |
+| Production domain / registrar | taksh.store / Namecheap; no nameserver cutover yet |
+| Cloudflare DNS zone | ed2fc0cd07488e846bf9a736f9d3b734 / taksh.store / Free; pending activation |
+| Assigned nameservers | keira.ns.cloudflare.com; neil.ns.cloudflare.com |
 | Live source baseline | Sites v60, f07dfe675471c0befd519aabea1cf1d79e5aa392; reconciled GitHub main e036f7e395b9e65466f53b3c34a94f47a1455518 |
 
-Zone ID, matched DNS/aliases and cutover timestamp must be added when prepared. Do not invent them. Do not touch unrelated Cloudflare resources.
+Matched DNS/aliases and cutover timestamp must be added when verified. The initial nine-record Cloudflare scan is not the complete registrar inventory. Do not invent missing records. Do not touch unrelated Cloudflare resources.
 
 ## Credentials and gates
 
@@ -70,7 +72,7 @@ All mutable data jobs share taksh-data-operations concurrency. Preview deploymen
 
 **Usage and cost.** Dispatch operations.yml with usage for requests/CPU/D1/R2 counters; use Cloudflare Billing invoices for money and Workers/D1/R2 dashboards for current allowance use. Base$5/month plus tax if applicable; R2 stays inside free allowance. The existing$3 usage email is sufficient with invoices; Cloudflare cannot provide the requested fixed-fee-inclusive forecast. GitHub stays within included compute/storage with$0 paid overage. Native branch previews also consume Worker/storage capacity; review stale resources before reaching limits. Do not buy add-ons or create daily status reports. Record usage only with the agreed migration milestones; label sampled/delayed metrics and unavailable exact build-minute totals honestly.
 
-**Cutover and verification.** Prepare the complete private Namecheap DNS/URL redirect/email-forwarding inventory, matched Cloudflare Free zone, verified destinations, same aliases and lower TTLs. Do not switch nameservers before owner staging go. Run one mobile/desktop live-v60/staging comparison. At the go: fresh Sites bounded export/import and count/content reconciliation, enable production, deploy validated main, attach domain/routes and change Namecheap nameservers in the owner's browser. Probe apex/www/TLS, owner sign-in, availability request/retry dedup, Sheet marked Test, GA and an actual test mail to every alias. Use one internal request with campaign taksh-migration-check, excluded from demand totals and labelled Test in the Sheet. Take a second Sites export and idempotently import late requests. Critical failure triggers immediate rollback. Set the cutover timestamp only when switched. At72hours publish one summary/status milestone. At14days ask before retirement and export Sites first. Rebase/check reporting PR#2 only after cutover.
+**Cutover and verification.** Prepare the complete private Namecheap DNS/URL redirect/email-forwarding inventory, matched Cloudflare Free zone, verified destinations, same aliases and lower TTLs. Cloudflare Email Routing onboarding requires an active zone; its pending-zone screen blocks activation before the nameserver switch. Prepare the private alias inventory and account-level destination verifications beforehand, then enable matching routing during the approved cutover. Do not claim pre-cutover mail delivery is verified. Do not switch nameservers before owner staging go. Run one mobile/desktop live-v60/staging comparison. At the go: fresh Sites bounded export/import and count/content reconciliation, enable production, deploy validated main, attach domain/routes and change Namecheap nameservers in the owner's browser. Probe apex/www/TLS, owner sign-in, availability request/retry dedup, Sheet marked Test, GA and an actual test mail to every alias. Use one internal request with campaign taksh-migration-check, excluded from demand totals and labelled Test in the Sheet. Take a second Sites export and idempotently import late requests. Critical failure triggers immediate rollback. Set the cutover timestamp only when switched. At72hours publish one summary/status milestone. At14days ask before retirement and export Sites first. Rebase/check reporting PR#2 only after cutover.
 
 ## Private Mac locations (paths only)
 
