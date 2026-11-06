@@ -1,62 +1,56 @@
-# Taksh Cloudflare migration
+# Taksh migration — staging review milestone
 
-Updated 5 November 2026. **The transfer is not complete.** taksh.store still runs on Sites v60; its domain and live app remain untouched. The original builder is frozen. Owner-approved hosting is Workers Paid ($5/month) plus R2 within its free allowance. No other paid service or trial is authorised.
+6 November 2026. **Functional staging review is available; speed approval and cutover remain open.** taksh.store is still on Sites v60. Namecheap nameservers are unchanged. Production readiness is false.
 
-## Source and deployment
-
-- GitHub: https://github.com/ved267/taksh-website . Main is reconciled to published v60 through PR#1, commit `e036f7e395b9e65466f53b3c34a94f47a1455518`. Migration is on `codex/cloudflare-migration`, draft [PR#3](https://github.com/ved267/taksh-website/pull/3). Reporting PR#2 remains separate.
-- Plain Worker/Vinext/Wrangler runtime replaces active Sites, ChatGPT sign-in and .openai hosting hooks. Original schema and five explicit migrations preserved. Public components, copy, layout, CSS and assets unchanged.
-- GitHub Actions is the production path. It requires successful actual Validate steps on exact current main, rechecked before deployment. Workers Builds production is not connected. Private GitHub Free lacks branch protection; the owner's replacement safety rule is the deployment gate.
-- GitHub variables: `TAKSH_CI_READY=true`, `TAKSH_DEPLOYMENT_READY=false`, `TAKSH_PRODUCTION_READY=false`. CI uses the verified free allowance. Deployment credential readiness enables preview testing separately from the production approval switch, which stays false until the release go/no-go.
-- Preview builds have no deployment secrets. A trusted-main workflow verifies run identity/SHA/steps, safely extracts compiled data and uses fixed isolated bindings. Artifact scripts/configuration are not executed with credentials. A deliberately malicious repository writer can still create another secret-reading workflow on private Free; this is not claimed prevented.
+Staging: https://taksh-staging.taksh-ved267.workers.dev
 
 ## Verified
 
-- Local suite now **90/90 unit tests**, including a failing-then-passing test that preview activation cannot open the production release gate. Typecheck/lint and all five compiled-Worker synthetic request suites previously passed; lint has three existing warnings.
-- Actual [GitHub Validate on ddc4e84](https://github.com/ved267/taksh-website/actions/runs/42018271372) passed locked install, build, 89 units, typecheck, lint, request flows and strict comparison against native live-v60 main. Its preview build also passed. The new production-switch test/change follows that verified revision and needs the next hosted run.
-- Downloaded both numeric GitHub performance reports: JS gzip **247,520 bytes**, CSS **33,364 bytes**, Worker **414,782 bytes**, identical between base and target. All 21 key page-weight checks passed. Reports now upload even from the hidden folder and missing reports fail. Vinext's random server build/authentication inputs are fixed only in the non-deployed synthetic benchmark job; production/preview builds retain normal random values. No size threshold was relaxed. Earlier 51-byte differences were observations before these remaining random inputs were controlled.
-- Dedicated staging and isolated branch preview passed five hosted synthetic suites: cart, availability requests, duplicate/retry prevention, owner sign-in/CSV, Sheet endpoint failure/ack recovery, direct exact **5 MiB** private photo roundtrip and logout revocation. These do not prove an actual Google Sheet row or notification.
-- Full live/staging comparison: **18 URLs and 637 assets**, no errors; sitemap, robots, metadata, 404, fonts and images checked.
-- First real production D1 export: **13,592-byte SQL**, private R2 SQL/manifest/hash verified, owner-only copy outside Cloudflare, fresh independent remote D1 restore with every field/count matching. Orders 13, reporting_state 1, migrations 5, other tables 0. Initial standby import replay: 14 exact records, no conflicts/writes. These are not final cutover snapshots.
-- Staging rollback applied and health verified in **9.05 seconds**, then current staging restored. This excludes Actions queue/install and DNS propagation.
-- Native Chrome: Home/Gully rendered, desktop gallery open/next/close, iPhone 16 menu open/close, add-to-bag and bag persistence observed. Initial single Gully LCP observations: staging/live 1.14/3.70 seconds on 393×852 phone preset; 0.95/3.22 seconds on narrow desktop with DevTools docked right; all CLS 0, no CPU/network throttling. These uncontrolled-cache single samples are not the full repeated/key-page or physical-phone gate. No quantity-change claim.
+- Main4950b598bbe4dc46f21c43b7cec5d719153f179d reconciles v60, requested owner lockout and hosted recovery. Original builder frozen. [Current main Validate](https://github.com/ved267/taksh-website/actions/runs/42167477547) passed111 units, six compiled request flows, build, types, lint (zero errors; three existing warnings) and strict public size checks.
+- [Current staging deployment](https://github.com/ved267/taksh-website/actions/runs/42167569320) succeeded after the recovery rehearsal. Owner completed private password/Sheet-key entry; no values are in Git or evidence. Unauthenticated admin and Sheet feed return401/no-store.
+- [GitHub backup](https://github.com/ved267/taksh-website/actions/runs/42160789232) and [staging restore](https://github.com/ved267/taksh-website/actions/runs/42166096423) succeeded, matching all table counts/content:13 requests,1 reporting-state row, zero support/enquiry/subscription/session rows,5 migrations. This is a rehearsal snapshot, not a fresh cutover export.
+- Daily GitHub backups enabled03:30IST, private R2,30-day retention. D1 Time Travel remains the second layer. Monthly Mac copy best effort only.
+- [GitHub-only rollback](https://github.com/ved267/taksh-website/actions/runs/42167481956) restored the preceding safe staging version in3.245seconds and passed page checks. The first rehearsal exposed suppressed CLI JSON; the checked API-based fix now passes the actual hosted job.
+- Claude PR#4 passed Validate and received a real [preview](https://github.com/ved267/taksh-website/pull/4#issuecomment-6676707537), through the same jobs as the [Codex preview](https://github.com/ved267/taksh-website/pull/5#issuecomment-6676711049). #4 closed unmerged. Both preview URLs returned200/noindex. Normal preview, backup and rollback execute using GitHub credentials only; the Cloudflare token stays in Actions.
+- Complete Namecheap inventory saved privately: zero email forwarders, zero domain redirects, DNSSEC off. All ten original DNS type/name/value/priority entries match the Free Cloudflare zone. Added www alias/routes and canonical301; preserved live HTTP-to-HTTPS302 with path/query. Four editable registrar TTLs now300seconds; automatic mail records are provider-locked at1800seconds. No new mailbox or unused Email Routing activation needed.
+- Existing Apps Script source saved and verified against GitHub; only marked internal Test handling changed. Existing key/cursor/notes preserved. Existing time-based sync trigger remains, latest displayed run6Nov10:46:43IST,0% error rate. Live endpoint still Sites; Cloudflare delivery/acknowledgement remains a cutover check.
+- Existing GA4 G-NHQFYHTNLP preserved, no new tracking library. Staging is excluded by hostname; www will redirect to the existing tracked apex. Production GA receipt remains a cutover check.
 
-## Staging and integrations
+## One live-v60 comparison — approval still open
 
-Staging: https://taksh-staging.taksh-ved267.workers.dev . Branch preview: https://codex-cloudflare-migration-taksh-store.taksh-ved267.workers.dev . Both use synthetic isolated storage, non-production email blocking and noindex. **Staging is not yet ready for final owner approval.**
+Native Chrome, cache disabled, desktop1440×900 and mobile393×852, no CPU/network throttling; viewport emulation, not a physical phone. No repeated benchmark matrix. All samples HTTP200, matching titles, CLS0.
 
-A private synthetic Google Sheet with the existing 17 headers is prepared, with no customer rows. Native headers, private access, IST timezone, frozen rows/columns and native export render verified. Its staging-only Apps Script is prepared privately. Owner key/Google permission, actual feed row and owner notification remain pending. Production Sheet and its cursor/manual notes remain untouched. Owner passwords also need private setup.
+| Largest contentful paint | Live v60 | Staging |
+|---|---:|---:|
+| Desktop home |0.672s|1.128s|
+| Desktop Bharat (heaviest page) |4.264s|1.024s|
+| Mobile home |0.564s|0.636s|
+| Mobile Bharat |0.584s|1.176s|
 
-Automatic Actions preview deployment, PR URL comments and actual Claude/Codex parity remain unverified until the deployment credential and trusted-main workflow are active. Do not claim that Claude's PR has received a preview yet.
+These are mixed single observations, not a speed pass or proof of equivalent speed. The first staging origin had DNS34ms/TLS104ms while live had an existing connection. Live mobile Bharat did not settle to network-idle; both mobile product samples were read after load without reloading. PerformanceTimeline was unavailable; native browser timing/paint entries were used. Browser viewport/cache overrides were restored. Public JS247520bytes gzip/CSS33364bytes and all21 compiled key-page size gates remain unchanged; Worker415017bytes gzip includes the requested235-byte auth addition. No public UI/copy/assets changed.
 
-## Backups and account settings
+## November usage snapshot
 
-Daily backup Worker is deployed without a public endpoint; **daily schedule remains OFF**. Owner approved token creation and unlocked the Mac. Account-owned `Taksh daily D1 export` was created with D1 Read only and saved only as the backup Worker secret. Database-info GET returned200; native export POST returned401/code10000, so export permission is not verified and no activation proof was written. A later native screenshot retained the old token-success modal despite text state showing it closed; treat that token as exposed and never reuse it. Owner was asked to disable/revoke it because browser controls became inconsistent/blank. Disable/revoke verification and a fresh working least-privilege credential are pending. No broader permission was granted. Daily schedule remains off.
+[GitHub usage job](https://github.com/ved267/taksh-website/actions/runs/42165444648), as of6Nov04:57UTC, month beginning1Nov00:00UTC. Account-wide, potentially sampled/delayed; excludes later rehearsals and is not an invoice.
 
-Paid D1 Time Travel's current remote bookmark verified; 30-day retention is always on. R2 `d1/` retention is 30 days. Monthly owner-only copy automation `taksh-monthly-private-d1-copy` is ACTIVE for the first of each month at 10:00 IST. It requires matching checksum/size, private permissions and backup age ≤48 hours. First scheduled run pending; the Mac must be awake and Wrangler signed in. The old hourly usage monitor remains deleted.
+| Category | Reported usage |
+|---|---|
+| Workers |309 requests;0 errors;6.069seconds total CPU |
+| D1 |3428 rows read;920 written; production110592bytes, staging102400bytes at snapshot |
+| R2 |84 operations; exact billed-storage measure unavailable in this query |
+| Cloudflare Workers Builds |No build-minute rows returned; builds run in GitHub Actions |
+| GitHub Actions |Account-wide included-minute consumption not available from the repo-level query; no paid overage authorised |
 
-Cloudflare $3 usage email warning is saved. Native budget alerts exclude fixed subscriptions/tax, so they cannot implement an exact $10 total-bill forecast; the existing $10 usage alert is not that forecast or a cap. Images/Stream is unused by Taksh, configured at **$0/month**, paid storage unchecked, zero image delivery/transformations/origins; left unchanged under the owner's conditional cancellation instruction. Exact creation date/actor remains unattributed. Invoice IN-87226026 was Workers proration $1.77 +18% IGST $0.32 = $2.09. Owner declined the second invoice download; not read.
+Cost: Workers Paid$5/month plus applicable tax, R2 within its free allowance. Existing$3 usage emails plus invoices; no forecast alert, extra paid service or Mac usage monitor.
 
-## Monthly usage
+## Phone review — about10minutes
 
-Cloudflare account-wide November UTC snapshot **5 Nov 11:22:45 UTC**; delayed/sampled analytics, not an invoice:
+1. Open staging/admin and sign in with the password you set. This also marks that browser internal.
+2. Home/menu, Bharat and Gully Cricket: compare text/images with live; swipe/open/close galleries and note loading or layout problems.
+3. Add a set, change quantity, refresh the bag, then open checkout. Submit one request using phone-check@example.test. No payment is collected.
+4. Refresh the confirmation, then open admin → All: find that reference once, labelled Test/automated, with demand totals excluding it. Do not export or screenshot customer rows.
+5. Test Help → missing piece with a small non-sensitive photo and check its confirmation. Log out and check that owner access closes. Private exact-byte retrieval is covered by the compiled support flow and earlier remote upload proof.
 
-| Metric | Observation |
-| --- | --- |
-| Workers | 295 requests, 0 errors; total CPU 5,595.348 ms; median 6.856 ms, p99 198.367 ms |
-| D1 | 3,102 rows read / 820 written; production 110,592 bytes, all five databases 544,768 bytes |
-| R2 | 68 operations; last dashboard billed-storage observation 0.11 GB-month/$0 for 15 Oct–14 Nov, observed 4 Nov |
-| Cloudflare build minutes | No rows; Workers Builds not connected |
-| GitHub Actions | Before these runs: $0.05/$12 included compute, 0/0.5 GB storage, $0 billed; owner UI 5 Nov about 11:00 UTC. Existing $0 paid Actions budget blocks overage; included alerts On. Exact account-month billed minutes unavailable: current dashboard reports compute dollars. Validate ddc4e84 elapsed 9m37s; this is a job duration, not account billed minutes. |
-| Expected base cost | $5/month plus tax and actual usage; no other paid add-on activated |
+Report functional or speed problems. Cutover still requires the owner's explicit staging/cutover go and resolution of the speed hold. After go: fresh Sites export/import/reconciliation, validated production deploy, nameserver switch, website/www/TLS/request/dedup/marked Sheet Test/GA checks, second late-request export. No mail-alias test applies to the verified empty forwarding inventory. Critical failures roll back; quiet hosted72-hour watch and14-day Sites retirement approval follow. PR#2 rebases/checks only after cutover.
 
-## Remaining before the switch
-
-1. Disable/revoke the exposed newly created backup token and verify it no longer authenticates. Mac unlock is complete. Native text/rendered frame inconsistency and blank Cloudflare UI prevent reliable security clicks; dedicated DOM calls still fail with timeoutMs. No disable success is claimed.
-2. Replace the exposed, export-incompatible read token with a fresh verified credential (broader access needs explicit approval); finish deployment credentials, owner passwords and Sheet key/Google consent; verify real isolated Sheet/notification delivery and the first daily cron.
-3. Finish hosted current-head CI, automatic preview URL comments and Claude test PR parity; complete repeated browser/analytics checks and the phone checklist.
-4. Capture full private Namecheap DNS/TTL/redirect/forwarding inventory. Prepare equivalent Cloudflare Free zone, verified free Email Routing and www redirect. Lower TTLs a day ahead. Public lookups are not a complete inventory.
-5. Sites connector cannot list/export the managed R2 bucket, including orphan objects. Zero support rows is not proof it is empty. The exact unsupported boundary is documented in STORAGE-MIGRATION.md; owner UI/provider export is still sought, with no complete storage-export claim.
-6. Owner approves verified staging, then separately approves the nameserver switch/window. Take fresh and late-write Sites snapshots, reconcile counts/content idempotently, switch and smoke-test domain/TLS/mail/Sheet/GA. Keep Sites 14 days, report 72 hours, obtain a separate retirement decision.
-
-Owner-only actions: [OWNER-STEPS.md](docs/cloudflare/OWNER-STEPS.md). Operations: [RUNBOOK.md](docs/RUNBOOK.md).
+Maintained handoffs: [Operations](docs/OPERATIONS.md), [Architecture](docs/ARCHITECTURE.md). Private evidence paths are listed there; no exports, customer rows, credentials or customer hashes are committed.
