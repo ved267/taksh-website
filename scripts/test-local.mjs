@@ -21,7 +21,7 @@ config.vars={APP_ENV:'preview',ADMIN_PASSWORD_HASH:createHash('sha256').update('
 const worker=await startLocalWorker(root,config,persist);
 const origin=worker.origin;
 try{
- if(!process.argv.includes('--performance-only'))for(const test of ['cart-lifecycle','availability-request','gully-cricket','demand','support-upload'])await new Promise((ok,bad)=>{
+ if(!process.argv.includes('--performance-only'))for(const test of ['cart-lifecycle','availability-request','gully-cricket','demand','support-upload','admin-lockout'])await new Promise((ok,bad)=>{
   const run=spawn(process.execPath,[resolve(import.meta.dirname,'../tests',test+'.integration.mjs')],{cwd:root,stdio:'inherit',env:{...process.env,TAKSH_TEST_ORIGIN:origin}});
   run.on('error',bad);run.on('exit',code=>code===0?ok():bad(new Error(`Local ${test} failed (${code}). See ${temp}/worker.log`)));
  });
