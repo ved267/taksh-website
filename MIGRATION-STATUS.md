@@ -14,6 +14,7 @@ Staging: https://taksh-staging.taksh-ved267.workers.dev
 - Claude PR#4 passed Validate and received a real [preview](https://github.com/ved267/taksh-website/pull/4#issuecomment-6676707537), through the same jobs as the [Codex preview](https://github.com/ved267/taksh-website/pull/5#issuecomment-6676711049). #4 closed unmerged. Both preview URLs returned200/noindex. Normal preview, backup and rollback execute using GitHub credentials only; the Cloudflare token stays in Actions.
 - Complete Namecheap inventory saved privately: zero email forwarders, zero domain redirects, DNSSEC off. All ten original DNS type/name/value/priority entries match the Free Cloudflare zone. Added www alias/routes and canonical301; preserved live HTTP-to-HTTPS302 with path/query. Four editable registrar TTLs now300seconds; automatic mail records are provider-locked at1800seconds. No new mailbox or unused Email Routing activation needed.
 - Existing Apps Script source saved and verified against GitHub; only marked internal Test handling changed. Existing key/cursor/notes preserved. Existing time-based sync trigger remains, latest displayed run6Nov10:46:43IST,0% error rate. Live endpoint still Sites; Cloudflare delivery/acknowledgement remains a cutover check.
+- All21 public routes match the live status/canonical destination, including four existing308 redirects. Staging remains noindex.
 - Existing GA4 G-NHQFYHTNLP preserved, no new tracking library. Staging is excluded by hostname; www will redirect to the existing tracked apex. Production GA receipt remains a cutover check.
 
 ## One live-v60 comparison — approval still open
@@ -31,13 +32,13 @@ These are mixed single observations, not a speed pass or proof of equivalent spe
 
 ## November usage snapshot
 
-[GitHub usage job](https://github.com/ved267/taksh-website/actions/runs/42165444648), as of6Nov04:57UTC, month beginning1Nov00:00UTC. Account-wide, potentially sampled/delayed; excludes later rehearsals and is not an invoice.
+[GitHub usage job](https://github.com/ved267/taksh-website/actions/runs/42204395481), as of2026-11-06T10:40:31.249Z UTC, month beginning1Nov00:00UTC. Account-wide, potentially sampled/delayed; is not an invoice.
 
 | Category | Reported usage |
 |---|---|
-| Workers |309 requests;0 errors;6.069seconds total CPU |
-| D1 |3428 rows read;920 written; production110592bytes, staging102400bytes at snapshot |
-| R2 |84 operations; exact billed-storage measure unavailable in this query |
+| Workers |331 requests;0 errors;6.711seconds total CPU |
+| D1 |4073 rows read;1060 written; production110592bytes, staging110592bytes at snapshot |
+| R2 |103 operations; exact billed-storage measure unavailable in this query |
 | Cloudflare Workers Builds |No build-minute rows returned; builds run in GitHub Actions |
 | GitHub Actions |Account-wide included-minute consumption not available from the repo-level query; no paid overage authorised |
 
