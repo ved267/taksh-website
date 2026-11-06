@@ -1,0 +1,36 @@
+name: Google Analytics report
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Days to report (1-90, ending yesterday)'
+        type: string
+        required: false
+        default: '28'
+permissions:
+  contents: read
+concurrency:
+  group: google-report
+  cancel-in-progress: true
+jobs:
+  report:
+    if: github.ref == 'refs/heads/main' && vars.GA_PROPERTY_ID != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+          sparse-checkout: scripts/google-report.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Read GA4 and Search Console (read-only, aggregates only)
+        run: node scripts/google-report.mjs
+        env:
+          TAKSH_REPORT_DAYS: ${{ inputs.days }}
+          GA_PROPERTY_ID: ${{ vars.GA_PROPERTY_ID }}
+          GSC_SITE: ${{ vars.GSC_SITE }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
