@@ -1,4 +1,5 @@
 import {mkdtemp,writeFile,readFile,cp,mkdir} from 'node:fs/promises';import {tmpdir}from'node:os';import {join,resolve}from'node:path';import {execFileSync}from'node:child_process';
+import {adminSecurityAllowance} from '../lib/cloudflare/performance-regression.mjs';
 const root=process.cwd(),sha=process.argv[2]||'origin/main';
 if(!/^[a-f0-9]{40}$/.test(sha)&&sha!=='origin/main')throw new Error('Supply the pull request base commit SHA.');
 const base=await mkdtemp(join(tmpdir(),'taksh-main-performance-'));
@@ -22,4 +23,6 @@ if(!viteSource.includes('TAKSH_PERFORMANCE_BUILD_ID'))await writeFile(vitePath,v
 run('npm',['ci','--no-audit','--no-fund']);run('npm',['run','build'],{TAKSH_PERFORMANCE_BUILD_ID:identity});
 const output=resolve(root,'.local/performance-main.json');
 run(process.execPath,[resolve(root,'scripts/test-local.mjs'),'--performance-only'],{TAKSH_APP_ROOT:base,TAKSH_PERFORMANCE_OUTPUT:output});
-execFileSync(process.execPath,['scripts/compare-performance.mjs',output,resolve(root,'.local/performance-current.json')],{cwd:root,stdio:'inherit'});
+const changed=execFileSync('git',['diff','--name-only',sha,'HEAD'],{cwd:root,encoding:'utf8'}).trim().split('\n').filter(Boolean);
+const allowance=adminSecurityAllowance(sha,changed);
+execFileSync(process.execPath,['scripts/compare-performance.mjs',output,resolve(root,'.local/performance-current.json'),String(allowance)],{cwd:root,stdio:'inherit'});
