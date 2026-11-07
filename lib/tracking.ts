@@ -37,7 +37,7 @@ function instance() {
         const clarity=document.createElement('script');clarity.async=true;clarity.src=`https://www.clarity.ms/tag/${brand.clarity}`;document.head.appendChild(clarity);
       });
     },
-    send:(name:string,data:Record<string,unknown>) => {const p=currentPage();window.gtag?.('set',{page_location:p.url,page_title:p.title});window.gtag?.('event',name,{...data,page_location:p.url,page_title:p.title});const px=pixelPayload(name,data);if(px)window.fbq?.('track',px.event,px.params)}
+    send:(name:string,data:Record<string,unknown>,meta?:{eventId?:string}) => {const p=currentPage();window.gtag?.('set',{page_location:p.url,page_title:p.title});window.gtag?.('event',name,{...data,page_location:p.url,page_title:p.title});const px=pixelPayload(name,data);if(px)window.fbq?.('track',px.event,px.params,...(meta?.eventId?[{eventID:meta.eventId}]:[]))}
   });
   return tracker;
 }
@@ -48,6 +48,7 @@ function disableInternal(){tracker?.consent(false);window.gtag?.('consent','upda
 function markInternalRoute(){if(location.pathname.startsWith('/admin')){try{localStorage.setItem('taksh-internal-traffic','1')}catch{};disableInternal();}}
 let observingInternal=false;
 export function trackRoutePageView() {markInternalRoute();const t=instance();if(t){const p=currentPage();t.page(p.url,p.title)}}
+export function measuringForServer(){try{return analyticsConfigured&&location.hostname==='taksh.store'&&!internalTracking()&&analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{return false}}
 export function analyticsPreference(){try{return readConsent(localStorage.getItem(analyticsChoiceKey))}catch{return null}}
 export function initialiseTracking() {if(!observingInternal){observingInternal=true;window.addEventListener('storage',(event:StorageEvent)=>{if(event.key==='taksh-internal-traffic'&&event.newValue==='1')disableInternal()});}markInternalRoute();let allow=true;try{allow=analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{}instance()?.consent(allow);trackRoutePageView()}
 export function setAnalyticsConsent(allow:boolean) {
