@@ -30,7 +30,7 @@ export function AnalyticsConsent(){
  {message&&<p className="cookie-save-status" role="status">{message}</p>}
  <Dialog open={open} onOpenChange={setOpen}><DialogContent className="taksh-dialog cookie-dialog" onCloseAutoFocus={e=>{if(choicesTrigger?.isConnected){e.preventDefault();choicesTrigger.focus()}}}><DialogTitle>Cookie choices</DialogTitle><DialogDescription>Essential storage keeps your bag and checkout working. Analytics is on unless you turn it off.</DialogDescription>
  <label className="cookie-toggle"><span>Analytics</span><input type="checkbox" checked={selected??analyticsEnabled(raw)} disabled={!analyticsConfigured} onChange={e=>setSelected(e.target.checked)}/></label>
- <p className="small muted">No advertising cookies. Contact details are excluded from analytics.</p>
+ <p className="small muted">Includes Google Analytics, Microsoft Clarity and the Meta Pixel. Contact details are excluded from analytics.</p>
  <div className="cookie-dialog-actions"><button type="button" className="button outline" onClick={()=>save(false)}>Essential only</button><button type="button" className="button primary" onClick={()=>save(selected??analyticsEnabled(raw))}>Save choices</button></div><SiteLink href="/privacy" className="text-link" onClick={()=>setOpen(false)}>Privacy details</SiteLink>
  </DialogContent></Dialog></>;
 }
