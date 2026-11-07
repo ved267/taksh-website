@@ -4,5 +4,7 @@ const [baseline,current]=await Promise.all(process.argv.slice(2,4).map(async fil
 if(!baseline||!current)throw new Error('Provide main and PR performance reports.');
 const workerAllowance=Number(process.argv[4]||0);
 if(workerAllowance)console.log('Requested admin-lockout baseline adjustment: maximum '+workerAllowance+' compressed Worker bytes; JS/CSS/page weights remain strict. Actual Worker change: '+(current.totals.workerGzip-baseline.totals.workerGzip)+' bytes.');
-const failures=performanceRegressions(baseline,current,{workerAllowance});
+const tracking=process.argv[5]==='tracking';
+if(tracking)console.log('Owner-approved tracking allowance (7 Nov 2026): up to 1,000 gzip bytes of JS per page and 1,200 Worker bytes; CSS stays strict. JS change: '+(current.totals.jsGzip-baseline.totals.jsGzip)+' bytes, Worker change: '+(current.totals.workerGzip-baseline.totals.workerGzip)+' bytes.');
+const failures=performanceRegressions(baseline,current,{workerAllowance,tracking});
 if(failures.length){console.error('Performance regression against main:\n'+failures.join('\n'));process.exitCode=1;}else console.log(workerAllowance?'Public JS/CSS/page weights unchanged; Worker fits the scoped admin-security baseline.':'No JS, CSS, Worker or key-page weight regression against main.');

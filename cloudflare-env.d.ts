@@ -5,6 +5,8 @@ declare namespace Cloudflare {
     CUSTOMER_SHEET_SYNC_KEY?: string;
     RESEND_API_KEY?: string;
     FROM_EMAIL?: string;
+    META_CAPI_TOKEN?: string;
+    META_TEST_EVENT_CODE?: string;
     DB?: D1Database;
     BUCKET?: R2Bucket;
   }

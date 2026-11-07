@@ -20,3 +20,17 @@ test('the requested admin security addition has a one-baseline file-scoped Worke
  next.totals.jsGzip++;assert.match(performanceRegressions(base,next,{workerAllowance:256})[0],/jsGzip/);
  next.totals.jsGzip--;next.totals.workerGzip=357;assert.match(performanceRegressions(base,next,{workerAllowance:256})[0],/workerGzip/);
 });
+
+test('the owner-approved tracking allowance is one baseline, one file set, capped, and CSS stays strict',async()=>{
+ const {trackingAllowance}=await import('../lib/cloudflare/performance-regression.mjs');
+ const sha='a75391e5bcb8a626ca15993491d54eb6dda562fa';
+ assert.equal(trackingAllowance(sha,['lib/tracking.ts','lib/meta-capi.mjs']),true);
+ assert.equal(trackingAllowance('other',['lib/tracking.ts']),false);
+ assert.equal(trackingAllowance(sha,['lib/tracking.ts','components/taksh/home-hero.tsx']),false);
+ const base={totals:{jsGzip:1000,cssGzip:100,workerGzip:1000},pages:{'/':{jsGzip:1000,cssGzip:100,pageBytes:1000}}};
+ const ok=structuredClone(base);ok.totals.jsGzip+=600;ok.totals.workerGzip+=800;ok.pages['/'].jsGzip+=600;ok.pages['/'].pageBytes+=600;
+ assert.deepEqual(performanceRegressions(base,ok,{tracking:true}),[]);
+ assert.ok(performanceRegressions(base,ok).length>0);
+ const big=structuredClone(ok);big.totals.jsGzip+=600;assert.ok(performanceRegressions(base,big,{tracking:true}).length>0);
+ const css=structuredClone(ok);css.totals.cssGzip+=1;assert.ok(performanceRegressions(base,css,{tracking:true}).length>0);
+});

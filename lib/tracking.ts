@@ -1,7 +1,7 @@
 import {brand,catalogueProducts} from './shop';
-import {createTracker,safePage,excludedFromTracking} from './tracking-domain.mjs';
+import {createTracker,safePage,excludedFromTracking,pixelPayload} from './tracking-domain.mjs';
 import {readConsent,writeConsent,analyticsEnabled} from './consent-domain.mjs';
-declare global {interface Window {dataLayer?:IArguments[];gtag?:(...args:unknown[])=>void}}
+declare global {interface Window {dataLayer?:IArguments[];gtag?:(...args:unknown[])=>void;fbq?:(...args:unknown[])=>void;clarity?:(...args:unknown[])=>void}}
 export const analyticsConfigured = /^G-[A-Z0-9]+$/.test(brand.ga);
 export const analyticsChoiceKey = 'taksh-analytics-consent';
 export function internalTracking(){try{return excludedFromTracking(location.hostname,navigator.userAgent,localStorage.getItem('taksh-internal-traffic')==='1',navigator.webdriver===true)}catch{return false}}
@@ -26,18 +26,29 @@ function instance() {
       let referrer = '';try {referrer = document.referrer ? new URL(document.referrer).origin : ''} catch {}
       window.gtag('config',brand.ga,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:currentPage().url,page_referrer:referrer});
       const script = document.createElement('script');script.async = true;script.src = `https://www.googletagmanager.com/gtag/js?id=${brand.ga}`;document.head.appendChild(script);
+      // Meta Pixel and Clarity queue calls on small stubs now and download their scripts when the browser is idle, so neither can delay the page.
+      const fbq:{(...args:unknown[]):void;queue?:unknown[];callMethod?:(...args:unknown[])=>void;loaded?:boolean;version?:string;disablePushState?:boolean;push?:unknown}=function(...args:unknown[]){if(fbq.callMethod)fbq.callMethod(...args);else fbq.queue!.push(args)};
+      fbq.queue=[];fbq.loaded=true;fbq.version='2.0';fbq.push=fbq;fbq.disablePushState=true;window.fbq=fbq as unknown as Window['fbq'];
+      window.fbq?.('init',brand.pixel);
+      window.clarity=window.clarity||function(...args:unknown[]){((window.clarity as unknown as {q?:unknown[]}).q=(window.clarity as unknown as {q?:unknown[]}).q||[]).push(args)};
+      const later=(fn:()=>void)=>{if(typeof window.requestIdleCallback==='function')window.requestIdleCallback(fn,{timeout:4000});else if(typeof setTimeout==='function')setTimeout(fn,2000);else fn()};
+      later(()=>{
+        const pixel=document.createElement('script');pixel.async=true;pixel.src='https://connect.facebook.net/en_US/fbevents.js';document.head.appendChild(pixel);
+        const clarity=document.createElement('script');clarity.async=true;clarity.src=`https://www.clarity.ms/tag/${brand.clarity}`;document.head.appendChild(clarity);
+      });
     },
-    send:(name:string,data:Record<string,unknown>) => {const p=currentPage();window.gtag?.('set',{page_location:p.url,page_title:p.title});window.gtag?.('event',name,{...data,page_location:p.url,page_title:p.title})}
+    send:(name:string,data:Record<string,unknown>,meta?:{eventId?:string}) => {const p=currentPage();window.gtag?.('set',{page_location:p.url,page_title:p.title});window.gtag?.('event',name,{...data,page_location:p.url,page_title:p.title});const px=pixelPayload(name,data);if(px)window.fbq?.('track',px.event,px.params,...(meta?.eventId?[{eventID:meta.eventId}]:[]))}
   });
   return tracker;
 }
-export function track(name:'ViewContent'|'AddToCart'|'InitiateCheckout'|'Lead'|'ViewCart'|'RemoveFromCart'|'RequestFailure',data:Record<string,unknown>={}) {
+export function track(name:'ViewContent'|'AddToCart'|'InitiateCheckout'|'Lead'|'PayTap'|'ViewCart'|'RemoveFromCart'|'RequestFailure',data:Record<string,unknown>={}) {
   const t = instance();if (!t) return;const p=currentPage();t.page(p.url,p.title);t.event(name,data);
 }
 function disableInternal(){tracker?.consent(false);window.gtag?.('consent','update',{analytics_storage:'denied'});(window as unknown as Record<string,unknown>)[`ga-disable-${brand.ga}`]=true;}
 function markInternalRoute(){if(location.pathname.startsWith('/admin')){try{localStorage.setItem('taksh-internal-traffic','1')}catch{};disableInternal();}}
 let observingInternal=false;
 export function trackRoutePageView() {markInternalRoute();const t=instance();if(t){const p=currentPage();t.page(p.url,p.title)}}
+export function measuringForServer(){try{return analyticsConfigured&&location.hostname==='taksh.store'&&!internalTracking()&&analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{return false}}
 export function analyticsPreference(){try{return readConsent(localStorage.getItem(analyticsChoiceKey))}catch{return null}}
 export function initialiseTracking() {if(!observingInternal){observingInternal=true;window.addEventListener('storage',(event:StorageEvent)=>{if(event.key==='taksh-internal-traffic'&&event.newValue==='1')disableInternal()});}markInternalRoute();let allow=true;try{allow=analyticsEnabled(localStorage.getItem(analyticsChoiceKey))}catch{}instance()?.consent(allow);trackRoutePageView()}
 export function setAnalyticsConsent(allow:boolean) {
