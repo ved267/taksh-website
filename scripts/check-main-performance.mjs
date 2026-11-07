@@ -1,6 +1,6 @@
 import {mkdtemp,writeFile,readFile,cp,mkdir} from 'node:fs/promises';import {tmpdir}from'node:os';import {join,resolve}from'node:path';import {execFileSync}from'node:child_process';
 import {fetchMainBaseline} from '../lib/cloudflare/main-baseline.mjs';
-import {adminSecurityAllowance} from '../lib/cloudflare/performance-regression.mjs';
+import {adminSecurityAllowance,trackingAllowance} from '../lib/cloudflare/performance-regression.mjs';
 const root=process.cwd(),requested=process.argv[2]||'origin/main';
 if(!/^[a-f0-9]{40}$/.test(requested)&&requested!=='origin/main')throw new Error('Supply the pull request base commit SHA.');
 const sha=requested==='origin/main'?execFileSync('git',['rev-parse','origin/main'],{encoding:'utf8'}).trim():requested;
@@ -8,7 +8,8 @@ const output=resolve(root,'.local/performance-main.json'),current=resolve(root,'
 function compare(){
  const changed=execFileSync('git',['diff','--name-only',sha,'HEAD'],{cwd:root,encoding:'utf8'}).trim().split('\n').filter(Boolean);
  const allowance=adminSecurityAllowance(sha,changed);
- execFileSync(process.execPath,['scripts/compare-performance.mjs',output,current,String(allowance)],{cwd:root,stdio:'inherit'});
+ const tracking=trackingAllowance(sha,changed)?['tracking']:[];
+ execFileSync(process.execPath,['scripts/compare-performance.mjs',output,current,String(allowance),...tracking],{cwd:root,stdio:'inherit'});
 }
 if(process.env.GITHUB_ACTIONS==='true'){
  const head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
