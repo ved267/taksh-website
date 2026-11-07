@@ -1,6 +1,6 @@
 # Taksh operations
 
-Status: staging functional review is available; speed approval and cutover are outstanding. Sites remains live. Read AGENTS.md first. This document describes implemented controls; successful hosted evidence belongs in MIGRATION-STATUS.md at the three agreed milestones. Do not confuse an available workflow with a verified run.
+[taksh.store](https://taksh.store) has run in the owner's Cloudflare account since 6 November 2026 at 18:15 IST. Claude owns day-to-day website work. GitHub main is the source of truth. [Migration evidence](../MIGRATION-STATUS.md)
 
 ## Resources
 
@@ -8,7 +8,7 @@ Status: staging functional review is available; speed approval and cutover are o
 |---|---|
 | Private source repository | ved267/taksh-website |
 | Cloudflare account | 60742c7f90408058b71f1065a6815ddd |
-| Production Worker | taksh-store; workers.dev disabled |
+| Production Worker | taksh-store, workers.dev disabled |
 | Dedicated staging Worker | taksh-staging; https://taksh-staging.taksh-ved267.workers.dev |
 | Production D1 | taksh-production / d110db81-9cb7-4b8d-90e5-3787ffd01517 |
 | Staging D1 | taksh-preview / ee526389-8611-4c32-85f5-f9d29dadd27a |
@@ -21,23 +21,23 @@ Status: staging functional review is available; speed approval and cutover are o
 | Retired backup Worker | taksh-daily-backup; no public URL, no cron; not the backup path |
 | Existing demand Sheet | 1PP8TvtPv5nD9XAbedCjQ7woxrjMu6G0ygUWRgfol9X0; Customer requests; gid1125591437 |
 | GA4 measurement | G-NHQFYHTNLP |
-| Production domain / registrar | taksh.store / Namecheap; no nameserver cutover yet |
-| Cloudflare DNS zone | ed2fc0cd07488e846bf9a736f9d3b734 / taksh.store / Free; pending activation |
-| Assigned nameservers | keira.ns.cloudflare.com; neil.ns.cloudflare.com |
-| Pending-zone Worker routes | taksh.store/* and www.taksh.store/* → taksh-store |
+| Production domain / registrar | taksh.store / Namecheap |
+| Cloudflare DNS zone | ed2fc0cd07488e846bf9a736f9d3b734 / taksh.store / Free, active |
+| Assigned nameservers | keira.ns.cloudflare.com and neil.ns.cloudflare.com |
+| Production Worker routes | taksh.store/* and www.taksh.store/* → taksh-store |
 | Canonical www redirect | 68dea6c78a10430bbd87230217f640ec; first;301 to apex with path/query |
 | Existing HTTP upgrade redirect | 5403be6c336849f68de49d66f1aafdaf; second;302 to HTTPS with path/query |
-| Live source baseline | Sites v60, f07dfe675471c0befd519aabea1cf1d79e5aa392; reconciled GitHub main e036f7e395b9e65466f53b3c34a94f47a1455518 |
+| Original Sites source baseline | Sites v60, f07dfe675471c0befd519aabea1cf1d79e5aa392; reconciled GitHub main e036f7e395b9e65466f53b3c34a94f47a1455518 |
 
-All ten original DNS type/name/value/priority entries were matched against the private Namecheap inventory, including the verification TXT omitted by the automatic scan. A www CNAME to the apex is added for the requested www check. Four editable registrar records now have300-second TTLs; Namecheap’s automatic mail records are provider-locked at1800seconds. No nameservers changed. The registrar has zero email forwarders and zero domain redirects; no destination verification, Email Routing activation or test mail is applicable to that empty set. Existing MX/SPF records remain preserved. The live HTTP302 upgrade is recreated in the pending zone. Do not touch unrelated Cloudflare resources.
+The apex uses proxied 192.0.2.0 and 192.0.2.1 placeholders. The www CNAME to taksh.store is proxied. Universal SSL covers both hosts. The www rule returns 301 to the HTTPS apex, and the apex HTTP rule returns 302 to HTTPS. Both preserve the path and query. The original verification and mail records were copied. Namecheap had zero email forwarding aliases and zero URL redirects, so there was no forwarding destination to test.
 
 ## Credentials and gates
 
-Only Cloudflare token: **Taksh GitHub deploy**, stored only as repository Actions secret **CLOUDFLARE_API_TOKEN**. Minimum permissions in the owner account: Workers Scripts Edit, D1 Edit, Workers R2 Storage Edit, Account Settings Read, and Account Analytics Read for the requested usage/watch queries. Analytics Read is an addition to the historical four-scope OWNER-STEPS list and must be visible in the same owner final token review. No billing, DNS, user administration, KV, AI or containers. Scope workers/resources further if supported. It is used by trusted-main deployment and backup jobs; no separate backup credential. GITHUB_TOKEN is GitHub's ephemeral per-job credential, not another Cloudflare token.
+**Taksh GitHub deploy** is the Cloudflare token in the repository Actions secret **CLOUDFLARE_API_TOKEN**. Its owner-account scopes are Workers Scripts Edit, D1 Edit, Workers R2 Storage Edit, Account Settings Read and Account Analytics Read. Trusted workflows use it for deploys, backups and recovery. DNS changes require the owner dashboard.
 
 Application secrets are Cloudflare Worker settings: ADMIN_PASSWORD_HASH, CUSTOMER_SHEET_SYNC_KEY; optional existing email settings RESEND_API_KEY/FROM_EMAIL. .env.example lists all names. Branch previews override every inherited secret with synthetic values and disable customer mail. Never copy real credentials into branches, logs or artifacts.
 
-Repository variables: TAKSH_CI_READY enables checks within included GitHub compute; TAKSH_DEPLOYMENT_READY enables operations/previews; TAKSH_PRODUCTION_READY remains false until the owner's cutover go; TAKSH_BACKUP_READY remains false until the first GitHub backup and restore pass; TAKSH_CUTOVER_AT is an ISO UTC timestamp set only at cutover. GitHub's $0 paid-overage budget must remain in place. Private GitHub Free cannot enforce protected-main rules; agents must use PRs, and production tooling independently verifies current main's successful Validate.
+`TAKSH_CI_READY`, `TAKSH_DEPLOYMENT_READY`, `TAKSH_PRODUCTION_READY` and `TAKSH_BACKUP_READY` are true. `TAKSH_CUTOVER_AT` is `2026-11-06T12:45:36Z`. GitHub has a $0 paid overage budget. Private GitHub Free cannot enforce branch protection. Follow the PR rules in AGENTS.md. Production independently checks Validate on current main.
 
 ## GitHub jobs — same API for Claude and Codex
 
@@ -53,7 +53,8 @@ Use `POST /repos/ved267/taksh-website/actions/workflows/<file>/dispatches` with 
 | backup.yml | Manual main dispatch for **backup now**. Daily at22:00UTC (03:30IST), only when deployment and backup gates are true. |
 | rollback.yml | Legacy manual production rollback entry, also behind production readiness; prefer operations.yml. |
 | migration-watch.yml | Manual or hourly at minute23, only after TAKSH_CUTOVER_AT. Quiet when healthy; private failure issue/rollback on HTTP/TLS failure; one72-hour summary and milestone PR, then disables itself. |
-| retirement.yml | Manual or daily05:00UTC after cutover. At14days, private approval issue requesting final Sites export, then disables itself. Does not retire Sites. |
+| retirement.yml | Manual or daily at 05:00 UTC. Opens a private owner decision issue after 14 days and then stops. The owner decides whether to delete the retained Sites project. |
+| google-report.yml | Manual main dispatch with optional `days`. Read-only GA4 and Search Console aggregates. The `GOOGLE_SERVICE_ACCOUNT_JSON` secret still needs owner setup. |
 
 GitHub Actions must be allowed to create PRs for the automated72-hour milestone PR. Notifications are private issues assigned to ved267; delivery of GitHub email follows the owner's GitHub notification settings. A workflow failure is visible in Actions even if email is delayed. Scheduled Actions can be delayed; they are not an uptime SLA.
 
@@ -61,9 +62,9 @@ All mutable data jobs share taksh-data-operations concurrency. Preview deploymen
 
 ## Runbooks
 
-**Deploy / product page.** Create claude/<task> or codex/<task>, one task per branch. Edit catalogue/routes/assets following existing patterns; product facts come from Namo Products/System/products.json. No secret or customer fixture. Open PR with what/why/tests and desktop/mobile screenshots for a visual change. Inspect Validate and the preview URL. Merge passing PR. After cutover, production deploys current validated main; manual retry uses production.yml. Before cutover, it stays locked. Staging deployment: operations.yml input deploy-staging, using wrangler.staging.json.
+**Deploy / product page.** Create claude/<task> or codex/<task>, one task per branch. Edit catalogue/routes/assets following existing patterns; product facts come from Namo Products/System/products.json. No secret or customer fixture. Open PR with what/why/tests and desktop/mobile screenshots for a visual change. Inspect Validate and the preview URL. Merge passing PR. Production deploys current validated main. Manual retry uses production.yml. Staging deployment: operations.yml input deploy-staging, using wrangler.staging.json.
 
-**Rollback.** Deployment history comes directly from the structured Cloudflare API, so quiet Wrangler logging cannot suppress recovery metadata. Dispatch operations.yml with rollback-production (or rollback-staging). It selects the previous100% Worker version, verifies the active version and probes home/product paths. Code only: it never reverses schema or DNS. Before first domain switch, retain two healthy own-account releases so previous means a known-good app. During initial DNS smoke failure, the operator restores the privately recorded Namecheap nameservers/records immediately; no extra owner approval. Hosted watch can restore Worker code but cannot operate the Namecheap browser. Use additive, backwards-compatible migrations so code rollback remains possible.
+**Rollback.** Dispatch operations.yml with rollback-production or rollback-staging. The job selects the preceding 100% Worker version and verifies the active version and key pages. Use additive migrations so earlier app versions can still use D1. DNS recovery and reopening the private Sites backup require an owner account action.
 
 **Backup now.** Dispatch backup.yml on main. Native D1 export is downloaded privately, bounded to20MiB, SHA256 checked and parsed as SQLite, written to d1/YYYY-MM-DD/<snapshot UUID>/taksh-production.sql plus manifest.json. Forced manual backups create another immutable snapshot; the day's latest.json pointer changes only after completion. SQL/manifests remain private R2, never Actions artifacts. health/latest.json is published only after completion. Thirty-day lifecycle covers d1/ including pre-restore snapshots; verify retention after setup. Failed jobs leave the prior completed backup available. If the database approaches20MiB, raise/review the supported size before it exceeds this bound. D1 Time Travel on Workers Paid provides a separate30-day recovery layer.
 
@@ -75,24 +76,18 @@ All mutable data jobs share taksh-data-operations concurrency. Preview deploymen
 
 **Usage and cost.** Dispatch operations.yml with usage for requests/CPU/D1/R2 counters; use Cloudflare Billing invoices for money and Workers/D1/R2 dashboards for current allowance use. Base$5/month plus tax if applicable; R2 stays inside free allowance. The existing$3 usage email is sufficient with invoices; Cloudflare cannot provide the requested fixed-fee-inclusive forecast. GitHub stays within included compute/storage with$0 paid overage. DNS is prepared through the owner dashboard: the deployment credential intentionally has no DNS/zone-edit scope. Routine Wrangler deployments leave routes absent from config and preserve the dashboard-managed bindings. Native branch previews also consume Worker/storage capacity; review stale resources before reaching limits. Do not buy add-ons or create daily status reports. Record usage only with the agreed migration milestones; label sampled/delayed metrics and unavailable exact build-minute totals honestly.
 
-**Cutover and verification.** Prepare the complete private Namecheap DNS/URL redirect/email-forwarding inventory, matched Cloudflare Free zone, verified destinations, same aliases and lower TTLs. The actual registrar inventory has zero forwarding aliases. Do not create new aliases or enable unused Email Routing as migration busywork. If the owner later adds forwarding, Cloudflare Email Routing requires an active zone and verified account-level destinations. No mailbox delivery has been claimed for the empty inventory. Do not switch nameservers before owner staging go. Run one mobile/desktop live-v60/staging comparison. At the go: fresh Sites bounded export/import and count/content reconciliation, enable production, deploy validated main, verify the prepared pending-zone routes/redirects and change Namecheap nameservers in the owner's browser. Probe apex/www/TLS, owner sign-in, availability request/retry dedup, Sheet marked Test, GA and an actual test mail to every alias. Use one internal request with campaign taksh-migration-check, excluded from demand totals and labelled Test in the Sheet. Take a second Sites export and idempotently import late requests. Critical failure triggers immediate rollback. Set the cutover timestamp only when switched. At72hours publish one summary/status milestone. At14days ask before retirement and export Sites first. Rebase/check reporting PR#2 only after cutover.
+**Cold Sites backup.** On 7 November 2026, the Sites integration changed v60 project `appgprj_6abff32e49a88191a4f182d4a3f59b98` to owner-only. Public access is disabled. The final D1 export contains 13 order records and one reporting-state row, plus source session and rate-limit data kept in the private export. Comparison with the cutover snapshot found zero new records and zero late submissions. Reconciliation with Cloudflare planned zero writes and found zero conflicts. The Sites integration has no R2 export capability. Zero support records reference files, and the bucket remains with the retained project. The owner may decide on deletion from **20 November 2026**. Resolve any need for a full bucket copy before deletion.
 
-## Private Mac locations (paths only)
+## Private Mac locations
 
-- Checkout: /Users/devanshsmac/Desktop/Taksh Website
-- Ignored verification/helper files: /Users/devanshsmac/Desktop/Taksh Website/.local/
-- Private exports/rollback inventory: /Users/devanshsmac/Desktop/Taksh Website Export/
-- Matched DNS, registrar inventory and redirect proofs: /Users/devanshsmac/Desktop/Taksh Website Export/2026-11-06/private-dns/
-- Monthly offsite copies: /Users/devanshsmac/Desktop/Taksh Website Export/2026-11/private-data/ (future months YYYY-MM)
-- Frozen original: /Users/devanshsmac/Documents/Codex/2026-10-02/sites-plugin-sites-openai-curated-remote/taksh
-- Shared business state: /Users/devanshsmac/Desktop/Namo Products/System/STATE.md
+- Final Sites D1 export and checksum manifest: `/Users/devanshsmac/Desktop/Taksh Website Export/2026-11-07/private-data/sites-final.json` and `sites-final-manifest.json` in the same folder.
+- Earlier private exports and DNS inventory: `/Users/devanshsmac/Desktop/Namo Products/Taksh Website Export/`.
+- Checkout and ignored verification files: `/Users/devanshsmac/Desktop/Namo Products/Taksh Website/` and its `.local/` folder.
+- Frozen builder: `/Users/devanshsmac/Documents/Codex/2026-10-02/sites-plugin-sites-openai-curated-remote/taksh`.
+- Shared business state: `/Users/devanshsmac/Desktop/Namo Products/System/STATE.md`.
 
-The existing monthly automation taksh-monthly-private-d1-copy runs on the first day at10:00IST, best effort only, and needs this Mac awake. All daily backups, release, migration, rollback and staging restore operations are hosted Actions; monthly Mac copy is the sole accepted local scheduled dependency.
+No scheduled website task depends on the Mac. The monthly D1 copy automation is paused and the hourly monitor is gone. The Mac holds private archive copies. GitHub runs the releases, previews, backups, restore, migrations and cutover watch. Apps Script runs the existing Sheet sync in Google's cloud.
 
 ## Lessons
 
-Use exact published v60 for parity, not later builder drafts. Build branch code without secrets and deploy with trusted tooling. Gate production independently of previews. Match restore contents as well as counts. Native UI text and screenshots can disagree: never capture a revealed credential window. Do not mistake an accepted dispatch or prepared form for a successful operation. Sites object inventory could not be exported completely; no support rows reference photos, so the owner closed that unused-data limitation without further export work.
-
-Owner-auth PR#5 adds the requested five-failure lockout. Its measured Worker increase was235 compressed bytes, with unchanged public JS/CSS/page weights. The check permits at most256 extra Worker bytes only against baseline171ff74380e4cc41aa145ff4766b1e2ba4f9621b and an explicit list of auth/helper/test/docs/performance files. Additional file changes disqualify it; after main advances, the allowance is zero. The3MiB ceiling and all public-page gates stay unchanged. This is a server-feature baseline update, not a speed measurement; the one staging/live browser comparison still precedes cutover approval.
-
-Performance comparisons use the numeric report from successful Validate on the exact main SHA, with workflow/repository/commit and actual-step verification. Archives are size-bounded, read as numeric JSON in memory, and never executed. Rebuilding the same old main varied by41bytes; its original GitHub report is414782bytes, and the requested auth build is415017bytes (+235). The256-byte auth-only bound remains unchanged. If the7-day evidence artifact has expired, dispatch validate.yml on main, then retry the branch check. Manual main validation refreshes the same-source baseline and does not trigger a production deploy. Local legacy comparison remains available for initial source export work.
+Use the exact published v60 baseline for parity. Build previews without deployment secrets. Verify the hosted run and compare restored contents as well as counts. If the main size report expired, dispatch validate.yml on main and retry the PR. The owner accepted a staging desktop LCP difference of about 0.25 seconds on Bharat and Gully Cricket. Claude owns the speed follow-up and the 72-hour watch.
