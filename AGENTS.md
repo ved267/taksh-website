@@ -2,7 +2,7 @@
 
 Repository: https://github.com/ved267/taksh-website. This is the single rules file; CLAUDE.md points here. Claude owns day-to-day website work from 7 November 2026. Follow the owner's latest decisions and the operating record here.
 
-Read [Operations](docs/OPERATIONS.md) for resources, GitHub jobs and recovery. Read [Architecture](docs/ARCHITECTURE.md) for application and data boundaries. These are the two maintained handoff documents. MIGRATION-STATUS.md records only staging ready, cutover done and the 72-hour milestone.
+Read [Operations](docs/OPERATIONS.md) for resources, GitHub jobs and recovery. Read [Architecture](docs/ARCHITECTURE.md) for application and data boundaries. Read [Access](docs/ACCESS.md) for every repository, token name, connector and account Claude and Codex use (names only, never values). These are the three maintained handoff documents. MIGRATION-STATUS.md records only staging ready, cutover done and the 72-hour milestone.
 
 ## Hosting and release
 
