@@ -1,4 +1,20 @@
-# Taksh migration — staging review milestone
+# Taksh migration status
+
+## Live cutover, 6 November 2026
+
+[taksh.store](https://taksh.store) started serving from the owner Cloudflare Worker at 18:15 IST (12:45:36 UTC). Namecheap delegates to keira.ns.cloudflare.com and neil.ns.cloudflare.com. Cloudflare Universal SSL is active. The original builder stays frozen. [Production deploy](https://github.com/ved267/taksh-website/actions/runs/42216581204)
+
+- The fresh import reconciled 13 order records and one reporting-state row. The late snapshot found no new requests or conflicts and preserved the newer Cloudflare Sheet acknowledgement. No Sites sessions were restored.
+- All 21 existing URLs matched the expected status and redirect. HTTPS, the www redirect and owner login and logout passed. A single internal request persisted through retry, left demand totals unchanged and arrived in the existing Sheet as Test. A 5 MiB synthetic support photo downloaded byte for byte with owner access. Anonymous and revoked access returned 401. The forwarding inventory was empty.
+- GA4 loaded the existing tag and queued page_view. The test browser's Google Analytics opt-out prevented a delivery acknowledgement. Google reports are a separate GitHub job with owner credential setup pending. [Analytics reporting PR](https://github.com/ved267/taksh-website/pull/8)
+- The owner accepted the desktop staging LCP differences. Five-load median differences were +0.148 s Home, +0.248 s Bharat, +0.240 s Gully and +0.204 s checkout. The repeated mobile matrix was not completed. Claude owns the speed follow-up.
+- The hosted 72-hour check started and passed. The daily R2 backup passed after cutover. Claude owns the watch and retirement decision. [First watch](https://github.com/ved267/taksh-website/actions/runs/42220678130) · [Daily backup](https://github.com/ved267/taksh-website/actions/runs/42323902953)
+
+November usage at 12:50 UTC on 6 November, account-wide and potentially delayed. Workers reported 510 requests and 14.399 CPU seconds. D1 reported 4,849 rows read and 1,129 written. R2 reported 117 operations, with billed storage unavailable from this query. Cloudflare Builds returned no minutes and the repository cannot report the account-wide GitHub minutes. The approved base remains $5/month plus applicable tax, with R2 within its free allowance. [Usage job](https://github.com/ved267/taksh-website/actions/runs/42220688529)
+
+[Current operations and cold Sites backup](docs/OPERATIONS.md)
+
+## Staging review record, 6 November 2026
 
 6 November 2026. **Functional staging review is available; speed approval and cutover remain open.** taksh.store is still on Sites v60. Namecheap nameservers are unchanged. Production readiness is false.
 

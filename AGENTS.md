@@ -1,15 +1,15 @@
 # Taksh — shared Claude and Codex rules
 
-Repository: https://github.com/ved267/taksh-website. This is the single rules file; CLAUDE.md points here. The owner's final migration brief of 5 November 2026 supersedes older migration plans and handoffs.
+Repository: https://github.com/ved267/taksh-website. This is the single rules file; CLAUDE.md points here. Claude owns day-to-day website work from 7 November 2026. Follow the owner's latest decisions and the operating record here.
 
 Read [Operations](docs/OPERATIONS.md) for resources, GitHub jobs and recovery. Read [Architecture](docs/ARCHITECTURE.md) for application and data boundaries. These are the two maintained handoff documents. MIGRATION-STATUS.md records only staging ready, cutover done and the 72-hour milestone.
 
 ## Hosting and release
 
 - Only authorised paid service: Cloudflare Workers Paid ($5/month) and R2 within its free allowance. No other paid services, add-ons or trials. Images/Stream is $0 and unused: leave it alone. Use the existing $3 usage notification plus invoices; no total-bill forecast or Mac usage monitor.
-- Sites v60 remains live until the owner reviews staging and gives the cutover go. Production readiness stays false until then. After the switch, keep Sites unchanged for 14 days; ask before retirement and take a final export first.
+- Production is live on owner Cloudflare. Keep the owner-only Sites v60 cold backup through 20 November 2026. Deletion requires the owner decision.
 - GitHub is the source of truth. Never edit, build or publish the frozen original builder at `/Users/devanshsmac/Documents/Codex/2026-10-02/sites-plugin-sites-openai-curated-remote/taksh`.
-- This migration must not change public UI, UX, copy, layout, images or speed, or add tracking libraries.
+- The migration preserved the v60 public UI, copy and assets. Scope future changes to the owner-approved task.
 
 ## Equal access
 
@@ -25,11 +25,9 @@ Read [Operations](docs/OPERATIONS.md) for resources, GitHub jobs and recovery. R
 - Preserve v60 schema, migration history, timestamps, stored prices/currency, consent, retry cursors and manual Sheet notes. Apply database changes only through committed migrations and explicit Actions jobs (`wrangler d1 migrations apply`), never inside requests.
 - Availability requests are not paid sales. Preserve bot/internal/test exclusions; no dummy payment or paid-order/revenue claims.
 
-## Migration scope and recovery
+## Recovery and handoff
 
-- Daily GitHub backup: D1 native export to private R2, 30-day retention; enable the schedule only after a real GitHub backup and staging restore match counts/content. D1 Time Travel is the second layer. Monthly Mac copy is best effort only.
-- Do not create a separate backup token, staging Google Sheet, Sites R2 export, daily report or repeated staging performance benchmark. Source support rows reference no photos; the unavailable complete Sites object inventory is a documented limitation, closed by the owner.
-- Before staging review: prepare matched DNS, forwarding, redirects and TTLs; one desktop/mobile comparison against live. Send staging and a short phone checklist, then wait for the cutover go.
-- Cutover: fresh and late Sites exports with idempotent reconciliation; browser nameserver change; website/www/TLS/request/admin/Sheet/GA/mail checks. A marked internal migration request must be excluded from demand totals and labelled Test in the existing Sheet.
-- Roll back critical failures without asking, notify the owner. Hosted checks stay quiet when healthy, stop at 72 hours with one summary, and ask at day 14 before retiring Sites. Rebase/check reporting PR #2 only after cutover.
-- Report actual tool failures; a fallback does not complete a failed capability. Record tested results separately from pending work. Collect the remaining owner confirmations/hidden inputs into one session, not piecemeal questions.
+- GitHub exports D1 daily to private R2 with 30-day retention. D1 Time Travel is the second recovery layer. The Mac backup schedule is paused.
+- Use the GitHub jobs in Operations for preview, production deploy, rollback, migration, backup and staging restore. Keep the Cloudflare deployment token in Actions.
+- Claude owns the hosted 72-hour watch, the Map and Gully speed follow-up, PR #2 and the Sites retirement decision with the owner. The final private Sites export and its R2 limitation are recorded in Operations.
+- Report actual tool failures and distinguish verified results from pending work.

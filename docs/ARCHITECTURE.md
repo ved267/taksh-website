@@ -1,6 +1,6 @@
 # Taksh architecture
 
-The migration preserves the published Sites v60 application. Vinext/React builds into a Cloudflare Worker plus static assets. Sites-specific authentication/hosting bindings are replaced with owner Cloudflare Wrangler bindings. No new frontend tracking dependency, design change or payment flow is introduced.
+The migration preserves the published Sites v60 application. Vinext/React builds into a Cloudflare Worker plus static assets. Sites-specific authentication/hosting bindings are replaced with owner Cloudflare Wrangler bindings. The application keeps the v60 design, availability request flow and GA4 tag.
 
 ## Request paths
 
@@ -44,13 +44,13 @@ Orders persist server-side item/price/currency snapshots, progress, CAS version,
 
 Production: taksh-production D1 and taksh-production-support R2. Dedicated staging: taksh-preview D1 and taksh-preview-support R2. Native branch previews derive separate D1/bucket names from branch+hash, use APP_ENV=preview and synthetic secrets; production storage is never mounted there. Dedicated staging is APP_ENV=staging and can receive the authorised private restore test.
 
-Private taksh-private-backups holds native SQL plus integrity manifests under d1/YYYY-MM-DD/<snapshot UUID>/ with a completed-day pointer, pre-restore snapshots under d1/pre-restore/, and numeric health records under health/. Lifecycle deletes d1/ objects after30days. GitHub backup schedule is22:00UTC daily after proof/readiness. D1 Paid Time Travel is an independent30-day layer. Monthly Mac copy is best effort. Legacy taksh-daily-backup has no active cron and is not used; no separate backup token.
+Private taksh-private-backups holds native SQL plus integrity manifests under d1/YYYY-MM-DD/<snapshot UUID>/ with a completed-day pointer, pre-restore snapshots under d1/pre-restore/, and numeric health records under health/. Lifecycle deletes d1/ objects after30days. GitHub backup schedule is22:00UTC daily after proof/readiness. D1 Paid Time Travel is an independent30-day layer. The monthly Mac copy automation is paused. Legacy taksh-daily-backup has no active cron and is not used; no separate backup token.
 
 The Apps Script sync trigger runs every5minutes. The hosted Actions watch runs hourly only through the72-hour cutover window and sends one summary, and a daily hosted retirement check asks at day14 then disables. The app Worker has no cron handler; Sheet health is checked by the hosted Actions watch. No migration, backup export or DDL executes during a customer request.
 
 ## Caching, images and performance
 
-Only explicitly allowlisted anonymous public HTML is cached, keyed by deployment/build, for300seconds. Personalised cookie requests, APIs, owner/cart/checkout paths and RSC requests bypass public HTML cache. Private responses use no-store. Static hashed files retain immutable caching; existing responsive image manifest, thumbnails, srcset, fonts and local assets remain. Preview/staging are excluded from indexing and production analytics by existing environment/hostname checks. CI compares compressed JS/CSS/Worker size and key-page weight against main; deployable builds use normal fresh server secrets, distinct from public fixed metadata used only for fair CI benchmarks. The single pre-approval staging desktop/mobile comparison uses livev60 as its external baseline.
+Only explicitly allowlisted anonymous public HTML is cached, keyed by deployment/build, for300seconds. Personalised cookie requests, APIs, owner/cart/checkout paths and RSC requests bypass public HTML cache. Private responses use no-store. Static hashed files retain immutable caching; existing responsive image manifest, thumbnails, srcset, fonts and local assets remain. Preview/staging are excluded from indexing and production analytics by existing environment/hostname checks. CI compares compressed JS/CSS/Worker size and key-page weight against main; deployable builds use normal fresh server secrets, distinct from public fixed metadata used only for fair CI benchmarks. Staging comparisons used live v60 as the external baseline. Measured timings and the owner decision are in MIGRATION-STATUS.md.
 
 ## Security
 
@@ -62,7 +62,7 @@ The sole persistent Cloudflare deployment token resides only in GitHub Actions. 
 
 Existing GA4: G-NHQFYHTNLP. No new tracking library or Meta Pixel is added. Existing event mapping: ViewContent→view_item, AddToCart→add_to_cart, InitiateCheckout→begin_checkout, ViewCart→view_cart, RemoveFromCart→remove_from_cart, RequestFailure→availability_request_error. Lead maps to generate_lead only for contactable saved interest; anonymous selection uses selection_saved. Events contain public catalogue/item/category/price information, never typed contact/form fields. No purchase or paid-revenue claim. Existing consent and internal/browser/bot/preview/noncanonical-host exclusions remain; GA visitors are browser estimates, not exact unique buyers.
 
-The production migration smoke request is internal:true with utmCampaign taksh-migration-check. Existing server classification excludes it from demand totals; the Script explicitly allows only that marked internal campaign into the Sheet as Test, with an internal-test note and no owner demand alert. All other test rows stay excluded. Reporting PR#2 remains separate until after cutover.
+The production migration smoke request is internal:true with utmCampaign taksh-migration-check. Existing server classification excludes it from demand totals; the Script explicitly allows only that marked internal campaign into the Sheet as Test, with an internal-test note and no owner demand alert. All other test rows stay excluded. Reporting PR #2 remains open for Claude.
 
 ## Existing Sheet protocol and email
 
@@ -70,12 +70,12 @@ Keep the original private workbook/tab,17 columns and manual follow-up notes. Fe
 
 Sync pages up to100 rows, at most5 pages per run; cursor uses placed_at/id. References deduplicate writes. A staged plan is persisted before Sheet writes; retry safely, then acknowledge the server only after successful completion. reporting_state records lastAttempt, lastSuccess, status/count and a non-sensitive failure category. Failures preserve previous success time. MailApp owner alerts use the existing15-minute throttle/free quota; internal tests do not alert. No synthetic staging workbook is required.
 
-Optional RESEND_API_KEY/FROM_EMAIL is not configured just because code supports it; do not claim customer transactional email delivery. The verified Namecheap inventory contains no email forwarders. No new alias, destination verification or unused Email Routing activation is required. Existing mail MX/SPF records are preserved. If forwarding is introduced later, use free Cloudflare Email Routing with owner-verified destinations. Destinations belong to the account; routing activation requires the zone to be active, so the pending zone cannot finish onboarding before the approved nameserver change. An actual non-empty forwarding inventory would require destination verification before that change and real mail checks after activation. DNS MX/TXT verification records and URL redirects must be inventoried privately and reproduced. Real forwarding delivery to each alias is a cutover smoke check. Prepared DNS is not a completed switch.
+Optional RESEND_API_KEY and FROM_EMAIL configure transactional mail when present. Namecheap had zero forwarding aliases. The mail MX and SPF records were preserved, so no forwarding test applied.
 
 ## Source and rollback boundary
 
-GitHub main contains the reconciled publishedv60 source. Original builder is frozen and Sites stays live until approval, then14days as rollback. Fresh and late Sites D1 snapshots reconcile source IDs/counts/content without duplicates. A complete Sites R2 inventory/export was unavailable; source support rows reference no photos. The owner explicitly closed that unused-object limitation; do not represent it as a complete object export or continue that work. Private inventory, backups and credentials never enter this repository.
+GitHub main contains the reconciled v60 source. The original builder is frozen. The Sites project is owner-only as of 7 November 2026 and remains a cold backup until at least 20 November. The private final D1 export reconciles with production. Zero source support rows reference photos. The Sites integration does not provide an R2 object export, so its bucket stays with the project. [Operations](OPERATIONS.md)
 
-## Prepared owner DNS
+## Owner DNS
 
-Free zone ed2fc0cd07488e846bf9a736f9d3b734 remains pending; Namecheap nameservers are unchanged. Ten original records match the private registrar/public-mail inventory. Added www CNAME points to taksh.store. Dashboard-managed taksh.store/* and www.taksh.store/* routes target taksh-store; normal GitHub deployments preserve these bindings without DNS permission. Free redirect rules send www directly to the HTTPS apex with301, preserving path/query, then preserve the live apex HTTP-to-HTTPS302 behavior. Canonical routing keeps GA on its existing taksh.store hostname allowlist. The rules become traffic-serving only when the owner-approved nameserver cutover activates this zone.
+Namecheap delegates taksh.store to the active Free Cloudflare zone. The dashboard-managed apex and www routes target taksh-store. GitHub deployments preserve them without DNS permissions. The www redirect uses the existing GA hostname, taksh.store, and preserves path and query.
