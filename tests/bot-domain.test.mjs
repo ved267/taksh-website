@@ -19,6 +19,11 @@ test('data-centre networks, verified bots, bot user agents and missing language 
  assert.equal(automatedRequest({...human,userAgent:'facebookexternalhit/1.1'}),true);
  assert.equal(automatedRequest({...human,acceptLanguage:null}),true);
 });
+test('preview and CI Workers skip only the network rule',()=>{
+ assert.equal(automatedRequest({...human,asn:8075},{network:false}),false);
+ assert.equal(automatedRequest({...human,asn:8075,userAgent:'Googlebot/2.1'},{network:false}),true);
+ assert.equal(automatedRequest({...human,asn:8075,acceptLanguage:null},{network:false}),true);
+});
 test('reads Cloudflare facts and the cookie from a request',()=>{
  const req=new Request('https://taksh.store/',{headers:{'user-agent':phone,'accept-language':'hi-IN'}});
  Object.defineProperty(req,'cf',{value:{asn:16509}});
