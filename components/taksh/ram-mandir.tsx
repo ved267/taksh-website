@@ -27,7 +27,7 @@ const gallery:PhotoInfo[]=[
  {image:'gallery-05-porch-stairs-plaque',label:'The entrance',alt:'The entrance porch, the stairs, the elephants and lions, and the nameplate'},
  {image:'gallery-06-wing-porch',label:'The side hall',alt:'One of the two side halls with its arches and lattice windows'},
  {image:'gallery-07-platform-lawn',label:'The platform and lawn',alt:'The carved platform, the side stairs and a lawn'},
- {image:'gallery-09-dimensions',label:'The dimensions',alt:"The model's size: 38 cm wide, 34 cm deep, 26 cm tall"},
+ {image:'gallery-09-dimensions',label:'The dimensions',alt:"The model's size: about 38 cm wide, 34 cm deep, 26 cm tall"},
 ];
 const guide:PhotoInfo={image:'gallery-08-parts-no-legend',label:'Walk in from the east',alt:'The brick temple with twelve numbered parts.'};
 
@@ -72,7 +72,7 @@ export function RamMandirDetail({p}:{p:Product}){
     ].map(([date,text])=><li key={date}><span>{date}</span><p>{text}</p></li>)}</ol><p className="rm-family-note">The Sompura family has designed temples for 15 generations.</p></div>
   </div></section>
   <figure className="rm-quote"><Photo image="ad-sunrise-banner" alt="The Ram Mandir model in a sunrise scene, with the nameplate verse: Mother and motherland are greater than even heaven." large/></figure>
-  <section className="wrap rm-specs" aria-labelledby="rm-size-heading"><h2 id="rm-size-heading">Size and space.</h2><dl><div><dt>Width</dt><dd>About 38 cm</dd></div><div><dt>Depth</dt><dd>About 34 cm</dd></div><div><dt>Height with the flag</dt><dd>About 26 cm</dd></div></dl><div className="rm-real-temple"><p>It needs a shelf 40 cm wide and 35 cm deep.</p><p>The real temple: 380 ft long, 250 ft wide, 161 ft tall, with 392 carved pillars. Nagara style. Entrance in the east.</p></div><p className="rm-disclaimer">A simplified brick model inspired by the Ram Mandir in Ayodhya. It is not an exact scale replica and is not made by, affiliated with or endorsed by the Shri Ram Janmabhoomi Teerth Kshetra Trust.</p></section>
+  <section className="wrap rm-specs" aria-labelledby="rm-size-heading"><h2 id="rm-size-heading">Size and space.</h2><dl><div><dt>Width</dt><dd>About 38 cm</dd></div><div><dt>Depth</dt><dd>About 34 cm</dd></div><div><dt>Height with the flag</dt><dd>About 26 cm</dd></div></dl><div className="rm-real-temple"><p>It needs a shelf about 40 cm wide and 35 cm deep.</p><p>The real temple: 380 ft long, 250 ft wide, 161 ft tall, with 392 carved pillars. Nagara style. Entrance in the east.</p></div><p className="rm-disclaimer">A simplified brick model inspired by the Ram Mandir in Ayodhya. It is not an exact scale replica and is not made by, affiliated with or endorsed by the Shri Ram Janmabhoomi Teerth Kshetra Trust.</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }

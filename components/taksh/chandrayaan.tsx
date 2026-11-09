@@ -13,7 +13,7 @@ import {Dialog,DialogContent,DialogTitle,DialogDescription} from '@/components/u
 import {Stepper} from './stepper';
 import {ContactLink} from './shell';
 import {useStore} from './store';
-import {productMoney,pieceLabel,type Product} from '@/lib/shop';
+import {productMoney,pieceLabel,inTheBox,type Product} from '@/lib/shop';
 import {track} from '@/lib/tracking';
 import {useStickyPurchase} from './use-sticky-purchase';
 import {imageAsset,imageInfo,imageSrcSet} from '@/lib/images';
@@ -135,6 +135,7 @@ export function ChandrayaanDetail({p}:{p:Product}){
     <div className="ch3-title"><h1>Chandrayaan-3</h1><div className="ch3-craft-pair"><span><strong>Vikram</strong><span className="ch3-craft-role"> · Lander</span></span><span><strong>Pragyan</strong><span className="ch3-craft-role"> · Rover</span></span></div></div>
     <div className="ch3-facts"><span>Ages {p.age}+</span><span>{pieceLabel(p)} pieces</span><span>{p.buildTime}</span><span>{p.level}</span></div>
     <p className="ch3-description">Build the lander, the rover and a piece of the Moon. The ramp unfolds, the rover rolls out, and the top lifts off.</p>
+    <p className="ch3-description">{inTheBox(p)}</p>
     <div className="ch3-pricing"><div className="price-block"><span className="price-tag">{productMoney(p)}</span><small>MRP inclusive of all taxes</small></div></div>
     <StockNotice/><div className="ch3-order"><div className="quantity-row"><span>Quantity</span><Stepper value={qty} onChange={setQty}/></div><button ref={buyRef} className="button primary full" disabled={!ready} onClick={()=>add(p,qty)}>Add to bag</button></div>
     <BuyerDetails p={p}/><div ref={contactRef} className="ch3-contact"><ContactLink><WhatsAppIcon/>Ask us on WhatsApp</ContactLink></div>
@@ -144,6 +145,7 @@ export function ChandrayaanDetail({p}:{p:Product}){
  ['The ramp unfolds.','Two hinged sections swing down from the door to the ground.'],['Pragyan rolls out.','All six wheels turn.'],['The top lifts off.','Take off the top deck to see the rover bay, the fuel tanks and the guide rails.'],['The solar panel flips.','It lies flat for the journey and stands up to charge.'],
  ].map(([title,text])=><div key={title}><h3>{title}</h3><p>{text}</p></div>)}</div></div></div></section>
   <PartGuide/>
+  <section className="wrap ch3-section" aria-labelledby="ch3-size-title"><div className="ch3-size-layout"><figure><Photo name="gallery-11-dimensions" alt="The complete lander and rover set with width, depth and height marked."/></figure><div className="ch3-size-copy"><h2 id="ch3-size-title">Size and space.</h2><dl><div><dt>Width</dt><dd>About 32 cm</dd></div><div><dt>Depth</dt><dd>About 28 cm</dd></div><div><dt>Height</dt><dd>About 17 cm</dd></div></dl><p>About one and a half A4 sheets of shelf space, so it fits on a study desk or a bookshelf.</p></div></div></section>
   <section className="ch3-moon" aria-label="Inspired by the mission"><picture><source media="(max-width:640px)" srcSet={imageSrcSet('/chandrayaan/ad-moon-portrait.webp')} sizes="100vw"/><img src={asset('ad-moon-banner')} srcSet={imageSrcSet('/chandrayaan/ad-moon-banner.webp')} sizes="100vw" width={1672} height={941} alt="The brick lander and rover in an imagined lunar scene." loading="lazy" decoding="async"/></picture><div className="ch3-moon-copy"><span>23 August 2023 · 6:04 pm</span><h2>A landing<br/>worth remembering.</h2><p>A build that keeps the story close.</p></div></section>
   <section className="wrap ch3-section ch3-story" id="ch-story" aria-labelledby="ch3-timeline-title"><h2 id="ch3-timeline-title">From Earth to the Moon.</h2><ol className="ch3-timeline">{timeline.map((item,i)=><li key={item.date} className={i===2?'ch3-touchdown':undefined}><span className="ch3-timeline-node" aria-hidden="true"/><span className="ch3-date">{item.date}</span><div><h3>{item.event}</h3>{item.note&&<p>{item.note}</p>}</div></li>)}</ol><p className="ch3-tribute">An independent tribute to the mission. Not made by, affiliated with or endorsed by ISRO.</p></section>
   {sticky&&<div className="ch3-sticky"><div><strong>Chandrayaan-3</strong><span>{productMoney(p)}</span></div><button className="button primary" disabled={!ready} onClick={()=>add(p,qty)}>Add to bag</button></div>}

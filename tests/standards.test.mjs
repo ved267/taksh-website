@@ -24,6 +24,7 @@ test('copy lint wants "about" before counts, sizes and times',()=>{
  assert.ok(rules('Build time 2–3 hours').includes('number without "about"'));
  assert.deepEqual(rules('About 350 pieces · about 2–3 hours · about 17 cm wide'),[]);
  assert.deepEqual(rules('Masters · over 1,000 pieces'),[]);
+ assert.deepEqual(rules('About 52.8 × 52.8 cm, 2 cm deep'),[]);
 });
 
 test('copy lint checks prices and piece counts against the catalogue',()=>{
