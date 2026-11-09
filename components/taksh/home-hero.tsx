@@ -17,6 +17,10 @@ export function HomeHero(){
  const current=useRef(0),sequence=useRef(0),mounted=useRef(true),start=useRef<{x:number;y:number}|null>(null),controls=useRef<(HTMLButtonElement|null)[]>([]);
  const slide=slides[active],product=products.find(p=>p.slug===slide.slug)!;
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false}},[]);
+ // Have every set photo ready before the tap: warm it on hover, touch or focus of its chip, and all of them once the first screen has settled (not on Save-Data or 2G).
+ const warmed=useRef(new Set<number>());
+ const warm=useCallback((n:number)=>{if(warmed.current.has(n))return;warmed.current.add(n);const i=new Image();i.sizes=photoSizes;i.srcset=imageSrcSet(slides[n].image)||'';i.src=imageAsset(slides[n].image,'large')},[]);
+ useEffect(()=>{const c=(navigator as Navigator&{connection?:{saveData?:boolean;effectiveType?:string}}).connection;if(c?.saveData||/2g/.test(c?.effectiveType||''))return;const t=setTimeout(()=>slides.forEach((_,n)=>warm(n)),2500);return()=>clearTimeout(t)},[warm]);
  const select=useCallback((n:number)=>{
   const next=(n+slides.length)%slides.length,token=++sequence.current;
   if(next===current.current){setBusy(false);return}
@@ -35,6 +39,6 @@ export function HomeHero(){
   </div>
   <div className="home-intro"><h1>Keep a little <br/>India close.</h1><p>Brick sets of the places and stories you grew up with.</p></div>
   <div className="home-feature-copy"><div className="home-feature-product" aria-live="polite" aria-atomic="true"><h2>{slide.name}</h2><strong>{productMoney(product)}</strong></div><div className="home-feature-action"><SiteLink href={'/sets/'+slide.slug} className="button primary" aria-label={`View ${slide.name}`}>View set</SiteLink><SiteLink href="/sets" className="home-browse-link">See all sets</SiteLink></div>{slide.slug==='nonsense'&&<span className="sr-only">Nazariya badlo, nazara badlega.</span>}</div>
-  <div className="home-feature-controls"><div className="home-feature-select" role="group" aria-label="Choose a featured set" onKeyDown={e=>{const i=controls.current.indexOf(document.activeElement as HTMLButtonElement);if(i<0)return;let next=i;if(e.key==='ArrowRight')next=(i+1)%slides.length;else if(e.key==='ArrowLeft')next=(i+slides.length-1)%slides.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;e.preventDefault();select(next);controls.current[next]?.focus()}}>{slides.map((s,i)=><button key={s.slug} ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onClick={()=>select(i)}>{s.label}</button>)}</div><span className="sr-only" role="status">{error|| (busy?'Loading the selected photograph.':'')}</span></div>
+  <div className="home-feature-controls"><div className="home-feature-select" role="group" aria-label="Choose a featured set" onKeyDown={e=>{const i=controls.current.indexOf(document.activeElement as HTMLButtonElement);if(i<0)return;let next=i;if(e.key==='ArrowRight')next=(i+1)%slides.length;else if(e.key==='ArrowLeft')next=(i+slides.length-1)%slides.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;e.preventDefault();select(next);controls.current[next]?.focus()}}>{slides.map((s,i)=><button key={s.slug} ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onTouchStart={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{s.label}</button>)}</div><span className="sr-only" role="status">{error|| (busy?'Loading the selected photograph.':'')}</span></div>
  </div></section>;
 }

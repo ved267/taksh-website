@@ -8,7 +8,7 @@ import {imageAsset,imageInfo,imageSrcSet} from '@/lib/images';
 export type PhotoInfo={image:string;label:string;alt:string};
 export function SetPhoto({image,alt,eager=false,large=false,sizes,className,resolvedSrc}:{image:string;alt:string;eager?:boolean;large?:boolean;sizes?:string;className?:string;resolvedSrc?:string}){
  const info=imageInfo(image);
- return <ProductPhoto eager={eager} className={className} src={resolvedSrc||imageAsset(image)} srcSet={resolvedSrc?undefined:imageSrcSet(image)} sizes={sizes??(large?'100vw':'(max-width: 960px) 90vw, (max-width: 1400px) 47vw, 660px')} width={info?.width} height={info?.height} alt={alt} fetchPriority={eager?'high':'auto'} decoding="async" draggable={false}/>;
+ return <ProductPhoto eager={eager} className={className} src={resolvedSrc||imageAsset(image)} srcSet={resolvedSrc?undefined:imageSrcSet(image)} sizes={sizes??(large?'100vw':'(max-width: 640px) and (min-resolution: 2.5dppx) 60vw, (max-width: 960px) 90vw, (max-width: 1400px) 47vw, 660px')} width={info?.width} height={info?.height} alt={alt} fetchPriority={eager?'high':'auto'} decoding="async" draggable={false}/>;
 }
 export function ImageViewer({photos,index,onChange,onClose,trigger,resolvedSrc,status}:{photos:PhotoInfo[];index:number;onChange:(n:number)=>void;onClose:()=>void;trigger:React.RefObject<HTMLButtonElement|null>;resolvedSrc?:string;status:string}){
  const pointer=useRef<{x:number;y:number}|null>(null);
