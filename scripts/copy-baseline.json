@@ -1,0 +1,21 @@
+{
+ "note": "Known copy issues on main when the check was added (2026-11-09 audit). Fix them and remove the line; never add new ones.",
+ "issues": [
+  "\"play\" outside Gully Cricket | components/taksh/home-hero.tsx | Khelo bachchon.",
+  "\"play\" outside Gully Cricket | components/taksh/nonsense.tsx | Khelo bachchon.",
+  "banned word: exact replica | components/taksh/ram-mandir.tsx | A simplified brick model inspired by the Ram Mandir in Ayodhya. It is not an exact scale replica and is not made by, affiliated with or endorsed by the Shri Ram",
+  "banned word: exact replica | components/taksh/yellow-taxi.tsx | A simplified brick model inspired by the yellow Ambassador taxis of Kolkata. It is not an exact scale replica and is not made by, affiliated with or endorsed by",
+  "banned word: official | components/taksh/yellow-taxi.tsx | For decades, the Prime Minister’s official car.",
+  "number without \"about\" | components/taksh/bharat.tsx | 52.8 cm",
+  "number without \"about\" | components/taksh/bharat.tsx | The map with its size: 52.8 cm wide and 52.8 cm tall.",
+  "number without \"about\" | components/taksh/nonsense.tsx | 45–60 minutes",
+  "number without \"about\" | components/taksh/ram-mandir.tsx | It needs a shelf 40 cm wide and 35 cm deep.",
+  "number without \"about\" | components/taksh/ram-mandir.tsx | The model's size: 38 cm wide, 34 cm deep, 26 cm tall",
+  "number without \"about\" | lib/catalogue.json | 2–3 hours",
+  "number without \"about\" | lib/catalogue.json | 45–60 minutes",
+  "number without \"about\" | lib/catalogue.json | 4–5 hours",
+  "number without \"about\" | lib/catalogue.json | 52.8 cm × 52.8 cm, about 2 cm deep",
+  "number without \"about\" | lib/catalogue.json | 5–6 hours",
+  "number without \"about\" | lib/catalogue.json | 8–10 hours"
+ ]
+}
