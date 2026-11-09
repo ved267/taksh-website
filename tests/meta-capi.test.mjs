@@ -8,8 +8,8 @@ test('sending reports status, keeps the token out of the URL and never throws',a
 
 test('contact details are normalised then hashed; raw values never appear',async()=>{
   const sha=async t=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)))].map(b=>b.toString(16).padStart(2,'0')).join('');
-  const c=await metaContactHashes({fullName:'Asha  Devi Rao',mobile:'098765 43210',email:' Asha@Example.COM ',city:'New Delhi',state:'Delhi',pincode:'110 001'.replace(' ','')});
-  assert.deepEqual(c.em,[await sha('asha@example.com')]);assert.deepEqual(c.ph,[await sha('919876543210')]);assert.deepEqual(c.fn,[await sha('asha')]);assert.deepEqual(c.ln,[await sha('rao')]);assert.deepEqual(c.ct,[await sha('newdelhi')]);assert.deepEqual(c.zp,[await sha('110001')]);assert.deepEqual(c.country,[await sha('in')]);
-  const text=JSON.stringify(metaLeadBody({reference:'TK-2',items:[],headers,contact:c}));assert.equal(/asha@example|9876543210/i.test(text),false);
+  const c=await metaContactHashes({fullName:'Asha Rao',mobile:'+91 98765 43210',email:' Asha@Example.COM ',pincode:'110001'});
+  assert.deepEqual(c.em,[await sha('asha@example.com')]);assert.deepEqual(c.ph,[await sha('919876543210')]);assert.deepEqual(c.zp,[await sha('110001')]);assert.deepEqual(c.country,[await sha('in')]);assert.equal('fn' in c,false);
+  const text=JSON.stringify(metaLeadBody({reference:'TK-2',items:[],headers,contact:c}));assert.equal(/asha|9876543210/i.test(text),false);
   assert.deepEqual(Object.keys(await metaContactHashes({mobile:'123',email:'bad'})),['country']);
 });
