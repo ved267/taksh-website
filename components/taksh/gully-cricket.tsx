@@ -63,14 +63,14 @@ export function GullyCricketDetail({p}:{p:Product}){
  return <div className="rm-page gc-page" style={{'--rm-header-height':`${headerHeight}px`} as CSSProperties}>
   <div className="wrap rm-opening"><nav className="breadcrumb" aria-label="Breadcrumb"><SiteLink href="/">Home</SiteLink><span>/</span><span>Gully Cricket</span></nav>
    <div className="rm-product-layout"><BuildExplorer/>
-    <div className="gc-buy-column"><SetBuyBox p={{...p,buildTime:'5 guided builds + your own ideas'}} qty={qty} setQty={setQty} buyRef={buyRef} contactRef={contactRef} ready={ready} onAdd={()=>add(p,qty)}/><p className="gc-preview-note">Images are design previews. The final set may differ in small details.</p></div>
+    <div className="gc-buy-column"><SetBuyBox p={{...p,buildTime:'5 guided builds + your own ideas'}} qty={qty} setQty={setQty} buyRef={buyRef} contactRef={contactRef} ready={ready} onAdd={()=>add(p,qty)}/><p className="gc-preview-note">Images are design previews.</p></div>
    </div>
   </div>
   <section className="gc-night" aria-label="One more over">
    <ProductPhoto src={imageAsset('/gully-cricket/banner-street-lamp.png')} srcSet={imageSrcSet('/gully-cricket/banner-street-lamp.png')} sizes="100vw" width={night?.width} height={night?.height} rootMargin="800px 0px" fetchPriority="low" decoding="async" alt="The brick set on a ledge in a dark lane at dusk, under a street lamp, a bat leaning on the wall behind."/>
    <div className="gc-dialogue" lang="hi-Latn"><p><span className="gc-speaker">Maa</span><span className="gc-quote">“Andar aa jao. Andhera ho gaya.”</span></p><p><span className="gc-speaker">Bachche</span><span className="gc-quote">“Bas ek over aur.”</span></p></div>
   </section>
-  <section className="wrap rm-specs" aria-labelledby="gc-size-heading"><div className="gc-size-layout"><div className="gc-size-photo"><SetPhoto image={gullyGallery[8].image} alt={gullyGallery[8].alt}/></div><div className="gc-size-copy"><h2 id="gc-size-heading">Size and space.</h2><p className="gc-assembled">Assembled size (Terrace House): about 18 × 13 × 12 cm</p><dl><div><dt>Width</dt><dd>About 18 cm</dd></div><div><dt>Depth</dt><dd>About 13 cm</dd></div><div><dt>Height</dt><dd>About 12 cm</dd></div></dl><div className="rm-real-temple"><p>The other builds take different shapes. All of them fit on a desk or a bedroom floor.</p><p>Size and build-time figures are estimates pending final product checks.</p></div></div></div><p className="rm-disclaimer">{gullyDisclaimer}</p></section>
+  <section className="wrap rm-specs" aria-labelledby="gc-size-heading"><div className="gc-size-layout"><div className="gc-size-photo"><SetPhoto image={gullyGallery[8].image} alt={gullyGallery[8].alt}/></div><div className="gc-size-copy"><h2 id="gc-size-heading">Size and space.</h2><p className="gc-assembled">Assembled size (Terrace House): about 18 × 13 × 12 cm</p><dl><div><dt>Width</dt><dd>About 18 cm</dd></div><div><dt>Depth</dt><dd>About 13 cm</dd></div><div><dt>Height</dt><dd>About 12 cm</dd></div></dl><div className="rm-real-temple"><p>The other builds take different shapes. All of them fit on a desk or a bedroom floor.</p><p>Sizes are estimates until the final product checks.</p></div></div></div><p className="rm-disclaimer">{gullyDisclaimer}</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }

@@ -17,7 +17,7 @@ export const BANNED=[
 ].map(([name,re])=>({name,re:new RegExp(re,'i')}));
 const ALLOWED_EXCLAIM=/Taxi!|Uncle, ball de do!|Nonsense!/; // "Nonsense!" is the set's plaque (product decision, 6 Nov 2026)
 const UNIT=/(?<![\d,.])(\d{1,2},\d{3}|\d+(?:\.\d+)?)(?:\s*[–-]\s*\d+(?:\.\d+)?)?\s*(pieces|pcs|cm|mm|hours?|hrs?|minutes?|mins?)\b/gi;
-const QUALIFIER=/\b(about|over|under|above|up to|around)\b[^.]*$/i;
+const QUALIFIER=/\b(about|over|under|above|up to|around)\b(?:[^.]|\.(?=\d))*$/i; // a decimal point is not a sentence end
 const THRESHOLD=/\b(over|under|above|below|up to)\b[^.]*$/i; // price bands and level labels, not product numbers
 
 /** Lint one piece of visible text. Returns [{rule,text}]. */

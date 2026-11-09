@@ -18,7 +18,7 @@ const gallery:PhotoInfo[]=[
  {image:asset('life-05-floor.jpg'),label:'One plate at a time.',alt:'A boy and his sister building the map on a round rug on the floor while their grandmother watches.'},
  {image:asset('life-04-last-dot.jpg'),label:'One last yellow dot.',alt:'A boy placing one last yellow dot on the finished map.'},
  {image:asset('life-02-nani.jpg'),label:'Look closely.',alt:'A boy pointing at a place on the map and grinning at his grandmother.'},
- {image:asset('gallery-04-size.png'),label:'Size and space.',alt:'The map with its size: 52.8 cm wide and 52.8 cm tall.'},
+ {image:asset('gallery-04-size.png'),label:'Size and space.',alt:'The map with its size: about 52.8 cm wide and 52.8 cm tall.'},
  {image:asset('gallery-05-plates.png'),label:'A1 to D4',alt:'The map divided into 16 square plates, named A1 to D4.'},
 ];
 const steps=[
@@ -98,7 +98,7 @@ export function BharatDetail({p}:{p:Product}){
    <ul className="bh-river-list" aria-label="The seven rivers">{rivers.map(name=><li key={name}>{name}</li>)}</ul>
    <p className="bh-note bh-river-note">The rivers go on last: 109 blue tiles, laid on top of the finished states.</p></div>
   </div></section>
-  <section className="wrap rm-specs" aria-labelledby="bh-size-heading"><h2 id="bh-size-heading">Size and space.</h2><dl><div><dt>Width</dt><dd>52.8 cm</dd></div><div><dt>Height</dt><dd>52.8 cm</dd></div><div><dt>Depth</dt><dd>About 2 cm</dd></div></dl><div className="rm-real-temple"><p>It needs a clear square of wall about 60 cm wide.</p><p>Scale: one dot is about 54 km.</p></div><p className="rm-disclaimer">The boundary of India is shown as depicted by the Survey of India. The map is a simplified mosaic and is not for navigation or legal use. Rivers are shown inside India only. Outside India the colours show height and depth; no other boundaries are drawn. The photographs on this page are imagined scenes; the map shown in them is the Taksh set.</p></section>
+  <section className="wrap rm-specs" aria-labelledby="bh-size-heading"><h2 id="bh-size-heading">Size and space.</h2><dl><div><dt>Width</dt><dd>About 52.8 cm</dd></div><div><dt>Height</dt><dd>About 52.8 cm</dd></div><div><dt>Depth</dt><dd>About 2 cm</dd></div></dl><div className="rm-real-temple"><p>It needs a clear square of wall about 60 cm wide.</p><p>Scale: one dot is about 54 km.</p></div><p className="rm-disclaimer">The boundary of India is shown as depicted by the Survey of India. The map is a simplified mosaic and is not for navigation or legal use. Rivers are shown inside India only. Outside India the colours show height and depth; no other boundaries are drawn. The photographs on this page are imagined scenes; the map shown in them is the Taksh set.</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }

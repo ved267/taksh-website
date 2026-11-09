@@ -52,11 +52,11 @@ export function YellowTaxiDetail({p}:{p:Product}){
    </div>
    <p className="wrap yt-closing">Soon there will be none left to hail.<br/>{' '}You can still build one.</p>
   </section>
-  <section className="yt-story" aria-labelledby="yt-story-heading">
+  <section className="yt-story" aria-label="The Ambassador">
    <figure className="yt-victoria">
     <SetPhoto image={photo('ad-victoria-banner')} alt="A yellow brick taxi driving past the Victoria Memorial in a sepia photograph." large/>
-    <figcaption><h2 id="yt-story-heading">For decades, the Prime Minister’s official car.</h2></figcaption>
    </figure>
+   <div className="wrap rm-real-temple"><p>The same Ambassador, painted white, carried India’s prime ministers for decades. In yellow, it carried everyone else.</p></div>
   </section>
   <section className="wrap rm-specs" aria-labelledby="yt-size-heading"><h2 id="yt-size-heading">Size and space.</h2><dl><div><dt>Length</dt><dd>About 17 cm</dd></div><div><dt>Width</dt><dd>About 8 cm</dd></div><div><dt>Height with the luggage</dt><dd>About 9 cm</dd></div></dl><div className="rm-real-temple"><p>About as long as your hand. It sits on a desk, a shelf or a windowsill.</p></div><p className="rm-disclaimer">A simplified brick model inspired by the yellow Ambassador taxis of Kolkata. It is not an exact scale replica and is not made by, affiliated with or endorsed by Hindustan Motors or the owners of the Ambassador name. The number plate is a tribute, not a real registration. The street scenes on this page are imagined; the model shown in them is the Taksh set.</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
