@@ -1,4 +1,4 @@
-import {requestTraffic,knownReferrer,preserveTraffic} from '@/lib/demand-domain.mjs';
+import {requestTraffic,knownReferrer,preserveTraffic} from '@/lib/demand-domain.mjs';import {automatedFromRequest} from '@/lib/bot-domain.mjs';
 import {database} from '@/db';
 import {resolveItems} from '@/lib/order-domain.mjs';
 import {json,parseJson,currentOrder,hash,token,setCookie,apiError,rateLimit} from '@/lib/server';
@@ -14,8 +14,8 @@ export async function POST(req:Request){try{
   await rateLimit(req,'cart',60);const access=token();const id=crypto.randomUUID();
   const reference='TK-'+now.slice(2,10).replace(/-/g,'')+'-'+token().slice(0,8).toUpperCase();
   const a=body.attribution||{};const s=(v:unknown)=>typeof v==='string'?v.slice(0,300):'';
-  await database().prepare('INSERT INTO orders (id,token_hash,reference,created_at,updated_at,status,last_step,items,total,details,device_type,arrival_page,utm_source,utm_medium,utm_campaign,email_status,traffic_type,referrer) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(id,await hash(access),reference,now,now,'cart',0,JSON.stringify(items),total,'{}',/Mobile|Android|iPhone/i.test(req.headers.get('user-agent')||'')?'mobile':'desktop',s(a.arrivalPage)||'/',s(a.utmSource),s(a.utmMedium),s(a.utmCampaign),'not_requested',requestTraffic({},req.headers.get('user-agent')||'',body.internal===true),knownReferrer(a.referrer)).run();
+  await database().prepare('INSERT INTO orders (id,token_hash,reference,created_at,updated_at,status,last_step,items,total,details,device_type,arrival_page,utm_source,utm_medium,utm_campaign,email_status,traffic_type,referrer) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(id,await hash(access),reference,now,now,'cart',0,JSON.stringify(items),total,'{}',/Mobile|Android|iPhone/i.test(req.headers.get('user-agent')||'')?'mobile':'desktop',s(a.arrivalPage)||'/',s(a.utmSource),s(a.utmMedium),s(a.utmCampaign),'not_requested',requestTraffic({},req.headers.get('user-agent')||'',body.internal===true,automatedFromRequest(req)),knownReferrer(a.referrer)).run();
   headers['Set-Cookie']=setCookie(req,'taksh_cart',access);
- }else await database().prepare("UPDATE orders SET updated_at=?,version=version+1,items=?,total=?,traffic_type=? WHERE id=? AND status='cart'").bind(now,JSON.stringify(items),total,preserveTraffic(row.traffic_type,requestTraffic({},req.headers.get('user-agent')||'',body.internal===true)),row.id).run();
+ }else await database().prepare("UPDATE orders SET updated_at=?,version=version+1,items=?,total=?,traffic_type=? WHERE id=? AND status='cart'").bind(now,JSON.stringify(items),total,preserveTraffic(row.traffic_type,requestTraffic({},req.headers.get('user-agent')||'',body.internal===true,automatedFromRequest(req))),row.id).run();
  return json({saved:true},200,headers);
  }catch(e){return apiError(e)}}
