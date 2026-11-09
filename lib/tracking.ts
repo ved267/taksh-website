@@ -4,7 +4,7 @@ import {readConsent,writeConsent,analyticsEnabled} from './consent-domain.mjs';
 declare global {interface Window {dataLayer?:IArguments[];gtag?:(...args:unknown[])=>void;fbq?:(...args:unknown[])=>void;clarity?:(...args:unknown[])=>void}}
 export const analyticsConfigured = /^G-[A-Z0-9]+$/.test(brand.ga);
 export const analyticsChoiceKey = 'taksh-analytics-consent';
-export function internalTracking(){try{return excludedFromTracking(location.hostname,navigator.userAgent,localStorage.getItem('taksh-internal-traffic')==='1',navigator.webdriver===true)}catch{return false}}
+export function internalTracking(){try{return excludedFromTracking(location.hostname,navigator.userAgent,localStorage.getItem('taksh-internal-traffic')==='1',navigator.webdriver===true||/(?:^|;\s*)taksh_auto=1/.test(document.cookie))}catch{return false}}
 let tracker:ReturnType<typeof createTracker>|undefined;
 function currentPage() {
   const url = safePage(location.href,catalogueProducts);

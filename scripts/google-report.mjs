@@ -21,6 +21,12 @@ export function dateRange(days, today = new Date()) {
   return { startDate: fmt(start), endDate: fmt(end) };
 }
 
+/** One line saying how many users the data-centre city filter removed. */
+export function filteredLine(all, real) {
+  const a = Number(all?.[0]?.[0] || 0), r = Number(real?.[0]?.[0] || 0);
+  return `Filtered as data-centre traffic: ${Math.max(a - r, 0)} of ${a} users. Bots seen by the site itself are never sent to Google (taksh_auto cookie).`;
+}
+
 export function table(title, headers, rows) {
   if (!rows.length) return `### ${title}\n\nNo rows.\n`;
   const line = (cells) => `| ${cells.join(" | ")} |`;
@@ -63,7 +69,7 @@ async function post(url, token, body) {
 }
 
 // Cities that host cloud servers and crawlers. Their traffic is excluded from every table except the unfiltered total, so real visitors stand out. An estimate, not a bot filter.
-export const DATA_CENTRE_CITIES = ["Ashburn", "Boardman", "Council Bluffs", "Glenview", "Prineville", "The Dalles", "Dallas", "Des Moines", "Columbus", "Hillsboro"];
+export const DATA_CENTRE_CITIES = ["Ashburn", "Boardman", "Council Bluffs", "Glenview", "Prineville", "The Dalles", "Dallas", "Des Moines", "Columbus", "Hillsboro", "Flower Mound"];
 
 async function ga(token, property, range, dimensions, metrics, limit = 25, orderMetric = metrics[0], includeBots = false) {
   const data = await post(`https://analyticsdata.googleapis.com/v1beta/properties/${property}:runReport`, token, {
@@ -102,8 +108,11 @@ async function main() {
   const totalsHeader = ["Users", "New users", "Sessions", "Engaged sessions", "Page views", "Engagement per user (s)"];
   const perUser = (rows) => rows.map((r) => [...r.slice(0, 5), String(Math.round(Number(r[5]) / Math.max(Number(r[0]), 1)))]);
   const totalMetrics = ["totalUsers", "newUsers", "sessions", "engagedSessions", "screenPageViews", "userEngagementDuration"];
-  out.push(table("Totals, likely real visitors (data-centre cities removed)", totalsHeader, perUser(await ga(token, property, range, [], totalMetrics, 1))));
-  out.push(table("Totals, all traffic including bots", totalsHeader, perUser(await ga(token, property, range, [], totalMetrics, 1, totalMetrics[0], true))));
+  const real = await ga(token, property, range, [], totalMetrics, 1);
+  const all = await ga(token, property, range, [], totalMetrics, 1, totalMetrics[0], true);
+  out.push(table("Totals, likely real visitors (data-centre cities removed)", totalsHeader, perUser(real)));
+  out.push(table("Totals, all traffic including bots", totalsHeader, perUser(all)));
+  out.push(filteredLine(all, real), "");
   out.push(table("Daily", ["Date", "Users", "Sessions", "Page views"],
     (await ga(token, property, range, ["date"], ["totalUsers", "sessions", "screenPageViews"], 90, "totalUsers")).sort((a, b) => a[0].localeCompare(b[0]))));
   out.push(table("Pages", ["Page", "Views", "Users", "Total engagement (s)"],
