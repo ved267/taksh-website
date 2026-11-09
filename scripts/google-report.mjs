@@ -62,9 +62,13 @@ async function post(url, token, body) {
   return response.json();
 }
 
-async function ga(token, property, range, dimensions, metrics, limit = 25, orderMetric = metrics[0]) {
+// Cities that host cloud servers and crawlers. Their traffic is excluded from every table except the unfiltered total, so real visitors stand out. An estimate, not a bot filter.
+export const DATA_CENTRE_CITIES = ["Ashburn", "Boardman", "Council Bluffs", "Glenview", "Prineville", "The Dalles", "Dallas", "Des Moines", "Columbus", "Hillsboro"];
+
+async function ga(token, property, range, dimensions, metrics, limit = 25, orderMetric = metrics[0], includeBots = false) {
   const data = await post(`https://analyticsdata.googleapis.com/v1beta/properties/${property}:runReport`, token, {
     dateRanges: [range],
+    ...(includeBots ? {} : { dimensionFilter: { notExpression: { filter: { fieldName: "city", inListFilter: { values: DATA_CENTRE_CITIES } } } } }),
     dimensions: dimensions.map((name) => ({ name })),
     metrics: metrics.map((name) => ({ name })),
     orderBys: [{ metric: { metricName: orderMetric }, desc: true }],
@@ -95,11 +99,14 @@ async function main() {
   const range = dateRange(days);
   const out = [`## Taksh Google report: ${range.startDate} to ${range.endDate} (${days} days)`, ""];
 
-  out.push(table("Totals", ["Users", "New users", "Sessions", "Engaged sessions", "Page views", "Avg engagement (s)"],
-    await ga(token, property, range, [], ["totalUsers", "newUsers", "sessions", "engagedSessions", "screenPageViews", "userEngagementDuration"], 1)));
+  const totalsHeader = ["Users", "New users", "Sessions", "Engaged sessions", "Page views", "Engagement per user (s)"];
+  const perUser = (rows) => rows.map((r) => [...r.slice(0, 5), String(Math.round(Number(r[5]) / Math.max(Number(r[0]), 1)))]);
+  const totalMetrics = ["totalUsers", "newUsers", "sessions", "engagedSessions", "screenPageViews", "userEngagementDuration"];
+  out.push(table("Totals, likely real visitors (data-centre cities removed)", totalsHeader, perUser(await ga(token, property, range, [], totalMetrics, 1))));
+  out.push(table("Totals, all traffic including bots", totalsHeader, perUser(await ga(token, property, range, [], totalMetrics, 1, totalMetrics[0], true))));
   out.push(table("Daily", ["Date", "Users", "Sessions", "Page views"],
     (await ga(token, property, range, ["date"], ["totalUsers", "sessions", "screenPageViews"], 90, "totalUsers")).sort((a, b) => a[0].localeCompare(b[0]))));
-  out.push(table("Pages", ["Page", "Views", "Users", "Avg engagement (s)"],
+  out.push(table("Pages", ["Page", "Views", "Users", "Total engagement (s)"],
     await ga(token, property, range, ["pagePath"], ["screenPageViews", "totalUsers", "userEngagementDuration"])));
   out.push(table("Sources", ["Source / medium", "Sessions", "Users", "Engaged sessions"],
     await ga(token, property, range, ["sessionSourceMedium"], ["sessions", "totalUsers", "engagedSessions"])));
