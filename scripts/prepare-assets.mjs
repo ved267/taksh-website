@@ -26,7 +26,7 @@ async function prepare(folder){
   for(const [key,target,quality] of [['thumb',160,80],['card',320,82],['small',600,84],['medium',900,86],['large',1200,88]]){
    const displayQuality=folder.startsWith('bharat')||key==='thumb'||key==='card'?quality:quality-4;
    variants[key]=await save(name+'-'+target,await sharp(bytes).resize({width:target,withoutEnlargement:true}).webp({quality:displayQuality}).toBuffer());
-   if(['small','medium','large'].includes(key)&&(/life-|ad-|gallery-04-breakfast/.test(file))){const avif=await sharp(bytes).resize({width:target,withoutEnlargement:true}).avif({quality:65,effort:5}).toBuffer();const webp=await fs.stat('public'+variants[key]);if(avif.length<webp.size*.9)variants[key]=await save(name+'-'+target,avif,'avif')}
+   if(['small','medium','large'].includes(key)&&(/life-|ad-|gallery-04-breakfast/.test(file)||folder.startsWith('bharat'))){const avif=await sharp(bytes).resize({width:target,withoutEnlargement:true}).avif({quality:65,effort:5}).toBuffer();const webp=await fs.stat('public'+variants[key]);if(avif.length<webp.size*.9)variants[key]=await save(name+'-'+target,avif,'avif')}
   }
   // Existing WebP masters are already compressed. Preserve those; large PNG/JPEG
   // sources get a display master without altering aspect ratio or source files.
