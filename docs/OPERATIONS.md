@@ -80,7 +80,7 @@ All mutable data jobs share taksh-data-operations concurrency. Preview deploymen
 
 ## Private Mac locations
 
-- Final Sites D1 export and checksum manifest: `/Users/devanshsmac/Desktop/Taksh Website Export/2026-11-07/private-data/sites-final.json` and `sites-final-manifest.json` in the same folder.
+- Final Sites D1 export and checksum manifest: `/Users/devanshsmac/Desktop/Namo Products/Taksh Website Export/2026-11-07/private-data/sites-final.json` and `sites-final-manifest.json` in the same folder.
 - Earlier private exports and DNS inventory: `/Users/devanshsmac/Desktop/Namo Products/Taksh Website Export/`.
 - Checkout and ignored verification files: `/Users/devanshsmac/Desktop/Namo Products/Taksh Website/` and its `.local/` folder.
 - Frozen builder: `/Users/devanshsmac/Documents/Codex/2026-10-02/sites-plugin-sites-openai-curated-remote/taksh`.
