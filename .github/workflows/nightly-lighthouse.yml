@@ -1,0 +1,42 @@
+name: Nightly Lighthouse
+# Mobile Lighthouse on four key pages of the live site, once a night (03:00 IST), against the
+# budget in docs/STANDARDS.md. Informational only: it never blocks anything and never deploys.
+# About 4 minutes a night (about 120 minutes a month) of the free GitHub allowance.
+on:
+  schedule:
+    - cron: '30 21 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: nightly-lighthouse
+  cancel-in-progress: true
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          sparse-checkout: scripts/nightly-lighthouse.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Previous history
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          run_id=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow nightly-lighthouse.yml --status success --limit 1 --json databaseId -q '.[0].databaseId')
+          if [ -n "$run_id" ]; then gh run download "$run_id" --repo "$GITHUB_REPOSITORY" --name lighthouse-history --dir . ; fi
+      - name: Measure
+        run: node scripts/nightly-lighthouse.mjs lighthouse-history.json
+      - name: Keep history
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: lighthouse-history
+          path: lighthouse-history.json
+          retention-days: 35

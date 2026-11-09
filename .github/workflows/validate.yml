@@ -40,6 +40,8 @@ jobs:
         run: npm run build
       - name: Unit tests
         run: npm test
+      - name: Standards (copy, tokens, links)
+        run: node scripts/lint-copy.mjs && node scripts/check-tokens.mjs && node scripts/check-links.mjs
       - name: Type check
         run: npm run typecheck
       - name: Lint
