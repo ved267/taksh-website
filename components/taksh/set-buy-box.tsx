@@ -10,8 +10,7 @@ export function SetBuyBox({p,qty,setQty,buyRef,contactRef,ready,onAdd,showDescri
  return <section className="rm-buy" aria-label="Choose your set">
   <div className="rm-title"><h1>{p.name}</h1><p>{p.subtitle}</p></div>
   <div className="rm-facts"><span>{ageText??`Ages ${ageLabel(p)}`}</span><span>{pieceLabel(p)} pieces</span><span>{p.buildTime}</span><span>{p.level}</span></div>
-  {showDescription&&<p className="rm-description">{p.description}</p>}
-  <p className="rm-description rm-in-box">{inTheBox(p)}</p>
+  <div className="rm-description">{showDescription&&<p style={{marginBottom:12}}>{p.description}</p>}<p className="rm-in-box">{inTheBox(p)}</p></div>
   <div className="rm-pricing"><div className="price-block"><span className="price-tag">{productMoney(p)}</span><small>MRP inclusive of all taxes</small></div></div>
   <StockNotice/><div className="rm-order"><div className="quantity-row"><span>Quantity</span><Stepper value={qty} onChange={setQty}/></div><button ref={buyRef} className="button primary full" disabled={!ready} onClick={onAdd}>Add to bag</button></div>
   <BuyerDetails p={p}/><div className="rm-contact" ref={contactRef}><ContactLink><WhatsAppIcon/>Ask us on WhatsApp</ContactLink></div>
