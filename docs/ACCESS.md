@@ -93,3 +93,7 @@ Connected: Cloudflare Developer Platform, Google Sheets, Google Drive, Gmail, Mi
 3. Clarity data (fills after PR #11 is live).
 4. Razorpay connector and test keys, when paid reservations start.
 5. Legal name, address and GSTIN for the Privacy and Returns pages.
+
+## Release note, 9 Nov 2026
+
+Merging several PRs within seconds leaves the in-between main commits without a performance baseline, so the push Validate fails and production skips. Merge one PR at a time and wait for its main Validate. If it happens anyway: run Validate manually on main, then merge any docs-only PR so the next push compares against that refreshed baseline.
