@@ -1,0 +1,41 @@
+name: Auto-merge
+# claude/* pull requests merge themselves (squash) once Validate passes, one at a time.
+# Owner decision 9 Nov 2026. Add the label `hold` to stop one. codex/* PRs are never touched.
+# Runs trusted code from main only; never checks out the pull request.
+on:
+  workflow_run:
+    workflows: [Validate]
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+  issues: write
+concurrency:
+  group: taksh-automerge
+  cancel-in-progress: false
+jobs:
+  merge:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      startsWith(github.event.workflow_run.head_branch, 'claude/') &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+          sparse-checkout: scripts/auto-merge.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Decide and merge
+        run: node scripts/auto-merge.mjs
+        env:
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          GITHUB_TOKEN: ${{ github.token }}
+          AUTOMERGE_TOKEN: ${{ secrets.AUTOMERGE_TOKEN }}
