@@ -34,3 +34,18 @@ test('the owner-approved tracking allowance is one baseline, one file set, cappe
  const big=structuredClone(ok);big.totals.jsGzip+=600;assert.ok(performanceRegressions(base,big,{tracking:true}).length>0);
  const css=structuredClone(ok);css.totals.cssGzip+=1;assert.ok(performanceRegressions(base,css,{tracking:true}).length>0);
 });
+
+test('owner allowances are exact, capped and expire with main',async()=>{
+ const {ownerAllowance,performanceRegressions}=await import('../lib/cloudflare/performance-regression.mjs');
+ const list=[{name:'x',baseSha:'a'.repeat(40),js:600,css:0,worker:1000,files:['lib/bot-domain.mjs','workers/app.ts']}];
+ assert.deepEqual(ownerAllowance('a'.repeat(40),['workers/app.ts'],list),{name:'x',js:600,css:0,worker:1000});
+ assert.equal(ownerAllowance('b'.repeat(40),['workers/app.ts'],list),null);
+ assert.equal(ownerAllowance('a'.repeat(40),['workers/app.ts','app/page.tsx'],list),null);
+ assert.equal(ownerAllowance('a'.repeat(40),[],list),null);
+ const base={totals:{jsGzip:100,cssGzip:10,workerGzip:1000},pages:{'/':{jsGzip:100,cssGzip:10,pageBytes:500}}};
+ const ok={totals:{jsGzip:700,cssGzip:10,workerGzip:2000},pages:{'/':{jsGzip:700,cssGzip:10,pageBytes:1100}}};
+ assert.deepEqual(performanceRegressions(base,ok,{owner:{js:600,css:0,worker:1000}}),[]);
+ const over=structuredClone(ok);over.totals.workerGzip=2001;over.pages['/'].cssGzip=11;
+ assert.equal(performanceRegressions(base,over,{owner:{js:600,css:0,worker:1000}}).length,2);
+ assert.throws(()=>performanceRegressions(base,ok,{owner:{js:601,css:0,worker:0}}),/caps/);
+});
