@@ -71,3 +71,13 @@ Cost: Workers Paid$5/month plus applicable tax, R2 within its free allowance. Ex
 Report functional or speed problems. Cutover still requires the owner's explicit staging/cutover go and resolution of the speed hold. After go: fresh Sites export/import/reconciliation, validated production deploy, nameserver switch, website/www/TLS/request/dedup/marked Sheet Test/GA checks, second late-request export. No mail-alias test applies to the verified empty forwarding inventory. Critical failures roll back; quiet hosted72-hour watch and14-day Sites retirement approval follow. PR#2 rebases/checks only after cutover.
 
 Maintained handoffs: [Operations](docs/OPERATIONS.md), [Architecture](docs/ARCHITECTURE.md). Private evidence paths are listed there; no exports, customer rows, credentials or customer hashes are committed.
+
+
+<!-- taksh-72h-milestone -->
+## 72-hour milestone
+
+Cutover: 2026-11-06T12:45:36Z. Checked: 2026-11-09T18:56:38.923Z.
+
+Website/TLS and Sheet acknowledgement checks passed.
+
+Cloudflare counters since cutover (delayed/sampled): {"cpuTimeUs":201798162,"errors":0,"requests":9036}. Counts contain no customer records. Sites remains available until the separate 14-day retirement decision.
