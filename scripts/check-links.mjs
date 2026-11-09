@@ -10,7 +10,7 @@ import {fileURLToPath} from 'node:url';
 const ROOT=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const PRIVATE=new Set(['/bag','/checkout','/admin']);
 // Accepted on 2026-11-09 (audit job 2026-11-09-03). Remove a line once fixed.
-export const KNOWN_GAPS=new Set(['sitemap missing: /sets/gully-cricket']);
+export const KNOWN_GAPS=new Set([]);
 
 async function walk(dir,acc=[]){for(const e of await readdir(dir,{withFileTypes:true})){const p=join(dir,e.name);if(e.isDirectory()){if(!/node_modules|^\./.test(e.name))await walk(p,acc);}else acc.push(p);}return acc;}
 

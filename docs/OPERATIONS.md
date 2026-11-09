@@ -55,10 +55,23 @@ Use `POST /repos/ved267/taksh-website/actions/workflows/<file>/dispatches` with 
 | migration-watch.yml | Manual or hourly at minute23, only after TAKSH_CUTOVER_AT. Quiet when healthy; private failure issue/rollback on HTTP/TLS failure; one72-hour summary and milestone PR, then disables itself. |
 | retirement.yml | Manual or daily at 05:00 UTC. Opens a private owner decision issue after 14 days and then stops. The owner decides whether to delete the retained Sites project. |
 | google-report.yml | Manual main dispatch with optional `days`. Read-only GA4 and Search Console aggregates. The `GOOGLE_SERVICE_ACCOUNT_JSON` secret still needs owner setup. |
+| auto-merge.yml | After a successful pull_request Validate on a claude/* branch: squash-merges the PR with `AUTOMERGE_TOKEN` (see Auto-merge). Never touches codex/* PRs. |
+| nightly-lighthouse.yml | Nightly 03:00 IST or manual: mobile Lighthouse on four live pages, trend in the job summary. Informational, never blocks. |
 
 GitHub Actions must be allowed to create PRs for the automated72-hour milestone PR. Notifications are private issues assigned to ved267; delivery of GitHub email follows the owner's GitHub notification settings. A workflow failure is visible in Actions even if email is delayed. Scheduled Actions can be delayed; they are not an uptime SLA.
 
 All mutable data jobs share taksh-data-operations concurrency. Preview deployments have per-branch concurrency; production releases serialize separately. Never start a migration/restore during a release.
+
+## Auto-merge
+
+Owner decision, 9 November 2026: claude/* pull requests merge themselves once Validate passes, so no merge waits for the owner.
+
+- `auto-merge.yml` runs after every completed Validate. It acts only when all of these are true: the run was a successful `pull_request` run on a `claude/*` branch in this repository; Validate's own job ran and passed (a skipped job never counts); the PR is open, not a draft, based on `main` and without the `hold` label; its head is the commit Validate tested.
+- One PR at a time (concurrency `taksh-automerge`). It first waits up to 20 minutes for Validate on the latest main commit. If main's Validate failed it comments on the PR and stops. If the PR's base is behind main it updates the branch and stops; Validate re-runs and the workflow fires again.
+- It squash-merges with the `AUTOMERGE_TOKEN` secret, a fine-grained personal access token of ved267 (repository `ved267/taksh-website` only; Contents and Pull requests read and write, Metadata read; one-year expiry). A merge made with `GITHUB_TOKEN` would not start main Validate or production, so the token is required. Without it the workflow comments "auto-merge needs AUTOMERGE_TOKEN" and does nothing else.
+- After the merge, main Validate and `production.yml` run exactly as for a manual merge. Merged branches are deleted automatically (repository setting).
+- To stop one PR: add the label `hold`. To stop all: disable the workflow in Actions. codex/* PRs are unaffected and still merge by hand.
+- Logic and tests: `scripts/auto-merge.mjs`, `tests/auto-merge.test.mjs`. The workflow runs main's copy of the script and never checks out PR code.
 
 ## Runbooks
 

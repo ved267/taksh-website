@@ -6,5 +6,7 @@ const workerAllowance=Number(process.argv[4]||0);
 if(workerAllowance)console.log('Requested admin-lockout baseline adjustment: maximum '+workerAllowance+' compressed Worker bytes; JS/CSS/page weights remain strict. Actual Worker change: '+(current.totals.workerGzip-baseline.totals.workerGzip)+' bytes.');
 const tracking=process.argv[5]==='tracking';
 if(tracking)console.log('Owner-approved tracking allowance (7 Nov 2026): up to 1,000 gzip bytes of JS per page and 1,200 Worker bytes; CSS stays strict. JS change: '+(current.totals.jsGzip-baseline.totals.jsGzip)+' bytes, Worker change: '+(current.totals.workerGzip-baseline.totals.workerGzip)+' bytes.');
-const failures=performanceRegressions(baseline,current,{workerAllowance,tracking});
+const owner=process.argv[6]?JSON.parse(process.argv[6]):null;
+if(owner)console.log(`Owner-approved allowance (9 Nov 2026), ${owner.name}: up to ${owner.js} JS, ${owner.css} CSS and ${owner.worker} Worker gzip bytes for this exact commit and file set. JS change: ${current.totals.jsGzip-baseline.totals.jsGzip} bytes, CSS change: ${current.totals.cssGzip-baseline.totals.cssGzip} bytes, Worker change: ${current.totals.workerGzip-baseline.totals.workerGzip} bytes.`);
+const failures=performanceRegressions(baseline,current,{workerAllowance,tracking,owner});
 if(failures.length){console.error('Performance regression against main:\n'+failures.join('\n'));process.exitCode=1;}else console.log(workerAllowance?'Public JS/CSS/page weights unchanged; Worker fits the scoped admin-security baseline.':'No JS, CSS, Worker or key-page weight regression against main.');

@@ -17,6 +17,12 @@ Read [Operations](docs/OPERATIONS.md) for resources, GitHub jobs and recovery. R
 - Both agents use the same GitHub API and Actions jobs. Normal operations require GitHub access only, never this Mac, a Codex session or the owner's Chrome. Preview artifacts build without credentials; trusted-main tooling verifies them before using the deployment secret. Production deploys require successful Validate on current main and TAKSH_PRODUCTION_READY=true.
 - Private-repository main protection is unavailable on the current GitHub Free plan. Do not claim server-enforced PR protection, buy an upgrade or make the repository public. Follow the PR convention and release checks.
 
+## Auto-merge
+
+- claude/* pull requests merge themselves (squash) once Validate passes, one PR in flight at a time (owner decision, 9 November 2026). Keep one task per PR so each merge is a clean release.
+- Add the label `hold` to stop a PR merging. codex/* PRs are unaffected: open a PR, pass Validate, then merge by hand.
+- Details, token and safeguards: Operations, Auto-merge.
+
 ## Secrets and data
 
 - Never put credentials, customer data or hashes, exports, private support photos or backups into Git, chat, screenshots or build artifacts. Never screenshot a page/window after a credential has been revealed; native text can advance while a rendered secret modal remains. Revoke any captured credential.
