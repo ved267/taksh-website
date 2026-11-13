@@ -242,25 +242,7 @@
       "imageAlt": "Three pink and white brick lotuses at three heights, standing on a round gold lotus base.",
       "imageWidth": 1600,
       "imageHeight": 1600,
-      "description": "Three lotuses in full bloom, each at its own height, on a gold lotus seat. Tilt the petals to close a flower for the night, or lift the stems out and stand them in a vase.",
-      "stories": {
-        "build": {
-          "title": "A lotus lasts about three days.",
-          "text": "This one stays."
-        },
-        "details": {
-          "title": "Every part has a reason.",
-          "text": "A seed pod, a ring of stamens, two rings of petals."
-        },
-        "process": {
-          "title": "Pankaj means born of mud.",
-          "text": "It rises clean."
-        },
-        "display": {
-          "title": "Is there a lotus in your family?",
-          "text": "Give one at home."
-        }
-      }
+      "description": "Three lotuses in full bloom, each at its own height, on a gold lotus seat. Tilt the petals to close a flower for the night, or lift the stems out and stand them in a vase."
     }
   ]
 }

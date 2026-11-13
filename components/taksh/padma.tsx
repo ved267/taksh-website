@@ -97,11 +97,11 @@ const names=[
 ] as const;
 
 function FamilyNames({onAdd,ready}:{onAdd:()=>void;ready:boolean}){
- const [picked,setPicked]=useState<number|null>(null);
+ const [picked,setPicked]=useState<number|null>(0);
  return <section className="rm-section pd-family" aria-labelledby="pd-family-heading"><div className="wrap pd-family-layout">
   <div className="pd-family-copy">
    <h2 id="pd-family-heading">Is there a lotus in your family?</h2>
-   <p className="pd-family-intro">Many Indian names mean lotus. Tap one.</p>
+   <p className="pd-family-intro">Many Indian names mean lotus. Tap one to see what it means.</p>
    <div className="pd-names" role="group" aria-label="Names that mean lotus">{names.map(([name],i)=><button key={name} lang="hi-Latn" aria-pressed={picked===i} onClick={()=>setPicked(picked===i?null:i)}>{name}</button>)}</div>
    <p className="pd-name-meaning" aria-live="polite">{picked===null?' ':<><strong lang="hi-Latn">{names[picked][0]}:</strong> {names[picked][1]}</>}</p>
    <div className="pd-honour"><p>India’s Padma awards are named after the lotus. Give one at home.</p><button className="button primary" onClick={()=>ready&&onAdd()}>Add to bag</button></div>
