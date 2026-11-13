@@ -14,27 +14,14 @@
 .pd-day-tabs .pd-yours{border-color:var(--lotus);color:var(--lotus)}.pd-day-tabs .pd-yours[aria-pressed=true]{background:var(--lotus);color:var(--cream)}
 .pd-day-line{grid-area:line;font-size:24px;font-weight:600;line-height:1.3;letter-spacing:-.01em;margin-top:28px;max-width:380px;min-height:66px}
 
-/* 2. Pankaj means born of mud */
-.pd-mud{background:var(--beige);border-top:1px solid var(--line)}
+/* 2. Born of mud. Untouched by it. */
+.pd-mud{background:var(--mud)}
 .pd-mud-banner{position:relative;overflow:hidden;background:var(--mud)}
 .pd-mud-banner img{display:block;width:100%;height:auto;min-height:420px;object-fit:cover}
 .pd-mud-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--mud-scrim) 0%,var(--mud-scrim-soft) 38%,var(--mud-scrim-clear) 62%);pointer-events:none}
 .pd-mud-copy{position:absolute;z-index:1;left:max(56px,calc((100vw - 1440px)/2 + 56px));bottom:16%;width:min(32%,460px);color:var(--cream)}
 .pd-mud-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.04}
-.pd-mud-copy p{font-size:18px;line-height:1.6;margin-top:20px;opacity:.95}
-
-/* 3. Is there a lotus in your family? */
-.pd-family{background:var(--tint)}
-.pd-family-copy{max-width:760px}
-.pd-family-intro{font-size:18px;color:var(--muted);margin-top:16px}
-.pd-names{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;max-width:560px}
-.pd-names button{min-height:44px;padding:0 18px;border:1px solid var(--ink);border-radius:999px;background:transparent;color:var(--ink);font-size:16px;font-weight:500;transition:background-color .15s ease,color .15s ease}
-.pd-names button:hover{background:var(--ink-wash)}
-.pd-names button[aria-pressed=true]{background:var(--lotus);border-color:var(--lotus);color:var(--cream)}
-.pd-name-meaning{min-height:34px;margin-top:22px;font-size:22px;font-weight:500}
-.pd-name-meaning strong{color:var(--lotus)}
-.pd-honour{margin-top:36px;padding-top:28px;border-top:1px solid var(--line);display:flex;flex-direction:column;align-items:flex-start;gap:20px}
-.pd-honour p{font-size:20px;line-height:1.45;max-width:460px}
+.pd-mud-copy p{font-size:18px;line-height:1.6;margin-top:18px;opacity:.95}.pd-mud-copy p+p{margin-top:12px}
 
 @media(max-width:1200px){.pd-days-inner{column-gap:40px;grid-template-columns:minmax(0,320px) minmax(0,1fr)}}
 @media(max-width:960px){
@@ -47,5 +34,5 @@
  .pd-mud-copy{position:static;width:auto;background:var(--mud);padding:32px 20px 36px}
  .pd-mud-copy h2{font-size:34px}
 }
-@media(max-width:760px){.pd-day-tabs button{padding:0 8px;font-size:13px}.pd-name-meaning{font-size:19px}.pd-honour p{font-size:18px}}
-@media(prefers-reduced-motion:reduce){.pd-days,.pd-day-tabs button,.pd-names button{transition:none}}
+@media(max-width:760px){.pd-day-tabs button{padding:0 8px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.pd-days,.pd-day-tabs button{transition:none}}

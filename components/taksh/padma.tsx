@@ -56,27 +56,9 @@ function ThreeDays(){
 function BornOfMud(){
  return <section className="pd-mud" aria-labelledby="pd-mud-heading">
   <div className="pd-mud-banner"><SetPhoto image="/padma/banner-born-of-mud.webp" alt="A pink lotus rising clean out of a dark, muddy pond at sunrise, water beading on a leaf beside it." sizes="100vw"/>
-   <div className="pd-mud-copy"><h2 id="pd-mud-heading"><span lang="hi-Latn">Pankaj</span> means born of mud.</h2><p>The lotus roots in the mud at the bottom of a pond and rises clean. The Gita and Guru Nanak both use it for a life lived in the world, untouched by it.</p></div>
+   <div className="pd-mud-copy"><h2 id="pd-mud-heading">Born of mud. Untouched by it.</h2><p>The lotus roots in the mud at the bottom of a pond and rises clean. Water slides off its leaves without wetting them.</p><p>The Gita and Guru Nanak use it for the same lesson: live fully in the world, and let nothing cling to you.</p></div>
   </div>
  </section>;
-}
-
-const names=[
- ['Pankaj','Born of mud.'],['Neeraj','Born of water.'],['Saroj','Born of a lake.'],['Jalaj','Born of water.'],['Ambuj','Born of water.'],['Arvind','The lotus.'],
- ['Kamal','The lotus.'],['Kamala','Of the lotus. A name of Lakshmi.'],['Padma','The lotus. A name of Lakshmi.'],['Padmini','Full of lotuses.'],['Nalini','The lotus.'],
-] as const;
-
-function FamilyNames({onAdd,ready}:{onAdd:()=>void;ready:boolean}){
- const [picked,setPicked]=useState<number|null>(0);
- return <section className="rm-section pd-family" aria-labelledby="pd-family-heading"><div className="wrap pd-family-layout">
-  <div className="pd-family-copy">
-   <h2 id="pd-family-heading">Is there a lotus in your family?</h2>
-   <p className="pd-family-intro">Many Indian names mean lotus. Tap one to see what it means.</p>
-   <div className="pd-names" role="group" aria-label="Names that mean lotus">{names.map(([name],i)=><button key={name} lang="hi-Latn" aria-pressed={picked===i} onClick={()=>setPicked(picked===i?null:i)}>{name}</button>)}</div>
-   <p className="pd-name-meaning" aria-live="polite">{picked===null?' ':<><strong lang="hi-Latn">{names[picked][0]}:</strong> {names[picked][1]}</>}</p>
-   <div className="pd-honour"><p>India’s Padma awards are named after the lotus. Give one at home.</p><button className="button primary" onClick={()=>ready&&onAdd()}>Add to bag</button></div>
-  </div>
- </div></section>;
 }
 
 export function PadmaDetail({p}:{p:Product}){
@@ -92,7 +74,6 @@ export function PadmaDetail({p}:{p:Product}){
   </div>
   <ThreeDays/>
   <BornOfMud/>
-  <FamilyNames ready={ready} onAdd={()=>add(p,1)}/>
   <section className="wrap rm-specs" aria-labelledby="pd-size-heading"><h2 id="pd-size-heading">Size and space.</h2><dl><div><dt>Height</dt><dd>About 28 cm</dd></div><div><dt>Width</dt><dd>About 19 cm</dd></div><div><dt>Base</dt><dd>About 13 cm across</dd></div></dl><div className="rm-real-temple"><p>It fits a side table, a mandir shelf or a windowsill.</p></div><p className="rm-disclaimer">An original Taksh design. Images are design previews; sizes are estimates until the final model is checked.</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
