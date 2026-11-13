@@ -692,6 +692,138 @@
     "medium": "/media/bharat-product-page-life-07-joining-900.736347efd4b2.avif",
     "large": "/media/bharat-product-page-life-07-joining-1200.7ab1dc86ec59.avif"
   },
+  "/padma/banner-born-of-mud.webp": {
+    "width": 2400,
+    "height": 1340,
+    "fullWidth": 2400,
+    "full": "/media/padma-banner-born-of-mud.f31e7ef032e9.webp",
+    "thumb": "/media/padma-banner-born-of-mud-160.523bc6c77b46.webp",
+    "card": "/media/padma-banner-born-of-mud-320.dc22139af5bd.webp",
+    "small": "/media/padma-banner-born-of-mud-600.83b2f67692ee.webp",
+    "medium": "/media/padma-banner-born-of-mud-900.b50611f9ddc0.webp",
+    "large": "/media/padma-banner-born-of-mud-1200.ae7d960ce9fd.webp"
+  },
+  "/padma/day-1.webp": {
+    "width": 1600,
+    "height": 1195,
+    "fullWidth": 1600,
+    "full": "/media/padma-day-1.148452ded933.webp",
+    "thumb": "/media/padma-day-1-160.06bcc4d4da67.webp",
+    "card": "/media/padma-day-1-320.80adb6a7a679.webp",
+    "small": "/media/padma-day-1-600.446b181de06d.webp",
+    "medium": "/media/padma-day-1-900.faaaf2efd60a.webp",
+    "large": "/media/padma-day-1-1200.9d0c3babf244.webp"
+  },
+  "/padma/day-2.webp": {
+    "width": 1600,
+    "height": 1195,
+    "fullWidth": 1600,
+    "full": "/media/padma-day-2.2542adbca8c3.webp",
+    "thumb": "/media/padma-day-2-160.d668f0b81ab4.webp",
+    "card": "/media/padma-day-2-320.8d5ff88a995f.webp",
+    "small": "/media/padma-day-2-600.1a958a3a9a0c.webp",
+    "medium": "/media/padma-day-2-900.392485faed7c.webp",
+    "large": "/media/padma-day-2-1200.372890dc84c8.webp"
+  },
+  "/padma/day-3.webp": {
+    "width": 1600,
+    "height": 1195,
+    "fullWidth": 1600,
+    "full": "/media/padma-day-3.07433bebca3a.webp",
+    "thumb": "/media/padma-day-3-160.dea5cbdcbae6.webp",
+    "card": "/media/padma-day-3-320.d5c1d55fe642.webp",
+    "small": "/media/padma-day-3-600.281a1f330c29.webp",
+    "medium": "/media/padma-day-3-900.20adc8c9d4d4.webp",
+    "large": "/media/padma-day-3-1200.2f6022223d40.webp"
+  },
+  "/padma/day-4.webp": {
+    "width": 1600,
+    "height": 1195,
+    "fullWidth": 1600,
+    "full": "/media/padma-day-4.a20d5552c19c.webp",
+    "thumb": "/media/padma-day-4-160.e80f22f2ed78.webp",
+    "card": "/media/padma-day-4-320.ecc82760207d.webp",
+    "small": "/media/padma-day-4-600.913053e90907.webp",
+    "medium": "/media/padma-day-4-900.2aa087f0b08f.webp",
+    "large": "/media/padma-day-4-1200.63c49e5c7922.webp"
+  },
+  "/padma/day-yours.webp": {
+    "width": 1600,
+    "height": 1195,
+    "fullWidth": 1600,
+    "full": "/media/padma-day-yours.6f47a80e5d00.webp",
+    "thumb": "/media/padma-day-yours-160.5093db3a3280.webp",
+    "card": "/media/padma-day-yours-320.77af52849aaf.webp",
+    "small": "/media/padma-day-yours-600.13a152b5f904.webp",
+    "medium": "/media/padma-day-yours-900.9ba9f5b90a58.webp",
+    "large": "/media/padma-day-yours-1200.98b656ff30e7.webp"
+  },
+  "/padma/gallery-01-hero.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/padma-gallery-01-hero.7b474a7beba7.webp",
+    "thumb": "/media/padma-gallery-01-hero-160.9ed93ecd22b3.webp",
+    "card": "/media/padma-gallery-01-hero-320.5bda9d135de9.webp",
+    "small": "/media/padma-gallery-01-hero-600.67e15aebd56c.avif",
+    "medium": "/media/padma-gallery-01-hero-900.d6783def73e9.avif",
+    "large": "/media/padma-gallery-01-hero-1200.4a15bbb15c55.avif"
+  },
+  "/padma/gallery-02-heart.webp": {
+    "width": 1440,
+    "height": 1440,
+    "fullWidth": 1440,
+    "full": "/media/padma-gallery-02-heart.666b1b557467.webp",
+    "thumb": "/media/padma-gallery-02-heart-160.c9b3730d7d78.webp",
+    "card": "/media/padma-gallery-02-heart-320.47efeafbfd2f.webp",
+    "small": "/media/padma-gallery-02-heart-600.0dc926a24c3e.avif",
+    "medium": "/media/padma-gallery-02-heart-900.e319a934d797.avif",
+    "large": "/media/padma-gallery-02-heart-1200.6a06de16ce67.avif"
+  },
+  "/padma/gallery-03-gold-seat.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/padma-gallery-03-gold-seat.62723d061607.webp",
+    "thumb": "/media/padma-gallery-03-gold-seat-160.a074f8d15fa6.webp",
+    "card": "/media/padma-gallery-03-gold-seat-320.0bc3e59e943f.webp",
+    "small": "/media/padma-gallery-03-gold-seat-600.1cc1faf71523.avif",
+    "medium": "/media/padma-gallery-03-gold-seat-900.466a763ca481.avif",
+    "large": "/media/padma-gallery-03-gold-seat-1200.feba8de4dfea.avif"
+  },
+  "/padma/gallery-04-at-home.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/padma-gallery-04-at-home.4ea3dc011b85.webp",
+    "thumb": "/media/padma-gallery-04-at-home-160.91dec47b50bc.webp",
+    "card": "/media/padma-gallery-04-at-home-320.0be38f44ae71.webp",
+    "small": "/media/padma-gallery-04-at-home-600.7931b62164f5.avif",
+    "medium": "/media/padma-gallery-04-at-home-900.f89be9e634d1.avif",
+    "large": "/media/padma-gallery-04-at-home-1200.e5e861d6a932.avif"
+  },
+  "/padma/gallery-05-gift.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/padma-gallery-05-gift.80e22619df7d.webp",
+    "thumb": "/media/padma-gallery-05-gift-160.be47af9032ee.webp",
+    "card": "/media/padma-gallery-05-gift-320.48ebd64e56e6.webp",
+    "small": "/media/padma-gallery-05-gift-600.4a335df0a78b.avif",
+    "medium": "/media/padma-gallery-05-gift-900.2f125f75ba17.avif",
+    "large": "/media/padma-gallery-05-gift-1200.1d8de7948ec6.avif"
+  },
+  "/padma/gallery-06-size.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/padma-gallery-06-size.7ab745c063ca.webp",
+    "thumb": "/media/padma-gallery-06-size-160.25b637d1ead8.webp",
+    "card": "/media/padma-gallery-06-size-320.f685ffd4cf47.webp",
+    "small": "/media/padma-gallery-06-size-600.b6799b1058ba.avif",
+    "medium": "/media/padma-gallery-06-size-900.bbc98e8ed203.avif",
+    "large": "/media/padma-gallery-06-size-1200.6594c759a15a.avif"
+  },
   "/gully-cricket/banner-golden-hour.png": {
     "width": 1920,
     "height": 1080,
