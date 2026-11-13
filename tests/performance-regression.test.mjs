@@ -58,4 +58,9 @@ test('an owner allowance marked above the caps is accepted only for its own entr
  const next={totals:{jsGzip:2500,cssGzip:240,workerGzip:8900},pages:{'/':{jsGzip:2500,cssGzip:240,pageBytes:3500}}};
  assert.deepEqual(performanceRegressions(base,next,{owner}),[]);
  assert.throws(()=>performanceRegressions(base,next,{owner:{js:1600,css:150,worker:8000}}),/caps/);
+ const routed=ownerAllowance('c'.repeat(40),['components/taksh/padma.tsx'],[{...list[0],routeJs:2000,routeCss:900}]);
+ const grown={totals:{jsGzip:4400,cssGzip:1100,workerGzip:8900},pages:{'/':{jsGzip:2500,cssGzip:240,pageBytes:3500}}};
+ assert.deepEqual(performanceRegressions(base,grown,{owner:routed}),[]);
+ assert.deepEqual(performanceRegressions(base,{...grown,pages:{'/':{jsGzip:4400,cssGzip:240,pageBytes:3500}}},{owner:routed}),['/ jsGzip: 1000 -> 4400 bytes']);
+ assert.ok(performanceRegressions(base,grown,{owner:{...routed,aboveCaps:undefined,js:600,css:300,worker:1000}}).includes('jsGzip: 1000 -> 4400 bytes'));
 });
