@@ -53,41 +53,11 @@ function ThreeDays(){
  </div></section>;
 }
 
-const reasons=[
- {x:39,y:14,title:'Three heights.',text:'Each lotus stands on its own stem, at its own height.'},
- {x:39,y:45,title:'The seed pod.',text:'Yellow at first bloom and ringed by stamens. It holds the seeds, and they last: one found in a dry lakebed in China grew after about 1,300 years.'},
- {x:79,y:41,title:'Petals that move.',text:'Tilt them closed for the night and open them again in the morning.'},
- {x:44,y:70,title:'Stems that lift out.',text:'Take the flowers out of the base and stand them in a vase.'},
- {x:64,y:87,title:'The gold seat.',text:'In Indian sculpture the Buddha, Lakshmi and the Tirthankaras sit or stand on a lotus. Your lotuses stand on one too.'},
-];
-
-function Reasons(){
- const [active,setActive]=useState(1);
- return <section className="rm-section pd-reasons" aria-labelledby="pd-reasons-heading"><div className="wrap">
-  <h2 id="pd-reasons-heading">Every part has a reason.</h2>
-  <div className="pd-reasons-layout">
-   <figure className="pd-reasons-image"><SetPhoto image="/padma/gallery-01-hero.webp" alt="The Padma set with five numbered parts." sizes="(max-width: 900px) calc(100vw - 40px), 620px"/>
-    {reasons.map((r,i)=><button key={r.title} className="pd-marker" style={{left:`${r.x}%`,top:`${r.y}%`} as CSSProperties} aria-pressed={active===i} aria-label={`${i+1}. ${r.title.replace('.','')}`} onClick={()=>setActive(i)}>{i+1}</button>)}
-   </figure>
-   <ol className="pd-reason-list">{reasons.map((r,i)=><li key={r.title} data-active={active===i||undefined}><button onClick={()=>setActive(i)} aria-expanded={active===i}><span className="pd-reason-number" aria-hidden="true">{i+1}</span><strong>{r.title}</strong></button>{active===i&&<p>{r.text}</p>}</li>)}</ol>
-  </div>
- </div></section>;
-}
-
-const lessons=[
- {source:'Bhagavad Gita 5.10',line:'Like a lotus leaf, untouched by water.'},
- {source:'Guru Nanak, Sidh Gosht',line:'Jaise jal mahi kamal niraalam: the lotus in the water, untouched by it.'},
- {source:'The Buddha',line:'Shown seated on an open lotus.'},
- {source:'Padmaprabha',line:'The sixth Tirthankara, known by the red lotus.'},
- {source:'The Lotus Temple, Delhi',line:'Twenty-seven marble petals, open to people of every faith.'},
-];
-
 function BornOfMud(){
  return <section className="pd-mud" aria-labelledby="pd-mud-heading">
   <div className="pd-mud-banner"><SetPhoto image="/padma/banner-born-of-mud.webp" alt="A pink lotus rising clean out of a dark, muddy pond at sunrise, water beading on a leaf beside it." sizes="100vw"/>
-   <div className="pd-mud-copy"><h2 id="pd-mud-heading"><span lang="hi-Latn">Pankaj</span> means born of mud.</h2><p>The lotus roots in the mud at the bottom of a pond and rises clean. Every tradition that grew up in India took the same lesson from it.</p></div>
+   <div className="pd-mud-copy"><h2 id="pd-mud-heading"><span lang="hi-Latn">Pankaj</span> means born of mud.</h2><p>The lotus roots in the mud at the bottom of a pond and rises clean. The Gita and Guru Nanak both use it for a life lived in the world, untouched by it.</p></div>
   </div>
-  <div className="wrap"><ul className="pd-lessons">{lessons.map(l=><li key={l.source}><strong>{l.source}</strong><p>{l.line}</p></li>)}</ul></div>
  </section>;
 }
 
@@ -106,7 +76,6 @@ function FamilyNames({onAdd,ready}:{onAdd:()=>void;ready:boolean}){
    <p className="pd-name-meaning" aria-live="polite">{picked===null?' ':<><strong lang="hi-Latn">{names[picked][0]}:</strong> {names[picked][1]}</>}</p>
    <div className="pd-honour"><p>India’s Padma awards are named after the lotus. Give one at home.</p><button className="button primary" onClick={()=>ready&&onAdd()}>Add to bag</button></div>
   </div>
-  <figure className="pd-family-image"><SetPhoto image="/padma/gallery-05-gift.webp" alt="The set beside an open gift box and a handwritten card that reads Dadi ke liye." sizes="(max-width: 900px) calc(100vw - 40px), 560px"/></figure>
  </div></section>;
 }
 
@@ -122,7 +91,6 @@ export function PadmaDetail({p}:{p:Product}){
    </div>
   </div>
   <ThreeDays/>
-  <Reasons/>
   <BornOfMud/>
   <FamilyNames ready={ready} onAdd={()=>add(p,1)}/>
   <section className="wrap rm-specs" aria-labelledby="pd-size-heading"><h2 id="pd-size-heading">Size and space.</h2><dl><div><dt>Height</dt><dd>About 28 cm</dd></div><div><dt>Width</dt><dd>About 19 cm</dd></div><div><dt>Base</dt><dd>About 13 cm across</dd></div></dl><div className="rm-real-temple"><p>It fits a side table, a mandir shelf or a windowsill.</p></div><p className="rm-disclaimer">An original Taksh design. Images are design previews; sizes are estimates until the final model is checked.</p></section>
