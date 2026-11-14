@@ -36,7 +36,7 @@ async function prepare(folder){
   manifest[`/${folder}/${file}`]={width,height,fullWidth,full,...variants};
  }
 }
-for(const folder of ['chandrayaan','ram-mandir','yellow-taxi','nonsense','bharat','padma'])await prepare(folder);
+for(const folder of ['chandrayaan','ram-mandir','yellow-taxi','nonsense','bharat','padma','1983-trophy'])await prepare(folder);
 // Owner-approved responsive display copies; preserve exact originals for the viewer.
 await prepare('gully-cricket');
 for(const file of (await fs.readdir('public/gully-cricket')).filter(f=>f.endsWith('.png'))){

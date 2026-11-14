@@ -813,6 +813,50 @@
     "medium": "/media/padma-gallery-06-size-900.bbc98e8ed203.avif",
     "large": "/media/padma-gallery-06-size-1200.6594c759a15a.avif"
   },
+  "/1983-trophy/banner-thank-you.webp": {
+    "width": 2400,
+    "height": 1340,
+    "fullWidth": 2400,
+    "full": "/media/1983-trophy-banner-thank-you.3fd024cc2971.webp",
+    "thumb": "/media/1983-trophy-banner-thank-you-160.d90c39420822.webp",
+    "card": "/media/1983-trophy-banner-thank-you-320.db866c5f407d.webp",
+    "small": "/media/1983-trophy-banner-thank-you-600.93671d3bffff.webp",
+    "medium": "/media/1983-trophy-banner-thank-you-900.49ce969cc73f.webp",
+    "large": "/media/1983-trophy-banner-thank-you-1200.e60b5a477fb7.webp"
+  },
+  "/1983-trophy/gallery-01-hero.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/1983-trophy-gallery-01-hero.a28388d7ec3d.webp",
+    "thumb": "/media/1983-trophy-gallery-01-hero-160.98858a5e3fff.webp",
+    "card": "/media/1983-trophy-gallery-01-hero-320.fe626555df0c.webp",
+    "small": "/media/1983-trophy-gallery-01-hero-600.4fa15f53827f.webp",
+    "medium": "/media/1983-trophy-gallery-01-hero-900.8fda36894392.avif",
+    "large": "/media/1983-trophy-gallery-01-hero-1200.8b619c45cfd7.avif"
+  },
+  "/1983-trophy/gallery-02-plaque.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/1983-trophy-gallery-02-plaque.eb2a7e1f101b.webp",
+    "thumb": "/media/1983-trophy-gallery-02-plaque-160.e7a7d84ad287.webp",
+    "card": "/media/1983-trophy-gallery-02-plaque-320.3e1e33ebfebe.webp",
+    "small": "/media/1983-trophy-gallery-02-plaque-600.15ae7db736fa.avif",
+    "medium": "/media/1983-trophy-gallery-02-plaque-900.e49a3f9d5089.avif",
+    "large": "/media/1983-trophy-gallery-02-plaque-1200.74296d723588.avif"
+  },
+  "/1983-trophy/gallery-03-on-desk.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/1983-trophy-gallery-03-on-desk.02aa299cebf3.webp",
+    "thumb": "/media/1983-trophy-gallery-03-on-desk-160.6e1796f30345.webp",
+    "card": "/media/1983-trophy-gallery-03-on-desk-320.65b5ad0248a6.webp",
+    "small": "/media/1983-trophy-gallery-03-on-desk-600.ccf5f5001dd2.avif",
+    "medium": "/media/1983-trophy-gallery-03-on-desk-900.36b31475c203.avif",
+    "large": "/media/1983-trophy-gallery-03-on-desk-1200.1f1dfbb007e1.avif"
+  },
   "/gully-cricket/banner-golden-hour.png": {
     "width": 1920,
     "height": 1080,

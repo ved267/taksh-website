@@ -1,0 +1,56 @@
+.tr-page .tr-preview-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
+
+/* 1. Nobody gave them a chance. */
+.tr-odds{background:var(--ink);color:var(--cream);padding:80px 0}
+.tr-odds-copy{max-width:640px;margin:0 auto}
+.tr-odds-copy .tr-opening{font-size:clamp(32px,3.6vw,52px);line-height:1.1;letter-spacing:-.02em}
+.tr-qmark{color:var(--saffron)}
+.tr-opening-cite{margin-top:14px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;opacity:.7}
+.tr-timeline{list-style:none;margin:48px 0 0;padding:0 0 0 28px;position:relative}
+.tr-timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:color-mix(in srgb,var(--cream) 25%,transparent)}
+.tr-timeline>li{position:relative;padding-bottom:28px}
+.tr-timeline>li:last-child{padding-bottom:0}
+.tr-timeline>li::before{content:'';position:absolute;left:-28px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--ink);border:2px solid var(--cream)}
+.tr-timeline .tr-turn::before{left:-31px;top:2px;width:18px;height:18px;background:var(--saffron);border-color:var(--saffron)}
+.tr-when{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.75}
+.tr-turn .tr-when{color:var(--saffron);opacity:1}
+.tr-timeline p{font-size:17px;line-height:1.6;margin-top:6px;opacity:.92}
+.tr-turn p{font-size:20px;opacity:1}
+.tr-timeline strong{font-weight:700}
+.tr-titles{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.tr-titles li{display:grid;grid-template-columns:48px 1fr;gap:12px;font-size:16px;line-height:1.45}
+.tr-titles b{color:var(--saffron);font-weight:700}
+.tr-titles span{opacity:.9}
+.tr-turn strong{color:var(--saffron)}
+
+/* 2. Thank you, 1983. */
+.tr-began{background:var(--mud);color:var(--cream)}
+.tr-began-banner img{display:block;width:100%;height:auto}
+.tr-began-copy{max-width:640px;margin:0 auto;padding:56px 20px 72px}
+.tr-began-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.04}
+.tr-began-copy p{font-size:18px;line-height:1.6;margin-top:16px;opacity:.95}
+.tr-team-wins{list-style:none;margin:24px 0 8px;padding:0;display:grid;gap:8px}
+.tr-team-wins li{position:relative;padding-left:22px;font-size:18px;line-height:1.45}
+.tr-team-wins li::before{content:'';position:absolute;left:0;top:.65em;width:10px;height:2px;background:var(--saffron)}
+.tr-began-copy .tr-lead{font-size:20px;opacity:1;margin-top:12px}
+.tr-finale{margin:36px 0 0;padding-top:28px;border-top:1px solid color-mix(in srgb,var(--cream) 20%,transparent)}
+.tr-finale blockquote{margin:0;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.25;letter-spacing:-.01em;color:var(--cream)}
+.tr-finale figcaption{margin-top:12px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;opacity:.7}
+.tr-began-cta{margin-top:32px;min-width:240px}
+.tr-began-copy .tr-thanks{font-size:24px;font-weight:600;opacity:1;color:var(--saffron);margin-top:20px}
+
+@media(max-width:960px){
+ .tr-buy-column{display:contents}.tr-preview-note{order:8}
+ .tr-odds{padding:48px 0 56px}
+ .tr-odds-copy .tr-opening{font-size:30px}
+ .tr-opening-cite,.tr-finale figcaption{font-size:12px}
+ .tr-timeline{margin-top:36px}
+ .tr-turn p{font-size:18px}
+ .tr-began-copy{padding:32px 20px 44px}
+ .tr-began-copy h2{font-size:34px}
+ .tr-team-wins li,.tr-began-copy p{font-size:17px}
+ .tr-began-copy .tr-lead{font-size:18px}
+ .tr-began-copy .tr-thanks{font-size:20px}
+ .tr-finale blockquote{font-size:24px}
+ }
+@media(max-width:760px){.tr-page.rm-page .rm-gallery-stage{height:auto;aspect-ratio:1/1}}
