@@ -20,11 +20,11 @@ const titles=[['2007','The first T20 world title'],['2011','World champions agai
 
 function NoChance(){
  return <section className="tr-odds" aria-labelledby="tr-odds-heading"><div className="wrap tr-odds-inner">
-  <div className="tr-odds-copy"><h2 id="tr-odds-heading">Nobody gave them a chance.</h2>
+  <div className="tr-odds-copy"><h2 id="tr-odds-heading" className="tr-opening"><span className="tr-qmark">“</span>Like people says, taste the success once… tongue want more.<span className="tr-qmark">”</span></h2><p className="tr-opening-cite">The captain to his team, 1983</p>
    <ol className="tr-timeline">
     <li><span className="tr-when">Before 1983</span><p><strong>One win in two world tournaments.</strong> Bookmakers put India at 66 to 1.</p></li>
     <li className="tr-turn"><span className="tr-when">25 June 1983</span><p><strong>183 was enough.</strong> All out for 183 against the champions. Everyone thought it was over. India bowled them out for 140.</p></li>
-    <li><span className="tr-when">Since then</span><blockquote className="tr-quote">“Like people says, taste the success once… tongue want more.”</blockquote><ul className="tr-titles">{titles.map(([y,t])=><li key={y}><b>{y}</b><span>{t}</span></li>)}</ul></li>
+    <li><span className="tr-when">Since then</span><p><strong>They wanted more.</strong></p><ul className="tr-titles">{titles.map(([y,t])=><li key={y}><b>{y}</b><span>{t}</span></li>)}</ul></li>
    </ol></div>
  </div></section>;
 }
@@ -36,7 +36,7 @@ function ThankYou({onAdd,price}:{onAdd:()=>void;price:string}){
   <div className="tr-began-banner"><SetPhoto image="/1983-trophy/banner-thank-you.webp" alt="A team of Indian cricketers in cream sweaters, seen from behind with their arms around each other on a pavilion balcony in golden evening light." sizes="100vw"/></div>
   <div className="tr-began-copy"><h2 id="tr-began-heading">Thank you, 1983.</h2><p className="tr-lead">Fourteen players. Three wins nobody saw coming.</p>
     <ul className="tr-team-wins">{teamWins.map(w=><li key={w}>{w}</li>)}</ul>
-    <p>They taught a country to believe.</p><figure className="tr-finale"><blockquote>“We here to win… to win the World Cup, what else we here for?”</blockquote><figcaption>The captain, to the press, June 1983</figcaption></figure><button className="button primary tr-began-cta" onClick={onAdd}>Bring the cup home · {price}</button></div>
+    <p>They taught a country to believe.</p><figure className="tr-finale"><blockquote><span className="tr-qmark">“</span>We here to win… to win the World Cup, what else we here for?<span className="tr-qmark">”</span></blockquote><figcaption>The captain, to the press, June 1983</figcaption></figure><button className="button primary tr-began-cta" onClick={onAdd}>Bring the cup home · {price}</button></div>
  </section>;
 }
 
