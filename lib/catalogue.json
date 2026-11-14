@@ -243,6 +243,26 @@
       "imageWidth": 1600,
       "imageHeight": 1600,
       "description": "Three lotuses in full bloom on a gold lotus seat, each at its own height. Build it in about an hour for a mandir shelf or side table. A gift for Dadi, Nani or Ma."
+    },
+    {
+      "slug": "1983-trophy",
+      "name": "1983 Trophy",
+      "subtitle": "The cup India brought home from Lord's.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 520,
+      "approximate": true,
+      "price": 2499,
+      "setNumber": "1983-TROPHY",
+      "age": 12,
+      "buildTime": "About 2 hours",
+      "dimensions": "About 21 cm tall and 13 cm wide, on a plinth about 8 cm across",
+      "weight": "To be confirmed",
+      "image": "/1983-trophy/gallery-01-hero.webp",
+      "imageAlt": "A silver brick trophy with two handles and a lid, on a brown plinth with a plaque that reads 1983 India.",
+      "imageWidth": 1600,
+      "imageHeight": 1600,
+      "description": "The silver cup on its brown plinth with the plaque, as India lifted it in 1983. It takes about 2 hours to build and is made for a shelf or study. A gift for Papa, Dadaji or the fan who still remembers that night."
     }
   ]
 }

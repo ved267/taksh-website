@@ -1,0 +1,39 @@
+.tr-page .tr-preview-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
+
+/* 1. Nobody gave them a chance. */
+.tr-odds{background:var(--ink);color:var(--cream);padding:80px 0}
+.tr-odds-inner{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);column-gap:64px;align-items:center}
+.tr-odds-copy h2{font-size:clamp(36px,3.9vw,56px);line-height:1.04}
+.tr-numbers{list-style:none;padding:0;margin:36px 0 28px;display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:28px;border-top:1px solid color-mix(in srgb,var(--cream) 20%,transparent);padding-top:24px}
+.tr-numbers li{display:flex;flex-direction:column;gap:6px;max-width:130px}
+.tr-numbers strong{font-size:40px;font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--saffron);white-space:nowrap}
+.tr-numbers span{font-size:13px;line-height:1.4;opacity:.8}
+.tr-odds-copy p{font-size:17px;line-height:1.65;opacity:.92}
+.tr-odds-copy .tr-odds-close{font-size:22px;font-weight:600;line-height:1.35;margin-top:20px;opacity:1}
+.tr-odds-photo{margin:0;border-radius:4px;overflow:hidden;aspect-ratio:1600/1195;background:var(--ink)}
+.tr-odds-photo img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* 2. Where it all began. */
+.tr-began{background:var(--mud)}
+.tr-began-banner{position:relative;overflow:hidden;background:var(--mud)}
+.tr-began-banner img{display:block;width:100%;height:auto;min-height:420px;object-fit:cover}
+.tr-began-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--mud-scrim) 0%,var(--mud-scrim-soft) 34%,var(--mud-scrim-clear) 56%);pointer-events:none}
+.tr-began-copy{position:absolute;z-index:1;left:max(56px,calc((100vw - 1440px)/2 + 56px));bottom:14%;width:min(34%,460px);color:var(--cream)}
+.tr-began-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.04}
+.tr-began-copy p{font-size:18px;line-height:1.6;margin-top:16px;opacity:.95}
+
+@media(max-width:1200px){.tr-odds-inner{column-gap:40px;grid-template-columns:minmax(0,360px) minmax(0,1fr)}}
+@media(max-width:960px){
+ .tr-buy-column{display:contents}.tr-preview-note{order:8}
+ .tr-odds{padding:48px 0 56px}
+ .tr-odds-inner{grid-template-columns:1fr}
+ .tr-odds-copy h2{font-size:34px}
+ .tr-numbers{margin:24px 0 20px;gap:20px}
+ .tr-numbers strong{font-size:32px}
+ .tr-odds-photo{margin-top:32px}
+ .tr-began-banner img{min-height:0}
+ .tr-began-banner::after{display:none}
+ .tr-began-copy{position:static;width:auto;background:var(--mud);padding:32px 20px 36px}
+ .tr-began-copy h2{font-size:34px}
+}
+@media(max-width:420px){.tr-numbers{gap:14px}.tr-numbers strong{font-size:28px}.tr-numbers span{font-size:12px}}
