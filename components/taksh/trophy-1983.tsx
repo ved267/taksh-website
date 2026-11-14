@@ -6,7 +6,7 @@ import {SetBuyBox,SetStickyBar} from './set-buy-box';
 import {useStickyPurchase} from './use-sticky-purchase';
 import {useStore} from './store';
 import {track} from '@/lib/tracking';
-import {type Product} from '@/lib/shop';
+import {productMoney,type Product} from '@/lib/shop';
 import './ram-mandir.css';
 import './trophy-1983.css';
 
@@ -31,12 +31,12 @@ function NoChance(){
 
 const teamWins=['Beat the champions, the West Indies, in their first match.','Were 17 for 5 against Zimbabwe, and still won.','Knocked out the hosts, England, in the semi-final.'];
 
-function ThankYou(){
+function ThankYou({onAdd,price}:{onAdd:()=>void;price:string}){
  return <section className="tr-began" aria-labelledby="tr-began-heading">
   <div className="tr-began-banner"><SetPhoto image="/1983-trophy/banner-thank-you.webp" alt="A team of Indian cricketers in cream sweaters, seen from behind with their arms around each other on a pavilion balcony in golden evening light." sizes="100vw"/></div>
   <div className="tr-began-copy"><h2 id="tr-began-heading">Thank you, 1983.</h2><p className="tr-lead">Fourteen players. Three wins nobody saw coming.</p>
     <ul className="tr-team-wins">{teamWins.map(w=><li key={w}>{w}</li>)}</ul>
-    <p>They taught a country to believe.</p><figure className="tr-finale"><blockquote>“We here to win… to win the World Cup, what else we here for?”</blockquote><figcaption>The captain, to the press, June 1983</figcaption></figure></div>
+    <p>They taught a country to believe.</p><figure className="tr-finale"><blockquote>“We here to win… to win the World Cup, what else we here for?”</blockquote><figcaption>The captain, to the press, June 1983</figcaption></figure><button className="button primary tr-began-cta" onClick={onAdd}>Bring the cup home · {price}</button></div>
  </section>;
 }
 
@@ -52,7 +52,7 @@ export function Trophy1983Detail({p}:{p:Product}){
    </div>
   </div>
   <NoChance/>
-  <ThankYou/>
+  <ThankYou price={productMoney(p)} onAdd={()=>ready&&add(p,qty)}/>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }
