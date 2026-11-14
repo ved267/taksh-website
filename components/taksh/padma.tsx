@@ -7,14 +7,13 @@ import {useGallerySelection} from './use-gallery-selection';
 import {useStickyPurchase} from './use-sticky-purchase';
 import {useStore} from './store';
 import {track} from '@/lib/tracking';
-import {type Product} from '@/lib/shop';
+import {productMoney,type Product} from '@/lib/shop';
 import './ram-mandir.css';
 import './padma.css';
 
 const gallery:PhotoInfo[]=[
  {image:'/padma/gallery-01-hero.webp',label:'Padma',alt:'Three pink and white brick lotuses at three heights, standing on a round gold lotus base.'},
  {image:'/padma/gallery-04-at-home.webp',label:'At home',alt:'The set on a teak side table beside reading glasses on a book and a brass bowl, in morning light.'},
- {image:'/padma/gallery-05-gift.webp',label:'A gift',alt:'The set beside an open gift box and a handwritten card that reads Dadi ke liye.'},
  {image:'/padma/gallery-02-heart.webp',label:'The heart',alt:'One brick lotus up close: white inner petals, a yellow seed pod and a ring of yellow stamens.'},
  {image:'/padma/gallery-03-gold-seat.webp',label:'The gold seat',alt:'The round gold base with lotus-petal sides and three green stems.'},
  {image:'/padma/gallery-06-size.webp',label:'Size',alt:'The set is about 28 cm tall and 19 cm wide.'},
@@ -28,7 +27,7 @@ const days=[
  {id:'day-yours',tab:'Yours',tone:'yours',line:'Yours stays in bloom.',alt:'The brick Padma set, three open lotuses on a gold base.'},
 ] as const;
 
-function ThreeDays(){
+function ThreeDays({onAdd,price}:{onAdd:()=>void;price:string}){
  const images=days.map(d=>`/padma/${d.id}.webp`);
  const {index,resolvedSrc,status,change,warm}=useGallerySelection(images,'(max-width: 760px) calc(100vw - 40px), 760px');
  const buttons=useRef<(HTMLButtonElement|null)[]>([]),section=useRef<HTMLElement>(null),fns=useRef({change,warm});
@@ -46,9 +45,9 @@ function ThreeDays(){
   e.preventDefault();buttons.current[next]?.focus({preventScroll:true});void change(next);
  }
  return <section ref={section} className="pd-days" data-tone={day.tone} aria-labelledby="pd-days-heading"><div className="wrap pd-days-inner">
-  <div className="pd-days-side"><h2 id="pd-days-heading" className="pd-days-copy">A lotus lasts about three days.</h2>
+  <div className="pd-days-side"><h2 id="pd-days-heading" className="pd-days-copy">A real lotus lasts about three days. This one stays.</h2>
   <div className="pd-day-tabs" role="group" aria-label="Choose a day" onKeyDown={onKey}>{days.map((d,i)=><button key={d.id} ref={el=>{buttons.current[i]=el}} aria-pressed={index===i} onClick={()=>{setTouched(true);void change(i)}} className={d.id==='day-yours'?'pd-yours':''}>{d.tab}</button>)}</div>
-  <p className="pd-day-line" aria-live={playing?'off':'polite'}>{day.line}</p></div>
+  <p className="pd-day-line" aria-live={playing?'off':'polite'}>{day.line}</p>{day.id==='day-yours'&&<button className="button primary pd-day-cta" onClick={onAdd}>Bring one home · {price}</button>}</div>
   <figure className="pd-days-stage" aria-busy={status==='loading'}>
    <SetPhoto key={day.id} image={images[index]} alt={day.alt} resolvedSrc={resolvedSrc} sizes="(max-width: 760px) calc(100vw - 40px), 760px"/>
    <GalleryStatus status={status}/>
@@ -56,10 +55,10 @@ function ThreeDays(){
  </div></section>;
 }
 
-function BornOfMud(){
+function LotusLeaf({onAdd}:{onAdd:()=>void}){
  return <section className="pd-mud" aria-labelledby="pd-mud-heading">
   <div className="pd-mud-banner"><SetPhoto image="/padma/banner-born-of-mud.webp" alt="A pink lotus rising clean from a muddy pond at sunrise." sizes="100vw"/>
-   <div className="pd-mud-copy"><h2 id="pd-mud-heading">Born of mud. Untouched by it.</h2><p>The lotus roots in the mud at the bottom of a pond and rises clean. Water slides off its leaves without wetting them.</p><p>The Gita and Guru Nanak use it for the same lesson: live fully in the world, and let nothing cling to you. Keep one where you see it every day.</p></div>
+   <div className="pd-mud-copy"><p className="pd-verse" lang="sa">पद्मपत्रमिवाम्भसा</p><h2 id="pd-mud-heading">Like a lotus leaf on water.</h2><p>Live fully in the world, and let nothing cling to you.</p><p className="pd-cite">Bhagavad Gita 5.10</p><p className="pd-keep">Keep one where you see it every day.</p><button className="button primary pd-mud-cta" onClick={onAdd}>Add to bag</button></div>
   </div>
  </section>;
 }
@@ -75,8 +74,8 @@ export function PadmaDetail({p}:{p:Product}){
     <div className="pd-buy-column"><SetBuyBox p={p} qty={qty} setQty={setQty} buyRef={buyRef} contactRef={contactRef} ready={ready} onAdd={()=>add(p,qty)}/><p className="pd-preview-note">Images are design previews; sizes are estimates.</p></div>
    </div>
   </div>
-  <ThreeDays/>
-  <BornOfMud/>
+  <ThreeDays price={productMoney(p)} onAdd={()=>ready&&add(p,qty)}/>
+  <LotusLeaf onAdd={()=>ready&&add(p,qty)}/>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }
