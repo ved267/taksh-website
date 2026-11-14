@@ -36,7 +36,7 @@ function ThankYou(){
   <div className="tr-began-banner"><SetPhoto image="/1983-trophy/banner-thank-you.webp" alt="A team of Indian cricketers in cream sweaters, seen from behind with their arms around each other on a pavilion balcony in golden evening light." sizes="100vw"/></div>
   <div className="tr-began-copy"><h2 id="tr-began-heading">Thank you, 1983.</h2>
     <ul className="tr-team-wins">{teamWins.map(w=><li key={w}>{w}</li>)}</ul>
-    <p>A ten-year-old in Bombay watched them win. Twenty-eight years later, he won it again in his own city.</p><p className="tr-thanks">This cup is our thank you.</p></div>
+    <p>It inspired a generation. A ten-year-old who watched that night in Bombay grew up to win it for India in 2011, in the same city.</p><p className="tr-thanks">This cup is our thank you.</p></div>
  </section>;
 }
 
