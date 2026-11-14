@@ -802,17 +802,6 @@
     "medium": "/media/padma-gallery-04-at-home-900.f89be9e634d1.avif",
     "large": "/media/padma-gallery-04-at-home-1200.e5e861d6a932.avif"
   },
-  "/padma/gallery-05-gift.webp": {
-    "width": 1600,
-    "height": 1600,
-    "fullWidth": 1600,
-    "full": "/media/padma-gallery-05-gift.80e22619df7d.webp",
-    "thumb": "/media/padma-gallery-05-gift-160.be47af9032ee.webp",
-    "card": "/media/padma-gallery-05-gift-320.48ebd64e56e6.webp",
-    "small": "/media/padma-gallery-05-gift-600.4a335df0a78b.avif",
-    "medium": "/media/padma-gallery-05-gift-900.2f125f75ba17.avif",
-    "large": "/media/padma-gallery-05-gift-1200.1d8de7948ec6.avif"
-  },
   "/padma/gallery-06-size.webp": {
     "width": 1600,
     "height": 1600,
