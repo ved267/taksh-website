@@ -55,10 +55,10 @@ function ThreeDays(){
  </div></section>;
 }
 
-function BornOfMud(){
+function LotusLeaf(){
  return <section className="pd-mud" aria-labelledby="pd-mud-heading">
   <div className="pd-mud-banner"><SetPhoto image="/padma/banner-born-of-mud.webp" alt="A pink lotus rising clean from a muddy pond at sunrise." sizes="100vw"/>
-   <div className="pd-mud-copy"><h2 id="pd-mud-heading">Born of mud. Untouched by it.</h2><p>The lotus roots in the mud at the bottom of a pond and rises clean. Water slides off its leaves without wetting them.</p><p>The Gita and Guru Nanak use it for the same lesson: live fully in the world, and let nothing cling to you. Keep one where you see it every day.</p></div>
+   <div className="pd-mud-copy"><p className="pd-verse" lang="sa">पद्मपत्रमिवाम्भसा</p><h2 id="pd-mud-heading">Like a lotus leaf on water.</h2><p>Live fully in the world, and let nothing cling to you.</p><p className="pd-cite">Bhagavad Gita 5.10</p><p className="pd-keep">Keep one where you see it every day.</p></div>
   </div>
  </section>;
 }
@@ -75,7 +75,7 @@ export function PadmaDetail({p}:{p:Product}){
    </div>
   </div>
   <ThreeDays/>
-  <BornOfMud/>
+  <LotusLeaf/>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }
