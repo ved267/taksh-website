@@ -15,6 +15,7 @@
 .tr-timeline p{font-size:17px;line-height:1.6;margin-top:6px;opacity:.92}
 .tr-turn p{font-size:20px;opacity:1}
 .tr-timeline strong{font-weight:700}
+.tr-quote{margin:10px 0 0;padding-left:14px;border-left:3px solid var(--saffron);font-size:22px;font-weight:600;line-height:1.35;color:var(--cream)}
 .tr-titles{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
 .tr-titles li{display:grid;grid-template-columns:48px 1fr;gap:12px;font-size:16px;line-height:1.45}
 .tr-titles b{color:var(--saffron);font-weight:700}
@@ -31,6 +32,9 @@
 .tr-team-wins li{position:relative;padding-left:22px;font-size:18px;line-height:1.45}
 .tr-team-wins li::before{content:'';position:absolute;left:0;top:.65em;width:10px;height:2px;background:var(--saffron)}
 .tr-began-copy .tr-lead{font-size:20px;opacity:1;margin-top:12px}
+.tr-finale{margin:36px 0 0;padding-top:28px;border-top:1px solid color-mix(in srgb,var(--cream) 20%,transparent)}
+.tr-finale blockquote{margin:0;font-size:clamp(26px,2.6vw,34px);font-weight:700;line-height:1.25;letter-spacing:-.01em;color:var(--saffron)}
+.tr-finale figcaption{margin-top:12px;font-size:14px;opacity:.75}
 .tr-began-copy .tr-thanks{font-size:24px;font-weight:600;opacity:1;color:var(--saffron);margin-top:20px}
 
 @media(max-width:1200px){.tr-odds-copy{column-gap:40px}}
@@ -46,4 +50,6 @@
  .tr-team-wins li,.tr-began-copy p{font-size:17px}
  .tr-began-copy .tr-lead{font-size:18px}
  .tr-began-copy .tr-thanks{font-size:20px}
+ .tr-finale blockquote{font-size:24px}
+ .tr-quote{font-size:19px}
 }
