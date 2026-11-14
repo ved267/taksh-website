@@ -2,9 +2,9 @@
 
 /* 1. Nobody gave them a chance. */
 .tr-odds{background:var(--ink);color:var(--cream);padding:80px 0}
-.tr-odds-inner{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);column-gap:64px;align-items:start}
-.tr-odds-copy h2{font-size:clamp(36px,3.9vw,56px);line-height:1.04}
-.tr-timeline{list-style:none;margin:36px 0 0;padding:0 0 0 28px;position:relative}
+.tr-odds-copy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);column-gap:64px;align-items:start}
+.tr-odds-copy h2{font-size:clamp(36px,3.9vw,56px);line-height:1.04;position:sticky;top:calc(var(--rm-header-height) + 40px)}
+.tr-timeline{list-style:none;margin:8px 0 0;padding:0 0 0 28px;position:relative}
 .tr-timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:color-mix(in srgb,var(--cream) 25%,transparent)}
 .tr-timeline>li{position:relative;padding-bottom:28px}
 .tr-timeline>li:last-child{padding-bottom:0}
@@ -20,8 +20,6 @@
 .tr-titles b{color:var(--saffron);font-weight:700}
 .tr-titles span{opacity:.9}
 .tr-turn strong{color:var(--saffron)}
-.tr-odds-photo{margin:0;border-radius:4px;overflow:hidden;aspect-ratio:1600/1195;background:var(--ink);position:sticky;top:calc(var(--rm-header-height) + 32px)}
-.tr-odds-photo img{display:block;width:100%;height:100%;object-fit:cover}
 
 /* 2. Thank you, 1983. */
 .tr-began{background:var(--mud);color:var(--cream)}
@@ -35,17 +33,13 @@
 .tr-began-copy .tr-lead{font-size:20px;opacity:1;margin-top:12px}
 .tr-began-copy .tr-thanks{font-size:24px;font-weight:600;opacity:1;color:var(--saffron);margin-top:20px}
 
-@media(max-width:1200px){.tr-odds-inner{column-gap:40px;grid-template-columns:minmax(0,400px) minmax(0,1fr)}}
+@media(max-width:1200px){.tr-odds-copy{column-gap:40px}}
 @media(max-width:960px){
  .tr-buy-column{display:contents}.tr-preview-note{order:8}
  .tr-odds{padding:48px 0 56px}
- .tr-odds-inner{grid-template-columns:1fr}
- .tr-odds-copy h2{font-size:34px}
- .tr-odds-copy{display:contents}
- .tr-odds-copy h2{order:1}
- .tr-page .tr-odds-photo{order:2;margin:24px 0 0;position:static}
- .tr-timeline{order:3;margin-top:32px}
- .tr-odds-inner{display:flex;flex-direction:column}
+ .tr-odds-copy{grid-template-columns:1fr}
+ .tr-odds-copy h2{font-size:34px;position:static}
+ .tr-timeline{margin-top:28px}
  .tr-turn p{font-size:18px}
  .tr-began-copy{padding:32px 20px 44px}
  .tr-began-copy h2{font-size:34px}

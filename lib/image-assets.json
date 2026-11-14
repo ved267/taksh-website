@@ -839,45 +839,34 @@
     "width": 1600,
     "height": 1600,
     "fullWidth": 1600,
-    "full": "/media/1983-trophy-gallery-01-hero.3bc2b0bd8040.webp",
-    "thumb": "/media/1983-trophy-gallery-01-hero-160.96557ec062da.webp",
-    "card": "/media/1983-trophy-gallery-01-hero-320.a1dcde3b548d.webp",
-    "small": "/media/1983-trophy-gallery-01-hero-600.dc85b7f5efc3.avif",
-    "medium": "/media/1983-trophy-gallery-01-hero-900.077ddc299bd3.avif",
-    "large": "/media/1983-trophy-gallery-01-hero-1200.a50bc554952e.avif"
+    "full": "/media/1983-trophy-gallery-01-hero.a28388d7ec3d.webp",
+    "thumb": "/media/1983-trophy-gallery-01-hero-160.98858a5e3fff.webp",
+    "card": "/media/1983-trophy-gallery-01-hero-320.fe626555df0c.webp",
+    "small": "/media/1983-trophy-gallery-01-hero-600.4fa15f53827f.webp",
+    "medium": "/media/1983-trophy-gallery-01-hero-900.8fda36894392.avif",
+    "large": "/media/1983-trophy-gallery-01-hero-1200.8b619c45cfd7.avif"
   },
   "/1983-trophy/gallery-02-plaque.webp": {
     "width": 1600,
     "height": 1600,
     "fullWidth": 1600,
-    "full": "/media/1983-trophy-gallery-02-plaque.554313988d11.webp",
-    "thumb": "/media/1983-trophy-gallery-02-plaque-160.15885c0d1f1e.webp",
-    "card": "/media/1983-trophy-gallery-02-plaque-320.33b5868122c1.webp",
-    "small": "/media/1983-trophy-gallery-02-plaque-600.2a2594958330.avif",
-    "medium": "/media/1983-trophy-gallery-02-plaque-900.91ce5f37f4bf.avif",
-    "large": "/media/1983-trophy-gallery-02-plaque-1200.742eee957ae1.avif"
+    "full": "/media/1983-trophy-gallery-02-plaque.eb2a7e1f101b.webp",
+    "thumb": "/media/1983-trophy-gallery-02-plaque-160.e7a7d84ad287.webp",
+    "card": "/media/1983-trophy-gallery-02-plaque-320.3e1e33ebfebe.webp",
+    "small": "/media/1983-trophy-gallery-02-plaque-600.15ae7db736fa.avif",
+    "medium": "/media/1983-trophy-gallery-02-plaque-900.e49a3f9d5089.avif",
+    "large": "/media/1983-trophy-gallery-02-plaque-1200.74296d723588.avif"
   },
   "/1983-trophy/gallery-04-size.webp": {
     "width": 1600,
     "height": 1600,
     "fullWidth": 1600,
-    "full": "/media/1983-trophy-gallery-04-size.5e0cf0e95b36.webp",
-    "thumb": "/media/1983-trophy-gallery-04-size-160.73fd8e5ff2db.webp",
-    "card": "/media/1983-trophy-gallery-04-size-320.388d847b335e.webp",
-    "small": "/media/1983-trophy-gallery-04-size-600.aea8e659f52b.avif",
-    "medium": "/media/1983-trophy-gallery-04-size-900.3dafbceed343.avif",
-    "large": "/media/1983-trophy-gallery-04-size-1200.cb158ffbcb97.avif"
-  },
-  "/1983-trophy/story-that-night.webp": {
-    "width": 1600,
-    "height": 1195,
-    "fullWidth": 1600,
-    "full": "/media/1983-trophy-story-that-night.9948e703a597.webp",
-    "thumb": "/media/1983-trophy-story-that-night-160.278ccc741ec3.webp",
-    "card": "/media/1983-trophy-story-that-night-320.d3099606479c.webp",
-    "small": "/media/1983-trophy-story-that-night-600.0b0626650530.webp",
-    "medium": "/media/1983-trophy-story-that-night-900.88c5ec1c3a38.webp",
-    "large": "/media/1983-trophy-story-that-night-1200.1fe68378e049.webp"
+    "full": "/media/1983-trophy-gallery-04-size.f097f02db7db.webp",
+    "thumb": "/media/1983-trophy-gallery-04-size-160.41a52874ec61.webp",
+    "card": "/media/1983-trophy-gallery-04-size-320.5403dd1df26e.webp",
+    "small": "/media/1983-trophy-gallery-04-size-600.6932b6fed304.avif",
+    "medium": "/media/1983-trophy-gallery-04-size-900.7936fcd5f1c3.avif",
+    "large": "/media/1983-trophy-gallery-04-size-1200.bf1d6114e533.avif"
   },
   "/gully-cricket/banner-golden-hour.png": {
     "width": 1920,

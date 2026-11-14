@@ -26,7 +26,6 @@ function NoChance(){
     <li className="tr-turn"><span className="tr-when">25 June 1983</span><p><strong>183 was enough.</strong> All out for 183 against the champions. Everyone thought it was over. India bowled them out for 140.</p></li>
     <li><span className="tr-when">Since then</span><p><strong>Never the underdogs again.</strong></p><ul className="tr-titles">{titles.map(([y,t])=><li key={y}><b>{y}</b><span>{t}</span></li>)}</ul></li>
    </ol></div>
-  <figure className="tr-odds-photo"><SetPhoto image="/1983-trophy/story-that-night.webp" alt="A living room late at night in 1983: an old television shows a cricket match, a transistor radio and a steel tumbler of tea wait on the table." sizes="(max-width: 960px) calc(100vw - 40px), 760px"/></figure>
  </div></section>;
 }
 
