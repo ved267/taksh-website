@@ -17,23 +17,26 @@ const gallery:PhotoInfo[]=[
  {image:'/1983-trophy/gallery-04-size.webp',label:'Size',alt:'The set is about 21 cm tall and 13 cm wide.'},
 ];
 
-const odds=[['1','win in two earlier tournaments'],['66 to 1','the odds against India'],['43','runs, the winning margin']];
-
 function NoChance(){
  return <section className="tr-odds" aria-labelledby="tr-odds-heading"><div className="wrap tr-odds-inner">
   <div className="tr-odds-copy"><h2 id="tr-odds-heading">Nobody gave them a chance.</h2>
-   <ul className="tr-numbers">{odds.map(([n,l])=><li key={n}><strong>{n}</strong><span>{l}</span></li>)}</ul>
-   <p>India came to England having won one match in two earlier tournaments. Bookmakers put them at 66 to 1. In the final they were all out for 183 against the West Indies, champions twice over. They bowled them out for 140 and won by 43 runs.</p>
-   <p className="tr-odds-close">That night, a country learned it could beat the best.</p></div>
+   <ol className="tr-timeline">
+    <li><span className="tr-when">Before 1983</span><p><strong>The underdogs.</strong> One match won in two world tournaments. Bookmakers put India at 66 to 1.</p></li>
+    <li className="tr-turn"><span className="tr-when">25 June 1983</span><p><strong>Champions of the world.</strong> All out for 183, India bowled out the West Indies for 140 and won by 43 runs.</p></li>
+    <li><span className="tr-when">Since then</span><p><strong>Never the underdogs again.</strong> World titles in 2007, 2011, 2013, 2024, 2025 and 2026.</p></li>
+   </ol></div>
   <figure className="tr-odds-photo"><SetPhoto image="/1983-trophy/story-that-night.webp" alt="A living room late at night in 1983: an old television shows a cricket match, a transistor radio and a steel tumbler of tea wait on the table." sizes="(max-width: 960px) calc(100vw - 40px), 760px"/></figure>
  </div></section>;
 }
 
-function WhereItBegan(){
+const teamWins=['Beat the West Indies, who had never lost a match at the tournament.','Were 17 for 5 against Zimbabwe, and still won.','Beat England, the hosts, in the semi-final.'];
+
+function ThankYou(){
  return <section className="tr-began" aria-labelledby="tr-began-heading">
-  <div className="tr-began-banner"><SetPhoto image="/1983-trophy/banner-where-it-began.webp" alt="A lane at dusk: cricket stumps drawn on an old wall, a worn bat leaning beside them and a taped tennis ball on the ground." sizes="100vw"/>
-   <div className="tr-began-copy"><h2 id="tr-began-heading">Where it all began.</h2><p>Before 1983, cricket was one sport among many in India. After that night, children in every lane picked up a bat, and the game became the country’s own.</p><p>This is the cup it started with. Give it to the one who was there at the start.</p></div>
-  </div>
+  <div className="tr-began-banner"><SetPhoto image="/1983-trophy/banner-thank-you.webp" alt="A team of Indian cricketers in cream sweaters, seen from behind with their arms around each other on a pavilion balcony in golden evening light." sizes="100vw"/></div>
+  <div className="tr-began-copy"><h2 id="tr-began-heading">Thank you, 1983.</h2>
+    <ul className="tr-team-wins">{teamWins.map(w=><li key={w}>{w}</li>)}</ul>
+    <p>A ten-year-old in Bombay watched them win. Twenty-eight years later, he won it again in his own city.</p><p className="tr-thanks">This cup is our thank you.</p></div>
  </section>;
 }
 
@@ -49,7 +52,7 @@ export function Trophy1983Detail({p}:{p:Product}){
    </div>
   </div>
   <NoChance/>
-  <WhereItBegan/>
+  <ThankYou/>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }
