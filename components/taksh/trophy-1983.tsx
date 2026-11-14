@@ -13,7 +13,7 @@ import './trophy-1983.css';
 const gallery:PhotoInfo[]=[
  {image:'/1983-trophy/gallery-01-hero.webp',label:'1983 Trophy',alt:'A silver brick trophy with two handles and a stepped lid, on a brown plinth with a plaque that reads 1983 India.'},
  {image:'/1983-trophy/gallery-02-plaque.webp',label:'The plaque',alt:'The brown brick plinth up close, with a black plaque that reads 1983 India.'},
- {image:'/1983-trophy/gallery-04-size.webp',label:'Size',alt:'The set is about 21 cm tall and 13 cm wide.'},
+ {image:'/1983-trophy/gallery-03-on-desk.webp',label:'Size',alt:'The set on a study desk beside a coffee mug. It is about 21 cm tall, a little over twice the height of the mug.'},
 ];
 
 const titles=[['2007','The first T20 world title'],['2011','World champions again, at home'],['2013','A one-day world title in England'],['2024','A second T20 world title'],['2025','A one-day world title, and the women’s first'],['2026','A third T20 world title, at home']];
