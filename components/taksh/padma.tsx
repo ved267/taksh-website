@@ -14,7 +14,6 @@ import './padma.css';
 const gallery:PhotoInfo[]=[
  {image:'/padma/gallery-01-hero.webp',label:'Padma',alt:'Three pink and white brick lotuses at three heights, standing on a round gold lotus base.'},
  {image:'/padma/gallery-04-at-home.webp',label:'At home',alt:'The set on a teak side table beside reading glasses on a book and a brass bowl, in morning light.'},
- {image:'/padma/gallery-05-gift.webp',label:'A gift',alt:'The set beside an open gift box and a handwritten card that reads Dadi ke liye.'},
  {image:'/padma/gallery-02-heart.webp',label:'The heart',alt:'One brick lotus up close: white inner petals, a yellow seed pod and a ring of yellow stamens.'},
  {image:'/padma/gallery-03-gold-seat.webp',label:'The gold seat',alt:'The round gold base with lotus-petal sides and three green stems.'},
  {image:'/padma/gallery-06-size.webp',label:'Size',alt:'The set is about 28 cm tall and 19 cm wide.'},
@@ -46,7 +45,7 @@ function ThreeDays(){
   e.preventDefault();buttons.current[next]?.focus({preventScroll:true});void change(next);
  }
  return <section ref={section} className="pd-days" data-tone={day.tone} aria-labelledby="pd-days-heading"><div className="wrap pd-days-inner">
-  <div className="pd-days-side"><h2 id="pd-days-heading" className="pd-days-copy">A lotus lasts about three days.</h2>
+  <div className="pd-days-side"><h2 id="pd-days-heading" className="pd-days-copy">A real lotus lasts about three days. This one stays.</h2>
   <div className="pd-day-tabs" role="group" aria-label="Choose a day" onKeyDown={onKey}>{days.map((d,i)=><button key={d.id} ref={el=>{buttons.current[i]=el}} aria-pressed={index===i} onClick={()=>{setTouched(true);void change(i)}} className={d.id==='day-yours'?'pd-yours':''}>{d.tab}</button>)}</div>
   <p className="pd-day-line" aria-live={playing?'off':'polite'}>{day.line}</p></div>
   <figure className="pd-days-stage" aria-busy={status==='loading'}>
