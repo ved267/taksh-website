@@ -43,7 +43,7 @@ function SunflowerTheory({onAdd,price}:{onAdd:()=>void;price:string}){
  return <section ref={section} className="sm-theory" data-tone={moment.id} aria-labelledby="sm-theory-heading"><div className="wrap sm-theory-inner">
   <div className="sm-theory-side"><h2 id="sm-theory-heading" className="sm-theory-copy">The Sunflower Theory</h2>
    <div className="sm-tabs" role="group" aria-label="Day or night" onKeyDown={onKey}>{moments.map((m,i)=><button key={m.id} ref={el=>{buttons.current[i]=el}} aria-pressed={index===i} onClick={()=>{setTouched(true);void change(i)}}>{m.tab}</button>)}</div>
-   <p className="sm-line" aria-live="polite">{night&&nightNow?nightLine:moment.line}</p>
+   <p className="sm-line" aria-live={touched?'polite':'off'}>{night&&nightNow?nightLine:moment.line}</p>
    <div className={night?'sm-close is-on':'sm-close'} aria-hidden={!night}><p className="sm-never">That’s why you never give just one.</p><button className="button primary sm-cta" onClick={onAdd}>Bring them home · {price}</button><p className="sm-footnote">A theory, not botany.</p></div>
   </div>
   <figure className="sm-stage" aria-busy={status==='loading'}>
