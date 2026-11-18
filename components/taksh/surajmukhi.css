@@ -19,7 +19,7 @@
 .sm-close.is-on{visibility:visible;opacity:1;transition:opacity .5s ease .2s,visibility 0s}
 .sm-never{font-size:18px;line-height:1.5;color:var(--saffron);font-weight:600}
 .sm-cta{margin-top:16px}
-.sm-footnote{grid-area:note;margin-top:24px;font-size:13px;line-height:1.5;opacity:.7}
+.sm-footnote{margin-top:20px;font-size:13px;line-height:1.5;opacity:.7}
 
 /* 2. For the one who keeps you warm */
 .sm-warm{background:var(--afternoon)}
@@ -32,11 +32,11 @@
 @media(max-width:1200px){.sm-theory-inner{column-gap:40px;grid-template-columns:minmax(0,320px) minmax(0,1fr)}}
 @media(max-width:960px){
  .sm-theory{padding:48px 0 56px}
- .sm-theory-inner{grid-template-columns:1fr;grid-template-areas:"copy" "stage" "tabs" "line" "close" "note"}.sm-theory-side{display:contents}
- .sm-stage{margin-top:28px}.sm-tabs{margin-top:20px;gap:6px}
+ .sm-theory-inner{grid-template-columns:1fr;grid-template-areas:"copy" "stage" "tabs" "line" "close"}.sm-theory-side{display:contents}
+ .sm-page .sm-stage{margin-top:24px}.sm-tabs{margin-top:20px;gap:6px}
  .sm-buy-column{display:contents}.sm-preview-note{order:8}
  .sm-line{font-size:22px;margin-top:18px;max-width:none;min-height:calc(3 * 1.3em)}
- .sm-close{margin-top:8px}
+ .sm-close{margin-top:8px}.sm-close:not(.is-on){display:none}
  .sm-warm-banner img{min-height:0;aspect-ratio:1/1;object-position:82% 50%}
  .sm-warm-copy{position:static;transform:none;width:auto;padding:32px 20px 40px}
  .sm-warm-copy h2{font-size:34px}
