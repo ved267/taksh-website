@@ -263,6 +263,26 @@
       "imageWidth": 1600,
       "imageHeight": 1600,
       "description": "Brick by brick, on its brown plinth with the plaque. A gift for Papa, Dadaji or anyone who still remembers that night."
+    },
+    {
+      "slug": "surajmukhi",
+      "name": "Surajmukhi",
+      "subtitle": "Two sunflowers that turn to each other.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 400,
+      "approximate": true,
+      "price": 1999,
+      "setNumber": "SURAJMUKHI",
+      "age": 12,
+      "buildTime": "About 1 hour per flower",
+      "dimensions": "Each flower about 38 cm tall",
+      "weight": "To be confirmed",
+      "image": "/surajmukhi/gallery-01-hero.webp",
+      "imageAlt": "Two brick sunflowers with crossed stems, their heads turned towards each other.",
+      "imageWidth": 1600,
+      "imageHeight": 1600,
+      "description": "Build one each, side by side. Then turn them to face each other."
     }
   ]
 }
