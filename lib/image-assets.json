@@ -5,10 +5,10 @@
     "fullWidth": 1672,
     "full": "/media/chandrayaan-ad-moon-banner.86a00e55618f.webp",
     "thumb": "/media/chandrayaan-ad-moon-banner-160.8a2fb15b39db.webp",
-    "card": "/media/chandrayaan-ad-moon-banner-320.13b88e0ce58f.webp",
-    "small": "/media/chandrayaan-ad-moon-banner-600.a1b53120dab1.avif",
-    "medium": "/media/chandrayaan-ad-moon-banner-900.78d4b3793191.avif",
-    "large": "/media/chandrayaan-ad-moon-banner-1200.eb551c5d4b12.avif"
+    "card": "/media/chandrayaan-ad-moon-banner-320.81a0806fcde7.webp",
+    "small": "/media/chandrayaan-ad-moon-banner-600.18af81663f65.avif",
+    "medium": "/media/chandrayaan-ad-moon-banner-900.bfe2f09cae1e.avif",
+    "large": "/media/chandrayaan-ad-moon-banner-1200.8d0f4797226b.avif"
   },
   "/chandrayaan/ad-moon-portrait.webp": {
     "width": 1122,
@@ -17,31 +17,31 @@
     "full": "/media/chandrayaan-ad-moon-portrait.e3f0356b663d.webp",
     "thumb": "/media/chandrayaan-ad-moon-portrait-160.bd3bbbbf886d.webp",
     "card": "/media/chandrayaan-ad-moon-portrait-320.5fa98bafdd66.webp",
-    "small": "/media/chandrayaan-ad-moon-portrait-600.c942bc498c35.avif",
-    "medium": "/media/chandrayaan-ad-moon-portrait-900.4442d1563246.avif",
-    "large": "/media/chandrayaan-ad-moon-portrait-1200.2d34b8d30092.avif"
+    "small": "/media/chandrayaan-ad-moon-portrait-600.c7cd20d3ff6e.avif",
+    "medium": "/media/chandrayaan-ad-moon-portrait-900.8de9acb16d7e.avif",
+    "large": "/media/chandrayaan-ad-moon-portrait-1200.f31389a12ebb.avif"
   },
   "/chandrayaan/gallery-01-hero.webp": {
     "width": 1800,
     "height": 1800,
     "fullWidth": 1800,
     "full": "/media/chandrayaan-gallery-01-hero.5087aac7b101.webp",
-    "thumb": "/media/chandrayaan-gallery-01-hero-160.3e6a05efad83.webp",
+    "thumb": "/media/chandrayaan-gallery-01-hero-160.2238e4dffa96.webp",
     "card": "/media/chandrayaan-gallery-01-hero-320.02381214d11e.webp",
-    "small": "/media/chandrayaan-gallery-01-hero-600.56049948aca2.avif",
-    "medium": "/media/chandrayaan-gallery-01-hero-900.e325af37ddbe.avif",
-    "large": "/media/chandrayaan-gallery-01-hero-1200.5163a628989f.avif"
+    "small": "/media/chandrayaan-gallery-01-hero-600.e90ba5c743a3.avif",
+    "medium": "/media/chandrayaan-gallery-01-hero-900.74fbb06ceca0.avif",
+    "large": "/media/chandrayaan-gallery-01-hero-1200.8dfed57dada3.avif"
   },
   "/chandrayaan/gallery-02-rover-closeup.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/chandrayaan-gallery-02-rover-closeup.421a57734007.webp",
-    "thumb": "/media/chandrayaan-gallery-02-rover-closeup-160.8552194bb7d1.webp",
+    "thumb": "/media/chandrayaan-gallery-02-rover-closeup-160.94788ac60333.webp",
     "card": "/media/chandrayaan-gallery-02-rover-closeup-320.0333fa7de797.webp",
-    "small": "/media/chandrayaan-gallery-02-rover-closeup-600.ca57867edfae.avif",
-    "medium": "/media/chandrayaan-gallery-02-rover-closeup-900.642854c97585.avif",
-    "large": "/media/chandrayaan-gallery-02-rover-closeup-1200.f62dbfe4f5d4.avif"
+    "small": "/media/chandrayaan-gallery-02-rover-closeup-600.fb665a7a9501.avif",
+    "medium": "/media/chandrayaan-gallery-02-rover-closeup-900.5955bf13bc15.avif",
+    "large": "/media/chandrayaan-gallery-02-rover-closeup-1200.733a80e1631a.avif"
   },
   "/chandrayaan/gallery-03-top-deck-closeup.webp": {
     "width": 1254,
@@ -50,20 +50,20 @@
     "full": "/media/chandrayaan-gallery-03-top-deck-closeup.454c7b6e94f0.webp",
     "thumb": "/media/chandrayaan-gallery-03-top-deck-closeup-160.46913f8bad4d.webp",
     "card": "/media/chandrayaan-gallery-03-top-deck-closeup-320.f5f40a651eae.webp",
-    "small": "/media/chandrayaan-gallery-03-top-deck-closeup-600.0fe99ef1438d.avif",
-    "medium": "/media/chandrayaan-gallery-03-top-deck-closeup-900.63a8ebf3ef57.avif",
-    "large": "/media/chandrayaan-gallery-03-top-deck-closeup-1200.65e560b8e536.avif"
+    "small": "/media/chandrayaan-gallery-03-top-deck-closeup-600.f114f1b1ae9b.avif",
+    "medium": "/media/chandrayaan-gallery-03-top-deck-closeup-900.c01c6e213cc1.avif",
+    "large": "/media/chandrayaan-gallery-03-top-deck-closeup-1200.e8021ca789fd.avif"
   },
   "/chandrayaan/gallery-04-door-closeup.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/chandrayaan-gallery-04-door-closeup.9d7418ea923e.webp",
-    "thumb": "/media/chandrayaan-gallery-04-door-closeup-160.fe0c93c0665d.webp",
+    "thumb": "/media/chandrayaan-gallery-04-door-closeup-160.59e97f1d1079.webp",
     "card": "/media/chandrayaan-gallery-04-door-closeup-320.ca1aec9a92a6.webp",
-    "small": "/media/chandrayaan-gallery-04-door-closeup-600.588fb346a974.avif",
-    "medium": "/media/chandrayaan-gallery-04-door-closeup-900.a181d75deadb.avif",
-    "large": "/media/chandrayaan-gallery-04-door-closeup-1200.6c69dfa7029c.avif"
+    "small": "/media/chandrayaan-gallery-04-door-closeup-600.1a7b31e46617.avif",
+    "medium": "/media/chandrayaan-gallery-04-door-closeup-900.84ed7428c04a.avif",
+    "large": "/media/chandrayaan-gallery-04-door-closeup-1200.f05b7dc115f0.avif"
   },
   "/chandrayaan/gallery-05-leg-heat-probe.webp": {
     "width": 1254,
@@ -72,9 +72,9 @@
     "full": "/media/chandrayaan-gallery-05-leg-heat-probe.c42dbd099753.webp",
     "thumb": "/media/chandrayaan-gallery-05-leg-heat-probe-160.fb77974e6f7b.webp",
     "card": "/media/chandrayaan-gallery-05-leg-heat-probe-320.f0c522f5d803.webp",
-    "small": "/media/chandrayaan-gallery-05-leg-heat-probe-600.3e08fd8df0f6.avif",
-    "medium": "/media/chandrayaan-gallery-05-leg-heat-probe-900.5a8ffc3bc925.avif",
-    "large": "/media/chandrayaan-gallery-05-leg-heat-probe-1200.562f950d9360.avif"
+    "small": "/media/chandrayaan-gallery-05-leg-heat-probe-600.6d0bbe491b01.avif",
+    "medium": "/media/chandrayaan-gallery-05-leg-heat-probe-900.3c807bafa55a.avif",
+    "large": "/media/chandrayaan-gallery-05-leg-heat-probe-1200.2d0cd2808527.avif"
   },
   "/chandrayaan/gallery-06-leg-moonquake-sensor.webp": {
     "width": 1254,
@@ -83,20 +83,20 @@
     "full": "/media/chandrayaan-gallery-06-leg-moonquake-sensor.9e69bcfda71c.webp",
     "thumb": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-160.92d1d58fba78.webp",
     "card": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-320.2cb0f67f80c3.webp",
-    "small": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-600.95778b0b83b3.avif",
-    "medium": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-900.d3c3c3ba5efa.avif",
-    "large": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-1200.0b0fce4136f5.avif"
+    "small": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-600.46e7a8b6cb7a.avif",
+    "medium": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-900.c0b5f3c0f788.avif",
+    "large": "/media/chandrayaan-gallery-06-leg-moonquake-sensor-1200.eeeefe902923.avif"
   },
   "/chandrayaan/gallery-07-inside-front.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/chandrayaan-gallery-07-inside-front.16545366bb56.webp",
-    "thumb": "/media/chandrayaan-gallery-07-inside-front-160.693c72aac526.webp",
+    "thumb": "/media/chandrayaan-gallery-07-inside-front-160.5918d14f7f3d.webp",
     "card": "/media/chandrayaan-gallery-07-inside-front-320.f863cb5ff0b5.webp",
-    "small": "/media/chandrayaan-gallery-07-inside-front-600.19b8e18eab92.avif",
-    "medium": "/media/chandrayaan-gallery-07-inside-front-900.50c349563196.avif",
-    "large": "/media/chandrayaan-gallery-07-inside-front-1200.36b240a13bb9.avif"
+    "small": "/media/chandrayaan-gallery-07-inside-front-600.c507e758ef4a.avif",
+    "medium": "/media/chandrayaan-gallery-07-inside-front-900.5c7e3c7972f7.avif",
+    "large": "/media/chandrayaan-gallery-07-inside-front-1200.5fb07cba2380.avif"
   },
   "/chandrayaan/gallery-08-inside-top.webp": {
     "width": 1254,
@@ -105,86 +105,86 @@
     "full": "/media/chandrayaan-gallery-08-inside-top.b0c3d6dab569.webp",
     "thumb": "/media/chandrayaan-gallery-08-inside-top-160.ed6e7c424b01.webp",
     "card": "/media/chandrayaan-gallery-08-inside-top-320.59950936af1e.webp",
-    "small": "/media/chandrayaan-gallery-08-inside-top-600.62e6c031550a.avif",
-    "medium": "/media/chandrayaan-gallery-08-inside-top-900.a9339c61e8a2.avif",
-    "large": "/media/chandrayaan-gallery-08-inside-top-1200.70b021c6fc79.avif"
+    "small": "/media/chandrayaan-gallery-08-inside-top-600.8579a260e084.webp",
+    "medium": "/media/chandrayaan-gallery-08-inside-top-900.f631dcaa6f48.avif",
+    "large": "/media/chandrayaan-gallery-08-inside-top-1200.908593975767.avif"
   },
   "/chandrayaan/gallery-09-lander-clean.webp": {
     "width": 1800,
     "height": 1800,
     "fullWidth": 1800,
     "full": "/media/chandrayaan-gallery-09-lander-clean.5cee1368a630.webp",
-    "thumb": "/media/chandrayaan-gallery-09-lander-clean-160.dc7241618f1d.webp",
+    "thumb": "/media/chandrayaan-gallery-09-lander-clean-160.c740567e51ec.webp",
     "card": "/media/chandrayaan-gallery-09-lander-clean-320.3bbc82348784.webp",
-    "small": "/media/chandrayaan-gallery-09-lander-clean-600.1db430fcf8b6.avif",
-    "medium": "/media/chandrayaan-gallery-09-lander-clean-900.1c949e44a387.avif",
-    "large": "/media/chandrayaan-gallery-09-lander-clean-1200.ad309dea8354.avif"
+    "small": "/media/chandrayaan-gallery-09-lander-clean-600.b0a51420df2f.avif",
+    "medium": "/media/chandrayaan-gallery-09-lander-clean-900.63e03b473cf7.avif",
+    "large": "/media/chandrayaan-gallery-09-lander-clean-1200.a3952d0b080a.avif"
   },
   "/chandrayaan/gallery-09-parts-lander.webp": {
     "width": 1800,
     "height": 1800,
     "fullWidth": 1800,
     "full": "/media/chandrayaan-gallery-09-parts-lander.0118d8cabc46.webp",
-    "thumb": "/media/chandrayaan-gallery-09-parts-lander-160.6c572d06b5dd.webp",
+    "thumb": "/media/chandrayaan-gallery-09-parts-lander-160.1c9742778a61.webp",
     "card": "/media/chandrayaan-gallery-09-parts-lander-320.c52e18b9c510.webp",
-    "small": "/media/chandrayaan-gallery-09-parts-lander-600.0e77c1aacf10.avif",
-    "medium": "/media/chandrayaan-gallery-09-parts-lander-900.90f378340c73.avif",
-    "large": "/media/chandrayaan-gallery-09-parts-lander-1200.d84f1041d296.avif"
+    "small": "/media/chandrayaan-gallery-09-parts-lander-600.580f48a0b60c.avif",
+    "medium": "/media/chandrayaan-gallery-09-parts-lander-900.e14009804599.avif",
+    "large": "/media/chandrayaan-gallery-09-parts-lander-1200.60695c733797.avif"
   },
   "/chandrayaan/gallery-10-parts-rover.webp": {
     "width": 1800,
     "height": 1800,
     "fullWidth": 1800,
     "full": "/media/chandrayaan-gallery-10-parts-rover.666c74e80720.webp",
-    "thumb": "/media/chandrayaan-gallery-10-parts-rover-160.7fb413ab4aab.webp",
+    "thumb": "/media/chandrayaan-gallery-10-parts-rover-160.30480422765b.webp",
     "card": "/media/chandrayaan-gallery-10-parts-rover-320.019c90dd19b6.webp",
-    "small": "/media/chandrayaan-gallery-10-parts-rover-600.ac11179fa596.avif",
-    "medium": "/media/chandrayaan-gallery-10-parts-rover-900.9cf80144e92b.avif",
-    "large": "/media/chandrayaan-gallery-10-parts-rover-1200.c235fead3449.avif"
+    "small": "/media/chandrayaan-gallery-10-parts-rover-600.2a2e95234070.avif",
+    "medium": "/media/chandrayaan-gallery-10-parts-rover-900.28f1231f9b0d.avif",
+    "large": "/media/chandrayaan-gallery-10-parts-rover-1200.91cf5ac6cb0f.avif"
   },
   "/chandrayaan/gallery-11-dimensions.webp": {
     "width": 1800,
     "height": 1800,
     "fullWidth": 1800,
     "full": "/media/chandrayaan-gallery-11-dimensions.3fc7c6251814.webp",
-    "thumb": "/media/chandrayaan-gallery-11-dimensions-160.95154cc1ae37.webp",
-    "card": "/media/chandrayaan-gallery-11-dimensions-320.65326cf3c77a.webp",
-    "small": "/media/chandrayaan-gallery-11-dimensions-600.ca6f19880cec.avif",
-    "medium": "/media/chandrayaan-gallery-11-dimensions-900.ca0a5b6fb0dc.avif",
-    "large": "/media/chandrayaan-gallery-11-dimensions-1200.40119b57d71f.avif"
+    "thumb": "/media/chandrayaan-gallery-11-dimensions-160.fc0cfcb9c7b9.webp",
+    "card": "/media/chandrayaan-gallery-11-dimensions-320.a101f960d0a4.webp",
+    "small": "/media/chandrayaan-gallery-11-dimensions-600.288eb72344c7.avif",
+    "medium": "/media/chandrayaan-gallery-11-dimensions-900.3694810e1d62.avif",
+    "large": "/media/chandrayaan-gallery-11-dimensions-1200.7e6a293dbdf5.avif"
   },
   "/chandrayaan/gallery-12-room.webp": {
     "width": 1536,
     "height": 1024,
     "fullWidth": 1536,
     "full": "/media/chandrayaan-gallery-12-room.395c779831ba.webp",
-    "thumb": "/media/chandrayaan-gallery-12-room-160.4be10590cb32.webp",
+    "thumb": "/media/chandrayaan-gallery-12-room-160.e9357fc3e359.webp",
     "card": "/media/chandrayaan-gallery-12-room-320.7e638b46b983.webp",
-    "small": "/media/chandrayaan-gallery-12-room-600.a17087576de0.avif",
-    "medium": "/media/chandrayaan-gallery-12-room-900.39fd6eae1a4a.avif",
-    "large": "/media/chandrayaan-gallery-12-room-1200.3e79ec29f7e3.avif"
+    "small": "/media/chandrayaan-gallery-12-room-600.5c68922c9ad4.avif",
+    "medium": "/media/chandrayaan-gallery-12-room-900.6440ddd6fb54.avif",
+    "large": "/media/chandrayaan-gallery-12-room-1200.a6fa01b2f3e3.avif"
   },
   "/chandrayaan/gallery-13-hand-for-scale.webp": {
     "width": 1536,
     "height": 1024,
     "fullWidth": 1536,
     "full": "/media/chandrayaan-gallery-13-hand-for-scale.a2179409a25f.webp",
-    "thumb": "/media/chandrayaan-gallery-13-hand-for-scale-160.876dd5c2ce27.webp",
+    "thumb": "/media/chandrayaan-gallery-13-hand-for-scale-160.fa5616c11d0c.webp",
     "card": "/media/chandrayaan-gallery-13-hand-for-scale-320.6204cef739eb.webp",
-    "small": "/media/chandrayaan-gallery-13-hand-for-scale-600.d58a908263f8.avif",
-    "medium": "/media/chandrayaan-gallery-13-hand-for-scale-900.dfa1e4623a4e.avif",
-    "large": "/media/chandrayaan-gallery-13-hand-for-scale-1200.bef84a2dd899.avif"
+    "small": "/media/chandrayaan-gallery-13-hand-for-scale-600.cfa662ff1613.avif",
+    "medium": "/media/chandrayaan-gallery-13-hand-for-scale-900.19dda0d9d608.avif",
+    "large": "/media/chandrayaan-gallery-13-hand-for-scale-1200.0ed956f6688b.avif"
   },
   "/ram-mandir/ad-room-banner.webp": {
     "width": 1672,
     "height": 941,
     "fullWidth": 1672,
     "full": "/media/ram-mandir-ad-room-banner.7b224477fefa.webp",
-    "thumb": "/media/ram-mandir-ad-room-banner-160.d63cde634d50.webp",
-    "card": "/media/ram-mandir-ad-room-banner-320.867744c4f083.webp",
-    "small": "/media/ram-mandir-ad-room-banner-600.0b6e1988a494.avif",
-    "medium": "/media/ram-mandir-ad-room-banner-900.875da52b390d.avif",
-    "large": "/media/ram-mandir-ad-room-banner-1200.049bb2636881.avif"
+    "thumb": "/media/ram-mandir-ad-room-banner-160.7982da1c2bb4.webp",
+    "card": "/media/ram-mandir-ad-room-banner-320.37b1567dfa3d.webp",
+    "small": "/media/ram-mandir-ad-room-banner-600.2c163c44fa73.avif",
+    "medium": "/media/ram-mandir-ad-room-banner-900.a226aec12f0d.avif",
+    "large": "/media/ram-mandir-ad-room-banner-1200.a8165543db48.avif"
   },
   "/ram-mandir/ad-shloka-dark-banner.webp": {
     "width": 1672,
@@ -192,32 +192,32 @@
     "fullWidth": 1672,
     "full": "/media/ram-mandir-ad-shloka-dark-banner.2e79ac97231b.webp",
     "thumb": "/media/ram-mandir-ad-shloka-dark-banner-160.663cf8a76020.webp",
-    "card": "/media/ram-mandir-ad-shloka-dark-banner-320.569e506af420.webp",
-    "small": "/media/ram-mandir-ad-shloka-dark-banner-600.fcae1975100c.avif",
-    "medium": "/media/ram-mandir-ad-shloka-dark-banner-900.6bb1631d7eb3.avif",
-    "large": "/media/ram-mandir-ad-shloka-dark-banner-1200.5e18354739f9.avif"
+    "card": "/media/ram-mandir-ad-shloka-dark-banner-320.3588c82f2bf6.webp",
+    "small": "/media/ram-mandir-ad-shloka-dark-banner-600.f95af5f38c94.avif",
+    "medium": "/media/ram-mandir-ad-shloka-dark-banner-900.0a990226e13d.avif",
+    "large": "/media/ram-mandir-ad-shloka-dark-banner-1200.53207152205e.avif"
   },
   "/ram-mandir/ad-sunrise-banner.webp": {
     "width": 1672,
     "height": 941,
     "fullWidth": 1672,
     "full": "/media/ram-mandir-ad-sunrise-banner.95b33849871a.webp",
-    "thumb": "/media/ram-mandir-ad-sunrise-banner-160.b24e0ed3c35f.webp",
-    "card": "/media/ram-mandir-ad-sunrise-banner-320.decfb9b8eb67.webp",
-    "small": "/media/ram-mandir-ad-sunrise-banner-600.b854a6a86a9b.avif",
-    "medium": "/media/ram-mandir-ad-sunrise-banner-900.7a44d7e39b88.avif",
-    "large": "/media/ram-mandir-ad-sunrise-banner-1200.920cf767b48f.avif"
+    "thumb": "/media/ram-mandir-ad-sunrise-banner-160.d0d83a18167c.webp",
+    "card": "/media/ram-mandir-ad-sunrise-banner-320.e676148b942c.webp",
+    "small": "/media/ram-mandir-ad-sunrise-banner-600.624cacb8a144.avif",
+    "medium": "/media/ram-mandir-ad-sunrise-banner-900.9672b1eef5a3.avif",
+    "large": "/media/ram-mandir-ad-sunrise-banner-1200.62e6c508b797.avif"
   },
   "/ram-mandir/gallery-01-hero-front.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/ram-mandir-gallery-01-hero-front.e8b70ffa1306.webp",
-    "thumb": "/media/ram-mandir-gallery-01-hero-front-160.8e7006153347.webp",
+    "thumb": "/media/ram-mandir-gallery-01-hero-front-160.0cfa0ebba32e.webp",
     "card": "/media/ram-mandir-gallery-01-hero-front-320.93ea92bfebf4.webp",
-    "small": "/media/ram-mandir-gallery-01-hero-front-600.ac98b34d662f.avif",
-    "medium": "/media/ram-mandir-gallery-01-hero-front-900.bc8f162ce348.avif",
-    "large": "/media/ram-mandir-gallery-01-hero-front-1200.3f731267d54b.avif"
+    "small": "/media/ram-mandir-gallery-01-hero-front-600.0078756fabde.avif",
+    "medium": "/media/ram-mandir-gallery-01-hero-front-900.4903c557851c.avif",
+    "large": "/media/ram-mandir-gallery-01-hero-front-1200.48b3c203b672.avif"
   },
   "/ram-mandir/gallery-02-angle.webp": {
     "width": 1254,
@@ -226,64 +226,64 @@
     "full": "/media/ram-mandir-gallery-02-angle.3d9f2f2fea97.webp",
     "thumb": "/media/ram-mandir-gallery-02-angle-160.9a333a612c6c.webp",
     "card": "/media/ram-mandir-gallery-02-angle-320.1c5585bad81e.webp",
-    "small": "/media/ram-mandir-gallery-02-angle-600.aac42041df20.avif",
-    "medium": "/media/ram-mandir-gallery-02-angle-900.39236fd90bb0.avif",
-    "large": "/media/ram-mandir-gallery-02-angle-1200.c99d38ff4e0e.avif"
+    "small": "/media/ram-mandir-gallery-02-angle-600.89650bbdf854.avif",
+    "medium": "/media/ram-mandir-gallery-02-angle-900.105392f8787f.avif",
+    "large": "/media/ram-mandir-gallery-02-angle-1200.b295c9868b33.avif"
   },
   "/ram-mandir/gallery-03-spire-flag-closeup.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/ram-mandir-gallery-03-spire-flag-closeup.8cfff38471b8.webp",
-    "thumb": "/media/ram-mandir-gallery-03-spire-flag-closeup-160.41d1ccce6610.webp",
+    "thumb": "/media/ram-mandir-gallery-03-spire-flag-closeup-160.79aae85e9a47.webp",
     "card": "/media/ram-mandir-gallery-03-spire-flag-closeup-320.d39527fd4232.webp",
     "small": "/media/ram-mandir-gallery-03-spire-flag-closeup-600.8d9c48b380c0.webp",
-    "medium": "/media/ram-mandir-gallery-03-spire-flag-closeup-900.7ce511608392.webp",
-    "large": "/media/ram-mandir-gallery-03-spire-flag-closeup-1200.e92327f52adc.avif"
+    "medium": "/media/ram-mandir-gallery-03-spire-flag-closeup-900.f5769a8fad66.webp",
+    "large": "/media/ram-mandir-gallery-03-spire-flag-closeup-1200.6f4fce585c5f.avif"
   },
   "/ram-mandir/gallery-04-roofs-surya-tilak-window.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window.9c127df3f5b9.webp",
-    "thumb": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-160.26c6768c52b5.webp",
+    "thumb": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-160.4665254189b6.webp",
     "card": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-320.6df047e23420.webp",
-    "small": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-600.11ab48998791.avif",
-    "medium": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-900.6f95b1e69084.avif",
-    "large": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-1200.bdf8dca119c5.avif"
+    "small": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-600.1f4d0a2541c8.avif",
+    "medium": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-900.0bd9051d4a28.avif",
+    "large": "/media/ram-mandir-gallery-04-roofs-surya-tilak-window-1200.cca344e65da5.avif"
   },
   "/ram-mandir/gallery-05-porch-stairs-plaque.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/ram-mandir-gallery-05-porch-stairs-plaque.1bbb3e1d22bd.webp",
-    "thumb": "/media/ram-mandir-gallery-05-porch-stairs-plaque-160.9c03087f6677.webp",
+    "thumb": "/media/ram-mandir-gallery-05-porch-stairs-plaque-160.b6d24d6b5c27.webp",
     "card": "/media/ram-mandir-gallery-05-porch-stairs-plaque-320.b3bdf5c3addd.webp",
     "small": "/media/ram-mandir-gallery-05-porch-stairs-plaque-600.973a4afb70eb.webp",
-    "medium": "/media/ram-mandir-gallery-05-porch-stairs-plaque-900.15f0544a7ab9.webp",
-    "large": "/media/ram-mandir-gallery-05-porch-stairs-plaque-1200.e8be5a7c2c15.avif"
+    "medium": "/media/ram-mandir-gallery-05-porch-stairs-plaque-900.6b43111c0ba4.webp",
+    "large": "/media/ram-mandir-gallery-05-porch-stairs-plaque-1200.b7ae65fb41ee.avif"
   },
   "/ram-mandir/gallery-06-wing-porch.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/ram-mandir-gallery-06-wing-porch.882ecd1ef258.webp",
-    "thumb": "/media/ram-mandir-gallery-06-wing-porch-160.62b0f0b2ad45.webp",
+    "thumb": "/media/ram-mandir-gallery-06-wing-porch-160.aee4359f8047.webp",
     "card": "/media/ram-mandir-gallery-06-wing-porch-320.9b6b63f60754.webp",
-    "small": "/media/ram-mandir-gallery-06-wing-porch-600.15c61ab8e39a.avif",
-    "medium": "/media/ram-mandir-gallery-06-wing-porch-900.21617f678d31.avif",
-    "large": "/media/ram-mandir-gallery-06-wing-porch-1200.c074c924e3c7.avif"
+    "small": "/media/ram-mandir-gallery-06-wing-porch-600.e4ff6da0a89c.avif",
+    "medium": "/media/ram-mandir-gallery-06-wing-porch-900.dcfcdcd34c74.avif",
+    "large": "/media/ram-mandir-gallery-06-wing-porch-1200.b65007aa706b.avif"
   },
   "/ram-mandir/gallery-07-platform-lawn.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/ram-mandir-gallery-07-platform-lawn.b8168ddda9e6.webp",
-    "thumb": "/media/ram-mandir-gallery-07-platform-lawn-160.2b27f1bff4a8.webp",
+    "thumb": "/media/ram-mandir-gallery-07-platform-lawn-160.833aefa083ae.webp",
     "card": "/media/ram-mandir-gallery-07-platform-lawn-320.6d14269cd8d0.webp",
-    "small": "/media/ram-mandir-gallery-07-platform-lawn-600.cb5eda9f2c0a.avif",
-    "medium": "/media/ram-mandir-gallery-07-platform-lawn-900.7f50e899de7b.avif",
-    "large": "/media/ram-mandir-gallery-07-platform-lawn-1200.040191a8dd59.avif"
+    "small": "/media/ram-mandir-gallery-07-platform-lawn-600.ce35d48bdf5e.avif",
+    "medium": "/media/ram-mandir-gallery-07-platform-lawn-900.6f59cf584639.avif",
+    "large": "/media/ram-mandir-gallery-07-platform-lawn-1200.9428b490bf8a.avif"
   },
   "/ram-mandir/gallery-08-parts-no-legend.webp": {
     "width": 1600,
@@ -291,21 +291,21 @@
     "fullWidth": 1600,
     "full": "/media/ram-mandir-gallery-08-parts-no-legend.f80ff1962262.webp",
     "thumb": "/media/ram-mandir-gallery-08-parts-no-legend-160.1930ec94ce0e.webp",
-    "card": "/media/ram-mandir-gallery-08-parts-no-legend-320.20b55769d6eb.webp",
-    "small": "/media/ram-mandir-gallery-08-parts-no-legend-600.b0ec37a357e5.avif",
-    "medium": "/media/ram-mandir-gallery-08-parts-no-legend-900.72b5d3194fe7.avif",
-    "large": "/media/ram-mandir-gallery-08-parts-no-legend-1200.0fb2556b2f40.avif"
+    "card": "/media/ram-mandir-gallery-08-parts-no-legend-320.3a5493f73576.webp",
+    "small": "/media/ram-mandir-gallery-08-parts-no-legend-600.f6025c1bd33b.avif",
+    "medium": "/media/ram-mandir-gallery-08-parts-no-legend-900.f52d3784be8f.avif",
+    "large": "/media/ram-mandir-gallery-08-parts-no-legend-1200.dba77576c46b.avif"
   },
   "/ram-mandir/gallery-08-parts.webp": {
     "width": 2508,
     "height": 2949,
     "fullWidth": 2508,
     "full": "/media/ram-mandir-gallery-08-parts.030c09e59b53.webp",
-    "thumb": "/media/ram-mandir-gallery-08-parts-160.e735de12abdc.webp",
+    "thumb": "/media/ram-mandir-gallery-08-parts-160.e1744a5f88cc.webp",
     "card": "/media/ram-mandir-gallery-08-parts-320.b128e3d0c4ee.webp",
-    "small": "/media/ram-mandir-gallery-08-parts-600.b29400a942b6.avif",
-    "medium": "/media/ram-mandir-gallery-08-parts-900.f0f7f15bcd54.avif",
-    "large": "/media/ram-mandir-gallery-08-parts-1200.b9b9d70d8aa2.avif"
+    "small": "/media/ram-mandir-gallery-08-parts-600.bc9cb4456b27.avif",
+    "medium": "/media/ram-mandir-gallery-08-parts-900.de5123ba101d.avif",
+    "large": "/media/ram-mandir-gallery-08-parts-1200.d8ff7577bcc1.avif"
   },
   "/ram-mandir/gallery-09-dimensions.webp": {
     "width": 2508,
@@ -314,20 +314,20 @@
     "full": "/media/ram-mandir-gallery-09-dimensions.4b5b083b1c78.webp",
     "thumb": "/media/ram-mandir-gallery-09-dimensions-160.d04b9bd6b7a7.webp",
     "card": "/media/ram-mandir-gallery-09-dimensions-320.840f66973c39.webp",
-    "small": "/media/ram-mandir-gallery-09-dimensions-600.d59188da2653.avif",
-    "medium": "/media/ram-mandir-gallery-09-dimensions-900.aa5efd6419d6.avif",
-    "large": "/media/ram-mandir-gallery-09-dimensions-1200.a1726caf073c.avif"
+    "small": "/media/ram-mandir-gallery-09-dimensions-600.c7f4adfddbb8.avif",
+    "medium": "/media/ram-mandir-gallery-09-dimensions-900.94d68a0ce7e3.avif",
+    "large": "/media/ram-mandir-gallery-09-dimensions-1200.d97919f61063.avif"
   },
   "/ram-mandir/gallery-10-room.webp": {
     "width": 1536,
     "height": 1024,
     "fullWidth": 1536,
     "full": "/media/ram-mandir-gallery-10-room.0eb0a6430210.webp",
-    "thumb": "/media/ram-mandir-gallery-10-room-160.0aa89be6ff77.webp",
+    "thumb": "/media/ram-mandir-gallery-10-room-160.bd4e55b9e995.webp",
     "card": "/media/ram-mandir-gallery-10-room-320.e236f299a7c3.webp",
-    "small": "/media/ram-mandir-gallery-10-room-600.6bbe580aa3de.avif",
-    "medium": "/media/ram-mandir-gallery-10-room-900.1712642f00cb.avif",
-    "large": "/media/ram-mandir-gallery-10-room-1200.c3b007c8dace.avif"
+    "small": "/media/ram-mandir-gallery-10-room-600.b606041029f1.avif",
+    "medium": "/media/ram-mandir-gallery-10-room-900.4b424d16157b.avif",
+    "large": "/media/ram-mandir-gallery-10-room-1200.9f04a9daba43.avif"
   },
   "/ram-mandir/gallery-11-spire-lifted.webp": {
     "width": 1254,
@@ -336,9 +336,9 @@
     "full": "/media/ram-mandir-gallery-11-spire-lifted.f5f8fce59e4e.webp",
     "thumb": "/media/ram-mandir-gallery-11-spire-lifted-160.928d06494daf.webp",
     "card": "/media/ram-mandir-gallery-11-spire-lifted-320.b2a7db7a6257.webp",
-    "small": "/media/ram-mandir-gallery-11-spire-lifted-600.acbd62d90b61.avif",
-    "medium": "/media/ram-mandir-gallery-11-spire-lifted-900.d5dbea389a31.avif",
-    "large": "/media/ram-mandir-gallery-11-spire-lifted-1200.d96e0dfecdfc.avif"
+    "small": "/media/ram-mandir-gallery-11-spire-lifted-600.715e86668e20.avif",
+    "medium": "/media/ram-mandir-gallery-11-spire-lifted-900.5de33d01189c.avif",
+    "large": "/media/ram-mandir-gallery-11-spire-lifted-1200.3eddd5f312f0.avif"
   },
   "/ram-mandir/story-01-stone-lock.webp": {
     "width": 1254,
@@ -348,19 +348,19 @@
     "thumb": "/media/ram-mandir-story-01-stone-lock-160.e70265117333.webp",
     "card": "/media/ram-mandir-story-01-stone-lock-320.d41ec72fdcd7.webp",
     "small": "/media/ram-mandir-story-01-stone-lock-600.afd7b4812d48.webp",
-    "medium": "/media/ram-mandir-story-01-stone-lock-900.dd4f70440b04.webp",
-    "large": "/media/ram-mandir-story-01-stone-lock-1200.9578a2de888e.webp"
+    "medium": "/media/ram-mandir-story-01-stone-lock-900.25694a9e29fa.webp",
+    "large": "/media/ram-mandir-story-01-stone-lock-1200.b7ef82139ad7.webp"
   },
   "/ram-mandir/story-02-copper-tie.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/ram-mandir-story-02-copper-tie.9a5baeac2d56.webp",
-    "thumb": "/media/ram-mandir-story-02-copper-tie-160.d900395d7672.webp",
+    "thumb": "/media/ram-mandir-story-02-copper-tie-160.b938708549ca.webp",
     "card": "/media/ram-mandir-story-02-copper-tie-320.cc9f8a5b53cb.webp",
     "small": "/media/ram-mandir-story-02-copper-tie-600.c8b34aec1690.webp",
-    "medium": "/media/ram-mandir-story-02-copper-tie-900.76052dfc4d04.webp",
-    "large": "/media/ram-mandir-story-02-copper-tie-1200.07b019c50ef0.webp"
+    "medium": "/media/ram-mandir-story-02-copper-tie-900.c756e79912d0.webp",
+    "large": "/media/ram-mandir-story-02-copper-tie-1200.bebd8b4339a3.webp"
   },
   "/ram-mandir/story-03-brick-lock.webp": {
     "width": 1254,
@@ -371,40 +371,40 @@
     "card": "/media/ram-mandir-story-03-brick-lock-320.dce2bcf47067.webp",
     "small": "/media/ram-mandir-story-03-brick-lock-600.83e75acacd7d.webp",
     "medium": "/media/ram-mandir-story-03-brick-lock-900.60aa272c15d2.webp",
-    "large": "/media/ram-mandir-story-03-brick-lock-1200.a1cc98f711a0.webp"
+    "large": "/media/ram-mandir-story-03-brick-lock-1200.8db18df3e753.webp"
   },
   "/yellow-taxi/ad-night-banner.webp": {
     "width": 1672,
     "height": 941,
     "fullWidth": 1672,
     "full": "/media/yellow-taxi-ad-night-banner.3042809dcad1.webp",
-    "thumb": "/media/yellow-taxi-ad-night-banner-160.c82ba99fde6d.webp",
-    "card": "/media/yellow-taxi-ad-night-banner-320.858cf14946de.webp",
-    "small": "/media/yellow-taxi-ad-night-banner-600.f9a9f549c04f.avif",
-    "medium": "/media/yellow-taxi-ad-night-banner-900.4eafda54c3d9.avif",
-    "large": "/media/yellow-taxi-ad-night-banner-1200.1504ff505434.avif"
+    "thumb": "/media/yellow-taxi-ad-night-banner-160.a74d8841f3ee.webp",
+    "card": "/media/yellow-taxi-ad-night-banner-320.373ddc02d47a.webp",
+    "small": "/media/yellow-taxi-ad-night-banner-600.09f02a6c4124.avif",
+    "medium": "/media/yellow-taxi-ad-night-banner-900.227c31124f13.avif",
+    "large": "/media/yellow-taxi-ad-night-banner-1200.af9540f7bfb0.avif"
   },
   "/yellow-taxi/ad-victoria-banner.webp": {
     "width": 1672,
     "height": 941,
     "fullWidth": 1672,
     "full": "/media/yellow-taxi-ad-victoria-banner.2d0acb09a3d2.webp",
-    "thumb": "/media/yellow-taxi-ad-victoria-banner-160.fd3b99157e42.webp",
-    "card": "/media/yellow-taxi-ad-victoria-banner-320.4758290e2acb.webp",
-    "small": "/media/yellow-taxi-ad-victoria-banner-600.e6759a299577.avif",
-    "medium": "/media/yellow-taxi-ad-victoria-banner-900.024d7202c2ad.avif",
-    "large": "/media/yellow-taxi-ad-victoria-banner-1200.916f213be7ac.avif"
+    "thumb": "/media/yellow-taxi-ad-victoria-banner-160.cef6e0715358.webp",
+    "card": "/media/yellow-taxi-ad-victoria-banner-320.679eb8faea53.webp",
+    "small": "/media/yellow-taxi-ad-victoria-banner-600.e8ccaabbcee1.avif",
+    "medium": "/media/yellow-taxi-ad-victoria-banner-900.753114e76783.avif",
+    "large": "/media/yellow-taxi-ad-victoria-banner-1200.16e9c834ca0e.avif"
   },
   "/yellow-taxi/gallery-01-hero.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/yellow-taxi-gallery-01-hero.f2fc987d4783.webp",
-    "thumb": "/media/yellow-taxi-gallery-01-hero-160.1999ea6f7452.webp",
+    "thumb": "/media/yellow-taxi-gallery-01-hero-160.270007fe3dcb.webp",
     "card": "/media/yellow-taxi-gallery-01-hero-320.f40c6f469451.webp",
-    "small": "/media/yellow-taxi-gallery-01-hero-600.abe4b9676394.avif",
-    "medium": "/media/yellow-taxi-gallery-01-hero-900.b3265e3151d1.avif",
-    "large": "/media/yellow-taxi-gallery-01-hero-1200.4519fc8e0a70.avif"
+    "small": "/media/yellow-taxi-gallery-01-hero-600.d4318e5afdf5.avif",
+    "medium": "/media/yellow-taxi-gallery-01-hero-900.dcf4a8c8863e.avif",
+    "large": "/media/yellow-taxi-gallery-01-hero-1200.96cabad7545f.avif"
   },
   "/yellow-taxi/gallery-02-front.webp": {
     "width": 1254,
@@ -414,19 +414,19 @@
     "thumb": "/media/yellow-taxi-gallery-02-front-160.c3637ac4110e.webp",
     "card": "/media/yellow-taxi-gallery-02-front-320.9bcc5fdc3a61.webp",
     "small": "/media/yellow-taxi-gallery-02-front-600.5fa9d84ea210.webp",
-    "medium": "/media/yellow-taxi-gallery-02-front-900.0816fd1de9ab.avif",
-    "large": "/media/yellow-taxi-gallery-02-front-1200.2e99fcbec03c.avif"
+    "medium": "/media/yellow-taxi-gallery-02-front-900.778421730241.avif",
+    "large": "/media/yellow-taxi-gallery-02-front-1200.8b6a989bd589.avif"
   },
   "/yellow-taxi/gallery-03-inside.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/yellow-taxi-gallery-03-inside.baef60585ccf.webp",
-    "thumb": "/media/yellow-taxi-gallery-03-inside-160.f3b77f13eb30.webp",
+    "thumb": "/media/yellow-taxi-gallery-03-inside-160.1145ca7b09da.webp",
     "card": "/media/yellow-taxi-gallery-03-inside-320.0254912bb144.webp",
-    "small": "/media/yellow-taxi-gallery-03-inside-600.4cb33a5601e5.avif",
-    "medium": "/media/yellow-taxi-gallery-03-inside-900.b5b57cdff45b.avif",
-    "large": "/media/yellow-taxi-gallery-03-inside-1200.296a424fb182.avif"
+    "small": "/media/yellow-taxi-gallery-03-inside-600.af7125898675.avif",
+    "medium": "/media/yellow-taxi-gallery-03-inside-900.6ff31ec256db.avif",
+    "large": "/media/yellow-taxi-gallery-03-inside-1200.a8d1ec6b12cf.avif"
   },
   "/yellow-taxi/gallery-04-roof-luggage.webp": {
     "width": 1254,
@@ -435,9 +435,9 @@
     "full": "/media/yellow-taxi-gallery-04-roof-luggage.0648392e35e7.webp",
     "thumb": "/media/yellow-taxi-gallery-04-roof-luggage-160.e9b78c111092.webp",
     "card": "/media/yellow-taxi-gallery-04-roof-luggage-320.8dbe2164eda6.webp",
-    "small": "/media/yellow-taxi-gallery-04-roof-luggage-600.184cbf7b7869.avif",
-    "medium": "/media/yellow-taxi-gallery-04-roof-luggage-900.5bc26de39749.avif",
-    "large": "/media/yellow-taxi-gallery-04-roof-luggage-1200.e5bec348ca75.avif"
+    "small": "/media/yellow-taxi-gallery-04-roof-luggage-600.d154627dd5a7.avif",
+    "medium": "/media/yellow-taxi-gallery-04-roof-luggage-900.a6705b048ea1.avif",
+    "large": "/media/yellow-taxi-gallery-04-roof-luggage-1200.193ea297e81c.avif"
   },
   "/yellow-taxi/gallery-05-dashboard.webp": {
     "width": 1254,
@@ -446,20 +446,20 @@
     "full": "/media/yellow-taxi-gallery-05-dashboard.becf7b302464.webp",
     "thumb": "/media/yellow-taxi-gallery-05-dashboard-160.86b902f9f2e0.webp",
     "card": "/media/yellow-taxi-gallery-05-dashboard-320.33039255bdb3.webp",
-    "small": "/media/yellow-taxi-gallery-05-dashboard-600.8a1cc5ea3c41.avif",
-    "medium": "/media/yellow-taxi-gallery-05-dashboard-900.290137c8b73e.avif",
-    "large": "/media/yellow-taxi-gallery-05-dashboard-1200.f2077d49cc01.avif"
+    "small": "/media/yellow-taxi-gallery-05-dashboard-600.009d181aefbc.avif",
+    "medium": "/media/yellow-taxi-gallery-05-dashboard-900.f9bf97026f8c.avif",
+    "large": "/media/yellow-taxi-gallery-05-dashboard-1200.76369f8c64b9.avif"
   },
   "/yellow-taxi/gallery-06-in-a-real-taxi.webp": {
     "width": 1536,
     "height": 1024,
     "fullWidth": 1536,
     "full": "/media/yellow-taxi-gallery-06-in-a-real-taxi.e18d0994c434.webp",
-    "thumb": "/media/yellow-taxi-gallery-06-in-a-real-taxi-160.8c7ad7ebdb60.webp",
+    "thumb": "/media/yellow-taxi-gallery-06-in-a-real-taxi-160.27dc0e55d8d2.webp",
     "card": "/media/yellow-taxi-gallery-06-in-a-real-taxi-320.6f84385c108d.webp",
-    "small": "/media/yellow-taxi-gallery-06-in-a-real-taxi-600.2697c28dc649.avif",
-    "medium": "/media/yellow-taxi-gallery-06-in-a-real-taxi-900.ed9c68a42e36.avif",
-    "large": "/media/yellow-taxi-gallery-06-in-a-real-taxi-1200.9d18f669eb9c.avif"
+    "small": "/media/yellow-taxi-gallery-06-in-a-real-taxi-600.48f29aff0be7.avif",
+    "medium": "/media/yellow-taxi-gallery-06-in-a-real-taxi-900.85d4f0ea8efd.avif",
+    "large": "/media/yellow-taxi-gallery-06-in-a-real-taxi-1200.90c4d04d9f9d.avif"
   },
   "/yellow-taxi/gallery-07-dimensions.webp": {
     "width": 2508,
@@ -468,31 +468,31 @@
     "full": "/media/yellow-taxi-gallery-07-dimensions.13697c66797c.webp",
     "thumb": "/media/yellow-taxi-gallery-07-dimensions-160.5573dc24c945.webp",
     "card": "/media/yellow-taxi-gallery-07-dimensions-320.978e07f28f88.webp",
-    "small": "/media/yellow-taxi-gallery-07-dimensions-600.86f761ebfc6a.avif",
-    "medium": "/media/yellow-taxi-gallery-07-dimensions-900.019967aa6296.avif",
-    "large": "/media/yellow-taxi-gallery-07-dimensions-1200.37c69d7b9ebb.avif"
+    "small": "/media/yellow-taxi-gallery-07-dimensions-600.286738b261d4.avif",
+    "medium": "/media/yellow-taxi-gallery-07-dimensions-900.d076979928db.avif",
+    "large": "/media/yellow-taxi-gallery-07-dimensions-1200.c444ab18e34e.avif"
   },
   "/nonsense/ad-store-banner.webp": {
     "width": 1672,
     "height": 941,
     "fullWidth": 1672,
     "full": "/media/nonsense-ad-store-banner.49129dc69d97.webp",
-    "thumb": "/media/nonsense-ad-store-banner-160.9e50b0f8743a.webp",
-    "card": "/media/nonsense-ad-store-banner-320.4cf21277de63.webp",
-    "small": "/media/nonsense-ad-store-banner-600.2f99c7b32b50.avif",
-    "medium": "/media/nonsense-ad-store-banner-900.b292397d7a1b.avif",
-    "large": "/media/nonsense-ad-store-banner-1200.5819e4dc2437.avif"
+    "thumb": "/media/nonsense-ad-store-banner-160.8f467e03c750.webp",
+    "card": "/media/nonsense-ad-store-banner-320.4a80f142d667.webp",
+    "small": "/media/nonsense-ad-store-banner-600.7425f3d0cc18.avif",
+    "medium": "/media/nonsense-ad-store-banner-900.07d66d9a95ae.avif",
+    "large": "/media/nonsense-ad-store-banner-1200.d511cdb1d986.avif"
   },
   "/nonsense/gallery-01-hero.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/nonsense-gallery-01-hero.4130ae7109b5.webp",
-    "thumb": "/media/nonsense-gallery-01-hero-160.f5ffe4665321.webp",
+    "thumb": "/media/nonsense-gallery-01-hero-160.0b844369b9de.webp",
     "card": "/media/nonsense-gallery-01-hero-320.de8a3492dfe5.webp",
     "small": "/media/nonsense-gallery-01-hero-600.54121ddb3582.webp",
-    "medium": "/media/nonsense-gallery-01-hero-900.441e8ccefe23.avif",
-    "large": "/media/nonsense-gallery-01-hero-1200.507d3cde644d.avif"
+    "medium": "/media/nonsense-gallery-01-hero-900.5de408125281.avif",
+    "large": "/media/nonsense-gallery-01-hero-1200.bdbf3295c1e0.avif"
   },
   "/nonsense/gallery-02-hinge-closeup.webp": {
     "width": 1254,
@@ -502,30 +502,30 @@
     "thumb": "/media/nonsense-gallery-02-hinge-closeup-160.ed25a96e0165.webp",
     "card": "/media/nonsense-gallery-02-hinge-closeup-320.872092a74ae2.webp",
     "small": "/media/nonsense-gallery-02-hinge-closeup-600.bd1c759c69f4.webp",
-    "medium": "/media/nonsense-gallery-02-hinge-closeup-900.715a40130007.avif",
-    "large": "/media/nonsense-gallery-02-hinge-closeup-1200.771df5c0b762.avif"
+    "medium": "/media/nonsense-gallery-02-hinge-closeup-900.dab04ed47622.avif",
+    "large": "/media/nonsense-gallery-02-hinge-closeup-1200.5bc8a2073ccb.avif"
   },
   "/nonsense/gallery-03-home.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/nonsense-gallery-03-home.9b320c7b4d4d.webp",
-    "thumb": "/media/nonsense-gallery-03-home-160.818e6a587695.webp",
+    "thumb": "/media/nonsense-gallery-03-home-160.d0043cfe2d19.webp",
     "card": "/media/nonsense-gallery-03-home-320.06f0b3c159a1.webp",
-    "small": "/media/nonsense-gallery-03-home-600.4c4a64f44605.avif",
-    "medium": "/media/nonsense-gallery-03-home-900.4d61f6812c2d.avif",
-    "large": "/media/nonsense-gallery-03-home-1200.641e9f73a775.avif"
+    "small": "/media/nonsense-gallery-03-home-600.eaea5c419b55.avif",
+    "medium": "/media/nonsense-gallery-03-home-900.8d2631386b57.avif",
+    "large": "/media/nonsense-gallery-03-home-1200.ea3956662f4b.avif"
   },
   "/nonsense/gallery-04-breakfast.webp": {
     "width": 1254,
     "height": 1254,
     "fullWidth": 1254,
     "full": "/media/nonsense-gallery-04-breakfast.5a4c58d7f3e4.webp",
-    "thumb": "/media/nonsense-gallery-04-breakfast-160.0a56950bc1bf.webp",
+    "thumb": "/media/nonsense-gallery-04-breakfast-160.cad4b3787dd2.webp",
     "card": "/media/nonsense-gallery-04-breakfast-320.7cced9f1f0ed.webp",
-    "small": "/media/nonsense-gallery-04-breakfast-600.7442bf6cd286.avif",
-    "medium": "/media/nonsense-gallery-04-breakfast-900.d6fb3f66c1d3.avif",
-    "large": "/media/nonsense-gallery-04-breakfast-1200.f66fc1c7e547.avif"
+    "small": "/media/nonsense-gallery-04-breakfast-600.6a1cb801e0b4.avif",
+    "medium": "/media/nonsense-gallery-04-breakfast-900.6ec0c3510828.avif",
+    "large": "/media/nonsense-gallery-04-breakfast-1200.f44bd5e50e5a.avif"
   },
   "/bharat/gallery-01-hero-front.png": {
     "width": 2000,
@@ -534,9 +534,9 @@
     "full": "/media/bharat-gallery-01-hero-front.0db1aa766f0d.webp",
     "thumb": "/media/bharat-gallery-01-hero-front-160.45186513aff4.webp",
     "card": "/media/bharat-gallery-01-hero-front-320.c028fbc7b834.webp",
-    "small": "/media/bharat-gallery-01-hero-front-600.d77fb03ddf30.avif",
-    "medium": "/media/bharat-gallery-01-hero-front-900.1eff5a44dd47.avif",
-    "large": "/media/bharat-gallery-01-hero-front-1200.efd6a7b9c550.avif"
+    "small": "/media/bharat-gallery-01-hero-front-600.fb9c2320e9b1.avif",
+    "medium": "/media/bharat-gallery-01-hero-front-900.cf50d8069dee.avif",
+    "large": "/media/bharat-gallery-01-hero-front-1200.8b2656d6b3b3.avif"
   },
   "/bharat/gallery-02-closeup.png": {
     "width": 1400,
@@ -545,9 +545,9 @@
     "full": "/media/bharat-gallery-02-closeup.53efb3afbb65.webp",
     "thumb": "/media/bharat-gallery-02-closeup-160.86310747f35d.webp",
     "card": "/media/bharat-gallery-02-closeup-320.1448734355ee.webp",
-    "small": "/media/bharat-gallery-02-closeup-600.8cf6c2d678b0.avif",
-    "medium": "/media/bharat-gallery-02-closeup-900.68a7c9879cc5.avif",
-    "large": "/media/bharat-gallery-02-closeup-1200.dc06a50afb2a.avif"
+    "small": "/media/bharat-gallery-02-closeup-600.334c9eb77ad1.avif",
+    "medium": "/media/bharat-gallery-02-closeup-900.257d2e04da15.avif",
+    "large": "/media/bharat-gallery-02-closeup-1200.6ae2d1e5be58.avif"
   },
   "/bharat/gallery-04-size.png": {
     "width": 2300,
@@ -556,9 +556,9 @@
     "full": "/media/bharat-gallery-04-size.6ba1831b732f.webp",
     "thumb": "/media/bharat-gallery-04-size-160.9a30b396606d.webp",
     "card": "/media/bharat-gallery-04-size-320.92be057617d5.webp",
-    "small": "/media/bharat-gallery-04-size-600.6a5d7641c6bf.avif",
-    "medium": "/media/bharat-gallery-04-size-900.2683660a6ba8.avif",
-    "large": "/media/bharat-gallery-04-size-1200.b6598600fc11.avif"
+    "small": "/media/bharat-gallery-04-size-600.54137c07c847.avif",
+    "medium": "/media/bharat-gallery-04-size-900.eb7b83621c54.avif",
+    "large": "/media/bharat-gallery-04-size-1200.5f3824d6cf5b.avif"
   },
   "/bharat/gallery-05-plates.png": {
     "width": 2220,
@@ -567,9 +567,9 @@
     "full": "/media/bharat-gallery-05-plates.a064b04fa5ad.webp",
     "thumb": "/media/bharat-gallery-05-plates-160.8e4dccdba7fa.webp",
     "card": "/media/bharat-gallery-05-plates-320.ecdf01ab5caf.webp",
-    "small": "/media/bharat-gallery-05-plates-600.075564d8dfdd.avif",
-    "medium": "/media/bharat-gallery-05-plates-900.57642c6479fd.avif",
-    "large": "/media/bharat-gallery-05-plates-1200.ef1e6dbc6f20.avif"
+    "small": "/media/bharat-gallery-05-plates-600.9db91005a74c.avif",
+    "medium": "/media/bharat-gallery-05-plates-900.0a617c439fca.avif",
+    "large": "/media/bharat-gallery-05-plates-1200.7b2380e9b056.avif"
   },
   "/bharat/product-page/gallery-01-hero-front.png": {
     "width": 2000,
@@ -578,9 +578,9 @@
     "full": "/media/bharat-product-page-gallery-01-hero-front.0db1aa766f0d.webp",
     "thumb": "/media/bharat-product-page-gallery-01-hero-front-160.45186513aff4.webp",
     "card": "/media/bharat-product-page-gallery-01-hero-front-320.c028fbc7b834.webp",
-    "small": "/media/bharat-product-page-gallery-01-hero-front-600.d77fb03ddf30.avif",
-    "medium": "/media/bharat-product-page-gallery-01-hero-front-900.1eff5a44dd47.avif",
-    "large": "/media/bharat-product-page-gallery-01-hero-front-1200.efd6a7b9c550.avif"
+    "small": "/media/bharat-product-page-gallery-01-hero-front-600.fb9c2320e9b1.avif",
+    "medium": "/media/bharat-product-page-gallery-01-hero-front-900.cf50d8069dee.avif",
+    "large": "/media/bharat-product-page-gallery-01-hero-front-1200.8b2656d6b3b3.avif"
   },
   "/bharat/product-page/gallery-02-closeup.png": {
     "width": 1400,
@@ -589,9 +589,9 @@
     "full": "/media/bharat-product-page-gallery-02-closeup.53efb3afbb65.webp",
     "thumb": "/media/bharat-product-page-gallery-02-closeup-160.86310747f35d.webp",
     "card": "/media/bharat-product-page-gallery-02-closeup-320.1448734355ee.webp",
-    "small": "/media/bharat-product-page-gallery-02-closeup-600.8cf6c2d678b0.avif",
-    "medium": "/media/bharat-product-page-gallery-02-closeup-900.68a7c9879cc5.avif",
-    "large": "/media/bharat-product-page-gallery-02-closeup-1200.dc06a50afb2a.avif"
+    "small": "/media/bharat-product-page-gallery-02-closeup-600.334c9eb77ad1.avif",
+    "medium": "/media/bharat-product-page-gallery-02-closeup-900.257d2e04da15.avif",
+    "large": "/media/bharat-product-page-gallery-02-closeup-1200.6ae2d1e5be58.avif"
   },
   "/bharat/product-page/gallery-04-size.png": {
     "width": 2300,
@@ -600,9 +600,9 @@
     "full": "/media/bharat-product-page-gallery-04-size.6ba1831b732f.webp",
     "thumb": "/media/bharat-product-page-gallery-04-size-160.9a30b396606d.webp",
     "card": "/media/bharat-product-page-gallery-04-size-320.92be057617d5.webp",
-    "small": "/media/bharat-product-page-gallery-04-size-600.6a5d7641c6bf.avif",
-    "medium": "/media/bharat-product-page-gallery-04-size-900.2683660a6ba8.avif",
-    "large": "/media/bharat-product-page-gallery-04-size-1200.b6598600fc11.avif"
+    "small": "/media/bharat-product-page-gallery-04-size-600.54137c07c847.avif",
+    "medium": "/media/bharat-product-page-gallery-04-size-900.eb7b83621c54.avif",
+    "large": "/media/bharat-product-page-gallery-04-size-1200.5f3824d6cf5b.avif"
   },
   "/bharat/product-page/gallery-05-plates.png": {
     "width": 2220,
@@ -611,9 +611,9 @@
     "full": "/media/bharat-product-page-gallery-05-plates.a064b04fa5ad.webp",
     "thumb": "/media/bharat-product-page-gallery-05-plates-160.8e4dccdba7fa.webp",
     "card": "/media/bharat-product-page-gallery-05-plates-320.ecdf01ab5caf.webp",
-    "small": "/media/bharat-product-page-gallery-05-plates-600.075564d8dfdd.avif",
-    "medium": "/media/bharat-product-page-gallery-05-plates-900.57642c6479fd.avif",
-    "large": "/media/bharat-product-page-gallery-05-plates-1200.ef1e6dbc6f20.avif"
+    "small": "/media/bharat-product-page-gallery-05-plates-600.9db91005a74c.avif",
+    "medium": "/media/bharat-product-page-gallery-05-plates-900.0a617c439fca.avif",
+    "large": "/media/bharat-product-page-gallery-05-plates-1200.7b2380e9b056.avif"
   },
   "/bharat/product-page/life-01-room.jpg": {
     "width": 2400,
@@ -622,9 +622,9 @@
     "full": "/media/bharat-product-page-life-01-room.a5523250334c.webp",
     "thumb": "/media/bharat-product-page-life-01-room-160.d44e06fcf2f9.webp",
     "card": "/media/bharat-product-page-life-01-room-320.e559f67b1774.webp",
-    "small": "/media/bharat-product-page-life-01-room-600.ec1865596b44.avif",
-    "medium": "/media/bharat-product-page-life-01-room-900.48b640d6bc09.avif",
-    "large": "/media/bharat-product-page-life-01-room-1200.3db23e577bc7.avif"
+    "small": "/media/bharat-product-page-life-01-room-600.6d225648892b.avif",
+    "medium": "/media/bharat-product-page-life-01-room-900.ede570c6a333.avif",
+    "large": "/media/bharat-product-page-life-01-room-1200.9e1eb85efb0f.avif"
   },
   "/bharat/product-page/life-02-nani.jpg": {
     "width": 2400,
@@ -633,9 +633,9 @@
     "full": "/media/bharat-product-page-life-02-nani.dd0877ec951c.webp",
     "thumb": "/media/bharat-product-page-life-02-nani-160.418e263958b5.webp",
     "card": "/media/bharat-product-page-life-02-nani-320.fa767f970a48.webp",
-    "small": "/media/bharat-product-page-life-02-nani-600.66131bc96b82.avif",
-    "medium": "/media/bharat-product-page-life-02-nani-900.a82df9ae388f.avif",
-    "large": "/media/bharat-product-page-life-02-nani-1200.541da6c153ef.avif"
+    "small": "/media/bharat-product-page-life-02-nani-600.1ebe2fda69a7.avif",
+    "medium": "/media/bharat-product-page-life-02-nani-900.ef9df985d736.avif",
+    "large": "/media/bharat-product-page-life-02-nani-1200.fbfcad8c89c2.avif"
   },
   "/bharat/product-page/life-03-hanging.jpg": {
     "width": 2400,
@@ -644,9 +644,9 @@
     "full": "/media/bharat-product-page-life-03-hanging.f20390ce9866.webp",
     "thumb": "/media/bharat-product-page-life-03-hanging-160.ac6a0fee2e6f.webp",
     "card": "/media/bharat-product-page-life-03-hanging-320.798499e42371.webp",
-    "small": "/media/bharat-product-page-life-03-hanging-600.33f97ceb1a4f.avif",
-    "medium": "/media/bharat-product-page-life-03-hanging-900.74d56cf60b40.avif",
-    "large": "/media/bharat-product-page-life-03-hanging-1200.f826808ca76d.avif"
+    "small": "/media/bharat-product-page-life-03-hanging-600.1ca295aaa89f.avif",
+    "medium": "/media/bharat-product-page-life-03-hanging-900.2f58c0810f9c.avif",
+    "large": "/media/bharat-product-page-life-03-hanging-1200.94242a0639f2.avif"
   },
   "/bharat/product-page/life-04-last-dot.jpg": {
     "width": 2400,
@@ -655,9 +655,9 @@
     "full": "/media/bharat-product-page-life-04-last-dot.6974b07c2f08.webp",
     "thumb": "/media/bharat-product-page-life-04-last-dot-160.2bdf179cc807.webp",
     "card": "/media/bharat-product-page-life-04-last-dot-320.d59a8bccdb40.webp",
-    "small": "/media/bharat-product-page-life-04-last-dot-600.04e49f1e0ffd.avif",
-    "medium": "/media/bharat-product-page-life-04-last-dot-900.079fdc12e30a.avif",
-    "large": "/media/bharat-product-page-life-04-last-dot-1200.c7ecd7c19220.avif"
+    "small": "/media/bharat-product-page-life-04-last-dot-600.9d03655ac65f.avif",
+    "medium": "/media/bharat-product-page-life-04-last-dot-900.d9142ee07a8c.avif",
+    "large": "/media/bharat-product-page-life-04-last-dot-1200.9de3fd0a62fc.avif"
   },
   "/bharat/product-page/life-05-floor.jpg": {
     "width": 2400,
@@ -666,9 +666,9 @@
     "full": "/media/bharat-product-page-life-05-floor.a3f60d3821e3.webp",
     "thumb": "/media/bharat-product-page-life-05-floor-160.88433a3abe1f.webp",
     "card": "/media/bharat-product-page-life-05-floor-320.16b7fee10617.webp",
-    "small": "/media/bharat-product-page-life-05-floor-600.fb92b2db2ffd.avif",
-    "medium": "/media/bharat-product-page-life-05-floor-900.1c11d44bdba7.avif",
-    "large": "/media/bharat-product-page-life-05-floor-1200.2d5e6f6e075f.avif"
+    "small": "/media/bharat-product-page-life-05-floor-600.28ecfa12cbc2.avif",
+    "medium": "/media/bharat-product-page-life-05-floor-900.d522d3905395.avif",
+    "large": "/media/bharat-product-page-life-05-floor-1200.0cabf7b641ec.avif"
   },
   "/bharat/product-page/life-06-one-plate.jpg": {
     "width": 2400,
@@ -677,9 +677,9 @@
     "full": "/media/bharat-product-page-life-06-one-plate.2fa7aeb1e5b8.webp",
     "thumb": "/media/bharat-product-page-life-06-one-plate-160.7e9812b6d7da.webp",
     "card": "/media/bharat-product-page-life-06-one-plate-320.5cba8a9f0e64.webp",
-    "small": "/media/bharat-product-page-life-06-one-plate-600.e192c87cec84.avif",
-    "medium": "/media/bharat-product-page-life-06-one-plate-900.7e9784cdff2d.avif",
-    "large": "/media/bharat-product-page-life-06-one-plate-1200.cd4fd034bf7e.avif"
+    "small": "/media/bharat-product-page-life-06-one-plate-600.2827247d47f8.avif",
+    "medium": "/media/bharat-product-page-life-06-one-plate-900.3e409e84b30a.avif",
+    "large": "/media/bharat-product-page-life-06-one-plate-1200.3d8ce9c15c5f.avif"
   },
   "/bharat/product-page/life-07-joining.jpg": {
     "width": 2400,
@@ -688,9 +688,9 @@
     "full": "/media/bharat-product-page-life-07-joining.1013a1d24433.webp",
     "thumb": "/media/bharat-product-page-life-07-joining-160.95c75d052c1f.webp",
     "card": "/media/bharat-product-page-life-07-joining-320.791897ce3182.webp",
-    "small": "/media/bharat-product-page-life-07-joining-600.c5eb9963e1ba.avif",
-    "medium": "/media/bharat-product-page-life-07-joining-900.cbcd47c72114.avif",
-    "large": "/media/bharat-product-page-life-07-joining-1200.f973837f5a4c.avif"
+    "small": "/media/bharat-product-page-life-07-joining-600.3c3630b3c826.avif",
+    "medium": "/media/bharat-product-page-life-07-joining-900.736347efd4b2.avif",
+    "large": "/media/bharat-product-page-life-07-joining-1200.7ab1dc86ec59.avif"
   },
   "/padma/banner-born-of-mud.webp": {
     "width": 2400,
@@ -861,67 +861,67 @@
     "width": 2400,
     "height": 1340,
     "fullWidth": 2400,
-    "full": "/media/surajmukhi-banner-at-home.bd5377c0af06.webp",
-    "thumb": "/media/surajmukhi-banner-at-home-160.e864cf2c88fc.webp",
-    "card": "/media/surajmukhi-banner-at-home-320.6638b9d1e2d2.webp",
-    "small": "/media/surajmukhi-banner-at-home-600.c3f7251f92b5.webp",
-    "medium": "/media/surajmukhi-banner-at-home-900.476f75604a66.webp",
-    "large": "/media/surajmukhi-banner-at-home-1200.8e76feaa7cdb.webp"
+    "full": "/media/surajmukhi-banner-at-home.fb8bcb10f623.webp",
+    "thumb": "/media/surajmukhi-banner-at-home-160.0bc5a8a8d728.webp",
+    "card": "/media/surajmukhi-banner-at-home-320.4233649f8148.webp",
+    "small": "/media/surajmukhi-banner-at-home-600.d033f26e62a0.webp",
+    "medium": "/media/surajmukhi-banner-at-home-900.2d67bdd80807.webp",
+    "large": "/media/surajmukhi-banner-at-home-1200.4945d3af1643.webp"
   },
   "/surajmukhi/day.webp": {
     "width": 1600,
     "height": 1200,
     "fullWidth": 1600,
-    "full": "/media/surajmukhi-day.d65f98e23b0d.webp",
-    "thumb": "/media/surajmukhi-day-160.bbd916a5b90b.webp",
-    "card": "/media/surajmukhi-day-320.96c7b659187b.webp",
-    "small": "/media/surajmukhi-day-600.0d3e3c3d8e20.webp",
-    "medium": "/media/surajmukhi-day-900.eef5b4bb477d.webp",
-    "large": "/media/surajmukhi-day-1200.addb6bbaf62c.webp"
+    "full": "/media/surajmukhi-day.eb25a7d7b8c4.webp",
+    "thumb": "/media/surajmukhi-day-160.aa292e80721a.webp",
+    "card": "/media/surajmukhi-day-320.3ce030a46c4d.webp",
+    "small": "/media/surajmukhi-day-600.9eec8bc6f673.webp",
+    "medium": "/media/surajmukhi-day-900.05382060c6cb.webp",
+    "large": "/media/surajmukhi-day-1200.e043ad8e29a6.webp"
   },
   "/surajmukhi/gallery-01-hero.webp": {
     "width": 1600,
     "height": 1600,
     "fullWidth": 1600,
-    "full": "/media/surajmukhi-gallery-01-hero.385e446d653d.webp",
-    "thumb": "/media/surajmukhi-gallery-01-hero-160.29cd68b20e56.webp",
-    "card": "/media/surajmukhi-gallery-01-hero-320.a0e888610d67.webp",
-    "small": "/media/surajmukhi-gallery-01-hero-600.72bb41db23c4.avif",
-    "medium": "/media/surajmukhi-gallery-01-hero-900.3b23acfedce8.avif",
-    "large": "/media/surajmukhi-gallery-01-hero-1200.94632a595cfd.avif"
+    "full": "/media/surajmukhi-gallery-01-hero.035b659221f6.webp",
+    "thumb": "/media/surajmukhi-gallery-01-hero-160.3eb81da26980.webp",
+    "card": "/media/surajmukhi-gallery-01-hero-320.f7d3cbe14a8e.webp",
+    "small": "/media/surajmukhi-gallery-01-hero-600.f30d8d240c29.avif",
+    "medium": "/media/surajmukhi-gallery-01-hero-900.39bd29fce97c.avif",
+    "large": "/media/surajmukhi-gallery-01-hero-1200.71e45701afa0.avif"
   },
   "/surajmukhi/gallery-02-heads.webp": {
     "width": 1600,
     "height": 1600,
     "fullWidth": 1600,
-    "full": "/media/surajmukhi-gallery-02-heads.ce3c5cf3606b.webp",
-    "thumb": "/media/surajmukhi-gallery-02-heads-160.be1bac074ed9.webp",
-    "card": "/media/surajmukhi-gallery-02-heads-320.867924693573.webp",
-    "small": "/media/surajmukhi-gallery-02-heads-600.2ccc7f4de102.webp",
-    "medium": "/media/surajmukhi-gallery-02-heads-900.5694f6660cff.avif",
-    "large": "/media/surajmukhi-gallery-02-heads-1200.5d06a7bcfc14.avif"
+    "full": "/media/surajmukhi-gallery-02-heads.646d1a71719a.webp",
+    "thumb": "/media/surajmukhi-gallery-02-heads-160.b86f1cb4779d.webp",
+    "card": "/media/surajmukhi-gallery-02-heads-320.2145b8395b5c.webp",
+    "small": "/media/surajmukhi-gallery-02-heads-600.b9dc90cbc782.avif",
+    "medium": "/media/surajmukhi-gallery-02-heads-900.e7932d13a5f2.avif",
+    "large": "/media/surajmukhi-gallery-02-heads-1200.b69e98a267be.avif"
   },
   "/surajmukhi/gallery-03-at-home.webp": {
     "width": 1600,
     "height": 1600,
     "fullWidth": 1600,
-    "full": "/media/surajmukhi-gallery-03-at-home.d5641977a9ac.webp",
-    "thumb": "/media/surajmukhi-gallery-03-at-home-160.911193a0dc23.webp",
-    "card": "/media/surajmukhi-gallery-03-at-home-320.9f66703f5b0f.webp",
-    "small": "/media/surajmukhi-gallery-03-at-home-600.ae79944dd733.avif",
-    "medium": "/media/surajmukhi-gallery-03-at-home-900.9f3aae69bff9.avif",
-    "large": "/media/surajmukhi-gallery-03-at-home-1200.0477829ec27a.avif"
+    "full": "/media/surajmukhi-gallery-03-at-home.6c9743299d0f.webp",
+    "thumb": "/media/surajmukhi-gallery-03-at-home-160.77d9c2c94b25.webp",
+    "card": "/media/surajmukhi-gallery-03-at-home-320.1491f7f785ea.webp",
+    "small": "/media/surajmukhi-gallery-03-at-home-600.93ca6ce98485.avif",
+    "medium": "/media/surajmukhi-gallery-03-at-home-900.78837dca6723.avif",
+    "large": "/media/surajmukhi-gallery-03-at-home-1200.388cdf925efc.avif"
   },
   "/surajmukhi/night.webp": {
     "width": 1600,
     "height": 1200,
     "fullWidth": 1600,
-    "full": "/media/surajmukhi-night.1eb05fbfe932.webp",
-    "thumb": "/media/surajmukhi-night-160.7f0624bd5ea3.webp",
-    "card": "/media/surajmukhi-night-320.baf4b531ba78.webp",
-    "small": "/media/surajmukhi-night-600.50bcb26ee807.webp",
-    "medium": "/media/surajmukhi-night-900.d35d058354a0.webp",
-    "large": "/media/surajmukhi-night-1200.b838d7ed5416.webp"
+    "full": "/media/surajmukhi-night.ae8eb4ace6bd.webp",
+    "thumb": "/media/surajmukhi-night-160.fadd22d4bab7.webp",
+    "card": "/media/surajmukhi-night-320.a4d088621865.webp",
+    "small": "/media/surajmukhi-night-600.19bf0e4cd467.webp",
+    "medium": "/media/surajmukhi-night-900.4db87e32218f.webp",
+    "large": "/media/surajmukhi-night-1200.1ad545338843.webp"
   },
   "/gully-cricket/banner-golden-hour.png": {
     "width": 1920,
@@ -954,9 +954,9 @@
     "full": "/media/gully-cricket-gallery-01-hero.e183b8e8d026.webp",
     "thumb": "/media/gully-cricket-gallery-01-hero-160.b782b2a6b36b.webp",
     "card": "/media/gully-cricket-gallery-01-hero-320.c978361b57b2.webp",
-    "small": "/media/gully-cricket-gallery-01-hero-600.e739690e7809.avif",
-    "medium": "/media/gully-cricket-gallery-01-hero-900.8e7fa8fe5a0d.avif",
-    "large": "/media/gully-cricket-gallery-01-hero-1200.8c3a797e00f2.avif",
+    "small": "/media/gully-cricket-gallery-01-hero-600.bf445c7fd47b.avif",
+    "medium": "/media/gully-cricket-gallery-01-hero-900.d49624164b93.avif",
+    "large": "/media/gully-cricket-gallery-01-hero-1200.ed7b05bedd71.avif",
     "original": "/media/gully-cricket-original-gallery-01-hero.9b42a0277287.png"
   },
   "/gully-cricket/gallery-02-five-builds.png": {
@@ -966,9 +966,9 @@
     "full": "/media/gully-cricket-gallery-02-five-builds.d1d49db761f1.webp",
     "thumb": "/media/gully-cricket-gallery-02-five-builds-160.69613f2d3b71.webp",
     "card": "/media/gully-cricket-gallery-02-five-builds-320.8485cd967eed.webp",
-    "small": "/media/gully-cricket-gallery-02-five-builds-600.dfebf9a6ee20.avif",
-    "medium": "/media/gully-cricket-gallery-02-five-builds-900.fb5af27db0e2.avif",
-    "large": "/media/gully-cricket-gallery-02-five-builds-1200.0d0aa4d806bd.avif",
+    "small": "/media/gully-cricket-gallery-02-five-builds-600.3d970720a970.avif",
+    "medium": "/media/gully-cricket-gallery-02-five-builds-900.b85800db5985.avif",
+    "large": "/media/gully-cricket-gallery-02-five-builds-1200.746e9da3e975.avif",
     "original": "/media/gully-cricket-original-gallery-02-five-builds.4e58a2fb94b9.png"
   },
   "/gully-cricket/gallery-03-crease.png": {
@@ -978,9 +978,9 @@
     "full": "/media/gully-cricket-gallery-03-crease.dcc43bea9074.webp",
     "thumb": "/media/gully-cricket-gallery-03-crease-160.7f2ec4a45616.webp",
     "card": "/media/gully-cricket-gallery-03-crease-320.88aca31eb05e.webp",
-    "small": "/media/gully-cricket-gallery-03-crease-600.a05ee05ce75d.avif",
-    "medium": "/media/gully-cricket-gallery-03-crease-900.3ae3773ab461.avif",
-    "large": "/media/gully-cricket-gallery-03-crease-1200.fde57849d08e.avif",
+    "small": "/media/gully-cricket-gallery-03-crease-600.357c631efee4.avif",
+    "medium": "/media/gully-cricket-gallery-03-crease-900.82d5d40eb63d.avif",
+    "large": "/media/gully-cricket-gallery-03-crease-1200.57c5fcec4476.avif",
     "original": "/media/gully-cricket-original-gallery-03-crease.ab439e597fd5.png"
   },
   "/gully-cricket/gallery-04-window.png": {
@@ -990,9 +990,9 @@
     "full": "/media/gully-cricket-gallery-04-window.3cfe1d9ca18b.webp",
     "thumb": "/media/gully-cricket-gallery-04-window-160.d94eae0df9e9.webp",
     "card": "/media/gully-cricket-gallery-04-window-320.d93d9a47b9f2.webp",
-    "small": "/media/gully-cricket-gallery-04-window-600.0ad077d5b52a.avif",
-    "medium": "/media/gully-cricket-gallery-04-window-900.0e6041528a65.avif",
-    "large": "/media/gully-cricket-gallery-04-window-1200.9e26b4877a8a.avif",
+    "small": "/media/gully-cricket-gallery-04-window-600.2092004c81c1.avif",
+    "medium": "/media/gully-cricket-gallery-04-window-900.9bfb02534640.avif",
+    "large": "/media/gully-cricket-gallery-04-window-1200.4592fa44e6de.avif",
     "original": "/media/gully-cricket-original-gallery-04-window.cffcceaeeeb0.png"
   },
   "/gully-cricket/gallery-05-players.png": {
@@ -1002,9 +1002,9 @@
     "full": "/media/gully-cricket-gallery-05-players.94de8f1591b3.webp",
     "thumb": "/media/gully-cricket-gallery-05-players-160.ccfecfa5c80f.webp",
     "card": "/media/gully-cricket-gallery-05-players-320.91c48d4b7e78.webp",
-    "small": "/media/gully-cricket-gallery-05-players-600.3861e97ac04d.avif",
-    "medium": "/media/gully-cricket-gallery-05-players-900.9bb91d1644ff.avif",
-    "large": "/media/gully-cricket-gallery-05-players-1200.9fbbf6f706bf.avif",
+    "small": "/media/gully-cricket-gallery-05-players-600.312a24310513.avif",
+    "medium": "/media/gully-cricket-gallery-05-players-900.73bab0e3a731.avif",
+    "large": "/media/gully-cricket-gallery-05-players-1200.6c931bedb774.avif",
     "original": "/media/gully-cricket-original-gallery-05-players.75a650e7fc9b.png"
   },
   "/gully-cricket/gallery-06-at-home.png": {
@@ -1014,9 +1014,9 @@
     "full": "/media/gully-cricket-gallery-06-at-home.f648ce161f6e.webp",
     "thumb": "/media/gully-cricket-gallery-06-at-home-160.818c1014650b.webp",
     "card": "/media/gully-cricket-gallery-06-at-home-320.c1d388885bb0.webp",
-    "small": "/media/gully-cricket-gallery-06-at-home-600.e5fbccf87d69.avif",
-    "medium": "/media/gully-cricket-gallery-06-at-home-900.bc3109979cea.avif",
-    "large": "/media/gully-cricket-gallery-06-at-home-1200.8f28eaae33e2.avif",
+    "small": "/media/gully-cricket-gallery-06-at-home-600.281fcf913df8.avif",
+    "medium": "/media/gully-cricket-gallery-06-at-home-900.ef8cfe87c5a5.avif",
+    "large": "/media/gully-cricket-gallery-06-at-home-1200.468634c89632.avif",
     "original": "/media/gully-cricket-original-gallery-06-at-home.51ba8dab9b4b.png"
   },
   "/gully-cricket/gallery-07-kids-room.png": {
@@ -1026,9 +1026,9 @@
     "full": "/media/gully-cricket-gallery-07-kids-room.511af469392e.webp",
     "thumb": "/media/gully-cricket-gallery-07-kids-room-160.0d4b71bccc77.webp",
     "card": "/media/gully-cricket-gallery-07-kids-room-320.cb0f89ca683c.webp",
-    "small": "/media/gully-cricket-gallery-07-kids-room-600.2658c1aa8fb4.avif",
-    "medium": "/media/gully-cricket-gallery-07-kids-room-900.69d094cf6b69.avif",
-    "large": "/media/gully-cricket-gallery-07-kids-room-1200.ebeac026d2ea.avif",
+    "small": "/media/gully-cricket-gallery-07-kids-room-600.d6cecc0d5b5f.avif",
+    "medium": "/media/gully-cricket-gallery-07-kids-room-900.923f7b14587d.avif",
+    "large": "/media/gully-cricket-gallery-07-kids-room-1200.d4214ea3ad8a.avif",
     "original": "/media/gully-cricket-original-gallery-07-kids-room.f2613ed28b93.png"
   },
   "/gully-cricket/gallery-08-desk.png": {
@@ -1038,9 +1038,9 @@
     "full": "/media/gully-cricket-gallery-08-desk.4d421b702d8a.webp",
     "thumb": "/media/gully-cricket-gallery-08-desk-160.16708acd1a51.webp",
     "card": "/media/gully-cricket-gallery-08-desk-320.bafb36edfc23.webp",
-    "small": "/media/gully-cricket-gallery-08-desk-600.dbcb15d0ab2d.avif",
-    "medium": "/media/gully-cricket-gallery-08-desk-900.6a545946e2df.avif",
-    "large": "/media/gully-cricket-gallery-08-desk-1200.408eeb8367fc.avif",
+    "small": "/media/gully-cricket-gallery-08-desk-600.6f14a043b54f.avif",
+    "medium": "/media/gully-cricket-gallery-08-desk-900.1c92ca696c4e.avif",
+    "large": "/media/gully-cricket-gallery-08-desk-1200.76a75b40574b.avif",
     "original": "/media/gully-cricket-original-gallery-08-desk.74364785a896.png"
   },
   "/gully-cricket/gallery-09-dimensions.png": {
@@ -1050,9 +1050,9 @@
     "full": "/media/gully-cricket-gallery-09-dimensions.1c267f71acf8.webp",
     "thumb": "/media/gully-cricket-gallery-09-dimensions-160.65ac9e64075c.webp",
     "card": "/media/gully-cricket-gallery-09-dimensions-320.6a6a40e9b71b.webp",
-    "small": "/media/gully-cricket-gallery-09-dimensions-600.a8e4b3c732c3.avif",
-    "medium": "/media/gully-cricket-gallery-09-dimensions-900.48f9f8d4738c.avif",
-    "large": "/media/gully-cricket-gallery-09-dimensions-1200.68ce8f208528.avif",
+    "small": "/media/gully-cricket-gallery-09-dimensions-600.d67d6ddaea44.avif",
+    "medium": "/media/gully-cricket-gallery-09-dimensions-900.a9471b09a0d2.avif",
+    "large": "/media/gully-cricket-gallery-09-dimensions-1200.9992ea6526d1.avif",
     "original": "/media/gully-cricket-original-gallery-09-dimensions.8d4f436a574b.png"
   },
   "/gully-cricket/switch-1-terrace-house.png": {
