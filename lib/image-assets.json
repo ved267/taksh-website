@@ -923,6 +923,39 @@
     "medium": "/media/surajmukhi-night-900.4db87e32218f.webp",
     "large": "/media/surajmukhi-night-1200.1ad545338843.webp"
   },
+  "/surajmukhi/gallery-04-back.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/surajmukhi-gallery-04-back.108c55b39fe7.webp",
+    "thumb": "/media/surajmukhi-gallery-04-back-160.1f56b1f8c3dc.webp",
+    "card": "/media/surajmukhi-gallery-04-back-320.ec62dadd55f9.webp",
+    "small": "/media/surajmukhi-gallery-04-back-600.4488f7914bb7.webp",
+    "medium": "/media/surajmukhi-gallery-04-back-900.215aac916d04.webp",
+    "large": "/media/surajmukhi-gallery-04-back-1200.c2b2152f71e6.avif"
+  },
+  "/surajmukhi/gallery-05-joining.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/surajmukhi-gallery-05-joining.8e16be322baa.webp",
+    "thumb": "/media/surajmukhi-gallery-05-joining-160.a1aaf75f0f0c.webp",
+    "card": "/media/surajmukhi-gallery-05-joining-320.e062eb1224bd.webp",
+    "small": "/media/surajmukhi-gallery-05-joining-600.fa6639d3ebc5.webp",
+    "medium": "/media/surajmukhi-gallery-05-joining-900.2abcd7565078.avif",
+    "large": "/media/surajmukhi-gallery-05-joining-1200.c88a7437d580.avif"
+  },
+  "/surajmukhi/gallery-06-building.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/surajmukhi-gallery-06-building.c617535ca592.webp",
+    "thumb": "/media/surajmukhi-gallery-06-building-160.9b58cbc4d0cd.webp",
+    "card": "/media/surajmukhi-gallery-06-building-320.465e8574a2c1.webp",
+    "small": "/media/surajmukhi-gallery-06-building-600.a1681d2a249c.avif",
+    "medium": "/media/surajmukhi-gallery-06-building-900.2868827d35ea.avif",
+    "large": "/media/surajmukhi-gallery-06-building-1200.320aceab7ecc.avif"
+  },
   "/gully-cricket/banner-golden-hour.png": {
     "width": 1920,
     "height": 1080,
