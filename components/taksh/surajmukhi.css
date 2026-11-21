@@ -1,28 +1,29 @@
 .sm-page .sm-preview-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
 
-/* The Sunflower Theory: one story; the light passes from day to night to home as you scroll */
-.sm-story{background:var(--morning);color:var(--ink);border-top:1px solid var(--line);transition:background-color .8s ease,color .8s ease}
-.sm-story[data-tone=night]{background:var(--ink);color:var(--cream);border-top-color:var(--ink)}
-.sm-story[data-tone=home]{background:var(--afternoon)}
-.sm-story-inner{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:64px}
-.sm-story-title{font-size:clamp(32px,3.1vw,44px);line-height:1.08;padding-top:96px}
-.sm-beat{min-height:70vh;display:flex;align-items:center}
-.sm-story .sm-beat p{font-size:clamp(26px,2.4vw,34px);font-weight:600;line-height:1.25;letter-spacing:-.01em;max-width:440px;opacity:.35;transition:opacity .6s ease}
-.sm-beat.is-on p{opacity:1}
-.sm-beat-photo{display:none}
-.sm-story .sm-never{font-size:clamp(30px,3vw,44px);font-weight:700;line-height:1.1;color:var(--ink);padding:8vh 0 18vh;max-width:460px}
-.sm-story-stage{position:sticky;top:calc(var(--rm-header-height,72px) + 6vh);height:calc(88vh - var(--rm-header-height,72px));align-self:start;margin-top:12vh}
-.sm-story-stage figure{position:absolute;inset:0;margin:0;border-radius:4px;overflow:hidden;opacity:0;transition:opacity .8s ease}
-.sm-story-stage figure.is-on{opacity:1}
-.sm-story-stage img{width:100%;height:100%;object-fit:cover;object-position:72% 50%}
+/* The Sunflower Theory: one frame. Day and night side by side, then the line about people. */
+.sm-story{background:var(--morning);color:var(--ink);border-top:1px solid var(--line);padding:64px 0 72px;text-align:center}
+.sm-kicker{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.sm-story-title{font-size:clamp(30px,3vw,42px);line-height:1.12;max-width:760px;margin:0 auto 28px}
+.sm-split{display:grid;grid-template-columns:1fr 1fr;max-width:920px;margin:0 auto;border-radius:6px;overflow:hidden}
+.sm-half{margin:0;display:flex;flex-direction:column}
+.sm-half img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:64% 50%;display:block}
+.sm-half figcaption{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 18px 22px;font-size:clamp(18px,1.8vw,24px);font-weight:600;line-height:1.25;letter-spacing:-.01em}
+.sm-half-day figcaption{background:var(--cream);color:var(--ink)}
+.sm-half-night figcaption{background:var(--ink);color:var(--cream)}
+.sm-story .sm-together{font-size:clamp(18px,1.6vw,21px);line-height:1.45;color:var(--muted);max-width:560px;margin:22px auto 0}
+.sm-story .sm-people{max-width:640px;margin:36px auto 0}
+.sm-story .sm-people p{font-size:clamp(21px,2vw,27px);font-weight:500;line-height:1.38;margin:0}
+.sm-story .sm-people p+p{margin-top:14px;font-weight:600}
+.sm-story .sm-gift{font-size:clamp(17px,1.5vw,20px);color:var(--muted);margin:10px 0 0}
+.sm-story .sm-never{font-size:clamp(30px,3vw,44px);font-weight:700;line-height:1.1;max-width:560px;margin:28px auto 0}
 @media(max-width:960px){
- .sm-story-inner{display:block}.sm-story-stage{display:none}
- .sm-story-title{padding-top:48px}
- .sm-beat{min-height:0;display:block;padding:28px 0 8px}
- .sm-story .sm-beat-photo{display:block;margin:0 0 18px;border-radius:4px;overflow:hidden;aspect-ratio:4/3}
- .sm-beat-photo img{width:100%;height:100%;object-fit:cover;object-position:72% 50%}
- .sm-story .sm-beat p{opacity:1;font-size:24px}
- .sm-story .sm-never{padding:32px 0 56px;font-size:32px}
+ .sm-story{padding:52px 0 60px}
+ .sm-story-title{margin-bottom:24px}
+ .sm-half img{aspect-ratio:3/4;object-position:60% 50%}
+ .sm-half figcaption{padding:14px 10px 16px;font-size:16px}
+ .sm-story .sm-together{font-size:17px;margin-top:18px}
+ .sm-story .sm-people{margin-top:28px}
+ .sm-story .sm-people p{font-size:20px}
+ .sm-story .sm-never{font-size:30px;margin-top:16px}
 }
-@media(prefers-reduced-motion:reduce){.sm-story,.sm-beat p,.sm-story-stage figure{transition:none}}
 @media(max-width:760px){.sm-page.rm-page .rm-gallery-stage{height:auto;aspect-ratio:1/1}}
