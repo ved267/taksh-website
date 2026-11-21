@@ -19,16 +19,22 @@ const gallery:PhotoInfo[]=[
  {image:'/surajmukhi/gallery-03-at-home.webp',label:'At home',alt:'The pair in a glass bottle on a bedside table at golden hour, beside a folded note. Their shadows lean together on the wall.'},
 ];
 
-// The Sunflower Theory in one frame: day and night side by side, then what it means for people.
+// The Sunflower Theory in one frame, in the same words as the reel: day and night side by side, then what it means for people.
 function SunflowerStory(){
  return <section className="sm-story" aria-labelledby="sm-story-heading"><div className="wrap">
-  <h2 id="sm-story-heading" className="sm-story-title">The Sunflower Theory</h2>
+  <p className="sm-kicker">The Sunflower Theory</p>
+  <h2 id="sm-story-heading" className="sm-story-title">Sunflowers have a secret. They only share it after dark.</h2>
   <div className="sm-split">
-   <figure className="sm-half sm-half-day"><SetPhoto image="/surajmukhi/day.webp" alt="By day: the pair on a sunlit windowsill, both heads turned to the sun in the window." sizes="(max-width: 960px) 50vw, 600px"/><figcaption>By day, they follow the sun.</figcaption></figure>
-   <figure className="sm-half sm-half-night"><SetPhoto image="/surajmukhi/night.webp" alt="At night: the same windowsill under a crescent moon. The two heads have turned to face each other." sizes="(max-width: 960px) 50vw, 600px"/><figcaption>At night, they turn to each other.</figcaption></figure>
+   <figure className="sm-half sm-half-day"><SetPhoto image="/surajmukhi/day.webp" alt="By day: the pair on a sunlit windowsill, both heads turned to the sun in the window." sizes="(max-width: 960px) 50vw, 460px"/><figcaption>All day, a sunflower follows the sun.</figcaption></figure>
+   <figure className="sm-half sm-half-night"><SetPhoto image="/surajmukhi/night.webp" alt="After dark: the same windowsill under a crescent moon. The two heads have turned to face each other." sizes="(max-width: 960px) 50vw, 460px"/><figcaption>After dark, they turn to each other.</figcaption></figure>
   </div>
-  <p className="sm-people">People are the same. We chase the light all day. When it goes dark, we turn to our person.</p>
-  <p className="sm-never">That’s why you never give just one.</p>
+  <p className="sm-together">Alone, one would fade. Together, they keep each other warm till morning.</p>
+  <div className="sm-people">
+   <p>People are the same. We all need someone who’s our warmth when the day is done. Not just on the hard days. On every ordinary evening.</p>
+   <p>Someone you turn to. Someone who turns to you.</p>
+  </div>
+  <p className="sm-never">Who’s yours?</p>
+  <p className="sm-gift">One for you. One for them.</p>
  </div></section>;
 }
 
