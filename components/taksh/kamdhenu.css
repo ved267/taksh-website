@@ -24,30 +24,31 @@
 
 /* She blesses every home: the Pichwai banner and three homes */
 .kd-plenty{background:var(--pichwai);color:var(--cream)}
+.kd-plenty-banner{margin:0}
+.kd-plenty-banner figcaption{font-size:14px;line-height:1.5;text-align:center;text-wrap:balance;color:color-mix(in srgb,var(--cream) 75%,transparent);padding:16px 20px 0;max-width:640px;margin:0 auto}
 .kd-plenty-banner img{display:block;width:100%;height:min(560px,42vw);object-fit:cover;object-position:50% 55%}
-.kd-plenty-copy{max-width:640px;margin:0 auto;padding:64px 20px 80px}
+.kd-plenty-copy{max-width:640px;margin:0 auto;padding:48px 20px 80px}
 .kd-plenty-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.04}
 .kd-homes{list-style:none;margin:32px 0 0;padding:0}
-.kd-homes li{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:16px 0;border-top:1px solid color-mix(in srgb,var(--cream) 20%,transparent);align-items:baseline}
+.kd-homes li{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:16px 0;border-top:1px solid color-mix(in srgb,var(--cream) 20%,transparent);align-items:baseline}
 .kd-homes b{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ghee)}
-.kd-homes span{font-size:18px;line-height:1.5}
+.kd-homes span{font-size:20px;line-height:1.45}
 
 @media(max-width:960px){
  .kd-buy-column{display:contents}
- /* phone grid: the name comes right after Add to bag; the rows below it move down one */
- .kd-page.rm-page .kd-name{grid-column:1/-1;grid-row:6;margin:30px 0 6px}
- .kd-page.rm-page .rm-description{grid-row:7}
- .kd-page.rm-page .rm-contact{grid-row:8}
- .kd-page.rm-page .buyer-details{grid-row:9}
- .kd-page.rm-page .kd-preview-note{grid-column:1/-1;grid-row:10}
+ /* phone grid: the description follows Add to bag (as on other set pages); the name closes the red section */
+ .kd-page.rm-page .kd-preview-note{grid-column:1/-1;grid-row:9}
+ .kd-page.rm-page .kd-name{grid-column:1/-1;grid-row:10;margin:36px 0 8px}
  .kd-top .rm-pricing .price-tag{color:var(--cream)}
 }
 @media(max-width:760px){.kd-page.rm-page .rm-gallery-stage{height:auto;aspect-ratio:1/1}}
 @media(max-width:640px){
- .kd-plenty-copy{padding:40px 20px 56px}
+ .kd-plenty-copy{padding:32px 20px 56px}
  .kd-homes li{grid-template-columns:1fr;gap:4px}
  .kd-homes span{font-size:17px}
  .kd-name-line{font-size:17px}
- .kd-plenty-banner img{height:auto;aspect-ratio:4/3}
+ .kd-plenty-banner{margin:0}
+.kd-plenty-banner figcaption{font-size:14px;line-height:1.5;text-align:center;text-wrap:balance;color:color-mix(in srgb,var(--cream) 75%,transparent);padding:16px 20px 0;max-width:640px;margin:0 auto}
+.kd-plenty-banner img{height:auto;aspect-ratio:4/3}
 }
 @media(prefers-reduced-motion:reduce){.kd-plus,.kd-roman,.kd-name-line{transition:none}}

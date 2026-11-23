@@ -967,17 +967,6 @@
     "medium": "/media/kamdhenu-banner-pichwai-900.3c0e396f031b.webp",
     "large": "/media/kamdhenu-banner-pichwai-1200.430c99531861.webp"
   },
-  "/kamdhenu/gallery-01-hero.webp": {
-    "width": 1600,
-    "height": 1600,
-    "fullWidth": 1600,
-    "full": "/media/kamdhenu-gallery-01-hero.2a1617f1c472.webp",
-    "thumb": "/media/kamdhenu-gallery-01-hero-160.7d4166f2431d.webp",
-    "card": "/media/kamdhenu-gallery-01-hero-320.93746774e597.webp",
-    "small": "/media/kamdhenu-gallery-01-hero-600.5e0316ed6c4f.webp",
-    "medium": "/media/kamdhenu-gallery-01-hero-900.df8b17d569eb.webp",
-    "large": "/media/kamdhenu-gallery-01-hero-1200.fb98098b9730.avif"
-  },
   "/kamdhenu/gallery-02-mandir.webp": {
     "width": 1600,
     "height": 1600,
@@ -1032,6 +1021,17 @@
     "small": "/media/kamdhenu-gallery-06-size-600.142e4b608690.webp",
     "medium": "/media/kamdhenu-gallery-06-size-900.95a7396504f5.webp",
     "large": "/media/kamdhenu-gallery-06-size-1200.11b069471df8.avif"
+  },
+  "/kamdhenu/gallery-07-festive.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/kamdhenu-gallery-07-festive.15a410bda50e.webp",
+    "thumb": "/media/kamdhenu-gallery-07-festive-160.5b3dda0f2a47.webp",
+    "card": "/media/kamdhenu-gallery-07-festive-320.f51a845ee3b5.webp",
+    "small": "/media/kamdhenu-gallery-07-festive-600.86683327a163.webp",
+    "medium": "/media/kamdhenu-gallery-07-festive-900.7a32d370a110.avif",
+    "large": "/media/kamdhenu-gallery-07-festive-1200.8b77a61288d3.avif"
   },
   "/gully-cricket/banner-golden-hour.png": {
     "width": 1920,

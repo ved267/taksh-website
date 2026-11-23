@@ -12,14 +12,14 @@ import './kamdhenu.css';
 
 const gallery:PhotoInfo[]=[
  {image:'/kamdhenu/gallery-02-mandir.webp',label:'In the mandir',alt:'The set on a marble ledge in a carved wooden mandir, beside a lit brass diya and marigolds.'},
- {image:'/kamdhenu/gallery-01-hero.webp',label:'Kamdhenu',alt:'A white brick cow with a dark red saddle cloth, an orange cap between gold horns and a bell at her neck, one front hoof raised, beside a reddish brown post on a tan studded base.'},
+ {image:'/kamdhenu/gallery-07-festive.webp',label:'Festive',alt:'The set on a deep red cloth on a carved wooden chowki, with a marigold garland behind and three lit diyas beside a rice-flour rangoli.'},
  {image:'/kamdhenu/gallery-03-new-home.webp',label:'A new home',alt:'The set on a wooden console by a doorway hung with a mango-leaf and marigold toran, a rangoli on the floor.'},
  {image:'/kamdhenu/gallery-04-childs-room.webp',label:'A child’s room',alt:'The set on a white shelf in a child’s room, under a child’s drawing of a cow, beside books and a plant.'},
  {image:'/kamdhenu/gallery-05-head.webp',label:'Up close',alt:'Her head up close: pink ears, an orange cap between gold horns, a gold necklace and a bell. Beside her, the rope coiled on her post.'},
  {image:'/kamdhenu/gallery-06-size.webp',label:'Size',alt:'The set with dimension lines: about 32 cm long and about 23 cm tall.'},
 ];
 
-// The name: a centred band under the product on laptops, right after Add to bag on phones. काम + धेनु come apart once in view, then a warm line says what they mean.
+// The name: a centred band under the product on laptops; on phones it closes the red section, after the description. काम + धेनु come apart once in view, then a warm line says what they mean.
 function TheName(){
  const ref=useRef<HTMLDivElement>(null);
  const [split,setSplit]=useState<'open'|'joined'>('open');
@@ -35,15 +35,15 @@ function TheName(){
    <span className="kd-plus">+</span>
    <div className="kd-part" lang="sa"><span className="kd-deva">धेनु</span><span className="kd-roman">Dhenu</span></div>
   </div>
-  <p className="kd-name-line">Kāma is every wish you have ever made. Dhenu is a cow whose love never runs dry. Put them together: a cow who never says no to a wish.</p>
+  <p className="kd-name-line">Kāma is every wish you have ever made. Dhenu is a cow whose love never runs dry. Put them together and you get a name grandmothers say with folded hands.</p>
  </div>;
 }
 
-const homes=[['The mandir','It is said every god lives in her. Keep her by the diya.'],['The family','For generations, families have called her mother.'],['A child’s room','Little Krishna was called Gopal, the boy who looked after the cows. Now she looks after your little one.']] as const;
+const homes=[['In the mandir','Every god lives in her.'],['For the family','A mother to us all.'],['In a child’s room','Little Krishna’s favourite friend.']] as const;
 
 function PlentySection(){
  return <section className="kd-plenty" aria-labelledby="kd-plenty-heading">
-  <div className="kd-plenty-banner"><SetPhoto image="/kamdhenu/banner-pichwai.webp" alt="A painting in the Pichwai style: white cows in red saddle cloths walk with their calves through a green forest towards a lotus pond." sizes="100vw"/></div>
+  <figure className="kd-plenty-banner"><SetPhoto image="/kamdhenu/banner-pichwai.webp" alt="A painting in the Pichwai style: white cows in red saddle cloths walk with their calves through a green forest towards a lotus pond." sizes="100vw"/><figcaption>This painting style is called Pichwai. In Rajasthan, artists have painted Krishna’s cows like this for centuries.</figcaption></figure>
   <div className="kd-plenty-copy"><h2 id="kd-plenty-heading">She blesses every home.</h2>
    <ul className="kd-homes">{homes.map(([where,line])=><li key={where}><b>{where}</b><span>{line}</span></li>)}</ul>
   </div>
