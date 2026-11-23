@@ -9,19 +9,20 @@
 .kd-top .button:not(.primary):hover{background:color-mix(in srgb,var(--cream) 12%,transparent)}
 .kd-page .kd-preview-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
 
-/* काम + धेनु: joined as one word, then they come apart into their meanings */
-.kd-name{display:flex;align-items:flex-start;margin-bottom:28px}
+/* काम + धेनु: joined as one word, then they come apart and a warm line says what they mean */
+.kd-name{margin-bottom:28px}
+.kd-word{display:flex;align-items:flex-start}
 .kd-part{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
 .kd-part+.kd-plus+.kd-part{align-items:flex-start;text-align:left}
 .kd-deva{font-size:clamp(64px,6.4vw,96px);font-weight:700;line-height:1.15;color:var(--ghee)}
 .kd-roman{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:4px;opacity:.75}
-.kd-gloss{font-size:18px;font-weight:600;line-height:1.2;margin-top:2px}
 .kd-plus{flex:none;width:clamp(40px,4vw,64px);text-align:center;font-size:clamp(30px,3vw,44px);line-height:clamp(74px,7.4vw,110px);font-weight:300;color:var(--ghee);overflow:hidden}
-.kd-plus,.kd-roman,.kd-gloss{transition:width 1.1s cubic-bezier(.2,.7,.2,1),opacity .9s ease .25s}
+.kd-name-line{font-size:18px;line-height:1.55;max-width:32em;margin-top:16px}
+.kd-plus,.kd-roman,.kd-name-line{transition:width 1.1s cubic-bezier(.2,.7,.2,1),opacity .9s ease .25s}
 .kd-name[data-split=joined] .kd-plus{width:0;opacity:0}
-.kd-name[data-split=joined] .kd-roman,.kd-name[data-split=joined] .kd-gloss{opacity:0}
+.kd-name[data-split=joined] .kd-roman,.kd-name[data-split=joined] .kd-name-line{opacity:0}
 
-/* She brings plenty home: the Pichwai banner and three homes */
+/* She blesses every home: the Pichwai banner and three homes */
 .kd-plenty{background:var(--pichwai);color:var(--cream)}
 .kd-plenty-banner img{display:block;width:100%;height:auto}
 .kd-plenty-copy{max-width:640px;margin:0 auto;padding:64px 20px 80px}
@@ -49,5 +50,6 @@
  .kd-plenty-copy{padding:40px 20px 56px}
  .kd-homes li{grid-template-columns:1fr;gap:4px}
  .kd-homes span{font-size:17px}
+ .kd-name-line{font-size:17px}
 }
-@media(prefers-reduced-motion:reduce){.kd-plus,.kd-roman,.kd-gloss{transition:none}}
+@media(prefers-reduced-motion:reduce){.kd-plus,.kd-roman,.kd-name-line{transition:none}}

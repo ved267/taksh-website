@@ -19,7 +19,7 @@ const gallery:PhotoInfo[]=[
  {image:'/kamdhenu/gallery-06-size.webp',label:'Size',alt:'The set with dimension lines: about 32 cm long and about 23 cm tall.'},
 ];
 
-// The name, at the top of the buy column: काम (a wish) + धेनु (the cow who gives) come apart once it is in view.
+// The name, at the top of the buy column: काम + धेनु come apart once in view, then a warm line says what they mean.
 function TheName(){
  const ref=useRef<HTMLDivElement>(null);
  const [split,setSplit]=useState<'open'|'joined'>('open');
@@ -29,14 +29,17 @@ function TheName(){
   const io=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){timer=window.setTimeout(()=>setSplit('open'),450);io.disconnect()}},{threshold:.6});
   io.observe(node);return()=>{io.disconnect();clearTimeout(timer)};
  },[]);
- return <div ref={ref} className="kd-name" data-split={split} role="group" aria-label="What Kamdhenu means: Kāma, a wish, and Dhenu, the cow who gives">
-  <div className="kd-part" lang="sa" aria-hidden="true"><span className="kd-deva">काम</span><span className="kd-roman">Kāma</span><span className="kd-gloss">a wish</span></div>
-  <span className="kd-plus" aria-hidden="true">+</span>
-  <div className="kd-part" lang="sa" aria-hidden="true"><span className="kd-deva">धेनु</span><span className="kd-roman">Dhenu</span><span className="kd-gloss">the cow who gives</span></div>
+ return <div ref={ref} className="kd-name" data-split={split}>
+  <div className="kd-word" aria-hidden="true">
+   <div className="kd-part" lang="sa"><span className="kd-deva">काम</span><span className="kd-roman">Kāma</span></div>
+   <span className="kd-plus">+</span>
+   <div className="kd-part" lang="sa"><span className="kd-deva">धेनु</span><span className="kd-roman">Dhenu</span></div>
+  </div>
+  <p className="kd-name-line">Kāma is every wish you have ever made, out loud or in your heart. Dhenu is a cow whose love never runs dry. Put them together and you get a cow who never says no to a wish.</p>
  </div>;
 }
 
-const homes=[['The mandir','It is said every god lives in her. Keep her by the diya.'],['The family','For generations, families have called her mother.'],['A child’s room','The first roti of the day is hers. Love begins with giving.']] as const;
+const homes=[['The mandir','It is said every god lives in her. Keep her by the diya.'],['The family','For generations, families have called her mother.'],['A child’s room','Little Krishna was called Gopal, the boy who looked after the cows. Now she looks after your little one.']] as const;
 
 function PlentySection(){
  return <section className="kd-plenty" aria-labelledby="kd-plenty-heading">
