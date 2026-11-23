@@ -19,7 +19,7 @@ const gallery:PhotoInfo[]=[
  {image:'/kamdhenu/gallery-06-size.webp',label:'Size',alt:'The set with dimension lines: about 32 cm long and about 23 cm tall.'},
 ];
 
-// The name, at the top of the buy column: काम + धेनु come apart once in view, then a warm line says what they mean.
+// The name: a centred band under the product on laptops, right after Add to bag on phones. काम + धेनु come apart once in view, then a warm line says what they mean.
 function TheName(){
  const ref=useRef<HTMLDivElement>(null);
  const [split,setSplit]=useState<'open'|'joined'>('open');
@@ -35,7 +35,7 @@ function TheName(){
    <span className="kd-plus">+</span>
    <div className="kd-part" lang="sa"><span className="kd-deva">धेनु</span><span className="kd-roman">Dhenu</span></div>
   </div>
-  <p className="kd-name-line">Kāma is every wish you have ever made, out loud or in your heart. Dhenu is a cow whose love never runs dry. Put them together and you get a cow who never says no to a wish.</p>
+  <p className="kd-name-line">Kāma is every wish you have ever made. Dhenu is a cow whose love never runs dry. Put them together: a cow who never says no to a wish.</p>
  </div>;
 }
 
@@ -58,7 +58,8 @@ export function KamdhenuDetail({p}:{p:Product}){
  return <div className="rm-page kd-page" style={{'--rm-header-height':`${headerHeight}px`} as CSSProperties}>
   <div className="kd-top"><div className="wrap rm-opening"><nav className="breadcrumb" aria-label="Breadcrumb"><SiteLink href="/">Home</SiteLink><span>/</span><span>Kamdhenu</span></nav>
    <div className="rm-product-layout"><SetGallery photos={gallery} name="Kamdhenu"/>
-    <div className="kd-buy-column"><TheName/><SetBuyBox p={p} qty={qty} setQty={setQty} buyRef={buyRef} contactRef={contactRef} ready={ready} onAdd={()=>add(p,qty)}/><p className="kd-preview-note">Images are design previews; sizes are estimates.</p></div>
+    <div className="kd-buy-column"><SetBuyBox p={p} qty={qty} setQty={setQty} buyRef={buyRef} contactRef={contactRef} ready={ready} onAdd={()=>add(p,qty)}/><p className="kd-preview-note">Images are design previews; sizes are estimates.</p></div>
+    <TheName/>
    </div>
   </div></div>
   <PlentySection/>

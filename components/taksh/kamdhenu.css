@@ -10,10 +10,10 @@
 .kd-page .kd-preview-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
 
 /* काम + धेनु: joined as one word, then they come apart and a warm line says what they mean */
-.kd-name{margin-bottom:28px}
+.kd-name{margin-top:48px}
+@media(min-width:961px){.kd-page .rm-product-layout>.kd-name{grid-column:1/-1;text-align:center;margin:72px 0 24px}.kd-page .kd-word{justify-content:center}.kd-page .kd-name-line{margin-left:auto;margin-right:auto}}
 .kd-word{display:flex;align-items:flex-start}
-.kd-part{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
-.kd-part+.kd-plus+.kd-part{align-items:flex-start;text-align:left}
+.kd-part{display:flex;flex-direction:column;align-items:center;text-align:center}
 .kd-deva{font-size:clamp(64px,6.4vw,96px);font-weight:700;line-height:1.15;color:var(--ghee)}
 .kd-roman{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:4px;opacity:.75}
 .kd-plus{flex:none;width:clamp(40px,4vw,64px);text-align:center;font-size:clamp(30px,3vw,44px);line-height:clamp(74px,7.4vw,110px);font-weight:300;color:var(--ghee);overflow:hidden}
@@ -24,7 +24,7 @@
 
 /* She blesses every home: the Pichwai banner and three homes */
 .kd-plenty{background:var(--pichwai);color:var(--cream)}
-.kd-plenty-banner img{display:block;width:100%;height:auto}
+.kd-plenty-banner img{display:block;width:100%;height:min(560px,42vw);object-fit:cover;object-position:50% 55%}
 .kd-plenty-copy{max-width:640px;margin:0 auto;padding:64px 20px 80px}
 .kd-plenty-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.04}
 .kd-homes{list-style:none;margin:32px 0 0;padding:0}
@@ -34,11 +34,8 @@
 
 @media(max-width:960px){
  .kd-buy-column{display:contents}
- /* phone grid: the name sits under the photos; the rows below it move down one */
- .kd-page.rm-page .kd-name{grid-column:1/-1;grid-row:3;margin:22px 0 6px}
- .kd-page.rm-page .rm-facts{grid-row:4}
- .kd-page.rm-page .rm-pricing,.kd-page.rm-page .rm-order .quantity-row{grid-row:5}
- .kd-page.rm-page .rm-order>.button{grid-row:6}
+ /* phone grid: the name comes right after Add to bag; the rows below it move down one */
+ .kd-page.rm-page .kd-name{grid-column:1/-1;grid-row:6;margin:30px 0 6px}
  .kd-page.rm-page .rm-description{grid-row:7}
  .kd-page.rm-page .rm-contact{grid-row:8}
  .kd-page.rm-page .buyer-details{grid-row:9}
@@ -51,5 +48,6 @@
  .kd-homes li{grid-template-columns:1fr;gap:4px}
  .kd-homes span{font-size:17px}
  .kd-name-line{font-size:17px}
+ .kd-plenty-banner img{height:auto;aspect-ratio:4/3}
 }
 @media(prefers-reduced-motion:reduce){.kd-plus,.kd-roman,.kd-name-line{transition:none}}
