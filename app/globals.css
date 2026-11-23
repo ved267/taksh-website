@@ -50,4 +50,4 @@
 .set-card .stock-notice{margin:10px 0 12px}
 
 @media(max-width:640px){.bag-summary>.button.primary{position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:auto;z-index:39}.bag-page{padding-bottom:96px}body:has(.bag-summary) .floating-whatsapp{bottom:80px}}
-:root{--lotus:#b8236e;--dawn:#e6e7ee;--morning:#f4ecda;--afternoon:#f3e2c6;--dusk:#e3deea;--mud:#2a2219;--ink-wash:rgba(20,24,43,.06);--mud-scrim:rgba(20,16,12,.62);--mud-scrim-soft:rgba(20,16,12,.38);--mud-scrim-clear:rgba(20,16,12,0);--kumkum:#5c1916;--ghee:#f4c56a;--blush:#fcdfd2;--pichwai:#1d3a2b}
+:root{--lotus:#b8236e;--dawn:#e6e7ee;--morning:#f4ecda;--afternoon:#f3e2c6;--dusk:#e3deea;--mud:#2a2219;--ink-wash:rgba(20,24,43,.06);--mud-scrim:rgba(20,16,12,.62);--mud-scrim-soft:rgba(20,16,12,.38);--mud-scrim-clear:rgba(20,16,12,0);--kumkum:#5c1916;--ghee:#f4c56a;--pichwai:#1d3a2b}
