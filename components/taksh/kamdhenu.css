@@ -1,0 +1,84 @@
+.kd-page .kd-preview-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
+.kd-wish :focus-visible,.kd-plenty :focus-visible{outline-color:var(--saffron)}
+
+/* The name: काम + धेनु come apart as the section arrives, then a wish is folded and given to her */
+.kd-wish{background:var(--kumkum);color:var(--cream)}
+.kd-wish-inner{padding-top:104px;padding-bottom:104px}
+.kd-word{display:flex;justify-content:center;align-items:flex-start}
+.kd-part{flex:1 1 0;display:flex;flex-direction:column;align-items:flex-end;text-align:right;min-width:0}
+.kd-part+.kd-plus+.kd-part{align-items:flex-start;text-align:left}
+.kd-deva{font-size:clamp(76px,11vw,160px);font-weight:700;line-height:1.15;color:var(--ghee)}
+.kd-roman{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;opacity:.75}
+.kd-gloss{font-size:clamp(19px,2.1vw,26px);font-weight:600;line-height:1.15;margin-top:4px;max-width:9em}
+.kd-plus{flex:none;width:clamp(44px,7vw,112px);text-align:center;font-size:clamp(36px,4.5vw,64px);line-height:clamp(88px,12.6vw,184px);font-weight:300;color:var(--ghee);overflow:hidden}
+.kd-plus,.kd-roman,.kd-gloss{transition:width 1.1s cubic-bezier(.2,.7,.2,1),opacity .9s ease .25s}
+.kd-wish[data-split=joined] .kd-plus{width:0;opacity:0}
+.kd-wish[data-split=joined] .kd-roman,.kd-wish[data-split=joined] .kd-gloss{opacity:0}
+.kd-give{max-width:560px;margin:80px auto 0;min-height:200px;text-align:center}
+.kd-form h3{font-size:clamp(30px,3.2vw,42px);font-weight:700;letter-spacing:-.04em;margin-bottom:20px}
+.kd-field{display:flex;gap:10px}
+.kd-field input{flex:1;min-width:0;min-height:52px;border-radius:999px;border:1px solid color-mix(in srgb,var(--cream) 45%,transparent);background:color-mix(in srgb,var(--cream) 8%,transparent);color:var(--cream);padding:0 22px;font-size:16px}
+.kd-field input::placeholder{color:color-mix(in srgb,var(--cream) 60%,transparent)}
+.kd-private{font-size:13px;margin-top:14px;opacity:.7}
+.kd-slip-stage{position:relative;height:200px;display:grid;place-items:center}
+.kd-slip{position:relative;z-index:1;max-width:88%;background:var(--cream);color:var(--ink);padding:14px 22px;border-radius:3px;font-size:17px;font-style:italic;overflow-wrap:anywhere;box-shadow:0 6px 20px color-mix(in srgb,var(--ink) 30%,transparent);animation:kd-give 1.9s cubic-bezier(.45,0,.4,1) forwards}
+.kd-glow{position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--ghee) 85%,transparent) 0%,color-mix(in srgb,var(--ghee) 25%,transparent) 40%,transparent 70%);opacity:0;animation:kd-glow 1.9s ease-out forwards}
+@keyframes kd-give{0%{transform:none}22%{transform:scaleY(.22)}40%{transform:scale(.42,.22) rotate(-4deg)}100%{transform:translateY(-110px) scale(.12,.08) rotate(-8deg);opacity:0}}
+@keyframes kd-glow{0%,45%{opacity:0;transform:scale(.3) translateY(-50px)}80%{opacity:1;transform:scale(1.1) translateY(-60px)}100%{opacity:.7;transform:scale(1.3) translateY(-60px)}}
+.kd-kept p,.kd-kept h3{font-size:20px;animation:kd-in .8s ease both}
+.kd-kept h3{font-size:clamp(32px,3.4vw,46px);font-weight:700;letter-spacing:-.04em;color:var(--ghee);margin-bottom:8px}
+.kd-again{margin-top:20px;min-height:44px;border:0;background:transparent;color:var(--cream);text-decoration:underline;text-underline-offset:5px;font-weight:600;animation:kd-in .8s ease .3s both}
+@keyframes kd-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Every part of her is holy: points on the photo, names beside it */
+.kd-holy{background:var(--blush);color:var(--ink)}
+.kd-holy-inner{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:center;padding-top:96px;padding-bottom:96px}
+.kd-holy-photo{position:relative}
+.kd-crop{position:relative;aspect-ratio:1480/1100;overflow:hidden}
+.kd-holy .kd-crop img{position:absolute;max-width:none;width:108.11%;height:auto;left:-4.05%;top:-23.64%}
+.kd-dot{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;padding:0;border:0;background:transparent;display:grid;place-items:center}
+.kd-dot span{width:14px;height:14px;border-radius:50%;background:var(--saffron);box-shadow:0 0 0 4px color-mix(in srgb,var(--saffron) 35%,transparent),0 0 14px color-mix(in srgb,var(--saffron) 80%,transparent);transition:transform .3s ease,box-shadow .3s ease}
+.kd-dot.is-on span{transform:scale(1.25);background:var(--ink);box-shadow:0 0 0 4px var(--saffron),0 0 0 9px color-mix(in srgb,var(--saffron) 35%,transparent);animation:kd-pulse 2.2s ease-in-out infinite}
+@keyframes kd-pulse{50%{box-shadow:0 0 0 4px var(--saffron),0 0 0 14px transparent}}
+.kd-holy-copy h2{font-size:clamp(36px,4vw,56px)}
+.kd-holy-intro{font-size:18px;color:var(--muted);margin-top:14px}
+.kd-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.kd-chips button{min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ink) 25%,transparent);background:transparent;color:var(--ink);font-size:14px;font-weight:500}
+.kd-chips button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+.kd-caption{margin-top:28px;padding-top:20px;border-top:1px solid color-mix(in srgb,var(--ink) 15%,transparent);min-height:140px}
+.kd-caption-name{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kd-caption-line{font-size:clamp(24px,2.3vw,30px);font-weight:600;line-height:1.3;margin-top:8px;animation:kd-in .5s ease both}
+
+/* She brings plenty home: the Pichwai banner, three homes, one button */
+.kd-plenty{background:var(--pichwai);color:var(--cream)}
+.kd-plenty-banner img{display:block;width:100%;height:auto}
+.kd-plenty-copy{max-width:640px;margin:0 auto;padding:64px 20px 80px}
+.kd-plenty-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.04}
+.kd-homes{list-style:none;margin:32px 0 0;padding:0}
+.kd-homes li{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:16px 0;border-top:1px solid color-mix(in srgb,var(--cream) 20%,transparent);align-items:baseline}
+.kd-homes b{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ghee)}
+.kd-homes span{font-size:18px;line-height:1.5}
+.kd-builds{font-size:22px;font-weight:600;margin-top:36px}
+.kd-plenty-cta{margin-top:24px;min-width:260px}
+
+@media(max-width:960px){
+ .kd-buy-column{display:contents}.kd-preview-note{order:8}
+ .kd-wish-inner{padding-top:72px;padding-bottom:72px}
+ .kd-give{margin-top:56px}
+ .kd-holy-inner{grid-template-columns:1fr;gap:28px;padding-top:56px;padding-bottom:64px}
+}
+@media(max-width:760px){.kd-page.rm-page .rm-gallery-stage{height:auto;aspect-ratio:1/1}}
+@media(max-width:640px){
+ .kd-gloss{font-size:18px}
+ .kd-field{flex-direction:column}
+ .kd-field .button{width:100%}
+ .kd-plenty-copy{padding:40px 20px 56px}
+ .kd-homes li{grid-template-columns:1fr;gap:4px}
+ .kd-homes span{font-size:17px}
+ .kd-builds{font-size:22px}
+ .kd-plenty-cta{width:100%;min-width:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .kd-plus,.kd-roman,.kd-gloss{transition:none}
+ .kd-slip,.kd-glow,.kd-kept p,.kd-kept h3,.kd-again,.kd-caption-line,.kd-dot.is-on span{animation:none}
+}

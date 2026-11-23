@@ -283,6 +283,26 @@
       "imageWidth": 1600,
       "imageHeight": 1600,
       "description": "Two sunflowers. Build one each."
+    },
+    {
+      "slug": "kamdhenu",
+      "name": "Kamdhenu",
+      "subtitle": "The cow who grants every wish.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 550,
+      "approximate": true,
+      "price": 2999,
+      "setNumber": "KAMDHENU",
+      "age": 12,
+      "buildTime": "About 2 hours",
+      "dimensions": "About 32 cm long and 23 cm tall",
+      "weight": "To be confirmed",
+      "image": "/kamdhenu/gallery-01-hero.webp",
+      "imageAlt": "A white brick cow with a dark red saddle cloth and a bell at her neck, one front hoof raised, beside her post on a tan studded base.",
+      "imageWidth": 1600,
+      "imageHeight": 1600,
+      "description": "A white cow dressed as in a Pichwai painting: red cloth, a bell at her neck, one hoof raised."
     }
   ]
 }

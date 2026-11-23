@@ -912,17 +912,6 @@
     "medium": "/media/surajmukhi-gallery-03-at-home-900.78837dca6723.avif",
     "large": "/media/surajmukhi-gallery-03-at-home-1200.388cdf925efc.avif"
   },
-  "/surajmukhi/night.webp": {
-    "width": 1600,
-    "height": 1200,
-    "fullWidth": 1600,
-    "full": "/media/surajmukhi-night.ae8eb4ace6bd.webp",
-    "thumb": "/media/surajmukhi-night-160.fadd22d4bab7.webp",
-    "card": "/media/surajmukhi-night-320.a4d088621865.webp",
-    "small": "/media/surajmukhi-night-600.19bf0e4cd467.webp",
-    "medium": "/media/surajmukhi-night-900.4db87e32218f.webp",
-    "large": "/media/surajmukhi-night-1200.1ad545338843.webp"
-  },
   "/surajmukhi/gallery-04-back.webp": {
     "width": 1600,
     "height": 1600,
@@ -955,6 +944,94 @@
     "small": "/media/surajmukhi-gallery-06-building-600.a1681d2a249c.avif",
     "medium": "/media/surajmukhi-gallery-06-building-900.2868827d35ea.avif",
     "large": "/media/surajmukhi-gallery-06-building-1200.320aceab7ecc.avif"
+  },
+  "/surajmukhi/night.webp": {
+    "width": 1600,
+    "height": 1200,
+    "fullWidth": 1600,
+    "full": "/media/surajmukhi-night.ae8eb4ace6bd.webp",
+    "thumb": "/media/surajmukhi-night-160.fadd22d4bab7.webp",
+    "card": "/media/surajmukhi-night-320.a4d088621865.webp",
+    "small": "/media/surajmukhi-night-600.19bf0e4cd467.webp",
+    "medium": "/media/surajmukhi-night-900.4db87e32218f.webp",
+    "large": "/media/surajmukhi-night-1200.1ad545338843.webp"
+  },
+  "/kamdhenu/banner-pichwai.webp": {
+    "width": 2400,
+    "height": 1340,
+    "fullWidth": 2400,
+    "full": "/media/kamdhenu-banner-pichwai.1657150ba363.webp",
+    "thumb": "/media/kamdhenu-banner-pichwai-160.38c6bd662bf2.webp",
+    "card": "/media/kamdhenu-banner-pichwai-320.2d2556d5ac2d.webp",
+    "small": "/media/kamdhenu-banner-pichwai-600.b18299859634.webp",
+    "medium": "/media/kamdhenu-banner-pichwai-900.3c0e396f031b.webp",
+    "large": "/media/kamdhenu-banner-pichwai-1200.430c99531861.webp"
+  },
+  "/kamdhenu/gallery-01-hero.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/kamdhenu-gallery-01-hero.2a1617f1c472.webp",
+    "thumb": "/media/kamdhenu-gallery-01-hero-160.7d4166f2431d.webp",
+    "card": "/media/kamdhenu-gallery-01-hero-320.93746774e597.webp",
+    "small": "/media/kamdhenu-gallery-01-hero-600.5e0316ed6c4f.webp",
+    "medium": "/media/kamdhenu-gallery-01-hero-900.df8b17d569eb.webp",
+    "large": "/media/kamdhenu-gallery-01-hero-1200.fb98098b9730.avif"
+  },
+  "/kamdhenu/gallery-02-mandir.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/kamdhenu-gallery-02-mandir.302b4f2d69ed.webp",
+    "thumb": "/media/kamdhenu-gallery-02-mandir-160.11f4970d913f.webp",
+    "card": "/media/kamdhenu-gallery-02-mandir-320.9e6756bc1845.webp",
+    "small": "/media/kamdhenu-gallery-02-mandir-600.9eedc9b39b3d.webp",
+    "medium": "/media/kamdhenu-gallery-02-mandir-900.7901ff3852bc.avif",
+    "large": "/media/kamdhenu-gallery-02-mandir-1200.8887117577ce.avif"
+  },
+  "/kamdhenu/gallery-03-new-home.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/kamdhenu-gallery-03-new-home.900273a5185a.webp",
+    "thumb": "/media/kamdhenu-gallery-03-new-home-160.1593a5820697.webp",
+    "card": "/media/kamdhenu-gallery-03-new-home-320.9cd2c864d00f.webp",
+    "small": "/media/kamdhenu-gallery-03-new-home-600.358ec0338e25.webp",
+    "medium": "/media/kamdhenu-gallery-03-new-home-900.c15ed1744e69.avif",
+    "large": "/media/kamdhenu-gallery-03-new-home-1200.4a8c2b28a4dd.avif"
+  },
+  "/kamdhenu/gallery-04-childs-room.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/kamdhenu-gallery-04-childs-room.f3729fbdfbeb.webp",
+    "thumb": "/media/kamdhenu-gallery-04-childs-room-160.3f9b5ca7ee71.webp",
+    "card": "/media/kamdhenu-gallery-04-childs-room-320.2ff8542c92e8.webp",
+    "small": "/media/kamdhenu-gallery-04-childs-room-600.b0ddc23f271d.avif",
+    "medium": "/media/kamdhenu-gallery-04-childs-room-900.c3c12001723f.avif",
+    "large": "/media/kamdhenu-gallery-04-childs-room-1200.119fc92d5eca.avif"
+  },
+  "/kamdhenu/gallery-05-head.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/kamdhenu-gallery-05-head.b7f5f26f0879.webp",
+    "thumb": "/media/kamdhenu-gallery-05-head-160.73cae280201a.webp",
+    "card": "/media/kamdhenu-gallery-05-head-320.e3fbc8c69395.webp",
+    "small": "/media/kamdhenu-gallery-05-head-600.34bdd9a5109a.webp",
+    "medium": "/media/kamdhenu-gallery-05-head-900.045c0ef6e8a5.avif",
+    "large": "/media/kamdhenu-gallery-05-head-1200.d415b6b48592.avif"
+  },
+  "/kamdhenu/gallery-06-size.webp": {
+    "width": 1600,
+    "height": 1600,
+    "fullWidth": 1600,
+    "full": "/media/kamdhenu-gallery-06-size.e4e04c11da76.webp",
+    "thumb": "/media/kamdhenu-gallery-06-size-160.1c13265ba6c0.webp",
+    "card": "/media/kamdhenu-gallery-06-size-320.a99c0d26c6c2.webp",
+    "small": "/media/kamdhenu-gallery-06-size-600.142e4b608690.webp",
+    "medium": "/media/kamdhenu-gallery-06-size-900.95a7396504f5.webp",
+    "large": "/media/kamdhenu-gallery-06-size-1200.11b069471df8.avif"
   },
   "/gully-cricket/banner-golden-hour.png": {
     "width": 1920,
