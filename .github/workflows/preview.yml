@@ -19,7 +19,11 @@ jobs:
       (startsWith(github.head_ref, 'claude/') || startsWith(github.head_ref, 'codex/'))))
     name: Build preview without credentials
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Build time measured on GitHub runners: 14 min 3 s on 21 Nov 2026, 20 min 20 s on 24 Nov 2026
+    # (the build regenerates every image derivative from scratch; the Kamdhenu page added more).
+    # 15 minutes cancelled three production deploys in a row and every branch preview; Validate
+    # survived only because its own timeout is 30. Raised with headroom until the build is cached.
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
