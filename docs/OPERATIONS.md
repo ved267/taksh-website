@@ -91,6 +91,17 @@ Owner decision, 9 November 2026: claude/* pull requests merge themselves once Va
 
 **Cold Sites backup.** On 7 November 2026, the Sites integration changed v60 project `appgprj_6abff32e49a88191a4f182d4a3f59b98` to owner-only. Public access is disabled. The final D1 export contains 13 order records and one reporting-state row, plus source session and rate-limit data kept in the private export. Comparison with the cutover snapshot found zero new records and zero late submissions. Reconciliation with Cloudflare planned zero writes and found zero conflicts. The Sites integration has no R2 export capability. Zero support records reference files, and the bucket remains with the retained project. The owner may decide on deletion from **20 November 2026**. Resolve any need for a full bucket copy before deletion.
 
+**Check the browser measurement (Pixel, Clarity, Google tag).** All three load from one place, `lib/tracking.ts`, and only when every one of these holds: `brand.ga` looks like `G-…`; `location.hostname` is exactly `taksh.store` (never localhost, a workers.dev host or a preview host); the path is not under `/admin`; `localStorage['taksh-internal-traffic']` is not `1`; the request is not classed automated (`taksh_auto=1` cookie, `navigator.webdriver`, or a user agent containing bot, crawler, spider, headless, preview or facebookexternalhit — `lib/bot-domain.mjs`); and the stored analytics choice is not off, the default being on. The Pixel and Clarity files then download on `requestIdleCallback` with a 4-second timeout (2-second `setTimeout` fallback), so allow about ten seconds before judging a page.
+
+The owner's own browser is excluded for good after a single `/admin` visit, which makes every hand check look as if the Pixel were dead. Read and clear that flag in the browser console on taksh.store:
+
+```
+localStorage.getItem('taksh-internal-traffic')                      // "1" means this browser is excluded
+localStorage.removeItem('taksh-internal-traffic'); location.reload() // measure this browser again
+```
+
+`tests/tracking-lifecycle.test.mjs` covers both halves of that, so the way back stays true. To check as a real visitor instead, drive a clean browser profile with Playwright, set `navigator.webdriver` to false and use an ordinary user agent (otherwise the automated rule excludes the run), then watch requests to `facebook.com/tr`: a set page sends PageView and ViewContent, Add to bag sends AddToCart, opening `/checkout` sends InitiateCheckout. Never submit the checkout form in a test — that saves a real request and sends a real server-side Lead.
+
 ## Private Mac locations
 
 - Final Sites D1 export and checksum manifest: `/Users/devanshsmac/Desktop/Taksh Website Export/2026-11-07/private-data/sites-final.json` and `sites-final-manifest.json` in the same folder.
@@ -104,3 +115,5 @@ No scheduled website task depends on the Mac. The monthly D1 copy automation is 
 ## Lessons
 
 Use the exact published v60 baseline for parity. Build previews without deployment secrets. Verify the hosted run and compare restored contents as well as counts. If the main size report expired, dispatch validate.yml on main and retry the PR. The owner accepted a staging desktop LCP difference of about 0.25 seconds on Bharat and Gully Cricket. Claude owns the speed follow-up and the 72-hour watch.
+
+Browser measurement can go quiet without a single test failing, because nothing downstream breaks when the loaders disappear. `scripts/check-performance.mjs` now asserts that the built client still carries the Pixel, Clarity and Google tag loaders, the three identifiers and the funnel event names; `tests/tracking-lifecycle.test.mjs` locks the browser funnel, which event carries a server-shared `event_id` (only `Lead` does) and the owner-exclusion recovery. Running `npm run build` on the Mac rewrites `lib/image-assets.json` with different derivative hashes, because the local image library differs from CI's: never commit that churn (`git checkout -- lib/image-assets.json`), since the generated files under `public/media` are not in Git and CI regenerates files and manifest together.

@@ -63,3 +63,22 @@ for(const file of gullyFiles){
  assert.ok(fs.statSync('public'+entry.thumb).size<12_000);
 }
 console.log('All 17 Gully Cricket originals retain exact bytes and full resolution.');
+
+// The Pixel, Clarity and the Google tag are loaded from one place (lib/tracking.ts) by code that a
+// refactor or a tree-shake can drop without failing a single test: that is invisible for weeks,
+// because the site keeps working and only the measurement goes quiet (job 2026-11-25-01).
+// Assert the built client still carries all three loaders and the funnel the ad sets optimise on.
+const clientChunks=path.join(root,'dist/client/_next/static/chunks');
+const clientJs=fs.readdirSync(clientChunks,{recursive:true}).filter(f=>typeof f==='string'&&f.endsWith('.js'))
+ .map(f=>fs.readFileSync(path.join(clientChunks,f),'utf8')).join('\n');
+for(const needle of [
+ 'connect.facebook.net/en_US/fbevents.js',   // Meta Pixel library
+ 'www.clarity.ms/tag/',                      // Clarity
+ 'googletagmanager.com/gtag/js',             // Google tag
+ '29283360584637655',                        // dataset "Taksh website"
+ 'z9fvuelbga',                               // Clarity project
+ 'G-NHQFYHTNLP',                             // GA4 measurement
+ 'InitiateCheckout','AddToCart','ViewContent','AddPaymentInfo',
+]) assert.ok(clientJs.includes(needle),'The built client no longer ships "'+needle+'": browser measurement would be silently dead.');
+console.log('Pixel, Clarity and Google tag loaders plus the funnel events are present in the built client.');
+
