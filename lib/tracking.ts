@@ -6,6 +6,8 @@ export const analyticsConfigured = /^G-[A-Z0-9]+$/.test(brand.ga);
 export const analyticsChoiceKey = 'taksh-analytics-consent';
 export function internalTracking(){try{return excludedFromTracking(location.hostname,navigator.userAgent,localStorage.getItem('taksh-internal-traffic')==='1',navigator.webdriver===true||/(?:^|;\s*)taksh_auto=1/.test(document.cookie))}catch{return false}}
 let tracker:ReturnType<typeof createTracker>|undefined;
+let eventSeq=0;const eventOrigin=Math.random().toString(36).slice(2,10);
+function browserEventId(){return `b.${eventOrigin}.${++eventSeq}`}
 function currentPage() {
   const url = safePage(location.href,catalogueProducts);
   const path = new URL(url).pathname;
@@ -37,7 +39,9 @@ function instance() {
         const clarity=document.createElement('script');clarity.async=true;clarity.src=`https://www.clarity.ms/tag/${brand.clarity}`;document.head.appendChild(clarity);
       });
     },
-    send:(name:string,data:Record<string,unknown>,meta?:{eventId?:string}) => {const p=currentPage();window.gtag?.('set',{page_location:p.url,page_title:p.title});window.gtag?.('event',name,{...data,page_location:p.url,page_title:p.title});const px=pixelPayload(name,data);if(px)window.fbq?.('track',px.event,px.params,...(meta?.eventId?[{eventID:meta.eventId}]:[]))}
+    // Every Pixel event carries an eventID: the request reference when a server event shares it (Lead),
+    // otherwise a per-fire browser id, so Meta can deduplicate any browser/server pair we add later.
+    send:(name:string,data:Record<string,unknown>,meta?:{eventId?:string}) => {const p=currentPage();window.gtag?.('set',{page_location:p.url,page_title:p.title});window.gtag?.('event',name,{...data,page_location:p.url,page_title:p.title});const px=pixelPayload(name,data);if(px)window.fbq?.('track',px.event,px.params,{eventID:meta?.eventId||browserEventId()})}
   });
   return tracker;
 }
@@ -45,6 +49,10 @@ export function track(name:'ViewContent'|'AddToCart'|'InitiateCheckout'|'Lead'|'
   const t = instance();if (!t) return;const p=currentPage();t.page(p.url,p.title);t.event(name,data);
 }
 function disableInternal(){tracker?.consent(false);window.gtag?.('consent','update',{analytics_storage:'denied'});(window as unknown as Record<string,unknown>)[`ga-disable-${brand.ga}`]=true;}
+// The owner's browser keeps this flag after any /admin visit. Reading and clearing it keeps the
+// exclusion deliberate instead of a permanent silence nobody can see (job 2026-11-25-01).
+export function internalExclusion(){try{return localStorage.getItem('taksh-internal-traffic')==='1'}catch{return false}}
+export function clearInternalExclusion(){try{localStorage.removeItem('taksh-internal-traffic')}catch{return false};(window as unknown as Record<string,unknown>)[`ga-disable-${brand.ga}`]=false;return true}
 function markInternalRoute(){if(location.pathname.startsWith('/admin')){try{localStorage.setItem('taksh-internal-traffic','1')}catch{};disableInternal();}}
 let observingInternal=false;
 export function trackRoutePageView() {markInternalRoute();const t=instance();if(t){const p=currentPage();t.page(p.url,p.title)}}
