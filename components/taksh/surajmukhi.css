@@ -25,4 +25,5 @@
  .sm-story .sm-never{padding:32px 0 56px;font-size:32px}
 }
 @media(prefers-reduced-motion:reduce){.sm-story,.sm-beat p,.sm-story-stage figure{transition:none}}
+@media(max-width:960px){.sm-buy-column{display:contents}.sm-preview-note{order:8}}
 @media(max-width:760px){.sm-page.rm-page .rm-gallery-stage{height:auto;aspect-ratio:1/1}}
