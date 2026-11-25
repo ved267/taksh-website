@@ -32,7 +32,7 @@ export function NonsenseDetail({p}:{p:Product}){
     <ChandrayaanGallery photos={gallery} folder="nonsense" showHomePreview={false}/>
     <div className="ch3-buy">
      <div className="ch3-title"><h1>Ulta Chashma</h1><p className="product-literal">Buildable brick glasses and display stand.</p></div>
-     <div className="ch3-facts"><span>Ages 8+</span><span>About 200 pieces</span><span>{p.buildTime}</span><span>Craft</span></div>
+     <div className="ch3-facts"><span>About 200 pieces</span><span>{p.buildTime}</span><span>Craft</span></div>
      <div className="ch3-description"><p className="nonsense-intro" lang="hi-Latn">{p.description}</p><p style={{marginTop:16}}>Blue brick glasses you build yourself, on their own black display stand. They are about life-size and made for the shelf, not for wearing. A small gift for anyone who likes to see the world a little differently.</p><p style={{marginTop:12}}>{inTheBox(p)}</p></div>
      <div className="ch3-pricing"><div className="price-block"><span className="price-tag">{productMoney(p)}</span><small>MRP inclusive of all taxes</small></div></div>
      <StockNotice/><div className="ch3-order"><div className="quantity-row"><span>Quantity</span><Stepper value={qty} onChange={setQty}/></div><button ref={buyRef} className="button primary full" onClick={()=>ready&&add(p,qty)}>Add to bag</button></div>

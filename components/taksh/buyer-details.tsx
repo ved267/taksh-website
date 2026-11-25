@@ -1,3 +1,4 @@
 import {type Product} from '@/lib/shop';
 import {SiteLink} from './site-link';
-export function BuyerDetails({p}:{p:Product}){return <details className="buyer-details"><summary>Size, delivery & returns</summary><div><p><strong>Assembled size</strong><br/>{p.dimensions}</p><p className="small muted">Size and build-time guidance are estimates pending final product checks.</p><p>Free shipping in India. Allow 5–7 days after dispatch.</p><p>Unopened boxes can be refunded. Opened boxes can be replaced if there’s a problem. Missing pieces are replaced free.</p><SiteLink href="/returns">Returns and missing pieces</SiteLink></div></details>}
+import {policy} from '@/lib/policy';
+export function BuyerDetails({p}:{p:Product}){return <details className="buyer-details"><summary>Size, delivery & returns</summary><div><p><strong>Assembled size</strong><br/>{p.dimensions}</p><p className="small muted">Size and build-time guidance are estimates pending final product checks.</p><p>{policy.delivery}</p><p>{policy.refund}<br/>{policy.missing}</p><SiteLink href="/returns">Returns and missing pieces</SiteLink></div></details>}
