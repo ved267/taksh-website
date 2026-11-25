@@ -34,3 +34,4 @@
  .home-why h3{font-size:19px;padding:12px 0}
 }
 @media(max-width:760px){.set-card-line{font-size:13px;margin-bottom:4px}}
+@media(max-width:760px){.home-set-group .set-card h3{min-height:0}}
