@@ -1,12 +1,12 @@
-'use client';
 import {SiteLink} from './site-link';
-import {ProductGrid} from './cards';
-import {useStore} from './store';
+import {SetEndingButton} from './set-ending-button';
 import {products,productMoney,type Product} from '@/lib/shop';
+import {imageAsset,imageSrcSet} from '@/lib/images';
 import './set-ending.css';
 
 // The end of every set page (owner decision, 25 Nov 2026): Size and space where the page has none,
-// one closing line with Add to bag, then three other sets. Padma and 1983 Trophy close inside their own story.
+// one closing line with Add to bag, then three other sets. Rendered on the server: only the button ships code.
+// Padma and 1983 Trophy close inside their own story.
 const closing:Record<string,string>={
  'map-of-india':'Keep a little India close.',
  'chandrayaan-3':'Bring the landing home.',
@@ -28,10 +28,10 @@ const sizes:Record<string,Size>={
 // Same level first, then the rest, in catalogue order after this set.
 function related(p:Product){const i=products.findIndex(x=>x.slug===p.slug),rest=[...products.slice(i+1),...products.slice(0,i)].filter(x=>!x.catalogueOnly);return [...rest.filter(x=>x.level===p.level),...rest.filter(x=>x.level!==p.level)].slice(0,3)}
 export function SetEnding({p}:{p:Product}){
- const{add,ready}=useStore();const line=closing[p.slug],size=sizes[p.slug];
+ const line=closing[p.slug],size=sizes[p.slug];
  return <>
   {size&&<section className="wrap se-size" aria-labelledby="se-size-heading"><h2 id="se-size-heading">Size and space.</h2><dl>{size.rows.map(([k,v])=><div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl><p>{size.note}</p></section>}
-  {line&&<section className="wrap se-close" aria-label={'Bring home '+p.name}><h2>{line}</h2><button className="button primary" disabled={!ready} aria-label={`Add ${p.name} to bag`} onClick={()=>add(p)}>Add to bag · {productMoney(p)}</button></section>}
-  <section className="wrap se-more" aria-labelledby="se-more-heading"><h2 id="se-more-heading">Build another.</h2><ProductGrid items={related(p)} editorial={false}/><div className="product-return"><SiteLink href="/sets">See all sets</SiteLink></div></section>
+  {line&&<section className="wrap se-close" aria-label={'Bring home '+p.name}><h2>{line}</h2><SetEndingButton slug={p.slug} label={'Add to bag · '+productMoney(p)}/></section>}
+  <section className="wrap se-more" aria-labelledby="se-more-heading"><h2 id="se-more-heading">Build another.</h2><ul className="se-cards">{related(p).map(x=><li key={x.slug}><SiteLink href={'/sets/'+x.slug}><img src={imageAsset(x.image||'','small')} srcSet={imageSrcSet(x.image||'')} sizes="(max-width:760px) 60vw, 360px" width={700} height={700} alt={x.imageAlt||x.name} loading="lazy" decoding="async"/><h3>{x.shortName||x.name}</h3>{x.subtitle&&<p>{x.subtitle}</p>}<strong>{productMoney(x)}</strong></SiteLink></li>)}</ul><div className="product-return"><SiteLink href="/sets">See all sets</SiteLink></div></section>
  </>;
 }
