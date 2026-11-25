@@ -1,0 +1,54 @@
+/* The top: the product on kumkum red, with the name split above the title */
+.kd-top{background:var(--kumkum);color:var(--cream);--line:color-mix(in srgb,var(--cream) 24%,transparent);--muted:color-mix(in srgb,var(--cream) 74%,transparent)}
+.kd-top :focus-visible,.kd-plenty :focus-visible{outline-color:var(--saffron)}
+.kd-top .rm-title>p{color:var(--ghee)}
+.kd-top .stepper{background:transparent}
+.kd-top .rm-counter,.kd-top .rm-gallery-arrow{color:var(--ink)}
+.kd-top .rm-thumbnails button[aria-pressed=true]{border-color:var(--ghee)}
+.kd-top .button.primary{color:var(--ink)}
+.kd-top .button:not(.primary):hover{background:color-mix(in srgb,var(--cream) 12%,transparent)}
+.kd-page .kd-preview-note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
+
+/* काम + धेनु: joined as one word, then they come apart and a warm line says what they mean */
+.kd-name{margin-top:48px}
+@media(min-width:961px){.kd-page .rm-product-layout>.kd-name{grid-column:1/-1;text-align:center;margin:72px 0 24px}.kd-page .kd-word{justify-content:center}.kd-page .kd-name-line{margin-left:auto;margin-right:auto}}
+.kd-word{display:flex;align-items:flex-start}
+.kd-part{display:flex;flex-direction:column;align-items:center;text-align:center}
+.kd-deva{font-size:clamp(64px,6.4vw,96px);font-weight:700;line-height:1.15;color:var(--ghee)}
+.kd-roman{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:4px;opacity:.75}
+.kd-plus{flex:none;width:clamp(40px,4vw,64px);text-align:center;font-size:clamp(30px,3vw,44px);line-height:clamp(74px,7.4vw,110px);font-weight:300;color:var(--ghee);overflow:hidden}
+.kd-name-line{font-size:18px;line-height:1.55;max-width:32em;margin-top:16px}
+.kd-plus,.kd-roman,.kd-name-line{transition:width 1.1s cubic-bezier(.2,.7,.2,1),opacity .9s ease .25s}
+.kd-name[data-split=joined] .kd-plus{width:0;opacity:0}
+.kd-name[data-split=joined] .kd-roman,.kd-name[data-split=joined] .kd-name-line{opacity:0}
+
+/* She blesses every home: the Pichwai banner and three homes */
+.kd-plenty{background:var(--pichwai);color:var(--cream)}
+.kd-plenty-banner{margin:0}
+.kd-plenty-banner figcaption{font-size:14px;line-height:1.5;text-align:center;text-wrap:balance;color:color-mix(in srgb,var(--cream) 75%,transparent);padding:16px 20px 0;max-width:640px;margin:0 auto}
+.kd-plenty-banner img{display:block;width:100%;height:min(560px,42vw);object-fit:cover;object-position:50% 55%}
+.kd-plenty-copy{max-width:640px;margin:0 auto;padding:48px 20px 80px}
+.kd-plenty-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.04}
+.kd-homes{list-style:none;margin:32px 0 0;padding:0}
+.kd-homes li{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:16px 0;border-top:1px solid color-mix(in srgb,var(--cream) 20%,transparent);align-items:baseline}
+.kd-homes b{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ghee)}
+.kd-homes span{font-size:20px;line-height:1.45}
+
+@media(max-width:960px){
+ .kd-buy-column{display:contents}
+ /* phone grid: the description follows Add to bag (as on other set pages); the name closes the red section */
+ .kd-page.rm-page .kd-preview-note{grid-column:1/-1;grid-row:9}
+ .kd-page.rm-page .kd-name{grid-column:1/-1;grid-row:10;margin:36px 0 8px}
+ .kd-top .rm-pricing .price-tag{color:var(--cream)}
+}
+@media(max-width:760px){.kd-page.rm-page .rm-gallery-stage{height:auto;aspect-ratio:1/1}}
+@media(max-width:640px){
+ .kd-plenty-copy{padding:32px 20px 56px}
+ .kd-homes li{grid-template-columns:1fr;gap:4px}
+ .kd-homes span{font-size:17px}
+ .kd-name-line{font-size:17px}
+ .kd-plenty-banner{margin:0}
+.kd-plenty-banner figcaption{font-size:14px;line-height:1.5;text-align:center;text-wrap:balance;color:color-mix(in srgb,var(--cream) 75%,transparent);padding:16px 20px 0;max-width:640px;margin:0 auto}
+.kd-plenty-banner img{height:auto;aspect-ratio:4/3}
+}
+@media(prefers-reduced-motion:reduce){.kd-plus,.kd-roman,.kd-name-line{transition:none}}
