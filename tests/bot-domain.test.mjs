@@ -54,6 +54,26 @@ test('the browser mark needs strong evidence and prefetches never change it (Pix
  assert.equal(browserCookie(page({'accept-language':'en-IN'},16509),false),null,'preview and CI skip the network rule');
  assert.match(browserCookie(page({'accept-language':'en-IN',cookie:'taksh_auto=1'}),true),/Max-Age=0/);
 });
+test('a prefetch is counted as automated on the server, with or without a language (25 Nov 2026)',()=>{
+ const page=h=>new Request('https://taksh.store/sets',{headers:{'user-agent':phone,'accept-language':'en-IN,en;q=0.9',...h}});
+ // The gap this closes: a prefetch that sends a full set of headers used to be counted as a person.
+ for(const purpose of [{'sec-purpose':'prefetch'},{'sec-purpose':'prefetch;prerender'},{purpose:'prefetch'},{'x-purpose':'preview'}]){
+  const req=page(purpose);
+  assert.equal(requestFacts(req).purpose,true,JSON.stringify(purpose));
+  assert.equal(automatedFromRequest(req),true,JSON.stringify(purpose));
+  // The cookie rule is unchanged: a prefetch still never marks or unmarks the browser.
+  assert.equal(browserCookie(req,true),null,JSON.stringify(purpose));
+ }
+ // An ordinary visit is untouched by the new signal.
+ const person=page({});
+ assert.equal(requestFacts(person).purpose,false);
+ assert.equal(automatedFromRequest(person),false);
+ assert.equal(browserCookie(person,true),null);
+ // The fact is what counts, so a caller passing plain facts keeps working.
+ assert.equal(automatedRequest({...human,purpose:true}),true);
+ assert.equal(automatedRequest({...human,purpose:false}),false);
+ assert.equal(automatedRequest(human),false);
+});
 test('server counting marks automated requests and keeps test first',()=>{
  assert.equal(requestTraffic({},phone,false,true),'automated');
  assert.equal(requestTraffic({},phone,false,false),'external');
