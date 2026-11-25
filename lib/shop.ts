@@ -4,7 +4,7 @@ export const catalogueProducts=data.products.map(p=>({...p,level:levelForPieces(
 export const products=catalogueProducts;
 export type Product={gallery?:{image:string;label:string;alt:string}[];catalogueOnly?:boolean;slug:string;name:string;shortName?:string;subtitle?:string;collection?:string;level:string;pieces:number;approximate?:boolean;price:number;setNumber:string;age:number;maxAge?:number;buildTime:string;dimensions:string;inTheBox?:string;weight:string;image?:string;imageAlt?:string;imageWidth?:number;imageHeight?:number;description:string;stories:Record<'build'|'details'|'process'|'display',{title:string;text:string}>};
 export type CartItem={slug:string;quantity:number};
-export const money=(amount:number)=>'Rs '+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(amount);
+export const money=(amount:number)=>'₹'+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(amount);
 export {levels,catalogueLevels,normaliseLevel,levelDescription} from './levels.mjs';
 export const brand={whatsapp:'919830200960',instagram:'taksh.build',email:'[EMAIL]',legalName:'[LEGAL NAME]',address:'[ADDRESS]',gstin:'[GSTIN]',grievance:'[NAME, EMAIL]',country:'[COUNTRY]',bis:'[BIS_LICENCE]',pixel:'29283360584637655',clarity:'z9fvuelbga',ga:'G-NHQFYHTNLP'};
 export const origin='https://taksh.store';
