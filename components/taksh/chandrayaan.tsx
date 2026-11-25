@@ -133,7 +133,7 @@ export function ChandrayaanDetail({p}:{p:Product}){
   <div className="wrap ch3-opening"><nav className="breadcrumb" aria-label="Breadcrumb"><SiteLink href="/">Home</SiteLink><span>/</span><span>Chandrayaan-3</span></nav>
    <div className="ch3-top-layout"><ChandrayaanGallery showHomePreview={false}/><section className="ch3-buy" aria-label="Choose your set">
     <div className="ch3-title"><h1>Chandrayaan-3</h1><div className="ch3-craft-pair"><span><strong>Vikram</strong><span className="ch3-craft-role"> · Lander</span></span><span><strong>Pragyan</strong><span className="ch3-craft-role"> · Rover</span></span></div></div>
-    <div className="ch3-facts"><span>Ages {p.age}+</span><span>{pieceLabel(p)} pieces</span><span>{p.buildTime}</span><span>{p.level}</span></div>
+    <div className="ch3-facts"><span>{pieceLabel(p)} pieces</span><span>{p.buildTime}</span><span>{p.level}</span></div>
     <div className="ch3-description"><p>Build the lander, the rover and a piece of the Moon. The ramp unfolds, the rover rolls out, and the top lifts off.</p><p style={{marginTop:12}}>{inTheBox(p)}</p></div>
     <div className="ch3-pricing"><div className="price-block"><span className="price-tag">{productMoney(p)}</span><small>MRP inclusive of all taxes</small></div></div>
     <StockNotice/><div className="ch3-order"><div className="quantity-row"><span>Quantity</span><Stepper value={qty} onChange={setQty}/></div><button ref={buyRef} className="button primary full" onClick={()=>ready&&add(p,qty)}>Add to bag</button></div>
