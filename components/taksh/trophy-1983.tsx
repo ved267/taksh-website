@@ -48,8 +48,9 @@ export function Trophy1983Detail({p}:{p:Product}){
     <div className="tr-buy-column"><SetBuyBox p={p} qty={qty} setQty={setQty} buyRef={buyRef} contactRef={contactRef} ready={ready} onAdd={()=>add(p,qty)}/><p className="tr-preview-note">Images are design previews; sizes are estimates.</p></div>
    </div>
   </div>
-  <NoChance/>
+  {/* Owner note, 26 Nov 2026: the players' photo comes straight after the top. */}
   <ThankYou/>
+  <NoChance/>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }

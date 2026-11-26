@@ -15,10 +15,10 @@ import './nonsense.css';
 function WhatsAppIcon(){return <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M20.6 11.6a8.7 8.7 0 0 1-12.9 7.6L3 20.5l1.3-4.6a8.7 8.7 0 1 1 16.3-4.3Z"/><path d="M8.5 7.5c-.8.3-1 1.5-.5 2.6 1 2.4 3 4.4 5.4 5.2 1 .4 2.2-.1 2.6-1l-2.3-1.5-.9 1c-1.5-.6-2.7-1.8-3.3-3.2l.8-.9-1.2-2.2Z"/></svg>}
 
 const gallery=[
+ {image:'gallery-04-breakfast',label:'At breakfast',alt:'The Ulta Chashma brick glasses on a breakfast table.'},
  {image:'gallery-03-home',label:'On the shelf',alt:'The Ulta Chashma brick glasses displayed on a shelf at home.'},
  {image:'gallery-01-hero',label:'Ulta Chashma',alt:'Blue brick glasses on a black display stand.'},
  {image:'gallery-02-hinge-closeup',label:'The hinge',alt:'A close-up of the folding hinge on the blue brick glasses.'},
- {image:'gallery-04-breakfast',label:'At breakfast',alt:'The Ulta Chashma brick glasses on a breakfast table.'},
 ];
 
 export function NonsenseDetail({p}:{p:Product}){
