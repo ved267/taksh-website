@@ -1,5 +1,5 @@
 'use client';
-import {Fragment,useCallback,useEffect,useRef,useState} from 'react';
+import {useCallback,useEffect,useRef,useState} from 'react';
 import {Pause,Play} from 'lucide-react';
 import {imageAsset,imageInfo,imageSrcSet} from '@/lib/images';
 import {products} from '@/lib/shop';
@@ -58,7 +58,7 @@ export function HomeHero(){
   </div>
   <div className="home-feature-controls">
    <div className="home-feature-select" role="group" aria-label="Choose a set" onKeyDown={e=>{const i=controls.current.indexOf(document.activeElement as HTMLButtonElement);if(i<0)return;let next=i;if(e.key==='ArrowRight')next=(i+1)%slides.length;else if(e.key==='ArrowLeft')next=(i+slides.length-1)%slides.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;e.preventDefault();select(next);controls.current[next]?.focus()}}>
-    {slides.map((s,i)=><Fragment key={s.slug}>{i===5&&<span className="home-break" aria-hidden="true"/>}<button className="home-chip" ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{i===active&&<span key={active} className={`home-chip-fill${moving?' is-timed':''}`} style={{animationDuration:(i===0?LEAD_SECONDS:HERO_SECONDS)+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}<span className="home-chip-name">{s.label}</span></button></Fragment>)}
+    {slides.map((s,i)=><button key={s.slug} className="home-chip" ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{i===active&&<span key={active} className={`home-chip-fill${moving?' is-timed':''}`} style={{animationDuration:(i===0?LEAD_SECONDS:HERO_SECONDS)+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}<span className="home-chip-name">{s.label}</span></button>)}
    </div>
    <span className="sr-only" role="status">{error|| (busy?'Loading the selected photograph.':'')}</span>
   </div>
