@@ -32,3 +32,6 @@
 @media(min-width:961px){.ch3-facts{margin-top:14px}.ch3-moon{width:100%;height:clamp(34vw,60vh,56.28vw);max-height:none}.ch3-moon picture{width:100%;margin:0;mask-image:none}.ch3-moon img{object-fit:cover;object-position:center 85%}}
 @media(max-width:960px){.ch3-title{margin-bottom:12px}}
 @media(max-width:760px){.ch3-craft-pair{gap:12px;min-height:20px;line-height:20px}.ch3-craft-pair>span+span{padding-left:12px}.ch3-craft-pair strong{font-size:18px}.ch3-craft-role{font-size:11px}.ch3-title{margin-bottom:9px}}
+
+/* Owner note, 26 Nov 2026: on phones the set fills the screen, as on every set page. */
+@media(max-width:760px){.ch3-page .ch3-gallery .ch3-gallery-stage{height:auto;aspect-ratio:1/1;width:calc(100% + 40px);margin:0 -20px;border-radius:0}.ch3-page .ch3-gallery-stage:not([data-whole]) .ch3-main-image img{object-fit:cover}}

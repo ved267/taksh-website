@@ -50,3 +50,6 @@
 @media(max-width:960px){.rm-sun-layout{gap:32px}.rm-sun-layout h2{font-size:36px}}
 @media(max-width:760px){.rm-stone-pair{gap:16px;margin-top:20px}.rm-stone-pair figcaption{font-size:13px}.rm-sun-layout{grid-template-columns:1fr;gap:28px}.rm-sun-layout h2{font-size:33px;margin-bottom:20px}.rm-sun-layout p{font-size:15px;line-height:1.6;margin-top:16px}}
 @media(prefers-reduced-motion:reduce){.rm-page *{scroll-behavior:auto!important;transition:none!important}}
+
+/* Owner note, 26 Nov 2026: on phones the set fills the screen. The gallery runs edge to edge, square, and photos fill it (size photos stay whole). */
+@media(max-width:760px){.rm-page .rm-gallery .rm-gallery-stage{height:auto;aspect-ratio:1/1;width:calc(100% + 40px);margin:0 -20px;border-radius:0}.rm-page .rm-gallery-stage:not([data-whole]) .rm-main-image img{object-fit:cover}}
