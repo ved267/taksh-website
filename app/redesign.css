@@ -17,3 +17,22 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}.header-inner{gap:32px}.hea
 
 .phone-menu{position:relative}.phone-menu summary{list-style:none;cursor:pointer;color:inherit}.phone-menu summary::-webkit-details-marker{display:none}.phone-menu nav{position:absolute;right:0;top:calc(100% + 16px);min-width:260px;padding:20px;background:var(--cream);color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:0 12px 24px #14182b14}.phone-menu nav a{font-size:24px;min-height:52px;display:flex;align-items:center}.phone-menu[open] summary{background:#ffffff18;border-radius:50%}.checkout-draft-note{font-size:13px;color:var(--muted);line-height:1.5;margin-top:-8px}a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--cobalt);outline-offset:4px}.header :focus-visible,.footer :focus-visible{outline-color:var(--saffron)}
 @media(max-width:760px){.header .phone-menu{display:block}.phone-menu[open] nav{display:flex;flex-direction:column;gap:4px}.breadcrumb a{display:inline-flex;align-items:center;min-height:44px}.ch3-counter,.rm-counter{font-size:13px!important}.support-tip a{display:inline-flex;align-items:center;min-height:44px}.ch3-marker:disabled{opacity:1;cursor:default;pointer-events:none}.preorder-layout{gap:24px}.preorder-summary h2{margin-bottom:16px}.preorder-summary .summary-total{margin-top:12px}.preorder-layout .checkout-consent{line-height:1.6}}
+
+/* Phone menu, done properly (owner note, 26 Nov 2026): a full-width panel under the header, each link says where it goes. */
+.header{position:relative}
+.phone-menu{position:static}
+.phone-menu[open]::before{content:'';position:fixed;inset:0;z-index:40;background:color-mix(in srgb,var(--ink) 30%,transparent);animation:menu-fade .2s ease both}
+.phone-menu summary{position:relative;z-index:42}
+.phone-menu[open] nav{position:absolute;z-index:41;top:calc(100% + 8px);left:10px;right:10px;min-width:0;padding:6px 6px 10px;border:0;border-radius:18px;box-shadow:0 18px 40px color-mix(in srgb,var(--ink) 18%,transparent);display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:0;animation:menu-drop .22s cubic-bezier(.2,.7,.2,1) both}
+.phone-menu .phone-menu-link{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px;padding:12px 14px;border-radius:12px;font-size:inherit;color:var(--ink)}
+.phone-menu .phone-menu-link+.phone-menu-link{border-top:1px solid var(--line);border-radius:0}
+.phone-menu-link strong{display:block;font-family:var(--font-display);font-size:20px;font-weight:650;letter-spacing:-.02em;line-height:1.2}
+.phone-menu-link small{display:block;font-size:13px;color:var(--muted);margin-top:3px;line-height:1.35}
+.phone-menu-link[aria-current] strong{color:var(--cobalt)}
+.phone-menu-link svg{flex:0 0 18px;width:18px;height:18px;color:var(--muted)}
+.phone-menu-link:active{background:var(--tint)}
+.phone-menu .phone-menu-contact{display:flex;width:auto;align-items:center;justify-content:center;gap:10px;margin:8px 8px 0;min-height:48px;padding:0 16px;border-radius:999px;background:var(--tint);color:var(--ink);font-weight:600;font-size:15px}
+.phone-menu-contact svg{width:20px;height:20px}
+@keyframes menu-drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@keyframes menu-fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.phone-menu[open] nav,.phone-menu[open]::before{animation:none}}
