@@ -22,9 +22,9 @@ const gallery:PhotoInfo[]=[
  {image:asset('gallery-05-plates.png'),label:'A1 to D4',alt:'The map divided into 16 square plates, named A1 to D4.'},
 ];
 const steps=[
- {image:'life-06-one-plate.jpg',title:'Fill a plate.',text:'Follow the plan and press the dots on, one stud at a time.',alt:"A boy's finger pressing a blue dot onto a black studded plate."},
- {image:'life-07-joining.jpg',title:'Join it to the next.',text:'Two pins hold each plate to its neighbour.',alt:'Two finished plates being pushed together on two black pins.'},
- {image:'life-03-hanging.jpg',title:'Frame it and hang it.',text:'A built frame and two hangers are part of the set.',alt:'A sister and brother hanging the finished map with a spirit level.'},
+ {image:'life-06-one-plate.jpg',title:'Fill a plate.',alt:"A boy's finger pressing a blue dot onto a black studded plate."},
+ {image:'life-07-joining.jpg',title:'Join it to the next.',alt:'Two finished plates being pushed together on two black pins.'},
+ {image:'life-03-hanging.jpg',title:'Frame it and hang it.',alt:'A sister and brother hanging the finished map with a spirit level.'},
 ];
 const rivers=['Ganga','Yamuna','Indus','Narmada','Godavari','Kaveri','Brahmaputra'];
 
@@ -75,30 +75,27 @@ export function BharatDetail({p}:{p:Product}){
   </div>
   <section className="bh-map-section" aria-label="Interactive map of India"><BharatFrame/></section>
   <section className="bh-build bh-story" aria-labelledby="bh-build-heading"><div className="wrap">
-   <div className="bh-build-opening"><div className="bh-section-opening"><h2 id="bh-build-heading">One plate at a time.</h2><p>The map is sixteen black plates, each sixteen dots across. Fill one, join it to the next, and India grows across the floor.</p></div>
+   <div className="bh-build-opening"><div className="bh-section-opening"><h2 id="bh-build-heading">One plate at a time.</h2><p>Sixteen plates. Fill one, join it to the next.</p></div>
    <SetPhoto className="bh-photo bh-family" sizes="(max-width: 700px) 90vw, 50vw" image={asset('life-05-floor.jpg')} alt="A boy lying on a round rug pressing the last dot onto the map, his sister beside him checking the plan, their grandmother in an armchair and a cat asleep nearby."/></div>
    <ol className="bh-steps">{steps.map((step,i)=><li key={step.image}>
     <SetPhoto className="bh-photo" sizes="(max-width: 700px) 30vw, 30vw" image={asset(step.image)} alt={step.alt}/>
-    <div className="bh-step-copy"><div className="bh-step-title"><span aria-hidden="true">{i+1}</span><h3>{step.title}</h3></div><p>{step.text}</p></div>
+    <div className="bh-step-copy"><div className="bh-step-title"><span aria-hidden="true">{i+1}</span><h3>{step.title}</h3></div></div>
    </li>)}</ol>
   </div></section>
   <section className="bh-design bh-story" aria-labelledby="bh-design-heading">
-   <div className="wrap bh-design-opening"><h2 id="bh-design-heading">India never changes.<br/>The sea is yours.</h2><p>Outside India, every dot is flat and lifts off again. Start from kolam rings, leheriya waves or a night sea, then add your own boats, fish and stars.</p></div>
-   <div className="wrap bh-design-limit"><p className="bh-note">Preview patterns here. The box contains the colours of the original design to rearrange.</p></div>
+   <div className="wrap bh-design-opening"><h2 id="bh-design-heading">India never changes.<br/>The sea is yours.</h2><p>Every dot outside India lifts off. Make the sea your own.</p></div>
    <details className="bh-design-disclosure">
     <summary className="bh-design-toggle"><span className="bh-design-show">Try your design</span><span className="bh-design-hide">Close designer</span></summary>
     <BharatFrame design/>
-    <div className="wrap bh-design-limit"><p className="bh-note">This tool lets you try any of these patterns. In the box you have the dots of the box design to rearrange.</p></div>
    </details>
-   <div className="wrap bh-design-notes"><p className="bh-note">Twelve marker pins are in the box too, for the places that are yours.</p></div>
+   <div className="wrap bh-design-notes"><p className="bh-note">The box has the dots of the design shown, to rearrange.</p></div>
   </section>
   <section className="bh-rivers bh-story" aria-labelledby="bh-rivers-heading"><div className="wrap bh-rivers-layout">
    <SetPhoto className="bh-river-photo" sizes="45vw" image={asset('gallery-02-closeup.png')} alt="Close view of the round pieces, with blue river tiles sitting on top of them."/>
-   <div className="bh-rivers-copy"><h2 id="bh-rivers-heading">Seven rivers, one verse.</h2><p>An old bathing verse calls seven rivers into a handful of water. Six are on your map; the Brahmaputra takes the place of the Saraswati, believed to have dried up long ago.</p>
-   <ul className="bh-river-list" aria-label="The seven rivers">{rivers.map(name=><li key={name}>{name}</li>)}</ul>
-   <p className="bh-note bh-river-note">The rivers go on last: 109 blue tiles, laid on top of the finished states.</p></div>
+   <div className="bh-rivers-copy"><h2 id="bh-rivers-heading">Seven rivers, one verse.</h2><p>An old bathing verse names seven rivers. Your map has them all, the Brahmaputra in place of the Saraswati.</p>
+   <ul className="bh-river-list" aria-label="The seven rivers">{rivers.map(name=><li key={name}>{name}</li>)}</ul></div>
   </div></section>
-  <section className="wrap rm-specs" aria-labelledby="bh-size-heading"><h2 id="bh-size-heading">Size and space.</h2><dl><div><dt>Width</dt><dd>About 52.8 cm</dd></div><div><dt>Height</dt><dd>About 52.8 cm</dd></div><div><dt>Depth</dt><dd>About 2 cm</dd></div></dl><div className="rm-real-temple"><p>It needs a clear square of wall about 60 cm wide.</p><p>Scale: one dot is about 54 km.</p></div><p className="rm-disclaimer">The boundary of India is shown as depicted by the Survey of India. The map is a simplified mosaic and is not for navigation or legal use. Rivers are shown inside India only. Outside India the colours show height and depth; no other boundaries are drawn. The photographs on this page are imagined scenes; the map shown in them is the Taksh set.</p></section>
+  <section className="wrap bh-legal" aria-label="About the map"><p className="rm-disclaimer">The boundary of India is shown as depicted by the Survey of India. The map is a simplified mosaic and is not for navigation or legal use. Rivers are shown inside India only. Outside India the colours show height and depth; no other boundaries are drawn. The photographs on this page are imagined scenes; the map shown in them is the Taksh set.</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }

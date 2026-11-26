@@ -11,12 +11,12 @@ import './ram-mandir.css';
 import './surajmukhi.css';
 
 const gallery:PhotoInfo[]=[
+ {image:'/surajmukhi/gallery-03-at-home.webp',label:'At home',alt:'The pair in a glass bottle on a bedside table at golden hour, beside a folded note. Their shadows lean together on the wall.'},
  {image:'/surajmukhi/gallery-01-hero.webp',label:'Surajmukhi',alt:'Two brick sunflowers with crossed stems, their heads turned towards each other.'},
  {image:'/surajmukhi/gallery-04-back.webp',label:'From behind',alt:'The pair from behind: the green back of each head sits on a round joint at the top of its stem, and the stems cross.'},
  {image:'/surajmukhi/gallery-02-heads.webp',label:'Up close',alt:'The two heads up close: dark brown stud centres ringed in yellow, with pointed yellow and orange petals.'},
  {image:'/surajmukhi/gallery-05-joining.webp',label:'The click',alt:'One head about to click onto the top of its stem.'},
  {image:'/surajmukhi/gallery-06-building.webp',label:'Half built',alt:'Two flowers half built on a wooden table, with small piles of petals, stem pieces, leaves and studs sorted by colour.'},
- {image:'/surajmukhi/gallery-03-at-home.webp',label:'At home',alt:'The pair in a glass bottle on a bedside table at golden hour, beside a folded note. Their shadows lean together on the wall.'},
 ];
 
 const beats=[

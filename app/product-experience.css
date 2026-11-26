@@ -9,3 +9,5 @@
 @media(prefers-reduced-motion:reduce){[data-slot=dialog-content][data-state=open],[data-slot=dialog-overlay][data-state=open]{animation:none}}
 @media(max-width:760px){.footer{padding-bottom:88px}}
 @media(max-width:960px){.ch3-page.nonsense-page .ch3-top-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px}.ch3-page.nonsense-page .ch3-buy{display:contents;position:static}.ch3-page.nonsense-page .ch3-facts{margin:8px 0 0}.ch3-page.nonsense-page .ch3-facts>*{min-height:20px}.ch3-page.nonsense-page .ch3-description{margin:16px 0 0}.ch3-page.nonsense-page .ch3-title p{font-family:Figtree,sans-serif;font-weight:400;font-size:13px;letter-spacing:0;margin-top:5px}}
+/* Owner note,26 Nov 2026: on phones the set fills the screen. The gallery runs edge to edge, square, and photos fill it (size photos stay whole). */
+@media(max-width:760px){.rm-page .rm-gallery-stage,.ch3-page .ch3-gallery-stage{height:auto;aspect-ratio:1/1;width:calc(100% + 40px);margin:0 -20px;border-radius:0}.rm-page .rm-gallery-stage:not([data-whole]) .rm-main-image img,.ch3-page .ch3-gallery-stage:not([data-whole]) .ch3-main-image img{object-fit:cover}}

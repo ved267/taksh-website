@@ -24,11 +24,8 @@
 @media(min-width:961px) and (max-height:720px){.ch3-moon img{object-fit:contain;object-position:right center}.ch3-moon-copy{top:9%}.ch3-moon h2{font-size:34px}}
 /* Fit the complete scene even on wide, short laptops; blend only the empty left edge into the sky. */
 @media(min-width:641px){.ch3-moon picture{width:min(100%,106.61vh);margin-left:auto;mask-image:linear-gradient(to right,transparent,#000 14%)}.ch3-moon img{object-fit:contain;object-position:right center}}
-
-/* Size stays separate from the numbered instrument guide. */
-.ch3-size-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:36px;align-items:center}.ch3-size-layout img{display:block;width:100%;height:auto;object-fit:contain}.ch3-size-copy h3{font-size:30px;max-width:320px}.ch3-size-copy dl{margin:28px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ch3-size-copy dl>div{border-top:1px solid var(--line);padding-top:16px}.ch3-size-copy dt{font-size:13px;color:var(--muted)}.ch3-size-copy dd{margin:8px 0 0;font-size:20px;font-weight:600}.ch3-size-copy p{font-size:15px;color:var(--muted)}
-@media(max-width:960px){.ch3-size-layout{grid-template-columns:1fr;gap:24px}.ch3-size-layout figure{width:100%;max-width:600px;margin:auto}.ch3-size-copy h3{max-width:none}.ch3-size-copy dl{margin:20px 0}.ch3-tabs{max-width:100%;gap:22px}}
-@media(max-width:760px){.ch3-size-layout{gap:18px}.ch3-size-copy h3{font-size:24px}.ch3-size-copy dl{gap:10px;margin:16px 0}.ch3-size-copy dd{font-size:16px}.ch3-size-copy p{font-size:13px}.ch3-tabs{gap:18px}.ch3-tabs button{font-size:13px}}
+@media(max-width:960px){.ch3-tabs{max-width:100%;gap:22px}}
+@media(max-width:760px){.ch3-tabs{gap:18px}.ch3-tabs button{font-size:13px}}
 
 /* A compact pair of craft captions, using the existing brand type and palette. */
 .ch3-craft-pair{display:flex;align-items:center;gap:15px;margin-top:8px;min-height:24px;line-height:24px}.ch3-craft-pair>span{display:inline-flex;align-items:baseline;gap:4px;white-space:nowrap}.ch3-craft-pair>span+span{border-left:1px solid var(--line);padding-left:15px}.ch3-craft-pair strong{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:600;letter-spacing:-.025em;color:var(--cobalt)}.ch3-craft-role{font-size:12px;font-weight:400;color:var(--muted)}

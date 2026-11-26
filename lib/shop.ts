@@ -17,4 +17,6 @@ export const pieceLabel=(p:Product)=>(p.approximate?'About ':'')+p.pieces.toLoca
 export const ageLabel=(p:Product)=>p.maxAge?`${p.age}–${p.maxAge}`:`${p.age}+`;
 
 /** "In the box" line for set pages: catalogue text where a set has its own, then the built size. */
+// Owner note, 26 Nov 2026: no paragraphs under the buy button. One line on what comes in the box; size is in the dropdown.
+export const boxLine='Numbered bags · Printed instructions · Spare pieces';
 export function inTheBox(p:Pick<Product,'dimensions'|'inTheBox'>){return `${p.inTheBox??'In the box: numbered bags, a printed instruction book and spare pieces.'} Built size: ${p.dimensions.replace(/^About/,'about').replace(/\.\s*Life-size\.?$/,', life-size').replace(/\.$/,'')}.`}
