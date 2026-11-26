@@ -7,7 +7,7 @@ import {products} from '@/lib/shop';
 const slides=[
  {slug:'ram-mandir',label:'Ram Mandir',image:'/ram-mandir/ad-room-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Ram Mandir on a wooden sideboard in warm sunlight.'},
  {slug:'padma',label:'Padma',image:'/padma/gallery-04-at-home.webp',fit:'cover',pos:'50% 40%',alt:'The brick Padma lotuses on a wooden table beside a book and reading glasses.'},
- {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-01-hero.png',fit:'contain',pos:'50% 50%',alt:'The Gully Cricket Terrace House with green shutters, an open terrace and four figures playing cricket in front.'},
+ {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-06-at-home.png',fit:'cover',pos:'50% 50%',alt:'Two children on a rug playing cricket with the brick set while their grandmother watches.'},
  {slug:'map-of-india',label:'Map of India',image:'/bharat/product-page/life-05-floor.jpg',fit:'cover',pos:'50% 50%',alt:'A family building the India map on a round rug, with their grandmother nearby.'},
  {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
  {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
@@ -52,12 +52,12 @@ export function HomeHero(){
   <div className="home-intro"><h1>Brick-building sets that keep Indian stories and culture close</h1><p>For every age, to build together.</p></div>
   <div id="featured-photo" className="home-feature-photo" aria-busy={busy} onTouchStart={e=>{setHeld(true);start.current={x:e.touches[0].clientX,y:e.touches[0].clientY}}} onTouchEnd={e=>{setHeld(false);if(!start.current)return;const dx=e.changedTouches[0].clientX-start.current.x,dy=e.changedTouches[0].clientY-start.current.y;start.current=null;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))select(current.current+(dx<0?1:-1))}} onTouchCancel={()=>{setHeld(false);start.current=null}}>
    {previous!==null&&photo(previous,true)}{photo(active)}
+   {!still&&<button type="button" className="home-play" aria-label={rolling?'Pause the photos':'Start the photos'} onClick={()=>setRolling(v=>!v)}>{rolling?<Pause aria-hidden="true"/>:<Play aria-hidden="true"/>}</button>}
   </div>
   <div className="home-feature-controls">
    <div className="home-feature-select" role="group" aria-label="Choose a set" onKeyDown={e=>{const i=controls.current.indexOf(document.activeElement as HTMLButtonElement);if(i<0)return;let next=i;if(e.key==='ArrowRight')next=(i+1)%slides.length;else if(e.key==='ArrowLeft')next=(i+slides.length-1)%slides.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;e.preventDefault();select(next);controls.current[next]?.focus()}}>
     {slides.map((s,i)=><button key={s.slug} ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{s.label}<span className="home-step">{i===active&&<span key={active} className={`home-step-fill${moving?' is-timed':''}`} style={{animationDuration:HERO_SECONDS+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}</span></button>)}
    </div>
-   {!still&&<button type="button" className="home-play" aria-label={rolling?'Pause the photos':'Start the photos'} onClick={()=>setRolling(v=>!v)}>{rolling?<Pause aria-hidden="true"/>:<Play aria-hidden="true"/>}</button>}
    <span className="sr-only" role="status">{error|| (busy?'Loading the selected photograph.':'')}</span>
   </div>
  </div></section>;
