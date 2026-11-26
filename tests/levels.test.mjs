@@ -4,7 +4,7 @@ import {levels,levelForPieces} from '../lib/levels.mjs';
 import catalogue from '../lib/catalogue.json' with {type:'json'};
 test('ten sets use two levels',()=>{
  assert.deepEqual(levels.map(l=>l.name),['Master','Craft']);
- assert.deepEqual(catalogue.products.map(p=>p.slug),['chandrayaan-3','ram-mandir','map-of-india','gully-cricket','yellow-taxi','nonsense','padma','1983-trophy','surajmukhi','kamdhenu']);
- assert.deepEqual(catalogue.products.map(p=>[p.level,p.age,p.pieces,p.price]),[['Master',12,1250,6249],['Master',12,1500,7499],['Master',8,4470,8999],['Craft',8,600,2999],['Craft',9,350,1749],['Craft',8,200,1999],['Craft',8,240,1999],['Craft',12,520,2999],['Craft',12,400,1999],['Craft',12,550,2999]]);
+ assert.deepEqual(catalogue.products.map(p=>p.slug),['padma','ram-mandir','gully-cricket','map-of-india','chandrayaan-3','kamdhenu','surajmukhi','1983-trophy','yellow-taxi','nonsense']);
+ assert.deepEqual(catalogue.products.map(p=>[p.level,p.age,p.pieces,p.price]),[['Craft',8,240,1999],['Master',12,1500,7499],['Craft',8,600,2999],['Master',8,4470,8999],['Master',12,1250,6249],['Craft',12,550,2999],['Craft',12,400,1999],['Craft',12,520,2999],['Craft',9,350,1749],['Craft',8,200,1999]]);
  for(const p of catalogue.products)assert.equal(p.level,levelForPieces(p.pieces));
 });

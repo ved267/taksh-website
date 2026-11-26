@@ -4,39 +4,24 @@
   "specificationNote": "This is a provisional catalogue. Age guidance, build times, assembled dimensions and weights are sample estimates awaiting product validation. Set descriptions describe the proposed designs.",
   "products": [
     {
-      "slug": "chandrayaan-3",
-      "name": "Chandrayaan-3",
-      "shortName": "Chandrayaan-3",
-      "level": "Master",
-      "pieces": 1250,
+      "slug": "padma",
+      "name": "Padma",
+      "subtitle": "Three lotuses that stay in bloom.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 240,
       "approximate": true,
-      "price": 6249,
-      "setNumber": "TK-013",
-      "age": 12,
-      "buildTime": "About 4–5 hours",
-      "dimensions": "About 32 × 28 × 17 cm",
+      "price": 1999,
+      "setNumber": "PADMA",
+      "age": 8,
+      "buildTime": "About 1 hour",
+      "dimensions": "About 28 cm tall and 19 cm wide, on a base about 13 cm across",
       "weight": "To be confirmed",
-      "image": "/chandrayaan/gallery-01-hero.webp",
-      "description": "Build Vikram, Pragyan and a piece of the lunar surface. A display model with moving parts and a mission worth understanding.",
-      "stories": {
-        "build": {
-          "title": "A landing worth building.",
-          "text": "Build the Vikram lander, Pragyan rover and a cratered lunar base with a printed nameplate."
-        },
-        "details": {
-          "title": "Every part has a purpose.",
-          "text": "Discover the instruments that helped the mission land, explore and learn."
-        },
-        "process": {
-          "title": "Build it. Then understand it.",
-          "text": "Numbered bags, a printed building guide and an illustrated mission story book help you make sense of what you make."
-        },
-        "display": {
-          "title": "A little space for the Moon.",
-          "text": "A black-edged lunar base frames the lander and rover as one complete scene."
-        }
-      },
-      "imageAlt": "The gold brick Vikram lander and Pragyan rover on a lunar display base."
+      "image": "/padma/gallery-01-hero.webp",
+      "imageAlt": "Three brick lotuses at three heights on a gold lotus base.",
+      "imageWidth": 1600,
+      "imageHeight": 1600,
+      "description": "Three lotuses in full bloom on a gold lotus seat, each at its own height. Build it with Dadi, Nani, Ma or someone special. It stays on their mandir shelf, a memory of the day you made it together."
     },
     {
       "slug": "ram-mandir",
@@ -72,6 +57,44 @@
         "display": {
           "title": "Ayodhya",
           "text": "A simplified brick model inspired by the Ram Mandir in Ayodhya."
+        }
+      }
+    },
+    {
+      "slug": "gully-cricket",
+      "name": "Gully Cricket",
+      "subtitle": "Your gully. Your rules.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 600,
+      "approximate": true,
+      "price": 2999,
+      "setNumber": "GULLY-CRICKET",
+      "age": 8,
+      "buildTime": "To be confirmed",
+      "dimensions": "About 18 × 13 × 12 cm (Terrace House)",
+      "weight": "To be confirmed",
+      "image": "/gully-cricket/gallery-01-hero.png",
+      "imageAlt": "A brick neighbourhood house with an open terrace, green shutters and four figures playing cricket in front.",
+      "imageWidth": 1448,
+      "imageHeight": 1086,
+      "description": "Build a neighbourhood lane where the evening match never ends. Then take it apart and build it again: a narrow gully, a chai corner, a match-day pavilion, or something nobody has thought of yet.",
+      "stories": {
+        "build": {
+          "title": "Who’s batting?",
+          "text": "Four players and one bat."
+        },
+        "details": {
+          "title": "Change the street.",
+          "text": "One set. Build one at a time."
+        },
+        "process": {
+          "title": "Uncle, ball de do!",
+          "text": "Every gully has one window."
+        },
+        "display": {
+          "title": "One more over.",
+          "text": "Your gully. Your rules."
         }
       }
     },
@@ -114,42 +137,99 @@
       }
     },
     {
-      "slug": "gully-cricket",
-      "name": "Gully Cricket",
-      "subtitle": "Your gully. Your rules.",
-      "collection": "Sets",
-      "level": "Craft",
-      "pieces": 600,
+      "slug": "chandrayaan-3",
+      "name": "Chandrayaan-3",
+      "shortName": "Chandrayaan-3",
+      "level": "Master",
+      "pieces": 1250,
       "approximate": true,
-      "price": 2999,
-      "setNumber": "GULLY-CRICKET",
-      "age": 8,
-      "buildTime": "To be confirmed",
-      "dimensions": "About 18 × 13 × 12 cm (Terrace House)",
+      "price": 6249,
+      "setNumber": "TK-013",
+      "age": 12,
+      "buildTime": "About 4–5 hours",
+      "dimensions": "About 32 × 28 × 17 cm",
       "weight": "To be confirmed",
-      "image": "/gully-cricket/gallery-01-hero.png",
-      "imageAlt": "A brick neighbourhood house with an open terrace, green shutters and four figures playing cricket in front.",
-      "imageWidth": 1448,
-      "imageHeight": 1086,
-      "description": "Build a neighbourhood lane where the evening match never ends. Then take it apart and build it again: a narrow gully, a chai corner, a match-day pavilion, or something nobody has thought of yet.",
+      "image": "/chandrayaan/gallery-01-hero.webp",
+      "description": "Build Vikram, Pragyan and a piece of the lunar surface. A display model with moving parts and a mission worth understanding.",
       "stories": {
         "build": {
-          "title": "Who’s batting?",
-          "text": "Four players and one bat."
+          "title": "A landing worth building.",
+          "text": "Build the Vikram lander, Pragyan rover and a cratered lunar base with a printed nameplate."
         },
         "details": {
-          "title": "Change the street.",
-          "text": "One set. Build one at a time."
+          "title": "Every part has a purpose.",
+          "text": "Discover the instruments that helped the mission land, explore and learn."
         },
         "process": {
-          "title": "Uncle, ball de do!",
-          "text": "Every gully has one window."
+          "title": "Build it. Then understand it.",
+          "text": "Numbered bags, a printed building guide and an illustrated mission story book help you make sense of what you make."
         },
         "display": {
-          "title": "One more over.",
-          "text": "Your gully. Your rules."
+          "title": "A little space for the Moon.",
+          "text": "A black-edged lunar base frames the lander and rover as one complete scene."
         }
-      }
+      },
+      "imageAlt": "The gold brick Vikram lander and Pragyan rover on a lunar display base."
+    },
+    {
+      "slug": "kamdhenu",
+      "name": "Kamdhenu",
+      "subtitle": "Make a wish. She’s listening.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 550,
+      "approximate": true,
+      "price": 2999,
+      "setNumber": "KAMDHENU",
+      "age": 12,
+      "buildTime": "About 2 hours",
+      "dimensions": "About 32 cm long and 23 cm tall",
+      "weight": "To be confirmed",
+      "image": "/kamdhenu/gallery-02-mandir.webp",
+      "imageAlt": "The Kamdhenu set in a carved wooden mandir, beside a lit brass diya and marigolds.",
+      "imageWidth": 1600,
+      "imageHeight": 1600,
+      "description": "Dressed in her festival best, one hoof lifted, as if she has just stepped out of a Pichwai painting and into your home."
+    },
+    {
+      "slug": "surajmukhi",
+      "name": "Surajmukhi",
+      "subtitle": "Every sunflower needs another.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 400,
+      "approximate": true,
+      "price": 1999,
+      "setNumber": "SURAJMUKHI",
+      "age": 12,
+      "buildTime": "About 1 hour per flower",
+      "dimensions": "About 38 cm tall per flower",
+      "weight": "To be confirmed",
+      "image": "/surajmukhi/gallery-01-hero.webp",
+      "imageAlt": "Two brick sunflowers with crossed stems, their heads turned towards each other.",
+      "imageWidth": 1600,
+      "imageHeight": 1600,
+      "description": "Two sunflowers. Build one each."
+    },
+    {
+      "slug": "1983-trophy",
+      "name": "1983 Trophy",
+      "subtitle": "The cup India brought home from Lord's.",
+      "collection": "Sets",
+      "level": "Craft",
+      "pieces": 520,
+      "approximate": true,
+      "price": 2999,
+      "setNumber": "1983-TROPHY",
+      "age": 12,
+      "buildTime": "About 2 hours",
+      "dimensions": "About 21 cm tall and 13 cm wide, on a plinth about 8 cm across",
+      "weight": "To be confirmed",
+      "image": "/1983-trophy/gallery-01-hero.webp",
+      "imageAlt": "A silver brick trophy with two handles and a lid, on a brown plinth with a plaque that reads 1983 India.",
+      "imageWidth": 1600,
+      "imageHeight": 1600,
+      "description": "Brick by brick, on its brown plinth with the plaque. A gift for Papa, Dadaji or anyone who still remembers that night."
     },
     {
       "slug": "yellow-taxi",
@@ -223,86 +303,6 @@
           "text": "Tension toh hai sabke saath, bas nazariye ki hi toh hai baat."
         }
       }
-    },
-    {
-      "slug": "padma",
-      "name": "Padma",
-      "subtitle": "Three lotuses that stay in bloom.",
-      "collection": "Sets",
-      "level": "Craft",
-      "pieces": 240,
-      "approximate": true,
-      "price": 1999,
-      "setNumber": "PADMA",
-      "age": 8,
-      "buildTime": "About 1 hour",
-      "dimensions": "About 28 cm tall and 19 cm wide, on a base about 13 cm across",
-      "weight": "To be confirmed",
-      "image": "/padma/gallery-01-hero.webp",
-      "imageAlt": "Three brick lotuses at three heights on a gold lotus base.",
-      "imageWidth": 1600,
-      "imageHeight": 1600,
-      "description": "Three lotuses in full bloom on a gold lotus seat, each at its own height. Build it with Dadi, Nani, Ma or someone special. It stays on their mandir shelf, a memory of the day you made it together."
-    },
-    {
-      "slug": "1983-trophy",
-      "name": "1983 Trophy",
-      "subtitle": "The cup India brought home from Lord's.",
-      "collection": "Sets",
-      "level": "Craft",
-      "pieces": 520,
-      "approximate": true,
-      "price": 2999,
-      "setNumber": "1983-TROPHY",
-      "age": 12,
-      "buildTime": "About 2 hours",
-      "dimensions": "About 21 cm tall and 13 cm wide, on a plinth about 8 cm across",
-      "weight": "To be confirmed",
-      "image": "/1983-trophy/gallery-01-hero.webp",
-      "imageAlt": "A silver brick trophy with two handles and a lid, on a brown plinth with a plaque that reads 1983 India.",
-      "imageWidth": 1600,
-      "imageHeight": 1600,
-      "description": "Brick by brick, on its brown plinth with the plaque. A gift for Papa, Dadaji or anyone who still remembers that night."
-    },
-    {
-      "slug": "surajmukhi",
-      "name": "Surajmukhi",
-      "subtitle": "Every sunflower needs another.",
-      "collection": "Sets",
-      "level": "Craft",
-      "pieces": 400,
-      "approximate": true,
-      "price": 1999,
-      "setNumber": "SURAJMUKHI",
-      "age": 12,
-      "buildTime": "About 1 hour per flower",
-      "dimensions": "About 38 cm tall per flower",
-      "weight": "To be confirmed",
-      "image": "/surajmukhi/gallery-01-hero.webp",
-      "imageAlt": "Two brick sunflowers with crossed stems, their heads turned towards each other.",
-      "imageWidth": 1600,
-      "imageHeight": 1600,
-      "description": "Two sunflowers. Build one each."
-    },
-    {
-      "slug": "kamdhenu",
-      "name": "Kamdhenu",
-      "subtitle": "Make a wish. She’s listening.",
-      "collection": "Sets",
-      "level": "Craft",
-      "pieces": 550,
-      "approximate": true,
-      "price": 2999,
-      "setNumber": "KAMDHENU",
-      "age": 12,
-      "buildTime": "About 2 hours",
-      "dimensions": "About 32 cm long and 23 cm tall",
-      "weight": "To be confirmed",
-      "image": "/kamdhenu/gallery-02-mandir.webp",
-      "imageAlt": "The Kamdhenu set in a carved wooden mandir, beside a lit brass diya and marigolds.",
-      "imageWidth": 1600,
-      "imageHeight": 1600,
-      "description": "Dressed in her festival best, one hoof lifted, as if she has just stepped out of a Pichwai painting and into your home."
     }
   ]
 }

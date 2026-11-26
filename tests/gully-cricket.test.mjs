@@ -12,7 +12,7 @@ test('Gully Cricket is a single Craft product with the approved selling facts an
  assert.deepEqual([product.price,product.age,product.pieces,product.approximate,product.level],[2999,8,600,true,'Craft']);
  assert.equal(catalogue.products.filter(p=>p.slug==='gully-cricket').length,1);
  const [item]=resolveItems([{slug:'gully-cricket',quantity:2,price:1}]);assert.equal(item.price,2999);assert.equal(item.quantity,2);assert.equal(item.name,'Gully Cricket');
- assert.equal(catalogue.products.filter(p=>p.level==='Craft')[0].slug,'gully-cricket');
+ assert.equal(product.level,'Craft');
  assert.deepEqual(normaliseBag([{slug:'gully-cricket',quantity:2}]),[{slug:'gully-cricket',quantity:2}]);
  assert.deepEqual(addBagItem([{slug:'gully-cricket',quantity:2}],'gully-cricket',2),[{slug:'gully-cricket',quantity:3}]);
  for(const scene of gullyScenes)assert.deepEqual(normaliseBag([{slug:scene.id,quantity:1}]),[]);

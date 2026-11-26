@@ -19,7 +19,7 @@ export function looseValues(text,{isTokenFile=false}={}){
  const out=[];
  for(const m of body.matchAll(/#[0-9a-fA-F]{3,8}\b(?![\w-])/g))out.push({kind:'colour',value:m[0].toLowerCase()});
  for(const m of body.matchAll(/\b(?:rgba?|hsla?)\([^)]*\)/g))out.push({kind:'colour',value:m[0].replace(/\s+/g,'')});
- for(const m of body.matchAll(/font-family\s*:\s*([^;}"]+)/g))out.push({kind:'font',value:m[1].trim()});
+ for(const m of body.matchAll(/font-family\s*:\s*([^;}"]+)/g))if(!/^var\(--/.test(m[1].trim()))out.push({kind:'font',value:m[1].trim()}); // var(--token) is a token
  for(const m of body.matchAll(/fontFamily\s*:\s*['"]([^'"]+)['"]/g))out.push({kind:'font',value:m[1].trim()});
  return out;
 }

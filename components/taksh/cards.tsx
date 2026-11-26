@@ -11,7 +11,7 @@ const cardZoom:Record<string,string>={'chandrayaan-3':'scale(1.25)','ram-mandir'
 export function ProductCard({p,editorial=true,large=false}:{p:Product;editorial?:boolean;large?:boolean}){
  const{add,ready}=useStore();
  const map=editorial&&p.slug==='map-of-india',photo=p.image||'';
- return <article className={`set-card${map?' set-card-map':''}`}>
+ return <article className={`set-card${map?' set-card-map':''}`} data-set={p.slug}>
   <SiteLink className="set-card-link" href={'/sets/'+p.slug} aria-label={`View ${p.name}`}>
    <div className="set-card-image"><ProductPhoto rootMargin="80px 0px" src={imageAsset(photo,'medium')} srcSet={imageSrcSet(photo)} style={cardZoom[p.slug]?{'--z':cardZoom[p.slug]} as CSSProperties:undefined} sizes={map||large?'(max-width:760px) calc(100vw - 40px), (max-width:1200px) 30vw, 350px':'(max-width:760px) calc((100vw - 52px) / 2), (max-width:1200px) 30vw, 350px'} alt={p.imageAlt||p.name} width={700} height={700} decoding="async"/></div>
    <h3>{p.shortName||p.name}</h3><p className="set-card-pieces">{pieceLabel(p)} pieces</p><strong className="set-card-price">{productMoney(p)}</strong>
