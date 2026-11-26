@@ -6,12 +6,11 @@ import {SiteLink} from './site-link';
 import {useStore} from './store';
 import {productMoney,pieceLabel,type Product} from '@/lib/shop';
 import {imageAsset,imageSrcSet} from '@/lib/images';
-import {cardImage} from '@/lib/card-colours';
 // Owner note, 26 Nov 2026: cards stay on the plain backdrop, two to a row; each model is scaled to its measured outline so it fills the card.
 const cardZoom:Record<string,string>={'chandrayaan-3':'scale(1.25)','ram-mandir':'scale(1.15) translate(1%,2%)','map-of-india':'scale(1.07)','gully-cricket':'scale(1.11)','yellow-taxi':'scale(1.13)','nonsense':'scale(1.03)','padma':'scale(1.12) translate(-2%,-0%)','1983-trophy':'scale(1.07) translate(11%,-1%)','surajmukhi':'scale(1.14)'};
 export function ProductCard({p,editorial=true,large=false}:{p:Product;editorial?:boolean;large?:boolean}){
  const{add,ready}=useStore();
- const map=editorial&&p.slug==='map-of-india',photo=cardImage(p);
+ const map=editorial&&p.slug==='map-of-india',photo=p.image||'';
  return <article className={`set-card${map?' set-card-map':''}`} data-set={p.slug}>
   <SiteLink className="set-card-link" href={'/sets/'+p.slug} aria-label={`View ${p.name}`}>
    <div className="set-card-image"><ProductPhoto rootMargin="80px 0px" src={imageAsset(photo,'medium')} srcSet={imageSrcSet(photo)} style={cardZoom[p.slug]?{'--z':cardZoom[p.slug]} as CSSProperties:undefined} sizes={map||large?'(max-width:760px) calc(100vw - 40px), (max-width:1200px) 30vw, 350px':'(max-width:760px) calc((100vw - 52px) / 2), (max-width:1200px) 30vw, 350px'} alt={p.imageAlt||p.name} width={700} height={700} decoding="async"/></div>

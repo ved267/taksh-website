@@ -3,8 +3,6 @@ import {useEffect,useState} from 'react';
 import {ProductGrid} from './cards';
 import {products} from '@/lib/shop';
 import {filterCatalogue} from '@/lib/experience-domain.mjs';
-import {bySetOrder} from '@/lib/card-colours';
-const ordered=products.filter(p=>!p.catalogueOnly).sort(bySetOrder);
 const filters=[{label:'All sets',value:'all'},{label:'Masters',value:'Master'},{label:'Craft',value:'Craft'}];
 const defaults={level:'all',budget:'all',age:'all',sort:'featured'};
 type Filters=typeof defaults;
@@ -14,7 +12,7 @@ export function Catalogue(){
  const [filter,setFilter]=useState(defaults);
  useEffect(()=>{const restore=()=>setFilter(fromUrl());restore();window.addEventListener('popstate',restore);return()=>window.removeEventListener('popstate',restore)},[]);
  function change(next:Filters){setFilter(next);const url=new URL(location.href);for(const [key,value] of Object.entries(next)){if(value===defaults[key as keyof Filters])url.searchParams.delete(key);else url.searchParams.set(key,value)}history.pushState(null,'',url.pathname+url.search)}
- const selected=filterCatalogue([...ordered],filter);
+ const selected=filterCatalogue(products,filter);
  const active=Object.entries(filter).some(([key,value])=>value!==defaults[key as keyof Filters]);
  return <><div className="catalogue-bar"><div className="catalogue-filters" role="group" aria-label="Filter sets by collection">{filters.map(f=><button key={f.value} aria-pressed={filter.level===f.value} onClick={()=>change({...filter,level:f.value})}>{f.label}</button>)}</div>
  <div className="catalogue-controls"><label><span>Budget</span><select value={filter.budget} onChange={e=>change({...filter,budget:e.target.value})}><option value="all">Any price</option><option value="2500">Under ₹2,500</option><option value="5000">Under ₹5,000</option><option value="7500">Under ₹7,500</option></select></label><label><span>Sort</span><select value={filter.sort} onChange={e=>change({...filter,sort:e.target.value})}><option value="featured">Featured</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option></select></label></div></div>
