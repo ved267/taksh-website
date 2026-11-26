@@ -1,5 +1,5 @@
 'use client';
-import {useCallback,useEffect,useRef,useState} from 'react';
+import {Fragment,useCallback,useEffect,useRef,useState} from 'react';
 import {Pause,Play} from 'lucide-react';
 import {imageAsset,imageInfo,imageSrcSet} from '@/lib/images';
 import {products} from '@/lib/shop';
@@ -10,7 +10,7 @@ const slides=[
  {slug:'1983-trophy',label:'1983 Trophy',image:'/1983-trophy/gallery-03-on-desk.webp',fit:'cover',pos:'50% 45%',alt:'The silver brick 1983 Trophy on a wooden desk beside a mug and old books.'},
  {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
  {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
- {slug:'surajmukhi',label:'Surajmukhi',image:'/surajmukhi/banner-at-home.webp',fit:'cover',pos:'60% 50%',alt:'The brick Surajmukhi sunflowers in a glass bottle by a sunlit window.'},
+ {slug:'surajmukhi',label:'Surajmukhi',image:'/surajmukhi/banner-at-home.webp',fit:'cover',pos:'92% 50%',alt:'The brick Surajmukhi sunflowers in a glass bottle by a sunlit window.'},
  {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-06-at-home.png',fit:'cover',pos:'50% 50%',alt:'Two children on a rug playing cricket with the brick set while their grandmother watches.'},
  {slug:'map-of-india',label:'Map of India',image:'/bharat/product-page/life-05-floor.jpg',fit:'cover',pos:'50% 50%',alt:'A family building the India map on a round rug, with their grandmother nearby.'},
  {slug:'yellow-taxi',label:'Yellow Taxi',image:'/yellow-taxi/ad-night-banner.webp',fit:'cover',pos:'100% 50%',alt:'The yellow brick taxi under a street lamp at night.'},
@@ -58,7 +58,7 @@ export function HomeHero(){
   </div>
   <div className="home-feature-controls">
    <div className="home-feature-select" role="group" aria-label="Choose a set" onKeyDown={e=>{const i=controls.current.indexOf(document.activeElement as HTMLButtonElement);if(i<0)return;let next=i;if(e.key==='ArrowRight')next=(i+1)%slides.length;else if(e.key==='ArrowLeft')next=(i+slides.length-1)%slides.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;e.preventDefault();select(next);controls.current[next]?.focus()}}>
-    {slides.map((s,i)=><button key={s.slug} className="home-chip" ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{i===active&&<span key={active} className={`home-chip-fill${moving?' is-timed':''}`} style={{animationDuration:(i===0?LEAD_SECONDS:HERO_SECONDS)+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}<span className="home-chip-name">{s.label}</span></button>)}
+    {slides.map((s,i)=><Fragment key={s.slug}>{i===5&&<span className="home-break" aria-hidden="true"/>}<button className="home-chip" ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{i===active&&<span key={active} className={`home-chip-fill${moving?' is-timed':''}`} style={{animationDuration:(i===0?LEAD_SECONDS:HERO_SECONDS)+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}<span className="home-chip-name">{s.label}</span></button></Fragment>)}
    </div>
    <span className="sr-only" role="status">{error|| (busy?'Loading the selected photograph.':'')}</span>
   </div>
