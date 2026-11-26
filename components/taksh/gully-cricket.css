@@ -53,7 +53,7 @@
  .gc-page .gc-buy-column,.gc-page .rm-buy{display:contents}
  .gc-page .rm-title{order:0;margin-bottom:18px}
  .gc-page .rm-title h1{font-size:36px}.gc-page .rm-title>p{font-size:20px}
- .gc-explorer{order:1}.gc-explorer-stage{height:auto;aspect-ratio:4/3}
+ .gc-explorer{order:1}.gc-explorer-stage{height:auto;aspect-ratio:4/3;margin:0 -20px}
  .gc-page .rm-facts{order:2;margin:18px 0 0;width:100%;justify-content:flex-start}
  .gc-page .rm-pricing{order:3;margin:18px 0;width:100%}
  .gc-page .rm-order{order:4;width:100%}

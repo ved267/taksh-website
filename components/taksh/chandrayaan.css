@@ -35,3 +35,6 @@
 
 /* Owner note, 26 Nov 2026: on phones the set fills the screen, as on every set page. */
 @media(max-width:760px){.ch3-page .ch3-gallery .ch3-gallery-stage{height:auto;aspect-ratio:1/1;width:calc(100% + 40px);margin:0 -20px;border-radius:0}.ch3-page .ch3-gallery-stage:not([data-whole]) .ch3-main-image img{object-fit:cover}}
+
+/* What comes in the box: one line on a phone (owner note, 26 Nov 2026). */
+.rm-page .rm-in-box,.ch3-page .rm-in-box{font-size:min(14px,calc((100vw - 44px) / 26.5));white-space:nowrap}

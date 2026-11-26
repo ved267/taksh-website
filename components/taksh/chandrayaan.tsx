@@ -134,7 +134,7 @@ export function ChandrayaanDetail({p}:{p:Product}){
    <div className="ch3-top-layout"><ChandrayaanGallery showHomePreview={false}/><section className="ch3-buy" aria-label="Choose your set">
     <div className="ch3-title"><h1>Chandrayaan-3</h1><div className="ch3-craft-pair"><span><strong>Vikram</strong><span className="ch3-craft-role"> · Lander</span></span><span><strong>Pragyan</strong><span className="ch3-craft-role"> · Rover</span></span></div></div>
     <div className="ch3-facts"><span>{pieceLabel(p)} pieces</span><span>{p.buildTime}</span><span>{p.level}</span></div>
-    <div className="ch3-description"><p>{boxLine}</p></div>
+    <div className="ch3-description"><p className="rm-in-box">{boxLine}</p></div>
     <div className="ch3-pricing"><div className="price-block"><span className="price-tag">{productMoney(p)}</span><small>MRP inclusive of all taxes</small></div></div>
     <StockNotice/><div className="ch3-order"><div className="quantity-row"><span>Quantity</span><Stepper value={qty} onChange={setQty}/></div><button ref={buyRef} className="button primary full" onClick={()=>ready&&add(p,qty)}>Add to bag</button></div>
     <BuyerDetails p={p}/><div ref={contactRef} className="ch3-contact"><ContactLink><WhatsAppIcon/>Ask us on WhatsApp</ContactLink></div>

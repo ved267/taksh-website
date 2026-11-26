@@ -53,3 +53,6 @@
 
 /* Owner note, 26 Nov 2026: on phones the set fills the screen. The gallery runs edge to edge, square, and photos fill it (size photos stay whole). */
 @media(max-width:760px){.rm-page .rm-gallery .rm-gallery-stage{height:auto;aspect-ratio:1/1;width:calc(100% + 40px);margin:0 -20px;border-radius:0}.rm-page .rm-gallery-stage:not([data-whole]) .rm-main-image img{object-fit:cover}}
+
+/* What comes in the box: one line on a phone (owner note, 26 Nov 2026). */
+.rm-page .rm-in-box,.ch3-page .rm-in-box{font-size:min(14px,calc((100vw - 44px) / 26.5));white-space:nowrap}
