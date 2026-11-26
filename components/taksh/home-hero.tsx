@@ -16,9 +16,13 @@ const slides=[
  {slug:'yellow-taxi',label:'Yellow Taxi',image:'/yellow-taxi/ad-night-banner.webp',fit:'cover',pos:'100% 50%',alt:'The yellow brick taxi under a street lamp at night.'},
  {slug:'nonsense',label:'Ulta Chashma',image:'/nonsense/gallery-04-breakfast.webp',fit:'cover',pos:'50% 50%',alt:'The blue brick Ulta Chashma glasses on a breakfast table with chai and snacks.'},
 ].filter(s=>products.some(p=>p.slug===s.slug));
+// A small studio photo of each set on its button.
+const thumbs=slides.map(s=>imageAsset(products.find(p=>p.slug===s.slug)?.image||'','thumb'));
 const photoSizes='(max-width:760px) calc(100vw - 40px), (max-width:1200px) 54vw, 610px';
 // Owner note, 26 Nov 2026: three times as fast, so every set is seen.
 export const HERO_SECONDS=1.35;
+// Ram Mandir opens the page and stays a little longer.
+const LEAD_SECONDS=2.4;
 export function HomeHero(){
  const[active,setActive]=useState(0),[previous,setPrevious]=useState<number|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
  // rolling: the visitor's own choice (pause button). held: a temporary reason to wait (hover, focus, touch, off screen).
@@ -49,14 +53,14 @@ export function HomeHero(){
  const visible=onScreen&&shown,moving=rolling&&!still,running=moving&&!held&&visible&&!busy;
  function photo(index:number,old=false){const item=slides[index],info=imageInfo(item.image);return <img key={`${old?'old':'current'}-${index}`} className={old?'home-photo-previous':previous!==null?'home-photo-enter':''} style={{objectFit:item.fit as 'cover'|'contain',objectPosition:item.pos}} onError={e=>{if(e.currentTarget.currentSrc.endsWith('.avif')){e.currentTarget.srcset='';e.currentTarget.src=imageAsset(item.image)}}} src={imageAsset(item.image,'large')} srcSet={imageSrcSet(item.image)} sizes={photoSizes} width={info?.width} height={info?.height} alt={old?'':item.alt} aria-hidden={old||undefined} fetchPriority={index===0&&!old?'high':'auto'} decoding="async"/>}
  return <section ref={root} id="our-story" className="home-opening" aria-label="Discover Taksh" aria-roledescription="carousel" onPointerEnter={e=>{if(e.pointerType==='mouse')setHeld(true)}} onPointerLeave={e=>{if(e.pointerType==='mouse')setHeld(false)}} onFocus={e=>{if((e.target as HTMLElement).matches?.(':focus-visible'))setHeld(true)}} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setHeld(false)}}><div className="home-feature wrap">
-  <div className="home-intro"><h1>Brick-building sets that keep Indian stories and culture close</h1><p>For every age, to build together.</p></div>
+  <div className="home-intro"><span className="home-studs" aria-hidden="true"><i/><i/><i/><i/><i/></span><h1>Brick-building sets that keep <em>Indian stories and culture</em> close</h1><p>For every age, to build together.</p></div>
   <div id="featured-photo" className="home-feature-photo" aria-busy={busy} onTouchStart={e=>{setHeld(true);start.current={x:e.touches[0].clientX,y:e.touches[0].clientY}}} onTouchEnd={e=>{setHeld(false);if(!start.current)return;const dx=e.changedTouches[0].clientX-start.current.x,dy=e.changedTouches[0].clientY-start.current.y;start.current=null;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))select(current.current+(dx<0?1:-1))}} onTouchCancel={()=>{setHeld(false);start.current=null}}>
    {previous!==null&&photo(previous,true)}{photo(active)}
    {!still&&<button type="button" className="home-play" aria-label={rolling?'Pause the photos':'Start the photos'} onClick={()=>setRolling(v=>!v)}>{rolling?<Pause aria-hidden="true"/>:<Play aria-hidden="true"/>}</button>}
   </div>
   <div className="home-feature-controls">
    <div className="home-feature-select" role="group" aria-label="Choose a set" onKeyDown={e=>{const i=controls.current.indexOf(document.activeElement as HTMLButtonElement);if(i<0)return;let next=i;if(e.key==='ArrowRight')next=(i+1)%slides.length;else if(e.key==='ArrowLeft')next=(i+slides.length-1)%slides.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;e.preventDefault();select(next);controls.current[next]?.focus()}}>
-    {slides.map((s,i)=><button key={s.slug} ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{s.label}<span className="home-step">{i===active&&<span key={active} className={`home-step-fill${moving?' is-timed':''}`} style={{animationDuration:HERO_SECONDS+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}</span></button>)}
+    {slides.map((s,i)=><button key={s.slug} className="home-chip" ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{i===active&&<span key={active} className={`home-chip-fill${moving?' is-timed':''}`} style={{animationDuration:(i===0?LEAD_SECONDS:HERO_SECONDS)+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}<span className="home-chip-photo"><img src={thumbs[i]} width={56} height={56} alt="" decoding="async"/></span><span className="home-chip-name">{s.label}</span></button>)}
    </div>
    <span className="sr-only" role="status">{error|| (busy?'Loading the selected photograph.':'')}</span>
   </div>
