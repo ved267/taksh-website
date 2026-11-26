@@ -5,18 +5,18 @@ import {imageAsset,imageInfo,imageSrcSet} from '@/lib/images';
 import {products} from '@/lib/shop';
 // One photograph per set. fit/pos keep each model whole inside the 3:2 frame.
 const slides=[
- {slug:'ram-mandir',label:'Ram Mandir',image:'/ram-mandir/ad-room-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Ram Mandir on a wooden sideboard in warm sunlight.'},
+ {slug:'ram-mandir',label:'Ram Mandir',image:'/ram-mandir/ad-room-banner.webp',fit:'cover',pos:'78% 50%',alt:'The brick Ram Mandir on a wooden sideboard in warm sunlight.'},
  {slug:'padma',label:'Padma',image:'/padma/gallery-04-at-home.webp',fit:'cover',pos:'50% 40%',alt:'The brick Padma lotuses on a wooden table beside a book and reading glasses.'},
  {slug:'1983-trophy',label:'1983 Trophy',image:'/1983-trophy/gallery-03-on-desk.webp',fit:'cover',pos:'50% 45%',alt:'The silver brick 1983 Trophy on a wooden desk beside a mug and old books.'},
  {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
  {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
  {slug:'surajmukhi',label:'Surajmukhi',image:'/surajmukhi/banner-at-home.webp',fit:'cover',pos:'92% 50%',alt:'The brick Surajmukhi sunflowers in a glass bottle by a sunlit window.'},
- {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-06-at-home.png',fit:'cover',pos:'50% 50%',alt:'Two children on a rug playing cricket with the brick set while their grandmother watches.'},
+ {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-06-at-home.png',fit:'cover',pos:'40% 50%',alt:'Two children on a rug playing cricket with the brick set while their grandmother watches.'},
  {slug:'map-of-india',label:'Map of India',image:'/bharat/product-page/life-05-floor.jpg',fit:'cover',pos:'50% 50%',alt:'A family building the India map on a round rug, with their grandmother nearby.'},
  {slug:'yellow-taxi',label:'Yellow Taxi',image:'/yellow-taxi/ad-night-banner.webp',fit:'cover',pos:'100% 50%',alt:'The yellow brick taxi under a street lamp at night.'},
- {slug:'nonsense',label:'Ulta Chashma',image:'/nonsense/gallery-04-breakfast.webp',fit:'cover',pos:'50% 50%',alt:'The blue brick Ulta Chashma glasses on a breakfast table with chai and snacks.'},
+ {slug:'nonsense',label:'Ulta Chashma',image:'/nonsense/gallery-04-breakfast.webp',fit:'cover',pos:'70% 50%',alt:'The blue brick Ulta Chashma glasses on a breakfast table with chai and snacks.'},
 ].filter(s=>products.some(p=>p.slug===s.slug));
-const photoSizes='(max-width:760px) calc(100vw - 40px), (max-width:1200px) 54vw, 610px';
+const photoSizes='(max-width:760px) 100vw, (max-width:1200px) 54vw, 610px';
 // Owner note, 26 Nov 2026: three times as fast, so every set is seen.
 export const HERO_SECONDS=1.35;
 // Ram Mandir opens the page and stays a little longer.
