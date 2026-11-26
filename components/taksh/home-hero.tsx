@@ -7,17 +7,15 @@ import {products} from '@/lib/shop';
 const slides=[
  {slug:'ram-mandir',label:'Ram Mandir',image:'/ram-mandir/ad-room-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Ram Mandir on a wooden sideboard in warm sunlight.'},
  {slug:'padma',label:'Padma',image:'/padma/gallery-04-at-home.webp',fit:'cover',pos:'50% 40%',alt:'The brick Padma lotuses on a wooden table beside a book and reading glasses.'},
+ {slug:'1983-trophy',label:'1983 Trophy',image:'/1983-trophy/gallery-03-on-desk.webp',fit:'cover',pos:'50% 45%',alt:'The silver brick 1983 Trophy on a wooden desk beside a mug and old books.'},
+ {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
+ {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
+ {slug:'surajmukhi',label:'Surajmukhi',image:'/surajmukhi/banner-at-home.webp',fit:'cover',pos:'60% 50%',alt:'The brick Surajmukhi sunflowers in a glass bottle by a sunlit window.'},
  {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-06-at-home.png',fit:'cover',pos:'50% 50%',alt:'Two children on a rug playing cricket with the brick set while their grandmother watches.'},
  {slug:'map-of-india',label:'Map of India',image:'/bharat/product-page/life-05-floor.jpg',fit:'cover',pos:'50% 50%',alt:'A family building the India map on a round rug, with their grandmother nearby.'},
- {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
- {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
- {slug:'surajmukhi',label:'Surajmukhi',image:'/surajmukhi/banner-at-home.webp',fit:'cover',pos:'60% 50%',alt:'The brick Surajmukhi sunflowers in a glass bottle by a sunlit window.'},
- {slug:'1983-trophy',label:'1983 Trophy',image:'/1983-trophy/gallery-03-on-desk.webp',fit:'cover',pos:'50% 45%',alt:'The silver brick 1983 Trophy on a wooden desk beside a mug and old books.'},
  {slug:'yellow-taxi',label:'Yellow Taxi',image:'/yellow-taxi/ad-night-banner.webp',fit:'cover',pos:'100% 50%',alt:'The yellow brick taxi under a street lamp at night.'},
  {slug:'nonsense',label:'Ulta Chashma',image:'/nonsense/gallery-04-breakfast.webp',fit:'cover',pos:'50% 50%',alt:'The blue brick Ulta Chashma glasses on a breakfast table with chai and snacks.'},
 ].filter(s=>products.some(p=>p.slug===s.slug));
-// A small studio photo of each set on its button.
-const thumbs=slides.map(s=>imageAsset(products.find(p=>p.slug===s.slug)?.image||'','thumb'));
 const photoSizes='(max-width:760px) calc(100vw - 40px), (max-width:1200px) 54vw, 610px';
 // Owner note, 26 Nov 2026: three times as fast, so every set is seen.
 export const HERO_SECONDS=1.35;
@@ -53,14 +51,14 @@ export function HomeHero(){
  const visible=onScreen&&shown,moving=rolling&&!still,running=moving&&!held&&visible&&!busy;
  function photo(index:number,old=false){const item=slides[index],info=imageInfo(item.image);return <img key={`${old?'old':'current'}-${index}`} className={old?'home-photo-previous':previous!==null?'home-photo-enter':''} style={{objectFit:item.fit as 'cover'|'contain',objectPosition:item.pos}} onError={e=>{if(e.currentTarget.currentSrc.endsWith('.avif')){e.currentTarget.srcset='';e.currentTarget.src=imageAsset(item.image)}}} src={imageAsset(item.image,'large')} srcSet={imageSrcSet(item.image)} sizes={photoSizes} width={info?.width} height={info?.height} alt={old?'':item.alt} aria-hidden={old||undefined} fetchPriority={index===0&&!old?'high':'auto'} decoding="async"/>}
  return <section ref={root} id="our-story" className="home-opening" aria-label="Discover Taksh" aria-roledescription="carousel" onPointerEnter={e=>{if(e.pointerType==='mouse')setHeld(true)}} onPointerLeave={e=>{if(e.pointerType==='mouse')setHeld(false)}} onFocus={e=>{if((e.target as HTMLElement).matches?.(':focus-visible'))setHeld(true)}} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setHeld(false)}}><div className="home-feature wrap">
-  <div className="home-intro"><span className="home-studs" aria-hidden="true"><i/><i/><i/><i/><i/></span><h1>Brick-building sets that keep <em>Indian stories and culture</em> close</h1><p>For every age, to build together.</p></div>
+  <div className="home-intro"><h1>Brick-building sets that keep <em>Indian stories and culture</em> close</h1><p>For every age, to build together.</p></div>
   <div id="featured-photo" className="home-feature-photo" aria-busy={busy} onTouchStart={e=>{setHeld(true);start.current={x:e.touches[0].clientX,y:e.touches[0].clientY}}} onTouchEnd={e=>{setHeld(false);if(!start.current)return;const dx=e.changedTouches[0].clientX-start.current.x,dy=e.changedTouches[0].clientY-start.current.y;start.current=null;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))select(current.current+(dx<0?1:-1))}} onTouchCancel={()=>{setHeld(false);start.current=null}}>
    {previous!==null&&photo(previous,true)}{photo(active)}
    {!still&&<button type="button" className="home-play" aria-label={rolling?'Pause the photos':'Start the photos'} onClick={()=>setRolling(v=>!v)}>{rolling?<Pause aria-hidden="true"/>:<Play aria-hidden="true"/>}</button>}
   </div>
   <div className="home-feature-controls">
    <div className="home-feature-select" role="group" aria-label="Choose a set" onKeyDown={e=>{const i=controls.current.indexOf(document.activeElement as HTMLButtonElement);if(i<0)return;let next=i;if(e.key==='ArrowRight')next=(i+1)%slides.length;else if(e.key==='ArrowLeft')next=(i+slides.length-1)%slides.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=slides.length-1;else return;e.preventDefault();select(next);controls.current[next]?.focus()}}>
-    {slides.map((s,i)=><button key={s.slug} className="home-chip" ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{i===active&&<span key={active} className={`home-chip-fill${moving?' is-timed':''}`} style={{animationDuration:(i===0?LEAD_SECONDS:HERO_SECONDS)+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}<span className="home-chip-photo"><img src={thumbs[i]} width={56} height={56} alt="" decoding="async"/></span><span className="home-chip-name">{s.label}</span></button>)}
+    {slides.map((s,i)=><button key={s.slug} className="home-chip" ref={node=>{controls.current[i]=node}} aria-pressed={i===active} aria-controls="featured-photo" onPointerEnter={()=>warm(i)} onFocus={()=>warm(i)} onClick={()=>select(i)}>{i===active&&<span key={active} className={`home-chip-fill${moving?' is-timed':''}`} style={{animationDuration:(i===0?LEAD_SECONDS:HERO_SECONDS)+'s',animationPlayState:running?'running':'paused'}} onAnimationEnd={()=>select(current.current+1)}/>}<span className="home-chip-name">{s.label}</span></button>)}
    </div>
    <span className="sr-only" role="status">{error|| (busy?'Loading the selected photograph.':'')}</span>
   </div>
