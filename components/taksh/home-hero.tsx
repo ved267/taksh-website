@@ -6,15 +6,15 @@ import {products} from '@/lib/shop';
 // One photograph per set. fit/pos keep each model whole inside the 3:2 frame.
 const slides=[
  {slug:'ram-mandir',label:'Ram Mandir',image:'/ram-mandir/ad-room-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Ram Mandir on a wooden sideboard in warm sunlight.'},
- {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
- {slug:'map-of-india',label:'Map of India',image:'/bharat/product-page/life-05-floor.jpg',fit:'cover',pos:'50% 50%',alt:'A family building the India map on a round rug, with their grandmother nearby.'},
- {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
- {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-01-hero.png',fit:'contain',pos:'50% 50%',alt:'The Gully Cricket Terrace House with green shutters, an open terrace and four figures playing cricket in front.'},
  {slug:'padma',label:'Padma',image:'/padma/gallery-04-at-home.webp',fit:'cover',pos:'50% 40%',alt:'The brick Padma lotuses on a wooden table beside a book and reading glasses.'},
- {slug:'yellow-taxi',label:'Yellow Taxi',image:'/yellow-taxi/ad-night-banner.webp',fit:'cover',pos:'100% 50%',alt:'The yellow brick taxi under a street lamp at night.'},
+ {slug:'gully-cricket',label:'Gully Cricket',image:'/gully-cricket/gallery-01-hero.png',fit:'contain',pos:'50% 50%',alt:'The Gully Cricket Terrace House with green shutters, an open terrace and four figures playing cricket in front.'},
+ {slug:'map-of-india',label:'Map of India',image:'/bharat/product-page/life-05-floor.jpg',fit:'cover',pos:'50% 50%',alt:'A family building the India map on a round rug, with their grandmother nearby.'},
+ {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
+ {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
  {slug:'surajmukhi',label:'Surajmukhi',image:'/surajmukhi/banner-at-home.webp',fit:'cover',pos:'60% 50%',alt:'The brick Surajmukhi sunflowers in a glass bottle by a sunlit window.'},
- {slug:'nonsense',label:'Ulta Chashma',image:'/nonsense/gallery-04-breakfast.webp',fit:'cover',pos:'50% 50%',alt:'The blue brick Ulta Chashma glasses on a breakfast table with chai and snacks.'},
  {slug:'1983-trophy',label:'1983 Trophy',image:'/1983-trophy/gallery-03-on-desk.webp',fit:'cover',pos:'50% 45%',alt:'The silver brick 1983 Trophy on a wooden desk beside a mug and old books.'}
+ {slug:'yellow-taxi',label:'Yellow Taxi',image:'/yellow-taxi/ad-night-banner.webp',fit:'cover',pos:'100% 50%',alt:'The yellow brick taxi under a street lamp at night.'},
+ {slug:'nonsense',label:'Ulta Chashma',image:'/nonsense/gallery-04-breakfast.webp',fit:'cover',pos:'50% 50%',alt:'The blue brick Ulta Chashma glasses on a breakfast table with chai and snacks.'},
 ].filter(s=>products.some(p=>p.slug===s.slug));
 const photoSizes='(max-width:760px) calc(100vw - 40px), (max-width:1200px) 54vw, 610px';
 // Owner note, 26 Nov 2026: three times as fast, so every set is seen.
