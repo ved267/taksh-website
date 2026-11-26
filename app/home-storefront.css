@@ -19,7 +19,7 @@
 @media(max-width:760px){.home-set-group .set-card h3{min-height:0}}
 
 /* Desktop type (owner note, 26 Nov 2026: the writing has to be nicer on desktop): the display face for the line and the names, quiet dots between names. */
-@media(min-width:761px){.home-intro{padding-bottom:26px}.home-intro h1{font-size:min(38px,calc((100vw - 90px) / 29));font-weight:650;letter-spacing:-.035em}.home-intro p{font-size:18px;margin-top:8px}.home-feature-controls{padding-top:22px}.home-feature-select{gap:10px;max-width:none}.home-chip{font-family:var(--font-display);font-size:16px;font-weight:600;letter-spacing:-.02em}}
+@media(min-width:761px){.home-intro{padding-bottom:26px}.home-intro h1{font-size:min(38px,calc((100vw - 90px) / 29));font-weight:650;letter-spacing:-.035em}.home-intro p{font-size:18px;margin-top:8px}.home-feature-controls{padding-top:22px}.home-feature-select{gap:6px;max-width:none}.home-chip{font-family:var(--font-display);font-size:14px;font-weight:600;padding:0 10px}}
 
 /* Colour (owner decisions, 26 Nov 2026): every set has its own light colour, as a frame around its true photo; the colour never covers the photo.
    The top of the homepage stays one calm, warm light colour; it does not cycle with the photos. No grey, nothing dark. */
