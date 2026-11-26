@@ -7,7 +7,7 @@ import {products} from '@/lib/shop';
 const slides=[
  {slug:'ram-mandir',label:'Ram Mandir',image:'/ram-mandir/ad-room-banner.webp',fit:'cover',pos:'78% 50%',alt:'The brick Ram Mandir on a wooden sideboard in warm sunlight.'},
  {slug:'padma',label:'Padma',image:'/padma/gallery-04-at-home.webp',fit:'cover',pos:'50% 40%',alt:'The brick Padma lotuses on a wooden table beside a book and reading glasses.'},
- {slug:'1983-trophy',label:'1983 Trophy',image:'/1983-trophy/gallery-03-on-desk.webp',fit:'cover',pos:'50% 45%',alt:'The silver brick 1983 Trophy on a wooden desk beside a mug and old books.'},
+ {slug:'1983-trophy',label:'1983 Trophy',image:'/1983-trophy/gallery-03-on-desk.webp',fit:'cover',pos:'50% 38%',alt:'The silver brick 1983 Trophy on a wooden desk beside a mug and old books.'},
  {slug:'kamdhenu',label:'Kamdhenu',image:'/kamdhenu/gallery-07-festive.webp',fit:'cover',pos:'50% 60%',alt:'The brick Kamdhenu on a red cloth with diyas, a rangoli and a marigold garland.'},
  {slug:'chandrayaan-3',label:'Chandrayaan-3',image:'/chandrayaan/ad-moon-banner.webp',fit:'cover',pos:'100% 50%',alt:'The brick Vikram lander and Pragyan rover on the Moon.'},
  {slug:'surajmukhi',label:'Surajmukhi',image:'/surajmukhi/banner-at-home.webp',fit:'cover',pos:'92% 50%',alt:'The brick Surajmukhi sunflowers in a glass bottle by a sunlit window.'},
@@ -18,9 +18,9 @@ const slides=[
 ].filter(s=>products.some(p=>p.slug===s.slug));
 const photoSizes='(max-width:760px) 100vw, (max-width:1200px) 54vw, 610px';
 // Owner note, 26 Nov 2026: three times as fast, so every set is seen.
-export const HERO_SECONDS=1.35;
+export const HERO_SECONDS=1.8;
 // Ram Mandir opens the page and stays a little longer.
-const LEAD_SECONDS=2.4;
+const LEAD_SECONDS=2.8;
 export function HomeHero(){
  const[active,setActive]=useState(0),[previous,setPrevious]=useState<number|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
  // rolling: the visitor's own choice (pause button). held: a temporary reason to wait (hover, focus, touch, off screen).
@@ -47,9 +47,9 @@ export function HomeHero(){
   let fallback=false;image.onerror=()=>{if(!fallback&&image.srcset.includes('.avif')){fallback=true;image.srcset='';image.src=imageAsset(slides[next].image);return}if(!mounted.current||token!==sequence.current)return;setBusy(false);setError('This photograph could not load. Choose another set.')};
   image.sizes=photoSizes;image.srcset=imageSrcSet(slides[next].image)||'';image.src=imageAsset(slides[next].image,'large');
  },[]);
- useEffect(()=>{if(previous===null)return;const timer=setTimeout(()=>setPrevious(null),400);return()=>clearTimeout(timer)},[active,previous]);
+ useEffect(()=>{if(previous===null)return;const timer=setTimeout(()=>setPrevious(null),950);return()=>clearTimeout(timer)},[active,previous]);
  const visible=onScreen&&shown,moving=rolling&&!still,running=moving&&!held&&visible&&!busy;
- function photo(index:number,old=false){const item=slides[index],info=imageInfo(item.image);return <img key={`${old?'old':'current'}-${index}`} className={old?'home-photo-previous':previous!==null?'home-photo-enter':''} style={{objectFit:item.fit as 'cover'|'contain',objectPosition:item.pos}} onError={e=>{if(e.currentTarget.currentSrc.endsWith('.avif')){e.currentTarget.srcset='';e.currentTarget.src=imageAsset(item.image)}}} src={imageAsset(item.image,'large')} srcSet={imageSrcSet(item.image)} sizes={photoSizes} width={info?.width} height={info?.height} alt={old?'':item.alt} aria-hidden={old||undefined} fetchPriority={index===0&&!old?'high':'auto'} decoding="async"/>}
+ function photo(index:number,old=false){const item=slides[index],info=imageInfo(item.image);return <img key={`p-${index}`} className={old?'home-photo-previous':previous!==null?'home-photo-enter':''} style={{objectFit:item.fit as 'cover'|'contain',objectPosition:item.pos}} onError={e=>{if(e.currentTarget.currentSrc.endsWith('.avif')){e.currentTarget.srcset='';e.currentTarget.src=imageAsset(item.image)}}} src={imageAsset(item.image,'large')} srcSet={imageSrcSet(item.image)} sizes={photoSizes} width={info?.width} height={info?.height} alt={old?'':item.alt} aria-hidden={old||undefined} fetchPriority={index===0&&!old?'high':'auto'} decoding="async"/>}
  return <section ref={root} id="our-story" className="home-opening" aria-label="Discover Taksh" aria-roledescription="carousel" onPointerEnter={e=>{if(e.pointerType==='mouse')setHeld(true)}} onPointerLeave={e=>{if(e.pointerType==='mouse')setHeld(false)}} onFocus={e=>{if((e.target as HTMLElement).matches?.(':focus-visible'))setHeld(true)}} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setHeld(false)}}><div className="home-feature wrap">
   <div className="home-intro"><h1>Brick-building sets that keep <em>Indian stories and culture</em> close</h1><p>For every age, to build together.</p></div>
   <div id="featured-photo" className="home-feature-photo" aria-busy={busy} onTouchStart={e=>{setHeld(true);start.current={x:e.touches[0].clientX,y:e.touches[0].clientY}}} onTouchEnd={e=>{setHeld(false);if(!start.current)return;const dx=e.changedTouches[0].clientX-start.current.x,dy=e.changedTouches[0].clientY-start.current.y;start.current=null;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))select(current.current+(dx<0?1:-1))}} onTouchCancel={()=>{setHeld(false);start.current=null}}>
