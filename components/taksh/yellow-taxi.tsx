@@ -33,21 +33,20 @@ export function YellowTaxiDetail({p}:{p:Product}){
   <section className="yt-inside yt-section" aria-labelledby="yt-inside-heading"><div className="wrap">
    <h2 id="yt-inside-heading">Get in.</h2>
    <div className="yt-look-around">
-    <figure className="yt-roof"><SetPhoto {...gallery[3]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1440px) 31vw, 422px"/><figcaption><h3>On the roof.</h3><p>A tin trunk, a suitcase and a bedding roll. The train journey is over. The taxi ride begins.</p></figcaption></figure>
-    <figure className="yt-dashboard"><SetPhoto {...gallery[4]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1440px) 31vw, 422px"/><figcaption><h3>On the dashboard.</h3><p>A clay cup of tea beside the fare meter. A box of sweets on the back seat.</p></figcaption></figure>
-    <figure className="yt-bonnet"><SetPhoto {...gallery[2]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1440px) 31vw, 422px"/><figcaption><h3>Under the bonnet.</h3><p>Lift the bonnet to see the engine. Simple to mend, the Ambassador kept its drivers on the road for decades.</p></figcaption></figure>
+    <figure className="yt-roof"><SetPhoto {...gallery[3]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1440px) 31vw, 422px"/><figcaption><h3>On the roof.</h3></figcaption></figure>
+    <figure className="yt-dashboard"><SetPhoto {...gallery[4]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1440px) 31vw, 422px"/><figcaption><h3>On the dashboard.</h3></figcaption></figure>
+    <figure className="yt-bonnet"><SetPhoto {...gallery[2]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1440px) 31vw, 422px"/><figcaption><h3>Under the bonnet.</h3></figcaption></figure>
    </div>
   </div></section>
   <section className="yt-night" aria-labelledby="yt-taxi-heading">
    <SetPhoto image={photo('ad-night-banner')} alt="A yellow brick taxi under a street lamp on a dark, wet street with tram rails." large/>
-   <div className="wrap yt-night-overlay"><div className="yt-night-copy"><h2 id="yt-taxi-heading">Taxi!</h2><p>In 1962, the Ambassador became Calcutta’s taxi. It wore yellow so you could spot it even from afar.</p><p className="yt-plate-note">Your model carries that year on its plate: WBT 1962.</p></div></div>
+   <div className="wrap yt-night-overlay"><div className="yt-night-copy"><h2 id="yt-taxi-heading">Taxi!</h2><p>In 1962, the Ambassador became Calcutta’s taxi.</p><p className="yt-plate-note">Your plate says WBT 1962.</p></div></div>
   </section>
   <section className="yt-history" aria-labelledby="yt-history-heading">
    <div className="wrap yt-history-layout">
     <figure className="yt-history-photo"><SetPhoto {...gallery[5]} sizes="(max-width: 960px) calc(100vw - 40px), (max-width: 1440px) 57vw, 768px"/><figcaption><h2 id="yt-history-heading">Last stop.</h2></figcaption></figure>
     <div className="yt-history-copy">
-     <p>At Uttarpara in West Bengal, just outside Calcutta, Hindustan Motors built the Ambassador for fifty-seven years, from 1957 to 2014.</p>
-     <p>Production stopped in May 2014. The yellow Ambassadors still working in Kolkata are due off the road by the end of 2027.</p>
+     <p>Made from 1957 to 2014. Kolkata’s last yellow Ambassadors leave the road by the end of 2027.</p>
     </div>
    </div>
    <p className="wrap yt-closing">Soon there will be none left to hail.<br/>{' '}You can still build one.</p>
@@ -56,9 +55,8 @@ export function YellowTaxiDetail({p}:{p:Product}){
    <figure className="yt-victoria">
     <SetPhoto image={photo('ad-victoria-banner')} alt="A yellow brick taxi driving past the Victoria Memorial in a sepia photograph." large/>
    </figure>
-   <div className="wrap rm-real-temple"><p>The same Ambassador, painted white, carried India’s prime ministers for decades. In yellow, it carried everyone else.</p></div>
   </section>
-  <section className="wrap rm-specs" aria-labelledby="yt-size-heading"><h2 id="yt-size-heading">Size and space.</h2><dl><div><dt>Length</dt><dd>About 17 cm</dd></div><div><dt>Width</dt><dd>About 8 cm</dd></div><div><dt>Height with the luggage</dt><dd>About 9 cm</dd></div></dl><div className="rm-real-temple"><p>About as long as your hand. It sits on a desk, a shelf or a windowsill.</p></div><p className="rm-disclaimer">A simplified brick model inspired by the yellow Ambassador taxis of Kolkata. It is not an exact scale replica and is not made by, affiliated with or endorsed by Hindustan Motors or the owners of the Ambassador name. The number plate is a tribute, not a real registration. The street scenes on this page are imagined; the model shown in them is the Taksh set.</p></section>
+  <section className="wrap rm-legal" aria-label="About this model"><p className="rm-disclaimer">A simplified brick model inspired by the yellow Ambassador taxis of Kolkata. It is not an exact scale replica and is not made by, affiliated with or endorsed by Hindustan Motors or the owners of the Ambassador name. The number plate is a tribute, not a real registration. The street scenes on this page are imagined; the model shown in them is the Taksh set.</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
 }

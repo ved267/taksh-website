@@ -13,7 +13,7 @@ import {Dialog,DialogContent,DialogTitle,DialogDescription} from '@/components/u
 import {Stepper} from './stepper';
 import {ContactLink} from './shell';
 import {useStore} from './store';
-import {productMoney,pieceLabel,inTheBox,type Product} from '@/lib/shop';
+import {productMoney,pieceLabel,boxLine,type Product} from '@/lib/shop';
 import {track} from '@/lib/tracking';
 import {useStickyPurchase} from './use-sticky-purchase';
 import {imageAsset,imageInfo,imageSrcSet} from '@/lib/images';
@@ -28,13 +28,13 @@ function Photo({name,alt,eager=false,large=false,folder='chandrayaan',sizes,reso
  return <ProductPhoto eager={eager} src={resolvedSrc||imageAsset(src)} srcSet={resolvedSrc?undefined:imageSrcSet(src)} sizes={sizes??(large?'(max-width: 760px) 100vw, 1100px':'(max-width: 960px) calc(100vw - 40px), 50vw')} alt={alt} width={info?.width||photoWidth(name)} height={info?.height||(landscape(name)?1024:photoWidth(name))} fetchPriority={eager?'high':'auto'} decoding="async" draggable={false}/>;
 }
 const chandrayaanGalleryPhotos=[
+ {image:'gallery-12-room',label:'The set at home',alt:'The complete model on a wooden console beside books.'},
  {image:'gallery-01-hero',label:'The complete set',alt:'Vikram and Pragyan on the brick lunar base.'},
  {image:'gallery-02-rover-closeup',label:'Pragyan close-up',alt:'Pragyan with six wheels, camera eyes and a blue solar panel.'},
  {image:'gallery-07-inside-front',label:'Inside Vikram',alt:'The open lander with its rover bay, tanks and guide rails.'},
  {image:'gallery-03-top-deck-closeup',label:'The top deck',alt:'The antenna dish and instruments on Vikram’s top deck.'},
  {image:'gallery-05-leg-heat-probe',label:'The landing leg',alt:'Vikram’s landing leg, gold footpad and heat probe.'},
  {image:'gallery-11-dimensions',label:'Size and space',alt:'The complete set, about 32 cm wide, 28 cm deep and 17 cm tall.'},
- {image:'gallery-12-room',label:'The set at home',alt:'The complete model on a wooden console beside books.'},
 ];
 type Part={name:string;job:string};
 const parts:Record<'lander'|'rover',Part[]>={
@@ -63,11 +63,11 @@ const parts:Record<'lander'|'rover',Part[]>={
 };
 
 const timeline=[
- {date:'14 July 2023',event:'Leaving Earth',note:'LVM3 lifts off from Sriharikota, carrying Chandrayaan-3.'},
- {date:'5 August 2023',event:'Around the Moon',note:'Chandrayaan-3 enters lunar orbit.'},
- {date:'23 August 2023',event:'Vikram lands at 6:04 pm',note:'India becomes the first country to land near the Moon’s south pole.'},
+ {date:'14 July 2023',event:'Leaving Earth'},
+ {date:'5 August 2023',event:'Around the Moon'},
+ {date:'23 August 2023',event:'Vikram lands near the south pole'},
  {date:'A few hours later',event:'Pragyan rolls onto the Moon'},
- {date:'3 September 2023',event:'Vikram makes a short hop',note:'It rises about 40 cm and lands a short distance away.'},
+ {date:'3 September 2023',event:'Vikram makes a short hop'},
 ];
 
 const points={
@@ -90,7 +90,7 @@ export function ChandrayaanGallery({photos=chandrayaanGalleryPhotos,folder='chan
  return <>
   <div className="ch3-gallery" role="group" aria-label="Product gallery">
    <div className="ch3-thumbnails" aria-label="Choose a product image">{gallery.map((item,i)=><button ref={el=>{thumbs.current[i]=el}} key={item.image} type="button" aria-label={`${i+1}. ${item.label}`} aria-pressed={i===index} onClick={()=>change(i)}><img src={galleryAsset(item.image)} width={76} height={76} alt="" loading="lazy" fetchPriority="low" decoding="async" draggable={false}/></button>)}</div>
-   <div className="ch3-gallery-stage" aria-busy={status==='loading'} onPointerDown={start} onPointerUp={end} onPointerCancel={()=>{touch.current=null}} onKeyDown={e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();change(index+(e.key==='ArrowRight'?1:-1))}}}>
+   <div className="ch3-gallery-stage" data-whole={/size|dimension/.test(current.image)||undefined} aria-busy={status==='loading'} onPointerDown={start} onPointerUp={end} onPointerCancel={()=>{touch.current=null}} onKeyDown={e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();change(index+(e.key==='ArrowRight'?1:-1))}}}>
     {allowEnlarge?<button ref={trigger} className="ch3-main-image" aria-label={`View larger: ${current.label}`} onClick={()=>{if(dragged.current){dragged.current=false;return}setOpen(true)}}><Photo resolvedSrc={resolvedSrc} folder={folder} name={current.image} alt={current.alt} eager sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 960px) calc(100vw - 122px), (max-width: 1200px) calc(51vw - 125px), (max-width: 1440px) calc(55vw - 145px), 580px"/></button>:<div className="ch3-main-image" tabIndex={0} aria-label={current.label}><Photo resolvedSrc={resolvedSrc} folder={folder} name={current.image} alt={current.alt} eager sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 960px) calc(100vw - 122px), (max-width: 1200px) calc(51vw - 125px), (max-width: 1440px) calc(55vw - 145px), 580px"/></div>}
     <span className="ch3-counter" aria-live="polite">{index+1} / {gallery.length}</span>
     <button className="ch3-gallery-arrow previous" aria-label="Previous image" onClick={()=>change(index-1)}><ArrowLeft size={18}/></button><button className="ch3-gallery-arrow next" aria-label="Next image" onClick={()=>change(index+1)}><ArrowRight size={18}/></button>
@@ -108,7 +108,7 @@ export function ChandrayaanGallery({photos=chandrayaanGalleryPhotos,folder='chan
 }
 
 function PartGuide(){
- const [craft,setCraft]=useState<'lander'|'rover'>('lander');const [showSize,setShowSize]=useState(false);const [selected,setSelected]=useState<number|null>(null);
+ const [craft,setCraft]=useState<'lander'|'rover'>('lander');const [selected,setSelected]=useState<number|null>(null);
  const guide=useRef<HTMLDetailsElement>(null);const rows=useRef<(HTMLButtonElement|null)[]>([]);const diagram=useRef<HTMLDivElement>(null);const [phone,setPhone]=useState(false);
  useEffect(()=>{const query=window.matchMedia('(max-width:760px)');const update=()=>setPhone(query.matches);update();query.addEventListener('change',update);return()=>query.removeEventListener('change',update)},[]);
  function select(i:number,fromMarker=false){setSelected(i);if(guide.current)guide.current.open=true;if(fromMarker&&window.matchMedia('(max-width: 760px)').matches)rows.current[i]?.scrollIntoView({behavior:'smooth',block:'center'})}
@@ -117,10 +117,10 @@ function PartGuide(){
   if(e.detail&&diagram.current){const r=diagram.current.getBoundingClientRect();let closest=i,distance=Infinity;points[craft].forEach((p,j)=>{const d=(e.clientX-r.left-r.width*p.x/100)**2+(e.clientY-r.top-r.height*p.y/100)**2;if(d<distance){distance=d;closest=j}});select(closest,true)}else select(i,true);
  }
  return <section className="ch3-section ch3-parts" id="ch-parts" aria-labelledby="ch3-parts-title"><div className="wrap">
-  <div className="ch3-section-heading"><div><h2 id="ch3-parts-title">Every part has a job.</h2><p>Follow the numbers. Find out what each part does.</p></div><div className="ch3-tabs" role="group" aria-label="Choose parts or size">{(['lander','rover'] as const).map(c=><button key={c} aria-pressed={!showSize&&craft===c} onClick={()=>{setCraft(c);setShowSize(false);setSelected(null)}}>{c==='lander'?'Vikram · Lander':'Pragyan · Rover'}</button>)}<button aria-pressed={showSize} onClick={()=>{setShowSize(true);setSelected(null)}}>Size</button></div></div>
-  {showSize?<div className="ch3-size-layout"><figure><Photo name="gallery-11-dimensions" alt="The complete lander and rover set with width, depth and height marked."/></figure><div className="ch3-size-copy"><h3>A little room for the Moon.</h3><dl><div><dt>Width</dt><dd>About 32 cm</dd></div><div><dt>Depth</dt><dd>About 28 cm</dd></div><div><dt>Height</dt><dd>About 17 cm</dd></div></dl><p>About one and a half A4 sheets of shelf space.</p></div></div>:<div className="ch3-part-layout"><figure><div ref={diagram} className={`ch3-diagram ${craft}`}><Photo name={craft==='lander'?'gallery-09-lander-clean':'gallery-02-rover-closeup'} alt={craft==='lander'?'Vikram and its lunar base, with twelve numbered parts.':'Pragyan, with six numbered parts.'}/>{points[craft].map((point,i)=><button key={`${craft}-${i}`} className={`ch3-marker${phone?' is-static':''}`} tabIndex={phone?-1:0} aria-hidden={phone||undefined} style={{left:point.x+'%',top:point.y+'%'}} aria-label={`${i+1}. ${parts[craft][i].name}`} aria-pressed={selected===i} aria-controls={`ch3-part-${craft}-${i}`} onClick={e=>markerClick(i,e)}><span>{i+1}</span></button>)}</div><figcaption>{craft==='lander'?<><strong>Vikram carries a founder’s name.</strong> A tribute to Dr Vikram Sarabhai, the founder of India’s space programme.</>:<><strong>Pragyan means wisdom.</strong> A small rover, sent to learn about another world.</>}</figcaption></figure>
+  <div className="ch3-section-heading"><div><h2 id="ch3-parts-title">Every part has a job.</h2><p>Follow the numbers. Find out what each part does.</p></div><div className="ch3-tabs" role="group" aria-label="Choose lander or rover">{(['lander','rover'] as const).map(c=><button key={c} aria-pressed={craft===c} onClick={()=>{setCraft(c);setSelected(null)}}>{c==='lander'?'Vikram · Lander':'Pragyan · Rover'}</button>)}</div></div>
+  <div className="ch3-part-layout"><figure><div ref={diagram} className={`ch3-diagram ${craft}`}><Photo name={craft==='lander'?'gallery-09-lander-clean':'gallery-02-rover-closeup'} alt={craft==='lander'?'Vikram and its lunar base, with twelve numbered parts.':'Pragyan, with six numbered parts.'}/>{points[craft].map((point,i)=><button key={`${craft}-${i}`} className={`ch3-marker${phone?' is-static':''}`} tabIndex={phone?-1:0} aria-hidden={phone||undefined} style={{left:point.x+'%',top:point.y+'%'}} aria-label={`${i+1}. ${parts[craft][i].name}`} aria-pressed={selected===i} aria-controls={`ch3-part-${craft}-${i}`} onClick={e=>markerClick(i,e)}><span>{i+1}</span></button>)}</div><figcaption>{craft==='lander'?<><strong>Vikram carries a founder’s name.</strong> A tribute to Dr Vikram Sarabhai, the founder of India’s space programme.</>:<><strong>Pragyan means wisdom.</strong> A small rover, sent to learn about another world.</>}</figcaption></figure>
    <details ref={guide} className="parts-disclosure"><summary>Explore all {parts[craft].length} parts</summary><ol className="ch3-part-list" aria-label={`${craft==='lander'?'Vikram':'Pragyan'} parts and functions`}>{parts[craft].map((part,i)=><li key={part.name}><button ref={el=>{rows.current[i]=el}} id={`ch3-part-${craft}-${i}`} aria-pressed={selected===i} onClick={()=>select(i)}><span className="ch3-part-number">{i+1}</span><span><strong>{part.name}</strong><span className="ch3-part-job">{part.job}</span></span></button></li>)}</ol></details>
-  </div>}
+  </div>
  </div></section>;
 }
 
@@ -134,19 +134,18 @@ export function ChandrayaanDetail({p}:{p:Product}){
    <div className="ch3-top-layout"><ChandrayaanGallery showHomePreview={false}/><section className="ch3-buy" aria-label="Choose your set">
     <div className="ch3-title"><h1>Chandrayaan-3</h1><div className="ch3-craft-pair"><span><strong>Vikram</strong><span className="ch3-craft-role"> · Lander</span></span><span><strong>Pragyan</strong><span className="ch3-craft-role"> · Rover</span></span></div></div>
     <div className="ch3-facts"><span>{pieceLabel(p)} pieces</span><span>{p.buildTime}</span><span>{p.level}</span></div>
-    <div className="ch3-description"><p>Build the lander, the rover and a piece of the Moon. The ramp unfolds, the rover rolls out, and the top lifts off.</p><p style={{marginTop:12}}>{inTheBox(p)}</p></div>
+    <div className="ch3-description"><p className="rm-in-box">{boxLine}</p></div>
     <div className="ch3-pricing"><div className="price-block"><span className="price-tag">{productMoney(p)}</span><small>MRP inclusive of all taxes</small></div></div>
     <StockNotice/><div className="ch3-order"><div className="quantity-row"><span>Quantity</span><Stepper value={qty} onChange={setQty}/></div><button ref={buyRef} className="button primary full" onClick={()=>ready&&add(p,qty)}>Add to bag</button></div>
     <BuyerDetails p={p}/><div ref={contactRef} className="ch3-contact"><ContactLink><WhatsAppIcon/>Ask us on WhatsApp</ContactLink></div>
    </section></div>
   </div>
-  <section className="ch3-section ch3-moves" id="ch-moves" aria-labelledby="ch3-moves-title"><div className="wrap"><div className="ch3-section-heading"><div><h2 id="ch3-moves-title">Built to move.</h2><p>Four moving details to try for yourself.</p></div></div><div className="ch3-moves-layout"><div className="ch3-move-photos"><figure><Photo name="gallery-04-door-closeup" alt="The hinged doorway and unfolded ramp."/></figure><figure><Photo name="gallery-07-inside-front" alt="Vikram with the top deck lifted off and the rover inside."/></figure></div><div className="ch3-move-list">{[
- ['The ramp unfolds.','Two hinged sections swing down from the door to the ground.'],['Pragyan rolls out.','All six wheels turn.'],['The top lifts off.','Take off the top deck to see the rover bay, the fuel tanks and the guide rails.'],['The solar panel flips.','It lies flat for the journey and stands up to charge.'],
- ].map(([title,text])=><div key={title}><h3>{title}</h3><p>{text}</p></div>)}</div></div></div></section>
+  <section className="ch3-section ch3-moves" id="ch-moves" aria-labelledby="ch3-moves-title"><div className="wrap"><div className="ch3-section-heading"><div><h2 id="ch3-moves-title">Built to move.</h2></div></div><div className="ch3-moves-layout"><div className="ch3-move-photos"><figure><Photo name="gallery-04-door-closeup" alt="The hinged doorway and unfolded ramp."/></figure><figure><Photo name="gallery-07-inside-front" alt="Vikram with the top deck lifted off and the rover inside."/></figure></div><div className="ch3-move-list">{[
+ 'The ramp unfolds.','Pragyan rolls out.','The top lifts off.','The solar panel flips.',
+ ].map(title=><div key={title}><h3>{title}</h3></div>)}</div></div></div></section>
   <PartGuide/>
-  <section className="wrap ch3-section" aria-labelledby="ch3-size-title"><div className="ch3-size-layout"><figure><Photo name="gallery-11-dimensions" alt="The complete lander and rover set with width, depth and height marked."/></figure><div className="ch3-size-copy"><h2 id="ch3-size-title">Size and space.</h2><dl><div><dt>Width</dt><dd>About 32 cm</dd></div><div><dt>Depth</dt><dd>About 28 cm</dd></div><div><dt>Height</dt><dd>About 17 cm</dd></div></dl><p>About one and a half A4 sheets of shelf space.</p></div></div></section>
   <section className="ch3-moon" aria-label="Inspired by the mission"><picture><source media="(max-width:640px)" srcSet={imageSrcSet('/chandrayaan/ad-moon-portrait.webp')} sizes="100vw"/><img src={asset('ad-moon-banner')} srcSet={imageSrcSet('/chandrayaan/ad-moon-banner.webp')} sizes="100vw" width={1672} height={941} alt="The brick lander and rover in an imagined lunar scene." loading="lazy" decoding="async"/></picture><div className="ch3-moon-copy"><span>23 August 2023 · 6:04 pm</span><h2>A landing<br/>worth remembering.</h2><p>A build that keeps the story close.</p></div></section>
-  <section className="wrap ch3-section ch3-story" id="ch-story" aria-labelledby="ch3-timeline-title"><h2 id="ch3-timeline-title">From Earth to the Moon.</h2><ol className="ch3-timeline">{timeline.map((item,i)=><li key={item.date} className={i===2?'ch3-touchdown':undefined}><span className="ch3-timeline-node" aria-hidden="true"/><span className="ch3-date">{item.date}</span><div><h3>{item.event}</h3>{item.note&&<p>{item.note}</p>}</div></li>)}</ol><p className="ch3-tribute">An independent tribute to the mission. Not made by, affiliated with or endorsed by ISRO.</p></section>
+  <section className="wrap ch3-section ch3-story" id="ch-story" aria-labelledby="ch3-timeline-title"><h2 id="ch3-timeline-title">From Earth to the Moon.</h2><ol className="ch3-timeline">{timeline.map((item,i)=><li key={item.date} className={i===2?'ch3-touchdown':undefined}><span className="ch3-timeline-node" aria-hidden="true"/><span className="ch3-date">{item.date}</span><div><h3>{item.event}</h3></div></li>)}</ol><p className="ch3-tribute">An independent tribute to the mission. Not made by, affiliated with or endorsed by ISRO.</p></section>
   {sticky&&<div className="ch3-sticky"><div><strong>Chandrayaan-3</strong><span>{productMoney(p)}</span></div><button className="button primary" onClick={()=>ready&&add(p,qty)}>Add to bag</button></div>}
  </div>;
 }

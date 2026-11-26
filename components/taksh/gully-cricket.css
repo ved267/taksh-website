@@ -43,24 +43,17 @@
 .gc-speaker{display:block;font-family:Figtree,sans-serif;font-size:12px;font-weight:600;line-height:1.4;margin-bottom:12px;letter-spacing:.16em;text-transform:uppercase}
 .gc-quote{display:block;font-family:Georgia,'Times New Roman',serif;font-size:clamp(28px,3vw,44px);letter-spacing:-.025em;line-height:1.24;font-style:italic;text-wrap:balance}
 .gc-dialogue p+p .gc-quote{font-size:clamp(32px,3.6vw,52px)}
-.gc-page .rm-specs{background:#FDF8EC;margin-top:48px}
-.gc-size-layout{display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:48px}
-.gc-size-photo{background:#EEE8DA;aspect-ratio:4/3}
-.gc-size-photo img{width:100%;height:100%;object-fit:contain}
-.gc-size-copy{min-width:0}
-.gc-assembled{font-size:16px;margin-top:22px}
-.gc-page .rm-real-temple p+p{margin-top:12px}
 .gc-page .rm-disclaimer{font-size:12px;line-height:1.6;max-width:100%;margin-top:32px}
 
-@media(max-width:1200px){.gc-page .rm-product-layout{grid-template-columns:minmax(0,1.6fr) 340px;gap:28px}.gc-choice-heading{display:block}.gc-choice-heading p{margin-top:4px}.gc-dialogue{left:32px;width:36%}.gc-size-layout{gap:32px}.gc-page .rm-specs dd{font-size:19px}}
-@media(min-width:761px) and (max-width:960px){.gc-page .rm-product-layout{grid-template-columns:minmax(0,1.4fr) 300px;gap:24px}.gc-page .rm-title h1{font-size:36px}.gc-page .rm-title>p{font-size:20px}.gc-build-choices button{flex:0 0 90px}.gc-page .rm-description{font-size:14px}.gc-page .rm-facts{justify-content:flex-start}.gc-page .rm-specs dd{font-size:17px}}
+@media(max-width:1200px){.gc-page .rm-product-layout{grid-template-columns:minmax(0,1.6fr) 340px;gap:28px}.gc-choice-heading{display:block}.gc-choice-heading p{margin-top:4px}.gc-dialogue{left:32px;width:36%}}
+@media(min-width:761px) and (max-width:960px){.gc-page .rm-product-layout{grid-template-columns:minmax(0,1.4fr) 300px;gap:24px}.gc-page .rm-title h1{font-size:36px}.gc-page .rm-title>p{font-size:20px}.gc-build-choices button{flex:0 0 90px}.gc-page .rm-description{font-size:14px}.gc-page .rm-facts{justify-content:flex-start}}
 @media(max-width:760px){
  .gc-page .rm-opening{padding-bottom:24px}
  .gc-page .rm-product-layout{display:flex;flex-direction:column;gap:0}
  .gc-page .gc-buy-column,.gc-page .rm-buy{display:contents}
  .gc-page .rm-title{order:0;margin-bottom:18px}
  .gc-page .rm-title h1{font-size:36px}.gc-page .rm-title>p{font-size:20px}
- .gc-explorer{order:1}.gc-explorer-stage{height:auto;aspect-ratio:4/3}
+ .gc-explorer{order:1}.gc-explorer-stage{height:auto;aspect-ratio:4/3;margin:0 -20px}
  .gc-page .rm-facts{order:2;margin:18px 0 0;width:100%;justify-content:flex-start}
  .gc-page .rm-pricing{order:3;margin:18px 0;width:100%}
  .gc-page .rm-order{order:4;width:100%}
@@ -71,5 +64,4 @@
  .gc-build-choices{gap:10px}.gc-build-choices button{flex:0 0 94px;font-size:12px}
  .gc-page .gc-build-line{font-size:12px}.gc-caption{min-height:76px}
  .gc-dialogue{position:static;transform:none;width:auto;max-width:none;padding:30px 24px 38px}.gc-dialogue p+p{margin-top:30px;padding-left:22px}.gc-speaker{font-size:11px;margin-bottom:10px}.gc-quote{font-size:30px;text-wrap:initial}.gc-dialogue p+p .gc-quote{font-size:36px}
- .gc-page .rm-specs{margin-top:32px}.gc-size-layout{grid-template-columns:1fr;gap:28px}.gc-size-copy{grid-row:1}.gc-assembled{font-size:15px}.gc-page .rm-specs h2{font-size:28px}
 }
