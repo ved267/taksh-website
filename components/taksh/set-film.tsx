@@ -7,11 +7,11 @@ import './set-film.css';
 export function SetFilm({name,caption,length,side='right',at='bottom'}:{name:string;caption:string;length:string;side?:'left'|'right';at?:'top'|'bottom'}){
  const src=`/films/${name}.mp4`,box=useRef<HTMLDialogElement>(null),big=useRef<HTMLVideoElement>(null),bar=useRef<HTMLSpanElement>(null),[open,setOpen]=useState(false),[paused,setPaused]=useState(false),[muted,setMuted]=useState(false);
  useEffect(()=>{const v=big.current;if(!v)return;if(open){if(!v.getAttribute('src'))v.src=src;v.currentTime=0;v.muted=false;v.play().catch(()=>{v.muted=true;setMuted(true);v.play().catch(()=>{})});document.documentElement.style.overflow='hidden'}else{v.pause();document.documentElement.style.overflow=''}},[open,src]);
- const show=()=>{setPaused(false);setMuted(false);box.current?.showModal();setOpen(true)},hide=()=>{box.current?.close();setOpen(false)};
+ const show=()=>{setPaused(false);setMuted(false);box.current?.showModal();setOpen(true)},hide=()=>{const d=box.current;if(!d)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches){d.close();setOpen(false);return}d.classList.add('is-closing');setTimeout(()=>{d.classList.remove('is-closing');d.close();setOpen(false)},220)};
  const toggle=()=>{const v=big.current;if(!v)return;if(v.paused)v.play().catch(()=>{});else v.pause()};
  return <div className={`set-film set-film-${side} set-film-${at}`}>
   <button type="button" className="set-film-tile" onClick={show} aria-label={`Watch: ${caption} (${length})`}><span className="set-film-play" aria-hidden="true"/>Watch<span className="set-film-time">{length}</span></button>
-  <dialog ref={box} className="set-film-box" onClose={()=>setOpen(false)} onClick={e=>{if(e.target===e.currentTarget)hide()}} aria-label={caption}>
+  <dialog ref={box} className="set-film-box" onClose={()=>setOpen(false)} onCancel={e=>{e.preventDefault();hide()}} onClick={e=>{if(e.target===e.currentTarget)hide()}} aria-label={caption}>
    <div className="set-film-player">
     <video ref={big} poster={`/films/${name}.jpg`} playsInline preload="none" onClick={toggle} onPlay={()=>setPaused(false)} onPause={()=>setPaused(true)} onEnded={()=>setPaused(true)} onTimeUpdate={e=>{const v=e.currentTarget;if(bar.current&&v.duration)bar.current.style.transform=`scaleX(${v.currentTime/v.duration})`}}/>
     {paused&&<button type="button" className="set-film-resume" onClick={toggle} aria-label="Play"/>}

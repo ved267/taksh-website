@@ -12,6 +12,8 @@
 .set-film-box[open]::backdrop{animation:film-fade .32s ease}
 @keyframes film-in{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:none}}
 @keyframes film-fade{from{opacity:0}to{opacity:1}}
+.set-film-box.is-closing{animation:film-out .22s ease forwards}.set-film-box.is-closing::backdrop{animation:film-fade .22s ease reverse forwards}
+@keyframes film-out{to{opacity:0;transform:scale(.96) translateY(8px)}}
 .set-film-player{position:relative;height:min(86vh,780px);aspect-ratio:9/16;max-width:94vw;border-radius:20px;overflow:hidden;background:var(--ink);box-shadow:0 24px 60px color-mix(in srgb,var(--ink) 45%,transparent)}
 .set-film-player video{display:block;width:100%;height:100%;object-fit:cover;outline:none;cursor:pointer}
 .set-film-player p{position:absolute;left:0;right:0;bottom:0;margin:0;padding:56px 18px 22px;background:linear-gradient(transparent,color-mix(in srgb,var(--ink) 70%,transparent));color:var(--popover);font-size:14px;line-height:1.35;pointer-events:none}
