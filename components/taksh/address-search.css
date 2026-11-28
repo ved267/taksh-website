@@ -1,8 +1,0 @@
-.address-search{position:relative}
-.address-search ul{position:absolute;z-index:5;left:0;right:0;top:100%;margin:4px 0 0;padding:4px;list-style:none;background:var(--popover);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px var(--line);max-height:300px;overflow:auto}
-.address-search li{display:flex;flex-direction:column;gap:2px;padding:9px 10px;border-radius:7px;cursor:pointer}
-.address-search li[aria-selected=true]{background:var(--beige)}
-.address-search li span,.address-picked{font-size:13px;color:var(--muted)}
-.address-picked{margin:-6px 0 0}
-.checkout-step-actions{margin-top:14px}
-.checkout-step-actions button{padding:6px 0;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}

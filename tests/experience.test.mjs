@@ -13,7 +13,7 @@ test('gallery retains current image until selected image decodes; stale and fail
  const d=selection.select(4);selection.cancel();pending[4].resolve();await d;assert.deepEqual(commits,[2]);
 });
 test('checkout Enter moves through contact fields to the request button, never implicitly submits',()=>{
- assert.equal(nextCheckoutField('fullName'),'mobile');assert.equal(nextCheckoutField('email'),'request-submit');assert.equal(nextCheckoutField('request-submit'),null);assert.equal(nextCheckoutField('state'),null);assert.equal(nextCheckoutField('unknown'),null);
+ assert.equal(nextCheckoutField('fullName'),'mobile');assert.equal(nextCheckoutField('email'),'house');assert.equal(nextCheckoutField('request-submit'),null);assert.equal(nextCheckoutField('state'),'pincode');assert.equal(nextCheckoutField('house'),'street');assert.equal(nextCheckoutField('pincode'),'request-submit');assert.equal(nextCheckoutField('unknown'),null);
 });
 test('catalogue filters intersect, prices use catalogue data, sorting leaves originals untouched',()=>{
  const products=[{name:'B',level:'Master',price:8000,age:12},{name:'A',level:'Craft',price:1700,age:8},{name:'C',level:'Craft',price:2400,age:9}];

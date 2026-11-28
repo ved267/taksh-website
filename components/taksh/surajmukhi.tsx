@@ -9,7 +9,6 @@ import {track} from '@/lib/tracking';
 import {type Product} from '@/lib/shop';
 import './ram-mandir.css';
 import './surajmukhi.css';
-import {SetFilm} from './set-film';
 
 const gallery:PhotoInfo[]=[
  {image:'/surajmukhi/gallery-03-at-home.webp',label:'At home',alt:'The pair in a glass bottle on a bedside table at golden hour, beside a folded note. Their shadows lean together on the wall.'},
@@ -33,11 +32,11 @@ function SunflowerStory(){
  return <section className="sm-story" data-tone={beats[active].id} aria-labelledby="sm-story-heading"><div className="wrap sm-story-inner">
   <div className="sm-story-text"><h2 id="sm-story-heading" className="sm-story-title">The Sunflower Theory</h2>
    {beats.map((b,i)=><div key={b.id} ref={el=>{refs.current[i]=el}} data-i={i} className={i===active?'sm-beat is-on':'sm-beat'}>
-    <figure className="sm-beat-photo"><SetPhoto image={b.image} alt={b.alt} sizes="calc(100vw - 40px)"/>{i===0&&<SetFilm name="surajmukhi-theory" caption="The Sunflower Theory."/>}</figure>
+    <figure className="sm-beat-photo"><SetPhoto image={b.image} alt={b.alt} sizes="calc(100vw - 40px)"/></figure>
     <p>{b.line}</p></div>)}
    <p className="sm-never">That’s why you never give just one.</p>
   </div>
-  <div className="sm-story-stage"><div aria-hidden="true">{beats.map((b,i)=><figure key={b.id} className={i===active?'is-on':''}><SetPhoto image={b.image} alt="" sizes="(max-width: 1200px) 55vw, 700px"/></figure>)}</div><SetFilm name="surajmukhi-theory" caption="The Sunflower Theory."/></div>
+  <div className="sm-story-stage" aria-hidden="true">{beats.map((b,i)=><figure key={b.id} className={i===active?'is-on':''}><SetPhoto image={b.image} alt="" sizes="(max-width: 1200px) 55vw, 700px"/></figure>)}</div>
  </div></section>;
 }
 

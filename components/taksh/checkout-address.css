@@ -1,0 +1,5 @@
+.address-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checkout-address-heading{margin-top:12px}
+.address-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.address-row .field select{width:100%;min-height:52px;padding:12px 36px 12px 14px;border-width:1px;border-style:solid;border-radius:7px;background:var(--popover) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23636357' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;color:var(--ink);font:inherit;appearance:none}
+@media(max-width:640px){.address-pair{grid-template-columns:1fr}.address-row{grid-template-columns:1fr 1fr}.address-row>.field:first-child{grid-column:1/-1}}

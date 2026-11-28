@@ -3,7 +3,7 @@
 # https://raw.githubusercontent.com/dropdevrahul/pincodes-india/main/pincode.csv
 # Run: python3 -I scripts/build-pin-data.py pincode.csv public/pin
 # p/<first two digits>.json: {pin: [district, state index, [post office names]]}
-# w/<first two letters>.json: [[post office name, pin]] for every word of the name.
+# (Area word index removed 28 Nov 2026: checkout now uses the standard form with PIN autofill only.)
 import csv,json,re,os,sys,collections
 src,out=sys.argv[1],sys.argv[2]
 states=['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry']
