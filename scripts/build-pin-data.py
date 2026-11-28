@@ -3,7 +3,7 @@
 # https://raw.githubusercontent.com/dropdevrahul/pincodes-india/main/pincode.csv
 # Run: python3 -I scripts/build-pin-data.py pincode.csv public/pin
 # p/<first two digits>.json: {pin: [district, state index, [post office names]]}
-# w/<first three letters>.json: [[post office name, pin]] for every word of the name.
+# w/<first two letters>.json: [[post office name, pin]] for every word of the name.
 import csv,json,re,os,sys,collections
 src,out=sys.argv[1],sys.argv[2]
 states=['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry']
@@ -38,7 +38,7 @@ for k,v in byp.items(): json.dump(v,open(f'{out}/p/{k}.json','w'),separators=(',
 byw=collections.defaultdict(list)
 for pin,(d,s,offs) in pins.items():
     for o in offs:
-        keys=set(w[:3] for w in re.findall(r'[a-z]{3,}',o.lower()))
+        keys=set(w[:2] for w in re.findall(r'[a-z]{2,}',o.lower()))
         for k in keys: byw[k].append([o,pin])
 for k,v in byw.items(): json.dump(v,open(f'{out}/w/{k}.json','w'),separators=(',',':'),ensure_ascii=False)
 json.dump(states,open(f'{out}/states.json','w'))

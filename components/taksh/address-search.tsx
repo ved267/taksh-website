@@ -14,7 +14,7 @@ async function search(text:string):Promise<Hit[]>{
  const hit=async(name:string,pin:string)=>{const e=(await load<PinFile>(`/pin/p/${pin.slice(0,2)}.json`))?.[pin];return {name,pin,city:e?.[0]||'',state:e?states[e[1]]||'':''}};
  if(/^\d{3,6}$/.test(q)){const f=await load<PinFile>(`/pin/p/${q.slice(0,2)}.json`)||{},out:Hit[]=[];for(const pin of Object.keys(f).sort())if(pin.startsWith(q)){const [city,st,offices]=f[pin];for(const name of q.length===6?offices:offices.slice(0,1))out.push({name,pin,city,state:states[st]||''});if(out.length>=8)break}return out.slice(0,8)}
  const typed=words(q),key=[...typed].filter(w=>/^[a-z]{3,}$/.test(w)).sort((a,b)=>b.length-a.length)[0];if(!key)return [];
- const list=await load<[string,string][]>(`/pin/w/${key.slice(0,3)}.json`);if(!Array.isArray(list))return [];
+ const list=await load<[string,string][]>(`/pin/w/${key.slice(0,2)}.json`);if(!Array.isArray(list))return [];
  const near=list.filter(([n])=>words(n).some(w=>w.startsWith(key))).map(([n,p])=>({n,p,s:typed.filter(t=>words(n).some(w=>w.startsWith(t))).length})).sort((a,b)=>b.s-a.s).slice(0,40);
  const hits=await Promise.all(near.map(x=>hit(x.n,x.p)));
  return hits.filter(h=>typed.every(t=>words(`${h.name} ${h.city} ${h.state} ${h.pin}`).some(w=>w.startsWith(t)))).slice(0,8);
