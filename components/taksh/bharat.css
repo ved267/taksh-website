@@ -66,9 +66,7 @@
 }
 @media(max-width:760px){
  .bh-page .rm-opening .breadcrumb{white-space:normal;flex-wrap:wrap;gap:6px}
- .bh-page .rm-sticky>div{display:block;white-space:normal;min-width:0}
- .bh-page .rm-sticky strong{display:block;font-size:12px;line-height:1.25}
- .bh-page .rm-sticky .rm-sticky-separator{display:none}
- .bh-page .rm-sticky .button{flex-shrink:0}
+ 
+ 
 }
 @media(max-width:380px){.bh-story h2{font-size:32px}.bh-steps li{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:12px}.bh-step-title h3{font-size:19px}}
