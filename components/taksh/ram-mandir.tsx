@@ -13,6 +13,7 @@ import {imageAsset,imageSrcSet} from '@/lib/images';
 import {SetGallery} from './set-gallery';
 import {SetBuyBox,SetStickyBar} from './set-buy-box';
 import './ram-mandir.css';
+import {SetFilm} from './set-film';
 
 type PhotoInfo={image:string;label:string;alt:string};
 const asset=(name:string,small=false)=>imageAsset(`/ram-mandir/${name}.webp`,small?'thumb':'full');
@@ -37,13 +38,13 @@ function Photo({image,alt,eager=false,large=false,sizes}:{image:string;alt:strin
 }
 
 function WalkGuide(){
- return <section className="rm-section rm-walk" aria-labelledby="rm-walk-heading"><div className="wrap">
+ return <><section className="rm-section rm-walk" aria-labelledby="rm-walk-heading"><div className="wrap">
   <div className="rm-section-intro"><h2 id="rm-walk-heading">Walk in from the east.</h2><p>Climb the steps and meet each part.</p></div>
   <figure className="rm-parts-image"><Photo image={guide.image} alt={guide.alt} sizes="(max-width: 900px) calc(100vw - 40px), 860px"/></figure>
   <details className="parts-disclosure"><summary>Explore the 12 parts</summary><ol className="rm-parts-legend">{[
    ['Dharma Dhwaj','The saffron flag of dharma'],['Shikhara','The spire over the sanctum'],['Surya Tilak window','A mirror tile above the sanctum'],['Sabha Mandap','The tallest hall, before the sanctum'],['Rang Mandap','The gathering hall'],['Nritya Mandap','The dance hall, at the entrance'],['Side halls','One for prayer, one for song'],['Singh Dwar','The Lion Gate, facing east'],['Main stairs','32 steps on the real temple'],['Elephants and lions','Guardians beside the stairs'],['Platform','The raised base, with carved panels'],['Lawns','Four lawns around the temple'],
   ].map(([name,job],i)=><li key={name}><span className="rm-part-number" aria-hidden="true">{i+1}</span><div><strong>{name}</strong><p>{job}</p></div></li>)}</ol></details>
- </div></section>;
+ </div></section><SetFilm name="ram-mandir-walk" caption="Walk in from the east gate, all the way to the flag."/></>;
 }
 
 export function RamMandirDetail({p}:{p:Product}){
@@ -59,12 +60,12 @@ export function RamMandirDetail({p}:{p:Product}){
    <h2 id="rm-stone-heading">Different blocks. The same idea.</h2>
    <p className="rm-stone-intro">No steel. Stone shaped to fit stone. Your set works the same way.</p>
    <div className="rm-stone-pair"><figure><Photo image="story-01-stone-lock" alt="Two sandstone blocks, one above the other. A ridge on the lower block fits a groove in the upper block." sizes="(max-width: 760px) 45vw, 320px"/><figcaption>The temple</figcaption></figure><figure><Photo image="story-03-brick-lock" alt="Two tan building bricks, one above the other, with round studs on top." sizes="(max-width: 760px) 45vw, 320px"/><figcaption>Your set</figcaption></figure></div>
-  </div></section>
+  </div></section><SetFilm name="ram-mandir-blocks" caption="Built like a giant puzzle, block by block."/>
   <WalkGuide/>
   <section className="rm-section rm-sun" aria-labelledby="rm-sun-heading"><div className="wrap rm-sun-layout">
    <figure><Photo image="gallery-04-roofs-surya-tilak-window" alt={gallery.find(photo=>photo.image==='gallery-04-roofs-surya-tilak-window')!.alt} sizes="(max-width: 760px) calc(100vw - 40px), 46vw"/></figure>
    <div><h2 id="rm-sun-heading">Ram Lalla’s tilak.</h2><p>At noon on Ram Navami, mirrors bring sunlight to Ram Lalla’s forehead.</p><p>A mirror tile on your model marks the moment.</p></div>
-  </div></section>
+  </div></section><SetFilm name="ram-mandir-tilak" caption="Once a year at noon: the Surya Tilak."/>
   <section className="rm-history rm-section" aria-labelledby="rm-history-heading"><div className="wrap">
    <h2 id="rm-history-heading">Thirty-five years<br/>from drawing to flag.</h2>
     <div className="rm-timeline-layout"><ol className="rm-timeline">{[

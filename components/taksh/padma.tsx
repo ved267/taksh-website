@@ -10,6 +10,7 @@ import {track} from '@/lib/tracking';
 import {type Product} from '@/lib/shop';
 import './ram-mandir.css';
 import './padma.css';
+import {SetFilm} from './set-film';
 
 const gallery:PhotoInfo[]=[
  {image:'/padma/gallery-04-at-home.webp',label:'At home',alt:'The set on a teak side table beside reading glasses on a book and a brass bowl, in morning light.'},
@@ -44,7 +45,7 @@ function ThreeDays(){
   if(e.key==='ArrowRight')next=(current+1)%n;else if(e.key==='ArrowLeft')next=(current+n-1)%n;else return;
   e.preventDefault();buttons.current[next]?.focus({preventScroll:true});void change(next);
  }
- return <section ref={section} className="pd-days" data-tone={day.tone} aria-labelledby="pd-days-heading"><div className="wrap pd-days-inner">
+ return <><section ref={section} className="pd-days" data-tone={day.tone} aria-labelledby="pd-days-heading"><div className="wrap pd-days-inner">
   <div className="pd-days-side"><h2 id="pd-days-heading" className="pd-days-copy">A real lotus lasts about three days. This one stays.</h2>
   <div className="pd-day-tabs" role="group" aria-label="Choose a day" onKeyDown={onKey}>{days.map((d,i)=><button key={d.id} ref={el=>{buttons.current[i]=el}} aria-pressed={index===i} onClick={()=>{setTouched(true);void change(i)}} className={d.id==='day-yours'?'pd-yours':''}>{d.tab}</button>)}</div>
   <p className="pd-day-line" aria-live={playing?'off':'polite'}>{day.line}</p></div>
@@ -52,15 +53,15 @@ function ThreeDays(){
    <SetPhoto key={day.id} image={images[index]} alt={day.alt} resolvedSrc={resolvedSrc} sizes="(max-width: 760px) calc(100vw - 40px), 760px"/>
    <GalleryStatus status={status}/>
   </figure>
- </div></section>;
+ </div></section><SetFilm name="padma-nana-nani" caption="A lotus for Nana and Nani."/></>;
 }
 
 function LotusLeaf(){
- return <section className="pd-mud" aria-labelledby="pd-mud-heading">
+ return <><section className="pd-mud" aria-labelledby="pd-mud-heading">
   <div className="pd-mud-banner"><SetPhoto image="/padma/banner-born-of-mud.webp" alt="A pink lotus rising clean from a muddy pond at sunrise." sizes="100vw"/>
    <div className="pd-mud-copy"><p className="pd-verse" lang="sa">पद्मपत्रमिवाम्भसा</p><h2 id="pd-mud-heading">Like a lotus leaf on water.</h2><p>Live fully in the world, and let nothing cling to you.</p><p className="pd-cite">Bhagavad Gita 5.10</p></div>
   </div>
- </section>;
+ </section><SetFilm name="padma-samabhav" caption="Samabhav: calm, like a lotus leaf on water."/></>;
 }
 
 export function PadmaDetail({p}:{p:Product}){

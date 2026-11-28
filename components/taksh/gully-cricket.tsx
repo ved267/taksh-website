@@ -13,6 +13,7 @@ import {type Product} from '@/lib/shop';
 import {gullyGallery,gullyScenes,gullyExplorer,gullyDisclaimer} from '@/lib/gully-cricket.mjs';
 import './ram-mandir.css';
 import './gully-cricket.css';
+import {SetFilm} from './set-film';
 
 function GalleryViewer({photos,initialIndex,trigger,onClose}:{photos:PhotoInfo[];initialIndex:number;trigger:RefObject<HTMLButtonElement|null>;onClose:()=>void}){
  const originals=photos.map(p=>({...p,image:imageOriginal(p.image)}));
@@ -71,7 +72,7 @@ export function GullyCricketDetail({p}:{p:Product}){
   <section className="gc-night" aria-label="One more over">
    <ProductPhoto src={imageAsset('/gully-cricket/banner-street-lamp.png')} srcSet={imageSrcSet('/gully-cricket/banner-street-lamp.png')} sizes="100vw" width={night?.width} height={night?.height} rootMargin="800px 0px" fetchPriority="low" decoding="async" alt="The brick set on a ledge in a dark lane at dusk, under a street lamp, a bat leaning on the wall behind."/>
    <div className="gc-dialogue" lang="hi-Latn"><p><span className="gc-speaker">Maa</span><span className="gc-quote">“Andar aa jao. Andhera ho gaya.”</span></p><p><span className="gc-speaker">Bachche</span><span className="gc-quote">“Bas ek over aur.”</span></p></div>
-  </section>
+  </section><SetFilm name="gully-lane" caption="My lane, from memory."/>
   <section className="wrap rm-legal gc-legal" aria-label="About this set"><p className="rm-disclaimer">{gullyDisclaimer}</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;
