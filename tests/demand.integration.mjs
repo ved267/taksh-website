@@ -7,7 +7,7 @@ function client(){const cookies=new Map();return async function call(path,body,e
 const owner=client(),visitor=client(),internal=client();await visitor('/api/admin/orders',undefined,401);await owner('/api/admin/login',{password:process.env.TAKSH_TEST_PASSWORD||'taksh-local-demand-qa'});
 const before=(await owner('/api/admin/orders')).demand;
 const items=[{slug:'gully-cricket',quantity:2,price:1}];await visitor('/api/cart',{items,details:{email:'unsent@example.test'}});const draft=(await visitor('/api/checkout',{action:'begin',step:1,items,details:{}})).order;assert.equal(draft.details.email,'');assert.equal(draft.total,5998);
-await visitor('/api/checkout',{action:'place',step:1,items,reference:draft.reference,version:draft.version,details:{}},400);
+// Owner rule, 28 Nov 2026: nothing stops a request, so there is no contactless rejection to check here.
 const body={action:'place',step:1,items,reference:draft.reference,version:draft.version,details:{email:'simulation@outside.invalid'}};
 const parallel=await Promise.all([visitor('/api/checkout',body,[200,409]),visitor('/api/checkout',body,[200,409])]);const placed=parallel.find(r=>r.order)?.order;assert.ok(placed);const repeated=(await visitor('/api/checkout',body)).order;assert.equal(placed.reference,repeated.reference);assert.equal(placed.version,repeated.version);
 await internal('/api/cart',{items});await internal('/api/cart',{items,internal:true});const testDraft=(await internal('/api/checkout',{action:'begin',step:1,items,details:{},internal:true})).order;await internal('/api/checkout',{...body,reference:testDraft.reference,version:testDraft.version,internal:false,details:{email:'owner-simulation@outside.invalid'}});

@@ -1,0 +1,9 @@
+.bag-more{min-width:0;grid-column:1/-1}
+.bag-more h2{font-size:24px;letter-spacing:-.02em;margin:8px 0 16px}
+.bag-more-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.bag-more-item{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:16px;background:var(--card-wash)}
+.bag-more-item img{border-radius:10px;background:var(--tint)}
+.bag-more-item h3{font-size:16px;line-height:1.2;margin:8px 4px 0}
+.bag-more-item>span{margin:0 4px auto;font-size:15px;font-weight:600}
+.bag-more-item .button{min-height:42px;padding:8px;font-size:14px;margin-top:6px}
+@media(max-width:760px){.bag-more-list{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:0 20px 4px}.bag-more-item{flex:0 0 150px;scroll-snap-align:start}.bag-more h2{font-size:20px}.bag-more-item h3{font-size:14px}}
