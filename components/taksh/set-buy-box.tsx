@@ -16,4 +16,4 @@ export function SetBuyBox({p,qty,setQty,buyRef,contactRef,ready,onAdd}:{p:Produc
   <BuyerDetails p={p}/><div className="rm-contact" ref={contactRef}><ContactLink><WhatsAppIcon/>Ask us on WhatsApp</ContactLink></div>
  </section>;
 }
-export function SetStickyBar({p,ready,onAdd}:{p:Product;ready:boolean;onAdd:()=>void}){return <div className="rm-sticky"><div><strong>{p.name}</strong><span className="rm-sticky-separator" aria-hidden="true"> · </span><span>{productMoney(p)}</span></div><button className="button primary" onClick={()=>ready&&onAdd()}>Add to bag</button></div>}
+export function SetStickyBar({p,ready,onAdd}:{p:Product;ready:boolean;onAdd:()=>void}){return <div className="rm-sticky"><div><strong>{p.name}</strong><span>{productMoney(p)}</span></div><button className="button primary" onClick={()=>ready&&onAdd()}>Add to bag</button></div>}

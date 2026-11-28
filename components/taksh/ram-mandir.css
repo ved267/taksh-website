@@ -13,35 +13,26 @@
 
 
 
-
-
-
-
-
 .rm-parts-image{max-width:860px;margin:0 auto!important}.rm-parts-image img{width:100%;height:auto;object-fit:contain}
 .rm-parts-legend{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 36px;margin:28px 0 0;padding:28px 0 0;border-top:1px solid var(--line)}
 .rm-parts-legend li{display:flex;align-items:flex-start;gap:12px;min-width:0}.rm-part-number{flex:0 0 28px;width:28px;height:28px;display:grid;place-items:center;background:var(--cobalt);color:var(--cream);border-radius:50%;font-size:13px;font-weight:600}
 .rm-parts-legend strong{font-size:16px;font-weight:600;line-height:1.4}.rm-parts-legend p{font-size:14px;color:var(--muted);line-height:1.5;margin-top:3px}
 
-
 .rm-history h2{margin-bottom:38px}
-
 .rm-timeline{list-style:none;padding:0 0 0 30px;margin:0;position:relative}
 .rm-timeline:before{content:'';position:absolute;width:1px;background:var(--line);left:5px;top:8px;bottom:6px}
 .rm-timeline li{position:relative;padding:0 0 30px}.rm-timeline li:last-child{padding-bottom:0}
 .rm-timeline li:before{content:'';position:absolute;left:-30px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--cobalt);outline:5px solid var(--beige)}
 .rm-timeline li:last-child:before{background:var(--saffron)}.rm-timeline li>span{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}.rm-timeline li p{font-size:19px;line-height:1.45}.rm-disclaimer{font-size:12px;color:var(--muted);max-width:790px;line-height:1.55;margin-top:20px}
-.rm-sticky{position:fixed;z-index:39;left:0;right:0;top:var(--rm-header-height);display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;padding:8px max(56px,calc((100% - 1328px)/2));background:var(--cream);border-block:1px solid var(--line)}.rm-sticky>div{display:flex;align-items:center;gap:24px}.rm-sticky .rm-sticky-separator{display:none}.rm-sticky strong{font-size:18px}.rm-sticky>div>span{font-size:16px;font-weight:600}.rm-sticky .button{min-height:44px;padding:10px 26px;font-size:14px}
+.rm-sticky{position:fixed;z-index:39;left:50%;bottom:16px;translate:-50%;width:min(720px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;padding:8px 8px 8px 28px;background:var(--cream);border:1px solid var(--line);border-radius:99px;box-shadow:0 6px 20px var(--line)}.rm-sticky>div{display:flex;align-items:center;gap:24px}.rm-sticky strong{font-size:18px}.rm-sticky>div>span{font-size:16px;font-weight:600}.rm-sticky .button{min-height:44px;padding:10px 26px;font-size:14px}
 .rm-viewer[data-slot=dialog-content]{position:fixed;inset:0;transform:none;translate:none;max-width:none!important;width:100vw;height:100dvh;background:#101117;color:var(--cream);border:0;border-radius:0;padding:18px 28px;display:grid;grid-template-rows:44px minmax(0,1fr) auto;gap:12px;box-shadow:none;animation:none}.rm-viewer-toolbar{display:flex;align-items:center;justify-content:space-between;font-size:14px}.rm-viewer button{border:0;background:transparent;color:var(--cream);min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px}.rm-viewer :focus-visible{outline-color:var(--saffron)}.rm-viewer-image{min-height:0;display:flex;align-items:center;justify-content:center;touch-action:pan-y}.rm-viewer-image img{width:100%;height:100%;object-fit:contain}.rm-viewer-nav{display:flex;align-items:center;justify-content:center;gap:20px;min-height:44px;font-size:14px}.rm-viewer-nav span{min-width:180px;text-align:center}
 @media(max-width:1200px){.rm-product-layout{gap:36px}.rm-facts{font-size:12px}.rm-facts>*{padding:0 9px}.rm-section-intro{gap:42px}}
 @media(max-width:960px){.rm-product-layout{display:flex;flex-direction:column;gap:0}.rm-buy{display:contents}.rm-title{order:0;margin-bottom:22px}.rm-gallery{order:1;width:100%}.rm-facts{order:2;width:100%;justify-content:space-between;margin:22px 0 0;font-size:15px}.rm-pricing{order:3;width:100%;margin:22px 0}.rm-order{order:4;width:100%}.rm-description{order:5;margin-top:22px;max-width:none}.rm-contact{order:6}.rm-section{padding-top:48px;padding-bottom:48px}.rm-section-intro{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.rm-section-intro h2{max-width:none}.rm-section-intro p{max-width:660px}.rm-timeline li p{font-size:17px}}
 @media(max-width:760px){.rm-page{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}.rm-opening{padding:0 20px 34px}.rm-opening .breadcrumb{font-size:11px;margin-bottom:6px;gap:8px}.rm-title{margin-bottom:18px}.rm-title h1{font-size:42px}.rm-title>p{font-size:21px;margin-top:5px}.rm-thumbnails{gap:8px;padding-top:10px}.rm-thumbnails button{width:52px;height:52px}.rm-gallery-arrow{display:none}.rm-facts{display:grid;grid-template-columns:1fr 1fr;margin-top:16px;padding:4px 0;font-size:13px}.rm-facts>*{min-height:44px;padding:0 10px}.rm-facts>:nth-child(odd){border:0;padding-left:0}.rm-pricing{margin:18px 0}.rm-pricing .price-tag{font-size:27px}.rm-order .quantity-row{margin-bottom:14px}.rm-order>.button{min-height:50px}.rm-description{font-size:15px;margin-top:18px}.rm-contact{margin-top:8px}
 .rm-section{padding-top:36px;padding-bottom:36px}.rm-section .wrap,.rm-section.wrap{padding-left:20px;padding-right:20px}.rm-section h2{font-size:33px}.rm-section-intro{gap:18px;margin-bottom:24px}.rm-section-intro p,.rm-stone-intro{font-size:16px;line-height:1.55}.rm-stone-intro{margin-top:20px}
-
 .rm-parts-legend{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px;margin-top:22px;padding-top:22px}.rm-parts-legend li{gap:8px}.rm-part-number{width:24px;height:24px;flex-basis:24px;font-size:12px}
 .rm-history h2{margin-bottom:26px}.rm-timeline li{padding-bottom:24px}.rm-timeline li>span{font-size:12px}.rm-timeline li p{font-size:16px;line-height:1.5}.rm-disclaimer{font-size:11px;margin-top:18px}
-.rm-sticky{top:auto;bottom:0;min-height:64px;padding:8px 20px calc(8px + env(safe-area-inset-bottom,0px));gap:10px}.rm-sticky>div{display:flex;gap:4px;line-height:1.3;white-space:nowrap}.rm-sticky .rm-sticky-separator{display:inline;font-size:12px}.rm-sticky strong{font-size:12px}.rm-sticky>div>span{font-size:12px}.rm-sticky .button{padding:10px 16px}.rm-viewer[data-slot=dialog-content]{padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));gap:8px}.rm-viewer-nav{gap:12px;font-size:13px}.rm-viewer-nav span{min-width:160px}.rm-viewer-toolbar{font-size:13px}}
-
+.rm-sticky{left:0;right:0;bottom:0;translate:none;width:auto;border-radius:0;border-width:1px 0 0;box-shadow:none;gap:10px}.rm-sticky .button{padding:10px 16px}.rm-viewer[data-slot=dialog-content]{padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));gap:8px}.rm-viewer-nav{gap:12px;font-size:13px}.rm-viewer-nav span{min-width:160px}.rm-viewer-toolbar{font-size:13px}}
 .rm-stone-pair{display:grid;grid-template-columns:repeat(2,minmax(0,320px));justify-content:center;gap:32px;margin:28px auto 0;text-align:center}
 .rm-stone-pair img{width:100%;aspect-ratio:1;object-fit:contain;mix-blend-mode:darken}.rm-stone-pair figcaption{font-size:14px;color:var(--muted);margin-top:8px}
 .rm-sun-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center}.rm-sun-layout img{width:100%;height:auto;object-fit:contain}.rm-sun-layout h2{margin-bottom:28px}.rm-sun-layout p{font-size:16px;line-height:1.65;color:var(--muted);margin-top:20px}
@@ -50,9 +41,7 @@
 @media(max-width:960px){.rm-sun-layout{gap:32px}.rm-sun-layout h2{font-size:36px}}
 @media(max-width:760px){.rm-stone-pair{gap:16px;margin-top:20px}.rm-stone-pair figcaption{font-size:13px}.rm-sun-layout{grid-template-columns:1fr;gap:28px}.rm-sun-layout h2{font-size:33px;margin-bottom:20px}.rm-sun-layout p{font-size:15px;line-height:1.6;margin-top:16px}}
 @media(prefers-reduced-motion:reduce){.rm-page *{scroll-behavior:auto!important;transition:none!important}}
-
 /* Owner note, 26 Nov 2026: on phones the set fills the screen. The gallery runs edge to edge, square, and photos fill it (size photos stay whole). */
 @media(max-width:760px){.rm-page .rm-gallery .rm-gallery-stage{height:auto;aspect-ratio:1/1;width:calc(100% + 40px);margin:0 -20px;border-radius:0}.rm-page .rm-gallery-stage:not([data-whole]) .rm-main-image img{object-fit:cover}}
-
 /* What comes in the box: one line on a phone (owner note, 26 Nov 2026). */
 .rm-page .rm-in-box,.ch3-page .rm-in-box{font-size:min(14px,calc((100vw - 44px) / 26.5));white-space:nowrap}
