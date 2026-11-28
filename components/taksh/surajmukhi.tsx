@@ -30,15 +30,15 @@ const beats=[
 function SunflowerStory(){
  const [active,setActive]=useState(0);const refs=useRef<(HTMLDivElement|null)[]>([]);
  useEffect(()=>{const io=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting)setActive(Number((e.target as HTMLElement).dataset.i))},{rootMargin:'-45% 0px -45% 0px'});refs.current.forEach(el=>el&&io.observe(el));return()=>io.disconnect()},[]);
- return <><section className="sm-story" data-tone={beats[active].id} aria-labelledby="sm-story-heading"><div className="wrap sm-story-inner">
+ return <section className="sm-story" data-tone={beats[active].id} aria-labelledby="sm-story-heading"><div className="wrap sm-story-inner">
   <div className="sm-story-text"><h2 id="sm-story-heading" className="sm-story-title">The Sunflower Theory</h2>
    {beats.map((b,i)=><div key={b.id} ref={el=>{refs.current[i]=el}} data-i={i} className={i===active?'sm-beat is-on':'sm-beat'}>
-    <figure className="sm-beat-photo"><SetPhoto image={b.image} alt={b.alt} sizes="calc(100vw - 40px)"/></figure>
+    <figure className="sm-beat-photo"><SetPhoto image={b.image} alt={b.alt} sizes="calc(100vw - 40px)"/>{i===0&&<SetFilm name="surajmukhi-theory" caption="The Sunflower Theory."/>}</figure>
     <p>{b.line}</p></div>)}
    <p className="sm-never">That’s why you never give just one.</p>
   </div>
-  <div className="sm-story-stage" aria-hidden="true">{beats.map((b,i)=><figure key={b.id} className={i===active?'is-on':''}><SetPhoto image={b.image} alt="" sizes="(max-width: 1200px) 55vw, 700px"/></figure>)}</div>
- </div></section><SetFilm name="surajmukhi-theory" caption="The Sunflower Theory."/></>;
+  <div className="sm-story-stage"><div aria-hidden="true">{beats.map((b,i)=><figure key={b.id} className={i===active?'is-on':''}><SetPhoto image={b.image} alt="" sizes="(max-width: 1200px) 55vw, 700px"/></figure>)}</div><SetFilm name="surajmukhi-theory" caption="The Sunflower Theory."/></div>
+ </div></section>;
 }
 
 export function SurajmukhiDetail({p}:{p:Product}){

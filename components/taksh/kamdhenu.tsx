@@ -9,7 +9,6 @@ import {track} from '@/lib/tracking';
 import {type Product} from '@/lib/shop';
 import './ram-mandir.css';
 import './kamdhenu.css';
-import {SetFilm} from './set-film';
 
 const gallery:PhotoInfo[]=[
  {image:'/kamdhenu/gallery-02-mandir.webp',label:'In the mandir',alt:'The set on a marble ledge in a carved wooden mandir, beside a lit brass diya and marigolds.'},
@@ -43,12 +42,12 @@ function TheName(){
 const homes=[['In the mandir','Every god lives in her.'],['For the family','A mother to us all.'],['In a child’s room','Little Krishna’s favourite friend.']] as const;
 
 function PlentySection(){
- return <><section className="kd-plenty" aria-labelledby="kd-plenty-heading">
+ return <section className="kd-plenty" aria-labelledby="kd-plenty-heading">
   <figure className="kd-plenty-banner"><SetPhoto image="/kamdhenu/banner-pichwai.webp" alt="A painting in the Pichwai style: white cows in red saddle cloths walk with their calves through a green forest towards a lotus pond." sizes="100vw"/><figcaption>This painting style is called Pichwai. In Rajasthan, artists have painted Krishna’s cows like this for centuries.</figcaption></figure>
   <div className="kd-plenty-copy"><h2 id="kd-plenty-heading">She blesses every home.</h2>
    <ul className="kd-homes">{homes.map(([where,line])=><li key={where}><b>{where}</b><span>{line}</span></li>)}</ul>
   </div>
- </section><SetFilm name="kamdhenu-kanha" caption="Kanha’s Govinda."/></>;
+ </section>;
 }
 
 export function KamdhenuDetail({p}:{p:Product}){

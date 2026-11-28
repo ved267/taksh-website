@@ -12,7 +12,6 @@ import {useStickyPurchase} from './use-sticky-purchase';
 import {productMoney,boxLine,type Product} from '@/lib/shop';
 import {track} from '@/lib/tracking';
 import './nonsense.css';
-import {SetFilm} from './set-film';
 function WhatsAppIcon(){return <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M20.6 11.6a8.7 8.7 0 0 1-12.9 7.6L3 20.5l1.3-4.6a8.7 8.7 0 1 1 16.3-4.3Z"/><path d="M8.5 7.5c-.8.3-1 1.5-.5 2.6 1 2.4 3 4.4 5.4 5.2 1 .4 2.2-.1 2.6-1l-2.3-1.5-.9 1c-1.5-.6-2.7-1.8-3.3-3.2l.8-.9-1.2-2.2Z"/></svg>}
 
 const gallery=[
@@ -47,7 +46,7 @@ export function NonsenseDetail({p}:{p:Product}){
     <figcaption className="nonsense-breakfast-copy" lang="hi-Latn"><h2>Nazariya badlo, nazara badlega.</h2></figcaption>
    </figure>
    <div className="nonsense-caption"><small>An original Taksh design. Not affiliated with or endorsed by any film, television programme or brand.</small></div>
-  </section><SetFilm name="nonsense-other-view" caption="Nazariya badlo, nazara badlega."/>
+  </section>
   {sticky&&<div className="ch3-sticky nonsense-sticky"><div><strong>Ulta Chashma</strong><span aria-hidden="true"> · </span><span>{productMoney(p)}</span></div><button className="button primary" onClick={()=>ready&&add(p,qty)}>Add to bag</button></div>}
  </div>;
 }

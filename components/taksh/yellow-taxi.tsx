@@ -9,7 +9,6 @@ import {track} from '@/lib/tracking';
 import {type Product} from '@/lib/shop';
 import './ram-mandir.css';
 import './yellow-taxi.css';
-import {SetFilm} from './set-film';
 
 const photo=(name:string)=>`/yellow-taxi/${name}.webp`;
 const gallery:PhotoInfo[]=[
@@ -42,7 +41,7 @@ export function YellowTaxiDetail({p}:{p:Product}){
   <section className="yt-night" aria-labelledby="yt-taxi-heading">
    <SetPhoto image={photo('ad-night-banner')} alt="A yellow brick taxi under a street lamp on a dark, wet street with tram rails." large/>
    <div className="wrap yt-night-overlay"><div className="yt-night-copy"><h2 id="yt-taxi-heading">Taxi!</h2><p>In 1962, the Ambassador became Calcutta’s taxi.</p><p className="yt-plate-note">Your plate says WBT 1962.</p></div></div>
-  </section><SetFilm name="yellow-taxi-taxi" caption="Taxi!"/>
+  </section>
   <section className="yt-history" aria-labelledby="yt-history-heading">
    <div className="wrap yt-history-layout">
     <figure className="yt-history-photo"><SetPhoto {...gallery[5]} sizes="(max-width: 960px) calc(100vw - 40px), (max-width: 1440px) 57vw, 768px"/><figcaption><h2 id="yt-history-heading">Last stop.</h2></figcaption></figure>
@@ -56,7 +55,7 @@ export function YellowTaxiDetail({p}:{p:Product}){
    <figure className="yt-victoria">
     <SetPhoto image={photo('ad-victoria-banner')} alt="A yellow brick taxi driving past the Victoria Memorial in a sepia photograph." large/>
    </figure>
-  </section><SetFilm name="yellow-taxi-last-ride" caption="The last ride."/>
+  </section>
   <section className="wrap rm-legal" aria-label="About this model"><p className="rm-disclaimer">A simplified brick model inspired by the yellow Ambassador taxis of Kolkata. It is not an exact scale replica and is not made by, affiliated with or endorsed by Hindustan Motors or the owners of the Ambassador name. The number plate is a tribute, not a real registration. The street scenes on this page are imagined; the model shown in them is the Taksh set.</p></section>
   {sticky&&<SetStickyBar p={p} ready={ready} onAdd={()=>add(p,qty)}/>}
  </div>;

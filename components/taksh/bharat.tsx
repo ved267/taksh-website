@@ -9,7 +9,6 @@ import {track} from '@/lib/tracking';
 import {type Product} from '@/lib/shop';
 import './ram-mandir.css';
 import './bharat.css';
-import {SetFilm} from './set-film';
 
 const asset=(name:string)=>`/bharat/product-page/${name}`;
 const gallery:PhotoInfo[]=[
@@ -82,7 +81,7 @@ export function BharatDetail({p}:{p:Product}){
     <SetPhoto className="bh-photo" sizes="(max-width: 700px) 30vw, 30vw" image={asset(step.image)} alt={step.alt}/>
     <div className="bh-step-copy"><div className="bh-step-title"><span aria-hidden="true">{i+1}</span><h3>{step.title}</h3></div></div>
    </li>)}</ol>
-  </div></section><SetFilm name="bharat-build" caption="Build it to learn it."/>
+  </div></section>
   <section className="bh-design bh-story" aria-labelledby="bh-design-heading">
    <div className="wrap bh-design-opening"><h2 id="bh-design-heading">India never changes.<br/>The sea is yours.</h2><p>Every dot outside India lifts off. Make the sea your own.</p></div>
    <details className="bh-design-disclosure">
@@ -90,7 +89,7 @@ export function BharatDetail({p}:{p:Product}){
     <BharatFrame design/>
    </details>
    <div className="wrap bh-design-notes"><p className="bh-note">The box has the dots of the design shown, to rearrange.</p></div>
-  </section><SetFilm name="bharat-colour" caption="Every colour has a reason."/>
+  </section>
   <section className="bh-rivers bh-story" aria-labelledby="bh-rivers-heading"><div className="wrap bh-rivers-layout">
    <SetPhoto className="bh-river-photo" sizes="45vw" image={asset('gallery-02-closeup.png')} alt="Close view of the round pieces, with blue river tiles sitting on top of them."/>
    <div className="bh-rivers-copy"><h2 id="bh-rivers-heading">Seven rivers, one verse.</h2><p>An old bathing verse names seven rivers. Your map has them all, the Brahmaputra in place of the Saraswati.</p>
