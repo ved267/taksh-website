@@ -40,7 +40,7 @@ function Photo({image,alt,eager=false,large=false,sizes}:{image:string;alt:strin
 function WalkGuide(){
  return <section className="rm-section rm-walk" aria-labelledby="rm-walk-heading"><div className="wrap">
   <div className="rm-section-intro"><h2 id="rm-walk-heading">Walk in from the east.</h2><p>Climb the steps and meet each part.</p></div>
-  <figure className="rm-parts-image"><Photo image={guide.image} alt={guide.alt} sizes="(max-width: 900px) calc(100vw - 40px), 860px"/><SetFilm name="ram-mandir-walk" caption="Walk in from the east gate, all the way to the flag."/></figure>
+  <figure className="rm-parts-image"><Photo image={guide.image} alt={guide.alt} sizes="(max-width: 900px) calc(100vw - 40px), 860px"/><SetFilm name="ram-mandir-walk" caption="Walk in from the east gate, all the way to the flag." length="0:40"/></figure>
   <details className="parts-disclosure"><summary>Explore the 12 parts</summary><ol className="rm-parts-legend">{[
    ['Dharma Dhwaj','The saffron flag of dharma'],['Shikhara','The spire over the sanctum'],['Surya Tilak window','A mirror tile above the sanctum'],['Sabha Mandap','The tallest hall, before the sanctum'],['Rang Mandap','The gathering hall'],['Nritya Mandap','The dance hall, at the entrance'],['Side halls','One for prayer, one for song'],['Singh Dwar','The Lion Gate, facing east'],['Main stairs','32 steps on the real temple'],['Elephants and lions','Guardians beside the stairs'],['Platform','The raised base, with carved panels'],['Lawns','Four lawns around the temple'],
   ].map(([name,job],i)=><li key={name}><span className="rm-part-number" aria-hidden="true">{i+1}</span><div><strong>{name}</strong><p>{job}</p></div></li>)}</ol></details>
@@ -59,11 +59,11 @@ export function RamMandirDetail({p}:{p:Product}){
   <section className="rm-section rm-stone" aria-labelledby="rm-stone-heading"><div className="wrap">
    <h2 id="rm-stone-heading">Different blocks. The same idea.</h2>
    <p className="rm-stone-intro">No steel. Stone shaped to fit stone. Your set works the same way.</p>
-   <div className="rm-stone-pair"><figure><Photo image="story-01-stone-lock" alt="Two sandstone blocks, one above the other. A ridge on the lower block fits a groove in the upper block." sizes="(max-width: 760px) 45vw, 320px"/><figcaption>The temple</figcaption></figure><figure><Photo image="story-03-brick-lock" alt="Two tan building bricks, one above the other, with round studs on top." sizes="(max-width: 760px) 45vw, 320px"/><figcaption>Your set</figcaption><SetFilm name="ram-mandir-blocks" caption="Built like a giant puzzle, block by block." at="top"/></figure></div>
+   <div className="rm-stone-pair"><figure><Photo image="story-01-stone-lock" alt="Two sandstone blocks, one above the other. A ridge on the lower block fits a groove in the upper block." sizes="(max-width: 760px) 45vw, 320px"/><figcaption>The temple</figcaption></figure><figure><Photo image="story-03-brick-lock" alt="Two tan building bricks, one above the other, with round studs on top." sizes="(max-width: 760px) 45vw, 320px"/><figcaption>Your set</figcaption></figure><SetFilm name="ram-mandir-blocks" caption="Built like a giant puzzle, block by block." length="0:28" at="top"/></div>
   </div></section>
   <WalkGuide/>
   <section className="rm-section rm-sun" aria-labelledby="rm-sun-heading"><div className="wrap rm-sun-layout">
-   <figure><Photo image="gallery-04-roofs-surya-tilak-window" alt={gallery.find(photo=>photo.image==='gallery-04-roofs-surya-tilak-window')!.alt} sizes="(max-width: 760px) calc(100vw - 40px), 46vw"/><SetFilm name="ram-mandir-tilak" caption="Once a year at noon: the Surya Tilak."/></figure>
+   <figure><Photo image="gallery-04-roofs-surya-tilak-window" alt={gallery.find(photo=>photo.image==='gallery-04-roofs-surya-tilak-window')!.alt} sizes="(max-width: 760px) calc(100vw - 40px), 46vw"/><SetFilm name="ram-mandir-tilak" caption="Once a year at noon: the Surya Tilak." length="0:34"/></figure>
    <div><h2 id="rm-sun-heading">Ram Lalla’s tilak.</h2><p>At noon on Ram Navami, mirrors bring sunlight to Ram Lalla’s forehead.</p><p>A mirror tile on your model marks the moment.</p></div>
   </div></section>
   <section className="rm-history rm-section" aria-labelledby="rm-history-heading"><div className="wrap">
